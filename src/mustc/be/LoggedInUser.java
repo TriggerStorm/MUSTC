@@ -14,5 +14,6 @@ public class LoggedInUser {
     private int userKey;
     private String userName;
     private String password;
+    private int userRank;  // 0 = developer, 1 = admin, 2 = project owner... maybe . Could be a String
     private Task currentTask;
 }
