@@ -15,6 +15,6 @@ public class Project {
     private int id;
     private String name;
     private List<Task> taskList;
-    private int standardRate;
+    private int standardRate;  // could be in Client
     private int projectRate;
 }
