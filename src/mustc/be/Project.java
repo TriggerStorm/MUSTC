@@ -18,4 +18,65 @@ public class Project {
     private float projectRate;
     private List<Task> taskList;
     private boolean closed;
+    
+
+    public Project(int id, String name, Client associatedClient, float projectRate, List<Task> taskList, boolean closed) {
+        this.id = id;
+        this.name = name;
+        this.associatedClient = associatedClient;
+        this.projectRate = projectRate;
+        this.taskList = taskList;
+        this.closed = closed;
+    }
+
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Client getAssociatedClient() {
+        return associatedClient;
+    }
+
+    public void setAssociatedClient(Client associatedClient) {
+        this.associatedClient = associatedClient;
+    }
+
+    public float getProjectRate() {
+        return projectRate;
+    }
+
+    public void setProjectRate(float projectRate) {
+        this.projectRate = projectRate;
+    }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
+    }
+
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
+    }
+    
+    
 }
