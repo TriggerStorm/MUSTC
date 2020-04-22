@@ -12,16 +12,16 @@ import java.util.List;
  * @author Trigger, Filip, Cecillia and Alan
  */
 public class Client {
-    private int id;
-    private String name;
+    private int clientID;
+    private String clientName;
     private String imgLocation;
     private float standardRate;
     private List<Project> projectList;
 
     
     public Client(int id, String name, String imgLocation, float standardRate, List<Project> projectList) {
-        this.id = id;
-        this.name = name;
+        this.clientID = clientID;
+        this.clientName = clientName;
         this.imgLocation = imgLocation;
         this.standardRate = standardRate;
         this.projectList = projectList;
@@ -29,19 +29,19 @@ public class Client {
 
     
     public int getId() {
-        return id;
+        return clientID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int clientID) {
+        this.clientID = clientID;
     }
 
     public String getName() {
-        return name;
+        return clientName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String clientName) {
+        this.clientName = clientName;
     }
 
     public String getImgLocation() {

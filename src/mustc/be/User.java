@@ -12,8 +12,8 @@ import java.util.List;
  * @author Trigger, Filip, Cecillia and Alan
  */
 public class User {
-    private int id;  //  maybe
-    private String name;
+    private int userID;
+    private String userName;
     private String email;
     private String password;
     private int salary;  // do we really need this?
@@ -21,9 +21,9 @@ public class User {
  //   private List<Task> usersTasks;  //  may be faster to process if we have this.
 
     
-    public User(int id, String name, String email, String password, int salary, boolean admin) {
-        this.id = id;
-        this.name = name;
+    public User(int userID, String userName, String email, String password, int salary, boolean admin) {
+        this.userID = userID;
+        this.userName = userName;
         this.email = email;
         this.password = password;
         this.salary = salary;
@@ -32,19 +32,19 @@ public class User {
 
     
     public int getId() {
-        return id;
+        return userID;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.userID = userID;
     }
 
     public String getName() {
-        return name;
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {

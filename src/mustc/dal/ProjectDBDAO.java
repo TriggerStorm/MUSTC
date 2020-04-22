@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,31 +25,29 @@ import mustc.be.Task;
  */
 public class ProjectDBDAO {
     private DBConnection dbc;
-
+    private TaskDBDAO taskDBDao;
     
     public ProjectDBDAO() {
-         dbc = new DBConnection();
-
+        dbc = new DBConnection();
+        taskDBDao = new TaskDBDAO();
     }
     
     
-     public Project addNewProjectToDB(String name, Client associatedClient, float projectRate, boolean closed) throws SQLException { 
+    public Project addNewProjectToDB(String name, int associatedClientID, float projectRate, boolean isClosed) throws SQLException { 
     //  Adds a new project to the DB, and returns the updated projectList to the GUI
-        String clientName = associatedClient.getName();
         String sql = "INSERT INTO PROJECTS(name, clientName, projectRate, closed) VALUES (?,?,?,?)";
         List<Task> emptyTaskList = new ArrayList<>();
         emptyTaskList = null;
-        Project newProject = new Project(0, name, associatedClient, projectRate, emptyTaskList, closed);
+        Project newProject = new Project(0, name, associatedClientID, projectRate, emptyTaskList, isClosed);
         try (Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, name);
-            pstmt.setString(2, clientName);
+            pstmt.setInt(2, associatedClientID);
             pstmt.setFloat(3, projectRate);
-            pstmt.setBoolean(4, closed);
-/*            int isClosed = 0;  // can we put boolean in the database?
-            if(closed == true)
-                isClosed = 1;
- */   
+            int closed = 0;
+            if(isClosed == true)
+                closed = 1;
+            pstmt.setInt(4, closed);
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Creating attendance failed, no rows affected.");
@@ -69,26 +68,49 @@ public class ProjectDBDAO {
     }
      
      
-    public Project editProject (Project editedProject, String name, Client associatedClient, float projectRate, boolean closed) { 
+    public Project getProject(int projectID) throws SQLException {
+    //  Returns a spacific Project data object given the Project id
+        Project project = null;
+        List<Task> taskList = taskDBDao.getAllTasksInAProject(projectID);
+        String SQLStmt = "SELECT name, associatedClient, projectRate, closed FROM Projects WHERE id ='" + projectID + "'";
+        try(Connection con = dbc.getConnection()) {
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(SQLStmt);
+            while(rs.next()) //While you have something in the results
+            {
+                String projectName = rs.getString("name");
+                int associatedClientID = rs.getInt("associatedClient");
+                Float projectRate = rs.getFloat("projectRate");  // can we do this??
+                int closed = rs.getInt("closed");
+                boolean isClosed = false;
+                if(closed == 1)
+                isClosed = true;
+                project = new Project(projectID, projectName, associatedClientID, projectRate, taskList, isClosed); 
+
+            }    
+        }
+        return project;
+    }   
+    
+    
+    public Project editProject (Project editedProject, String name, int associatedClientID, float projectRate, boolean closed) { 
     //  Edits a Project in the Projects table of the database given the Projects new details.  
-        String clientName = associatedClient.getName();
         String sql = "UPDATE Projects SET name = clientName, projectRate = ?, closed = ? WHERE email = ?";
         try ( Connection con = dbc.getConnection()) {
             //Create a prepared statement.
             PreparedStatement pstmt = con.prepareStatement(sql);
             //Set parameter values.
             pstmt.setString(1, name);
-            pstmt.setString(2, clientName);
+            pstmt.setInt(2, associatedClientID);
             pstmt.setFloat(3, projectRate);
             pstmt.setBoolean(4, closed);
-/*            int isClosed = 0;  // can we put boolean in the database?
+            int isClosed = 0;
             if(closed == true)
                 isClosed = 1;
- */          
-            //Execute SQL query.
-            pstmt.executeUpdate();
+            pstmt.setInt(4, isClosed);
+            pstmt.executeUpdate();  //Execute SQL query.
             editedProject.setName(name);
-            editedProject.setAssociatedClient(associatedClient);  
+            editedProject.setAssociatedClient(associatedClientID);  
             editedProject.setProjectRate(projectRate);
             editedProject.setClosed(closed);
             return editedProject;

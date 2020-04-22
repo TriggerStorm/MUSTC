@@ -12,46 +12,46 @@ import java.util.List;
  * @author Trigger, Filip, Cecillia and Alan
  */
 public class Project {
-    private int id;
-    private String name;
-    private Client associatedClient;  // the person whom the task is assigned to.
+    private int projectID;
+    private String projectName;
+    private int /*(Client?)*/ associatedClientID;  // the person whom the task is assigned to.
     private float projectRate;
     private List<Task> taskList;
-    private boolean closed;
+    private boolean isClosed;
     
 
-    public Project(int id, String name, Client associatedClient, float projectRate, List<Task> taskList, boolean closed) {
-        this.id = id;
-        this.name = name;
-        this.associatedClient = associatedClient;
+    public Project(int projectID, String projectName, int associatedClientID, float projectRate, List<Task> taskList, boolean isClosed) {
+        this.projectID = projectID;
+        this.projectName = projectName;
+        this.associatedClientID = associatedClientID;
         this.projectRate = projectRate;
         this.taskList = taskList;
-        this.closed = closed;
+        this.isClosed = isClosed;
     }
 
     
     public int getId() {
-        return id;
+        return projectID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int projectID) {
+        this.projectID = projectID;
     }
 
     public String getName() {
-        return name;
+        return projectName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String projectName) {
+        this.projectName = projectName;
     }
 
-    public Client getAssociatedClient() {
-        return associatedClient;
+    public int associatedClientID() {
+        return associatedClientID;
     }
 
-    public void setAssociatedClient(Client associatedClient) {
-        this.associatedClient = associatedClient;
+    public void setAssociatedClient(int associatedClientID) {
+        this.associatedClientID = associatedClientID;
     }
 
     public float getProjectRate() {
@@ -71,11 +71,11 @@ public class Project {
     }
 
     public boolean isClosed() {
-        return closed;
+        return isClosed;
     }
 
-    public void setClosed(boolean closed) {
-        this.closed = closed;
+    public void setClosed(boolean isClosed) {
+        this.isClosed = isClosed;
     }
     
     

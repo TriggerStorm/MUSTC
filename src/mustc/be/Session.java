@@ -10,45 +10,45 @@ package mustc.be;
  * @author Trigger, Filip, Cecillia and Alan
  */
 public class Session {
-    private int id;
-    private User associatedUser;  // the person whom the task is assigned to.
-    private Task associatedTask;  // the person whom the task is assigned to.
+    private int sessionID;
+    private int associatedUserID;  // the person whom the Session is assigned to.
+    private int /*(Task?)*/ associatedTaskID;  // the Task whom the Session is assigned to.
     private int startTime;
     private int finishTime;
 //    private int sessionTime;  //  difference between start time and finish time ...maybe?
 
     
-    public Session(int id, User associatedUser, Task associatedTask, int startTime, int finishTime) {
-        this.id = id;
-        this.associatedUser = associatedUser;
-        this.associatedTask = associatedTask;
+    public Session(int sessionID, User associatedUser, int associatedTask, int startTime, int finishTime) {
+        this.sessionID = sessionID;
+        this.associatedUserID = associatedUserID;
+        this.associatedTaskID = associatedTaskID;
         this.startTime = startTime;
         this.finishTime = finishTime;
     }
 
     
     public int getId() {
-        return id;
+        return sessionID;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.sessionID = sessionID;
     }
 
-    public User getAssociatedUser() {
-        return associatedUser;
+    public int getAssociatedUserID() {
+        return associatedUserID;
     }
 
-    public void setAssociatedUser(User associatedUser) {
-        this.associatedUser = associatedUser;
+    public void setAssociatedUserID(int associatedUserID) {
+        this.associatedUserID = associatedUserID;
     }
 
-    public Task getAssociatedTask() {
-        return associatedTask;
+    public int getAssociatedTask() {
+        return associatedTaskID;
     }
 
-    public void setAssociatedTask(Task associatedTask) {
-        this.associatedTask = associatedTask;
+    public void setAssociatedTask(int associatedTaskID) {
+        this.associatedTaskID = associatedTaskID;
     }
 
     public int getStartTime() {

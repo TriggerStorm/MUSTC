@@ -5,11 +5,19 @@
  */
 package mustc.dal;
 
+import java.util.List;
+import mustc.be.Project;
+import mustc.be.Task;
+
 /**
  *
  * @author admin
  */
-public class DalFaçade {
+public class TaskDBDAO {
     
     
+    public List<Task> getAllTasksInAProject(int projectID) {
+       List<Task> projectTasks = null;
+       return projectTasks ;
+    }
 }

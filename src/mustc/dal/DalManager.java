@@ -10,5 +10,7 @@ package mustc.dal;
  * @author admin
  */
 public class DalManager {
-    
+    private ProjectDBDAO projectDBDao;
+    private TaskDBDAO taskDBDao;
+         
 }

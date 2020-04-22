@@ -11,17 +11,19 @@ package mustc.be;
  */
 public class LoggedInUser {
     private static LoggedInUser instance = null;
-    private int id;
-    private String name;
+    private int loggedInUserID;
+    private String loggedInUserName;
+    private String loggedInUserEmail;
     private String password;
     private int salary;  // do we really need this?
     private boolean admin;  // or 0 = developer, 1 = admin, 2 = project owner.
     private Task currentTask;
 
     
-    public LoggedInUser(int id, String name, String password, int salary, boolean admin, Task currentTask) {
-        this.id = id;
-        this.name = name;
+    public LoggedInUser(int LoggedInUserID, String LoggedInUserName, String LoggedInUserEmail, String password, int salary, boolean admin, Task currentTask) {
+        this.loggedInUserID = LoggedInUserID;
+        this.loggedInUserName = LoggedInUserName;
+        this.loggedInUserEmail = loggedInUserEmail;
         this.password = password;
         this.salary = salary;
         this.admin = admin;
@@ -38,19 +40,26 @@ public class LoggedInUser {
     }
 
     public int getId() {
-        return id;
+        return loggedInUserID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int loggedInUserID) {
+        this.loggedInUserID = loggedInUserID;
     }
 
     public String getName() {
-        return name;
+        return loggedInUserName;
+    }
+    
+    public String getEmail() {
+        return loggedInUserEmail;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String loggedInUserEmail) {
+        this.loggedInUserEmail = loggedInUserEmail;
+    }
+    public void setName(String loggedInUserName) {
+        this.loggedInUserName = loggedInUserName;
     }
 
     public String getPassword() {
