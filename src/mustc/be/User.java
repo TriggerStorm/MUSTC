@@ -12,8 +12,11 @@ import java.util.List;
  * @author Trigger, Filip, Cecillia and Alan
  */
 public class User {
-    private int userKey;  //  maybe
+    private int id;  //  maybe
+    private String name;
     private String email;
     private String password;
-    private List<Task> usersTasks;
+    private int salary;
+    private boolean admin;  // or 0 = developer, 1 = admin, 2 = project owner.
+ //   private List<Task> usersTasks;  //  may be faster to process if we have this.
 }

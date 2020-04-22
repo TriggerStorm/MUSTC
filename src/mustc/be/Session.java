@@ -10,9 +10,10 @@ package mustc.be;
  * @author Trigger, Filip, Cecillia and Alan
  */
 public class Session {
-    private int id;  // maybe?
-    private String details; // maybe?
+    private int id;
+    private User associatedUser;  // the person whom the task is assigned to.
+    private Task associatedTask;  // the person whom the task is assigned to.
     private int startTime;
     private int finishTime;
-    private int sessionTime;  //  difference between start time and finish time ...maybe?
+//    private int sessionTime;  //  difference between start time and finish time ...maybe?
 }

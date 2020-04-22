@@ -11,9 +11,10 @@ package mustc.be;
  */
 public class LoggedInUser {
     private static LoggedInUser instance = null;
-    private int userKey;
-    private String userName;
+    private int id;
+    private String name;
     private String password;
-    private int userRank;  // 0 = developer, 1 = admin, 2 = project owner... maybe . Could be a String
+    private int salary;  // do we really need this?
+    private boolean admin;  // or 0 = developer, 1 = admin, 2 = project owner.
     private Task currentTask;
 }

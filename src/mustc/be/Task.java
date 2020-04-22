@@ -13,8 +13,12 @@ import java.util.List;
  */
 public class Task {
     private int id;
+    private String name;
     private String description;
-    private int userKey;  // the person whom the task is assigned to.
+    private Project associatedProject;  // the person whom the task is assigned to.
+//    private User associatedUser;  // the person to whom the task is assigned to.
+//or  private List<User> associatedUsers;  // the people to whom the task is assigned to.
+
     private List<Session> sessions;  //time??
-    private int taskTime;  //  total time used on a task  ... maybe
+//    private int taskTime;  //  total time used on a task  ... maybe
 }

@@ -14,7 +14,8 @@ import java.util.List;
 public class Project {
     private int id;
     private String name;
+    private Client associatedClient;  // the person whom the task is assigned to.
+    private float projectRate;
     private List<Task> taskList;
-    private int standardRate;  // could be in Client
-    private int projectRate;
+    private boolean closed;
 }
