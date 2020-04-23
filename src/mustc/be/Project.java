@@ -12,9 +12,71 @@ import java.util.List;
  * @author Trigger, Filip, Cecillia and Alan
  */
 public class Project {
-    private int id;
-    private String name;
+    private int projectID;
+    private String projectName;
+    private int /*(Client?)*/ associatedClientID;  // the person whom the task is assigned to.
+    private float projectRate;
     private List<Task> taskList;
-    private int standardRate;  // could be in Client
-    private int projectRate;
+    private boolean isClosed;
+    
+
+    public Project(int projectID, String projectName, int associatedClientID, float projectRate, List<Task> taskList, boolean isClosed) {
+        this.projectID = projectID;
+        this.projectName = projectName;
+        this.associatedClientID = associatedClientID;
+        this.projectRate = projectRate;
+        this.taskList = taskList;
+        this.isClosed = isClosed;
+    }
+
+    
+    public int getId() {
+        return projectID;
+    }
+
+    public void setId(int projectID) {
+        this.projectID = projectID;
+    }
+
+    public String getName() {
+        return projectName;
+    }
+
+    public void setName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public int associatedClientID() {
+        return associatedClientID;
+    }
+
+    public void setAssociatedClient(int associatedClientID) {
+        this.associatedClientID = associatedClientID;
+    }
+
+    public float getProjectRate() {
+        return projectRate;
+    }
+
+    public void setProjectRate(float projectRate) {
+        this.projectRate = projectRate;
+    }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
+    }
+
+    public boolean isClosed() {
+        return isClosed;
+    }
+
+    public void setClosed(boolean isClosed) {
+        this.isClosed = isClosed;
+    }
+    
+    
 }
