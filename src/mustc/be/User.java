@@ -64,7 +64,7 @@ public class User {
         this.password = password;
     }
 
-    public int getSalary() {
+    public float getSalary() {
         return salary;
     }
 
