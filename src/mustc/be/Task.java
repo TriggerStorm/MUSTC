@@ -15,9 +15,8 @@ public class Task {
     private int taskID;
     private String taskName;
     private String description;
-    private int /*(Project?)*/ associatedProjectID;  // the person whom the task is assigned to.
-//    private User associatedUser;  // the person to whom the task is assigned to.
-//or  private List<User> associatedUsers;  // the people to whom the task is assigned to.
+    private int associatedProjectID;  // the project that the task is assigned to.
+//or  private List<int> associatedUserIDs;  // the people to whom the task is assigned to.
     private List<Session> sessions;  //time??
 //    private int taskTime;  //  total time used on a task  ... maybe
 
