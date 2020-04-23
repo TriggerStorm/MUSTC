@@ -12,8 +12,11 @@ import java.util.List;
  * @author Trigger, Filip, Cecillia and Alan
  */
 public class User {
-    private int userKey;  //  maybe
+    private int userID;  //  maybe
+    private String userName;
     private String email;
     private String password;
+    private boolean admin;
+    private float salary;
     private List<Task> usersTasks;
 }
