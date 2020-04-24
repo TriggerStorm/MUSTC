@@ -61,4 +61,38 @@ public class UserDBDAO {
         return null;
     }
      
+       
+    public User editUser (User userToEdit, String userName, String email, String password, Float salary, boolean isAdmin) { 
+    //  Edits a user in the User table of the database given the users new details.  
+        try (  //Get a connection to the database.
+            Connection con = dbc.getConnection()) {  
+            //Create a prepared statement.
+            String sql = "UPDATE Users SET userName = ?, email = ?, password = ?, salary = ? , isAdmin = ? WHERE email = ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            //Set parameter values.
+            pstmt.setString(1, userName);
+            pstmt.setString(2, email);
+            pstmt.setString(3, password);
+            pstmt.setFloat(4, salary);
+            int admin = 0;
+            if(isAdmin == true)
+                admin = 1;
+            pstmt.setInt(8, admin);
+            //Execute SQL query.
+            pstmt.executeUpdate();
+            userToEdit.setUserName(userName);
+            userToEdit.setEmail(email);
+            userToEdit.setPassword(password);   
+            userToEdit.setSalary(salary);
+            userToEdit.setIsAdmin(isAdmin);
+            return userToEdit;
+        } catch (SQLServerException ex) {
+            Logger.getLogger(UserDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    
 }
