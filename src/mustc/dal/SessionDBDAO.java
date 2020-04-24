@@ -5,13 +5,18 @@
  */
 package mustc.dal;
 
+import java.util.List;
+import mustc.be.Session;
+
 /**
  *
  * @author admin
  */
-public class DalManager {
-    private ProjectDBDAO projectDBDao;
-    private TaskDBDAO taskDBDao;
-    private SessionDBDAO sessionDBDao;
+public class SessionDBDAO {
+    
+    public List<Session> getAllSessionIDsAndNameInTask(int taskID) {
+        return null;
+    }
+    
     
 }

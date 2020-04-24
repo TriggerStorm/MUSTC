@@ -14,13 +14,14 @@ import java.util.List;
 public class Project {
     private int projectID;
     private String projectName;
-    private int /*(Client?)*/ associatedClientID;  // the person whom the task is assigned to.
+    private int associatedClientID;  // the person whom the task is assigned to.
     private float projectRate;
+    private int hoursAllocated;
     private List<Task> taskList;
     private boolean isClosed;
     
 
-    public Project(int projectID, String projectName, int associatedClientID, float projectRate, List<Task> taskList, boolean isClosed) {
+    public Project(int projectID, String projectName, int associatedClientID, float projectRate, int hoursAllocated, List<Task> taskList, boolean isClosed) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.associatedClientID = associatedClientID;
@@ -60,6 +61,14 @@ public class Project {
 
     public void setProjectRate(float projectRate) {
         this.projectRate = projectRate;
+    }
+
+     public int getHoursAllocated() {
+        return hoursAllocated;
+    }
+
+    public void setHoursAllocated(int hoursAllocated) {
+        this.hoursAllocated = hoursAllocated;
     }
 
     public List<Task> getTaskList() {

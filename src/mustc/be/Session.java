@@ -12,7 +12,7 @@ package mustc.be;
 public class Session {
     private int sessionID;
     private int associatedUserID;  // the person whom the Session is assigned to.
-    private int /*(Task?)*/ associatedTaskID;  // the Task whom the Session is assigned to.
+    private int associatedTaskID;  // the Task whom the Session is assigned to.
     private int startTime;
     private int finishTime;
 //    private int sessionTime;  //  difference between start time and finish time ...maybe?

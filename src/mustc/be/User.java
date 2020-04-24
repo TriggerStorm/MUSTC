@@ -12,11 +12,12 @@ import java.util.List;
  * @author Trigger, Filip, Cecillia and Alan
  */
 public class User {
+    
     private int userID;
     private String userName;
     private String email;
     private String password;
-    private int salary;  // do we really need this?
+    private float salary;  // do we really need this?
     private boolean admin;  // or 0 = developer, 1 = admin, 2 = project owner.
  //   private List<Task> usersTasks;  //  may be faster to process if we have this.
 
@@ -63,7 +64,7 @@ public class User {
         this.password = password;
     }
 
-    public int getSalary() {
+    public float getSalary() {
         return salary;
     }
 
