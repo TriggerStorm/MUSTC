@@ -30,11 +30,11 @@ public class Task {
     }
 
     
-    public int getId() {
+    public int getTaskId() {
         return taskID;
     }
 
-    public void setId(int id) {
+    public void setTaskId(int id) {
         this.taskID = taskID;
     }
 

@@ -50,7 +50,7 @@ public class TaskDBDAO {
             }
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    newTask.setId((int) generatedKeys.getLong(1));
+                    newTask.setTaskId((int) generatedKeys.getLong(1));
                 } else {
                     throw new SQLException("Creating Task failed, no ID obtained.");
                 } 
@@ -84,8 +84,8 @@ public class TaskDBDAO {
     }
     
     
-    public List<Task> getAProjectsTaskIDsAndNames(int projectID) throws SQLException {
-        List<Task> projectTasks = new ArrayList<>();  //null;?
+    public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID) throws SQLException {
+        List<Task> allTaskIDsAndNamesOfAProject = new ArrayList<>();  //null;?
         try(Connection con = dbc.getConnection()) {
             String sql = "SELECT id AND name FROM Tasks WHERE associatedProjectID = '" + projectID + "'";
             Statement statement = con.createStatement();
@@ -95,10 +95,10 @@ public class TaskDBDAO {
                 int taskID = rs.getInt("id");
                 String taskName =  rs.getString("Name");
                 Task taskInProject = new Task(taskID, taskName, null, projectID, null);
-                projectTasks.add(taskInProject); 
+                allTaskIDsAndNamesOfAProject.add(taskInProject); 
             }    
         }
-        return projectTasks ;
+        return allTaskIDsAndNamesOfAProject ;
     }
     
     
@@ -125,6 +125,18 @@ public class TaskDBDAO {
         return null;
     }
       
+        
+    public void removeTaskFromDB(Task taskToDelete) {
+    //  Removes a user from the User table of the database given a User data object
+        String sql = "DELETE FROM Tasks WHERE id = ?";
+        try (Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1,taskToDelete.getTaskId());
+            pstmt.execute();
+        } catch (SQLException ex) {
+            System.out.println("Exception " + ex);
+        }
+    }
       
     
 }
