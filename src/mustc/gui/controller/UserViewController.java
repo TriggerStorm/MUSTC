@@ -18,6 +18,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -134,8 +135,11 @@ public class UserViewController extends JFrame implements Initializable {
     private TableColumn<?, ?> col_sesion_myhours;
     @FXML
     private TextField sesion_search;
-    
+    @FXML
+    private ScrollPane Sp_last3;
     int MaxWidth;
+    boolean min;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -144,6 +148,7 @@ public class UserViewController extends JFrame implements Initializable {
 
     public UserViewController() {
         MaxWidth = 260;
+        min = true;
     }
     
     public void SS(){
@@ -170,6 +175,20 @@ public class UserViewController extends JFrame implements Initializable {
         }
        
     }
+    public void ToggelSize(){
+        
+        if(min == false){    
+            Sp_last3.setVisible(true);
+            min = true;
+            System.out.println("true");  
+        }
+        else{
+            Sp_last3.setVisible(false);
+            min = false;
+            System.out.println("false");
+        }
+ 
+    }
     
 
     @FXML
@@ -179,7 +198,7 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void toggel_size(ActionEvent event) {
-        
+        ToggelSize();
     }
 
     @FXML
