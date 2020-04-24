@@ -34,15 +34,15 @@ public class ProjectDBDAO {
     }
     
     
-    public Project addNewProjectToDB(String name, int associatedClientID, float projectRate, int hoursAllocated, boolean isClosed) throws SQLException { 
-    //  Adds a new project to the DB, and returns the updated projectList to the GUI
-        String sql = "INSERT INTO PROJECTS(name, clientName, projectRate, hoursAllocated, closed) VALUES (?,?,?,?,?)";
+    public Project addNewProjectToDB(String projectName, int associatedClientID, float projectRate, int hoursAllocated, boolean isClosed) throws SQLException { 
+    //  Adds a new Project to the DB, and returns the updated Project to the GUI
+        String sql = "INSERT INTO PROJECTS(projectName, associatedClientID, projectRate, hoursAllocated, closed) VALUES (?,?,?,?,?)";
         List<Task> emptyTaskList = new ArrayList<>();
         emptyTaskList = null;
-        Project newProject = new Project(0, name, associatedClientID, projectRate, hoursAllocated, emptyTaskList, isClosed);
+        Project newProject = new Project(0, projectName, associatedClientID, projectRate, hoursAllocated, emptyTaskList, isClosed);
         try (Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, name);
+            pstmt.setString(1, projectName);
             pstmt.setInt(2, associatedClientID);
             pstmt.setFloat(3, projectRate);
             pstmt.setInt(4, hoursAllocated);
@@ -52,13 +52,13 @@ public class ProjectDBDAO {
             pstmt.setInt(5, closed);
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Creating attendance failed, no rows affected.");
+                throw new SQLException("Creating Project failed, no rows affected.");
             }
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     newProject.setId((int) generatedKeys.getLong(1));
                 } else {
-                    throw new SQLException("Creating attendance failed, no ID obtained.");
+                    throw new SQLException("Creating Project failed, no ID obtained.");
                 } 
             }
         } catch (SQLServerException ex) {

@@ -5,12 +5,16 @@
  */
 package mustc.dal;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mustc.be.Project;
 import mustc.be.Session;
 import mustc.be.Task;
@@ -29,6 +33,36 @@ public class TaskDBDAO {
             sessionDBDao = new SessionDBDAO();
     }        
 
+    public Task addNewTaskToDB(String taskName, String description, int associatedProjectID) throws SQLException { 
+    //  Adds a new Task to the DB, and returns the updated Project to the GUI
+        String sql = "INSERT INTO Task(taskName, description, associatedProjectID) VALUES (?,?,?)";
+        List<Session> emptySessionList = new ArrayList<>();
+        emptySessionList = null;
+        Task newTask = new Task(0, taskName, description, associatedProjectID, emptySessionList);
+        try (Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, taskName);
+            pstmt.setString(2, description);
+            pstmt.setInt(3, associatedProjectID);
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Creating Task failed, no rows affected.");
+            }
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    newTask.setId((int) generatedKeys.getLong(1));
+                } else {
+                    throw new SQLException("Creating Task failed, no ID obtained.");
+                } 
+            }
+        } catch (SQLServerException ex) {
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return newTask;
+    }
+     
     
     public Task getTask(int taskID) throws SQLException {
         Task task = null;
