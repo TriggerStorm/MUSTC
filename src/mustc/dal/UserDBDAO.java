@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mustc.be.User;
@@ -61,7 +62,31 @@ public class UserDBDAO {
         return null;
     }
      
-       
+    
+    public User getUser(int userID) throws SQLException {
+    //  Returns a spacific user data object given their user id
+        User user = null;
+        try(Connection con = dbc.getConnection()) {
+            String sql = "SELECT userName, email, password, salary, isAdmin FROM Users WHERE id ='" + userID + "'";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()) //While you have something in the results
+            {
+                String userName = rs.getString("userName");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                Float salary = rs.getFloat("salary");
+                int admin = rs.getInt("admin");
+                boolean isAdmin = false;
+                if(admin == 1)
+                    isAdmin = true;
+               user = new User(userID, userName, email, password, salary, isAdmin); 
+            }    
+        }
+        return user;
+    }   
+ 
+         
     public User editUser (User userToEdit, String userName, String email, String password, Float salary, boolean isAdmin) { 
     //  Edits a user in the User table of the database given the users new details.  
         try (  //Get a connection to the database.
@@ -96,7 +121,7 @@ public class UserDBDAO {
 
          
     public void removeUserFromDB(User userToDelete) {
-    //  Removes a user from the User table of the database given a User data object
+    //  Removes a user from the Users table of the database given a User data object
         String stat = "DELETE FROM Users WHERE id =?";
         try (Connection con = dbc.getConnection()) {
             PreparedStatement stmt = con.prepareStatement(stat);
