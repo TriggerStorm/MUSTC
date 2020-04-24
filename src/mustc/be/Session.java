@@ -15,12 +15,12 @@ public class Session {
     private int sessionID;
     private int associatedUserID;  // the person whom the Session is assigned to.
     private int associatedTaskID;  // the Task whom the Session is assigned to.
-    private LocalDateTime startTime;
-    private LocalDateTime finishTime;
+    private String startTime;
+    private String finishTime;
 //    private int sessionTime;  //  difference between start time and finish time ...maybe?
 
     
-    public Session(int sessionID, int associatedUser, int associatedTask, LocalDateTime startTime, LocalDateTime finishTime) {
+    public Session(int sessionID, int associatedUser, int associatedTask, String startTime, String finishTime) {
         this.sessionID = sessionID;
         this.associatedUserID = associatedUserID;
         this.associatedTaskID = associatedTaskID;
@@ -29,11 +29,11 @@ public class Session {
     }
 
     
-    public int getId() {
+    public int getSessionId() {
         return sessionID;
     }
 
-    public void setId(int id) {
+    public void setSessionId(int id) {
         this.sessionID = sessionID;
     }
 
@@ -53,19 +53,19 @@ public class Session {
         this.associatedTaskID = associatedTaskID;
     }
 
-    public LocalDateTime getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(LocalDateTime startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public LocalDateTime getFinishTime() {
+    public String getFinishTime() {
         return finishTime;
     }
 
-    public void setFinishTime(LocalDateTime finishTime) {
+    public void setFinishTime(String finishTime) {
         this.finishTime = finishTime;
     }
     
