@@ -87,7 +87,28 @@ public class SessionDBDAO {
         return taskSessions ;
     }
     
-        
+          
+    public List<Session> getAllSessionsOfATask(int taskID) throws SQLException {
+        List<Session> allSessionsOfATask = new ArrayList<>();
+        try(Connection con = dbc.getConnection()) {
+            String sql = "SELECT * FROM Tasks WHERE associatedTask = '" + taskID + "'";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()) // While you have something in the results
+            {
+                int sessionID = rs.getInt("id");
+                int AssociatedUserID =  rs.getInt("associatedUser");
+                int associatedTaskID =  rs.getInt("associatedTask");
+                String startTime = rs.getString("startTime");
+                String finishTime = rs.getString("finishTime");            
+                Session sessionInTask = new Session(sessionID, AssociatedUserID, associatedTaskID, startTime, finishTime);
+                allSessionsOfATask.add(sessionInTask); 
+            }    
+        }
+        return allSessionsOfATask ;
+    }
+          
+          
     public void removeSessionFromDB(Session sessionToDelete) {
     //  Removes a session from the Session table of the database given a Session data object
         String sql = "DELETE FROM Tasks WHERE id = ?";

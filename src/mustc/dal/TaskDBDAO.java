@@ -85,15 +85,15 @@ public class TaskDBDAO {
     
     
     public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID) throws SQLException {
-        List<Task> allTaskIDsAndNamesOfAProject = new ArrayList<>();  //null;?
+        List<Task> allTaskIDsAndNamesOfAProject = new ArrayList<>();
         try(Connection con = dbc.getConnection()) {
-            String sql = "SELECT id AND name FROM Tasks WHERE associatedProjectID = '" + projectID + "'";
+            String sql = "SELECT id, name FROM Tasks WHERE associatedProject = '" + projectID + "'";
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while(rs.next()) //While you have something in the results
             {
                 int taskID = rs.getInt("id");
-                String taskName =  rs.getString("Name");
+                String taskName =  rs.getString("name");
                 Task taskInProject = new Task(taskID, taskName, null, projectID, null);
                 allTaskIDsAndNamesOfAProject.add(taskInProject); 
             }    
