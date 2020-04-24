@@ -75,9 +75,8 @@ public class TaskDBDAO {
                 String taskName =  rs.getString("Name");
                 String description =  rs.getString("Description");   
                 int associatedProjectID = rs.getInt("associatedProject");
-                List<Session> sessionIDsAndNameInTask = sessionDBDao.getSession(taskID);
-
-                Task taskInProject = new Task(taskID, taskName, description, associatedProjectID, sessionIDsAndNameInTask);
+                List<Session> allSessionsOfATask = sessionDBDao.getAllSessionsOfATask(taskID);
+                Task taskInProject = new Task(taskID, taskName, description, associatedProjectID, allSessionsOfATask);
             }    
         }
         return task ;

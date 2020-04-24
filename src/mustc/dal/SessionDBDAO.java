@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mustc.be.Session;
 import mustc.be.Task;
+import mustc.be.User;
 
 /**
  *
@@ -26,10 +27,11 @@ import mustc.be.Task;
  */
 public class SessionDBDAO {
     private DBConnection dbc;
-
+    private UserDBDAO userDBDao;
     
     public SessionDBDAO() {
         dbc = new DBConnection();
+        userDBDao = new UserDBDAO();
     }
 
      public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) { 
@@ -63,15 +65,14 @@ public class SessionDBDAO {
     }
      
      
-    public List<Session> getSession(int taskID) throws SQLException {
-        List<Session> taskSessions = new ArrayList<>();  //null;?
+    public Session getSession(int sessionID) throws SQLException {
+        Session session; 
         try(Connection con = dbc.getConnection()) {
-            String sql = "SELECT id AND name FROM Sessions WHERE AssociatedTask = '" + taskID + "'";
+            String sql = "SELECT * FROM Sessions WHERE id = '" + sessionID + "'";
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while(rs.next()) // While you have something in the results
             {
-                int sessionID = rs.getInt("id");
                 int associatedUserID = rs.getInt("AssociatedUser");
                 int associatedTaskID = rs.getInt("AssociatedTask");
                 String startTime = rs.getString("StartTime");
@@ -80,11 +81,11 @@ public class SessionDBDAO {
     //            LocalDateTime startTime = sqlStartTime.toLocalDate();
     //            java.sql.Date startTime = rs.getDate("StartTime");
     //            java.sql.Date finishTime = rs.getDate("FinishTime");
-                Session taskSession = new Session(sessionID, associatedUserID, associatedTaskID, startTime, finishTime);
-                taskSessions.add(taskSession); 
+                session = new Session(sessionID, associatedUserID, associatedTaskID, startTime, finishTime);
+                return session ;
             }    
         }
-        return taskSessions ;
+        return null ;
     }
     
           
@@ -108,7 +109,45 @@ public class SessionDBDAO {
         return allSessionsOfATask ;
     }
           
-          
+         
+    public List<Integer> getAllSessionIDsOfATask(int taskID) throws SQLException {
+        List<Integer> allSessionIDsOfATask = new ArrayList<>();
+        try(Connection con = dbc.getConnection()) {
+            String sql = "SELECT id FROM Tasks WHERE associatedTask = '" + taskID + "'";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()) // While you have something in the results
+            {
+                int sessionID = rs.getInt("id");
+                allSessionIDsOfATask.add(sessionID); 
+            }    
+        }
+        return allSessionIDsOfATask ;
+    } 
+         
+         
+/*    public List<User> getAllUserIDsAndNamesOfATask(int taskID) throws SQLException {
+        List<Session> allSessionsOfATask = new ArrayList<>(); 
+        List<User> allUserIDsOfATask = new ArrayList<>();
+        try(Connection con = dbc.getConnection()) {
+            String sql = "SELECT id, name FROM Users WHERE associatedUser = '" + taskID + "'";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()) // While you have something in the results
+            {
+                int sessionID = rs.getInt("id");
+                int AssociatedUserID = rs.getInt("associatedUser");
+                int associatedTaskID = rs.getInt("associatedTask");
+                String startTime = rs.getString("startTime");
+                String finishTime = rs.getString("finishTime");            
+                Session sessionInTask = new Session(sessionID, AssociatedUserID, associatedTaskID, startTime, finishTime);
+                allSessionsOfATask.add(sessionInTask); 
+            }    
+        }
+        return allSessionsOfATask ;
+    }
+ */         
+     
     public void removeSessionFromDB(Session sessionToDelete) {
     //  Removes a session from the Session table of the database given a Session data object
         String sql = "DELETE FROM Tasks WHERE id = ?";
