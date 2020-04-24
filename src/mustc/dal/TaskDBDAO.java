@@ -102,5 +102,29 @@ public class TaskDBDAO {
     }
     
     
+    public Task editTask (Task editedTask, String taskName, String description, int associatedProjectID) { 
+    //  Edits a Task in the Task table of the database given the Projects new details.  
+        String sql = "UPDATE Task SET name = ?, description = ?, associatedProject = ?";
+        try ( Connection con = dbc.getConnection()) {
+            //Create a prepared statement.
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            //Set parameter values.
+            pstmt.setString(1, taskName);
+            pstmt.setString(2, description);
+            pstmt.setInt(3, associatedProjectID);
+            pstmt.executeUpdate();  //Execute SQL query.
+            editedTask.setName(taskName);
+            editedTask.setDescription(description);
+            editedTask.setAssociatedProject(associatedProjectID);
+            return editedTask;
+        } catch (SQLServerException ex) {
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+      
+      
     
 }

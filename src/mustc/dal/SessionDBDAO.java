@@ -41,11 +41,11 @@ public class SessionDBDAO {
                 int associatedUserID = rs.getInt("AssociatedUser");
                 int associatedTaskID = rs.getInt("AssociatedTask");
                 java.sql.Date sqlStartTime = rs.getDate("StartTime");
-    //            LocalDateTime startTime = sqlStartTime.toLocalDate();
+    //            LocalDateTime startTime = sqlStartTime.toLocalDate();  Need to work out time
     //            LocalDateTime startTime = sqlStartTime.toLocalDate();
                 java.sql.Date startTime = rs.getDate("StartTime");
                 java.sql.Date finishTime = rs.getDate("FinishTime");
-                
+//  Following 2 lines can't be implementeduntil time is sorted out
        //         Session taskSession = new Session(sessionID, associatedUserID, associatedTaskID, startTime, finishTime);
         //        taskSessions.add(taskSession); 
             }    
