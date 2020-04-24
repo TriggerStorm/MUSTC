@@ -17,7 +17,7 @@ import mustc.be.User;
 
 /**
  *
- * @author admin
+ * @author Trigger, Filip, Cecillia and Alan
  */
 public class UserDBDAO {
     private DBConnection dbc;

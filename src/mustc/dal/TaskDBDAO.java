@@ -21,7 +21,7 @@ import mustc.be.Task;
 
 /**
  *
- * @author admin
+ * @author Trigger, Filip, Cecillia and Alan
  */
 public class TaskDBDAO {
     private DBConnection dbc;

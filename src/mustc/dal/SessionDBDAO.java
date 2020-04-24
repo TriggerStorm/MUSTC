@@ -23,7 +23,7 @@ import mustc.be.User;
 
 /**
  *
- * @author admin
+ * @author Trigger, Filip, Cecillia and Alan
  */
 public class SessionDBDAO {
     private DBConnection dbc;
@@ -110,10 +110,11 @@ public class SessionDBDAO {
     }
           
          
-    public List<Integer> getAllSessionIDsOfATask(int taskID) throws SQLException {
+    public List<Integer> getAllSessionIDsOfATask(int taskID) throws SQLException {  
+// method only needed for getAllUserIDsAndNamesOfATask. May not need
         List<Integer> allSessionIDsOfATask = new ArrayList<>();
         try(Connection con = dbc.getConnection()) {
-            String sql = "SELECT id FROM Tasks WHERE associatedTask = '" + taskID + "'";
+            String sql = "SELECT id FROM Sessions WHERE associatedTask = '" + taskID + "'";
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()) // While you have something in the results
@@ -127,24 +128,26 @@ public class SessionDBDAO {
          
          
 /*    public List<User> getAllUserIDsAndNamesOfATask(int taskID) throws SQLException {
-        List<Session> allSessionsOfATask = new ArrayList<>(); 
-        List<User> allUserIDsOfATask = new ArrayList<>();
-        try(Connection con = dbc.getConnection()) {
-            String sql = "SELECT id, name FROM Users WHERE associatedUser = '" + taskID + "'";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()) // While you have something in the results
-            {
-                int sessionID = rs.getInt("id");
-                int AssociatedUserID = rs.getInt("associatedUser");
-                int associatedTaskID = rs.getInt("associatedTask");
-                String startTime = rs.getString("startTime");
-                String finishTime = rs.getString("finishTime");            
-                Session sessionInTask = new Session(sessionID, AssociatedUserID, associatedTaskID, startTime, finishTime);
-                allSessionsOfATask.add(sessionInTask); 
-            }    
+        List<Integer> allSessionsIDsOfATask = new ArrayList<>();
+        allSessionsIDsOfATask = getAllSessionIDsOfATask(taskID); 
+        if (allSessionsIDsOfATask.size() > 0) {
+            for (int i = 0; i < allSessionsIDsOfATask.size(); i++) {            
+                try(Connection con = dbc.getConnection()) {
+                    String sql = "SELECT id, name FROM Users WHERE associatedUser = '" + taskID + "'";
+                    Statement stmt = con.createStatement();
+                    ResultSet rs = stmt.executeQuery(sql);
+                    while(rs.next()) // While you have something in the results
+                    {
+                        int sessionID = rs.getInt("id");
+                        int AssociatedUserID = rs.getInt("associatedUser");
+                        int associatedTaskID = rs.getInt("associatedTask");
+                        String startTime = rs.getString("startTime");
+                        String finishTime = rs.getString("finishTime");            
+                        Session sessionInTask = new Session(sessionID, AssociatedUserID, associatedTaskID, startTime, finishTime);
+                        allUserIDsOfATask.add(sessionInTask); 
+                    }    
         }
-        return allSessionsOfATask ;
+        return allUserIDsOfATask ;
     }
  */         
      
