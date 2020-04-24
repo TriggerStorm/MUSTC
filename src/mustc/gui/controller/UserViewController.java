@@ -157,21 +157,36 @@ public class UserViewController extends JFrame implements Initializable {
         if(MaxWidth == 260){
         
         Stage stage = (Stage) bn_expandview.getScene().getWindow();
-        stage.setMaxHeight(530);
+        stage.setMaxHeight(488);
         stage.setMaxWidth(1044);
-        stage.setMinHeight(530);
+        stage.setMinHeight(488);
         stage.setMinWidth(1044);
         MaxWidth = 1044;
+        Sp_last3.setVisible(true);
+            min = true;
         
         }
         else{
-        Stage stage = (Stage) bn_expandview.getScene().getWindow();
-        stage.setMaxHeight(488);
-        stage.setMaxWidth(260);
-        stage.setMinHeight(488);
-        stage.setMinWidth(260);
-        MaxWidth = 260;
-        
+            if(min == false){
+                Stage stage = (Stage) bn_expandview.getScene().getWindow();
+                stage.setMaxHeight(488);
+                stage.setMaxWidth(1044);
+                stage.setMinHeight(488);
+                stage.setMinWidth(1044);
+                MaxWidth = 1044;
+                Sp_last3.setVisible(true);
+                min = true;
+            }
+            else{
+                Stage stage = (Stage) bn_expandview.getScene().getWindow();
+                stage.setMaxHeight(488);
+                stage.setMaxWidth(260);
+                stage.setMinHeight(488);
+                stage.setMinWidth(260);
+                MaxWidth = 260;
+                Sp_last3.setVisible(true);
+                min = true;
+            }
         }
        
     }
@@ -180,15 +195,29 @@ public class UserViewController extends JFrame implements Initializable {
         if(min == false){    
             Sp_last3.setVisible(true);
             min = true;
-            System.out.println("true");  
-        }
+           
+                System.out.println("true");
+                Stage stage = (Stage) Sp_last3.getScene().getWindow();
+                stage.setMaxHeight(488);
+                stage.setMaxWidth(260);
+                stage.setMinHeight(488);
+                stage.setMinWidth(260);
+                MaxWidth = 260;
+            }
         else{
             Sp_last3.setVisible(false);
             min = false;
+            
             System.out.println("false");
+            Stage stage = (Stage) Sp_last3.getScene().getWindow();
+            stage.setMaxHeight(248);
+            stage.setMaxWidth(255);
+            stage.setMinHeight(248);
+            stage.setMinWidth(255);
         }
- 
     }
+ 
+    
     
 
     @FXML

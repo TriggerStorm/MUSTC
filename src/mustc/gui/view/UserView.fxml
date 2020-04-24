@@ -28,7 +28,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" maxHeight="550.0" maxWidth="1044.0" prefHeight="491.0" prefWidth="1021.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mustc.gui.controller.UserViewController">
+<AnchorPane id="AnchorPane" maxHeight="550.0" maxWidth="1044.0" prefHeight="450.0" prefWidth="1021.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mustc.gui.controller.UserViewController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIGHTGRAY" height="450.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" width="246.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f4f4f4" height="445.0" stroke="WHITE" strokeType="INSIDE" width="240.0" />
@@ -37,11 +37,11 @@
       <Button fx:id="bn_add" layoutX="186.0" layoutY="33.0" mnemonicParsing="false" text="add" AnchorPane.leftAnchor="186.0" AnchorPane.topAnchor="35.0" />
       <TextField fx:id="search" layoutX="20.0" layoutY="70.0" prefHeight="25.0" prefWidth="162.0" promptText="Search" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0" />
       <ToggleButton fx:id="tb_toggle" layoutX="197.0" layoutY="70.0" mnemonicParsing="false" onAction="#toggel_size" prefHeight="25.0" prefWidth="23.0" />
-      <Button fx:id="bn_start_stop" layoutX="16.0" layoutY="355.0" mnemonicParsing="false" onAction="#handel_startsotp" prefHeight="40.0" prefWidth="81.0" text="Start/Stop" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="355.0" />
-      <Label fx:id="lb_tasktime" layoutX="195.0" layoutY="356.0" text="1:39" AnchorPane.leftAnchor="195.0" AnchorPane.topAnchor="355.0" />
-      <Label fx:id="lb_timetoday" layoutX="195.0" layoutY="379.0" text="1:39" AnchorPane.leftAnchor="195.0" AnchorPane.topAnchor="378.0" />
-      <Text layoutX="150.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Task" wrappingWidth="29.44921875" AnchorPane.leftAnchor="150.0" AnchorPane.topAnchor="355.0" />
-      <Text layoutX="147.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="today" AnchorPane.leftAnchor="147.0" AnchorPane.topAnchor="378.0" />
+      <Button fx:id="bn_start_stop" layoutX="16.0" layoutY="355.0" mnemonicParsing="false" onAction="#handel_startsotp" prefHeight="40.0" prefWidth="81.0" text="Start/Stop" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="16.0" />
+      <Label fx:id="lb_tasktime" layoutX="195.0" layoutY="356.0" text="1:39" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="195.0" />
+      <Label fx:id="lb_timetoday" layoutX="195.0" layoutY="379.0" text="1:39" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="195.0" />
+      <Text layoutX="150.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Task" wrappingWidth="29.44921875" AnchorPane.bottomAnchor="77.98828125" AnchorPane.leftAnchor="150.0" />
+      <Text layoutX="147.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="today" AnchorPane.bottomAnchor="55.98828125" AnchorPane.leftAnchor="147.0" />
       <ToolBar layoutY="1.0" prefHeight="25.0" prefWidth="242.0" style="-fx-background-color: lightgrey;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <Label text="MUSTC" />
@@ -52,7 +52,7 @@
             <JFXButton fx:id="bn_settings" prefHeight="0.0" prefWidth="26.0" text="S" />
          </items>
       </ToolBar>
-      <Button fx:id="bn_expandview" layoutX="53.0" layoutY="412.0" mnemonicParsing="false" onAction="#handle_view" prefHeight="25.0" prefWidth="135.0" text="Expand view" AnchorPane.leftAnchor="53.0" AnchorPane.topAnchor="412.0" />
+      <Button fx:id="bn_expandview" layoutX="53.0" layoutY="412.0" mnemonicParsing="false" onAction="#handle_view" prefHeight="25.0" prefWidth="135.0" text="Expand view" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="53.0" />
       <ScrollPane fx:id="Sp_last3" layoutX="21.0" layoutY="111.0" prefHeight="235.0" prefWidth="200.0">
          <content>
             <FlowPane fx:id="fp_last3task" prefHeight="194.0" prefWidth="200.0">
@@ -145,7 +145,7 @@
             </FlowPane>
          </content>
       </ScrollPane>
-      <TabPane layoutX="252.0" layoutY="29.0" prefHeight="421.0" prefWidth="766.0" side="LEFT" tabClosingPolicy="UNAVAILABLE">
+      <TabPane layoutX="245.0" layoutY="27.0" prefHeight="423.0" prefWidth="773.0" side="LEFT" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="tab_pj" text="Project">
             <content>
