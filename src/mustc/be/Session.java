@@ -5,6 +5,8 @@
  */
 package mustc.be;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author Trigger, Filip, Cecillia and Alan
@@ -13,12 +15,12 @@ public class Session {
     private int sessionID;
     private int associatedUserID;  // the person whom the Session is assigned to.
     private int associatedTaskID;  // the Task whom the Session is assigned to.
-    private int startTime;
-    private int finishTime;
+    private LocalDateTime startTime;
+    private LocalDateTime finishTime;
 //    private int sessionTime;  //  difference between start time and finish time ...maybe?
 
     
-    public Session(int sessionID, User associatedUser, int associatedTask, int startTime, int finishTime) {
+    public Session(int sessionID, int associatedUser, int associatedTask, LocalDateTime startTime, LocalDateTime finishTime) {
         this.sessionID = sessionID;
         this.associatedUserID = associatedUserID;
         this.associatedTaskID = associatedTaskID;
@@ -51,19 +53,19 @@ public class Session {
         this.associatedTaskID = associatedTaskID;
     }
 
-    public int getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(int startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public int getFinishTime() {
+    public LocalDateTime getFinishTime() {
         return finishTime;
     }
 
-    public void setFinishTime(int finishTime) {
+    public void setFinishTime(LocalDateTime finishTime) {
         this.finishTime = finishTime;
     }
     

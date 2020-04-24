@@ -23,6 +23,7 @@ public class TaskDBDAO {
     private DBConnection dbc;
     private SessionDBDAO sessionDBDao;
     
+    
     public TaskDBDAO() {
             dbc = new DBConnection();
             sessionDBDao = new SessionDBDAO();
@@ -40,7 +41,7 @@ public class TaskDBDAO {
                 String taskName =  rs.getString("Name");
                 String description =  rs.getString("Description");   
                 int associatedProjectID = rs.getInt("associatedProject");
-                List<Session> sessionIDsAndNameInTask = sessionDBDao.getAllSessionIDsAndNameInTask(taskID);
+                List<Session> sessionIDsAndNameInTask = sessionDBDao.getSession(taskID);
 
                 Task taskInProject = new Task(taskID, taskName, description, associatedProjectID, sessionIDsAndNameInTask);
             }    
@@ -49,7 +50,7 @@ public class TaskDBDAO {
     }
     
     
-    public List<Task> getAllTasksNameAndIdInAProject(int projectID) throws SQLException {
+    public List<Task> getAProjectsTaskIDsAndNames(int projectID) throws SQLException {
         List<Task> projectTasks = new ArrayList<>();  //null;?
         try(Connection con = dbc.getConnection()) {
             String sql = "SELECT id AND name FROM Tasks WHERE associatedProjectID = '" + projectID + "'";

@@ -27,6 +27,7 @@ public class ProjectDBDAO {
     private DBConnection dbc;
     private TaskDBDAO taskDBDao;
     
+    
     public ProjectDBDAO() {
         dbc = new DBConnection();
         taskDBDao = new TaskDBDAO();
@@ -73,7 +74,7 @@ public class ProjectDBDAO {
     //  Returns a spacific Project data object given the Project id
         Project project = null;
         List<Task> taskList = new ArrayList<>(); //  Tasks here only contain id, name and projectID
-        taskList = taskDBDao.getAllTasksNameAndIdInAProject(projectID);
+        taskList = taskDBDao.getAProjectsTaskIDsAndNames(projectID);
         String SQLStmt = "SELECT name, associatedClient, projectRate, hoursAllocated, closed FROM Projects WHERE id ='" + projectID + "'";
         try(Connection con = dbc.getConnection()) {
             Statement statement = con.createStatement();
