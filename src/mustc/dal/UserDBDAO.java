@@ -30,7 +30,7 @@ public class UserDBDAO {
     
     public User addNewUserToDB(String userName, String email, String password, float salary, boolean isAdmin) { 
     //  Adds a new user to the User table of the database given the users details. Generated an id key    
-        String sql = "INSERT INTO Users(name, email, password, phoneNr, salary, admin) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO Users(name, email, password, salary, admin) VALUES (?,?,?,?,?)";
         User newUser = new User(0, userName, email, password, salary, isAdmin);
         try (Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);

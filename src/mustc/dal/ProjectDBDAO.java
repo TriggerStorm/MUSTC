@@ -97,7 +97,25 @@ public class ProjectDBDAO {
         return project;
     }   
     
-    
+     
+    public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID) throws SQLException {
+    //  Returns all Projects for all Client   
+        List<Project> allProjectIDsAndNamesOfAClient = new ArrayList<>();
+        try(Connection con = dbc.getConnection()){
+            String sql = "SELECT id AND name FROM Projects WHERE associatedClient = '" + clientID + "'";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()) //While you have something in the results
+            {
+                int projectID =  rs.getInt("id");
+                String projectName = rs.getString("name");
+                allProjectIDsAndNamesOfAClient.add(new Project(projectID, projectName, 0, 0, 0, 0, null, false)); 
+            }    
+        }
+        return allProjectIDsAndNamesOfAClient;
+    }
+
+
     public Project editProject (Project editedProject, String projectName, int associatedClientID, float projectRate, int allocatedHours, boolean isClosed) { 
     //  Edits a Project in the Projects table of the database given the Projects new details.  
         String sql = "UPDATE Projects SET name = ?, projectRate = ?, allocatedHours = ?, closed = ? WHERE email = ?";
