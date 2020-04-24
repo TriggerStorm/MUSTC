@@ -94,5 +94,18 @@ public class UserDBDAO {
         return null;
     }
 
+         
+    public void removeUserFromDB(User userToDelete) {
+    //  Removes a user from the User table of the database given a User data object
+        String stat = "DELETE FROM Users WHERE id =?";
+        try (Connection con = dbc.getConnection()) {
+            PreparedStatement stmt = con.prepareStatement(stat);
+            stmt.setInt(1,userToDelete.getUserId());
+            stmt.execute();
+        } catch (SQLException ex) {
+            System.out.println("Exception " + ex);
+        }
+    }
+    
     
 }
