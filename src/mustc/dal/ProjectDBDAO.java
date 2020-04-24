@@ -34,22 +34,23 @@ public class ProjectDBDAO {
     }
     
     
-    public Project addNewProjectToDB(String projectName, int associatedClientID, float projectRate, int hoursAllocated, boolean isClosed) throws SQLException { 
+    public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int hoursAllocated, boolean isClosed) throws SQLException { 
     //  Adds a new Project to the DB, and returns the updated Project to the GUI
         String sql = "INSERT INTO PROJECTS(projectName, associatedClientID, projectRate, hoursAllocated, closed) VALUES (?,?,?,?,?)";
         List<Task> emptyTaskList = new ArrayList<>();
         emptyTaskList = null;
-        Project newProject = new Project(0, projectName, associatedClientID, projectRate, hoursAllocated, emptyTaskList, isClosed);
+        Project newProject = new Project(0, projectName, associatedClientID, phoneNr, projectRate, hoursAllocated, emptyTaskList, isClosed);
         try (Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, projectName);
             pstmt.setInt(2, associatedClientID);
-            pstmt.setFloat(3, projectRate);
-            pstmt.setInt(4, hoursAllocated);
+            pstmt.setInt(3, phoneNr);
+            pstmt.setFloat(4, projectRate);
+            pstmt.setInt(5, hoursAllocated);
             int closed = 0;
             if(isClosed == true)
                 closed = 1;
-            pstmt.setInt(5, closed);
+            pstmt.setInt(6, closed);
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Creating Project failed, no rows affected.");
@@ -84,12 +85,13 @@ public class ProjectDBDAO {
                 String projectName = rs.getString("name");
                 int associatedClientID = rs.getInt("associatedClient");
                 Float projectRate = rs.getFloat("projectRate");
+                int phoneNr = rs.getInt("phoneNr");
                 int allocatedHours = rs.getInt("allocatedHours");
                 int closed = rs.getInt("closed");
                 boolean isClosed = false;
                 if(closed == 1)
                 isClosed = true;
-                project = new Project(projectID, projectName, associatedClientID, projectRate, allocatedHours, taskList, isClosed); 
+                project = new Project(projectID, projectName, associatedClientID, phoneNr, projectRate, allocatedHours, taskList, isClosed); 
             }    
         }
         return project;
