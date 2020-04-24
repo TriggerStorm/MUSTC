@@ -44,7 +44,7 @@ public class SessionDBDAO {
             pstmt.setString(4, finishTime);
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Creating Seesion failed, no rows affected.");
+                throw new SQLException("Creating Session failed, no rows affected.");
             }
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -74,36 +74,31 @@ public class SessionDBDAO {
                 int sessionID = rs.getInt("id");
                 int associatedUserID = rs.getInt("AssociatedUser");
                 int associatedTaskID = rs.getInt("AssociatedTask");
-                java.sql.Date sqlStartTime = rs.getDate("StartTime");
+                String startTime = rs.getString("StartTime");
+                String finishTime = rs.getString("FinishTime");
     //            LocalDateTime startTime = sqlStartTime.toLocalDate();  Need to work out time
     //            LocalDateTime startTime = sqlStartTime.toLocalDate();
-                java.sql.Date startTime = rs.getDate("StartTime");
-                java.sql.Date finishTime = rs.getDate("FinishTime");
-//  Following 2 lines can't be implementeduntil time is sorted out
-       //         Session taskSession = new Session(sessionID, associatedUserID, associatedTaskID, startTime, finishTime);
-        //        taskSessions.add(taskSession); 
+    //            java.sql.Date startTime = rs.getDate("StartTime");
+    //            java.sql.Date finishTime = rs.getDate("FinishTime");
+                Session taskSession = new Session(sessionID, associatedUserID, associatedTaskID, startTime, finishTime);
+                taskSessions.add(taskSession); 
             }    
         }
         return taskSessions ;
-    
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
     }
     
+        
+    public void removeSessionFromDB(Session sessionToDelete) {
+    //  Removes a session from the Session table of the database given a Session data object
+        String sql = "DELETE FROM Tasks WHERE id = ?";
+        try (Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1,sessionToDelete.getSessionId());
+            pstmt.execute();
+        } catch (SQLException ex) {
+            System.out.println("Exception " + ex);
+        }
+    }
+      
     
 }
