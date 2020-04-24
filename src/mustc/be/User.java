@@ -18,25 +18,25 @@ public class User {
     private String email;
     private String password;
     private float salary;  // do we really need this?
-    private boolean admin;  // or 0 = developer, 1 = admin, 2 = project owner.
+    private boolean isAdmin;  // or 0 = developer, 1 = admin, 2 = project owner.
  //   private List<Task> usersTasks;  //  may be faster to process if we have this.
 
     
-    public User(int userID, String userName, String email, String password, int salary, boolean admin) {
+    public User(int userID, String userName, String email, String password, float salary, boolean isAdmin) {
         this.userID = userID;
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.salary = salary;
-        this.admin = admin;
+        this.isAdmin = isAdmin;
     }
 
     
-    public int getId() {
+    public int getUserId() {
         return userID;
     }
 
-    public void setId(int id) {
+    public void setUserId(int id) {
         this.userID = userID;
     }
 
@@ -68,16 +68,16 @@ public class User {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(float salary) {
         this.salary = salary;
     }
 
-    public boolean isAdmin() {
-        return admin;
+    public boolean getIsAdmin() {
+        return isAdmin;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
     
     
