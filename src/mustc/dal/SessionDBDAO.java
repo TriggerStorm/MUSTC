@@ -30,12 +30,18 @@ import mustc.be.User;
 public class SessionDBDAO {
     private DBConnection dbc;
     private UserDBDAO userDBDao;
+    private TaskDBDAO taskDBDao;
+
+    
     
     public SessionDBDAO() {
         dbc = new DBConnection();
+        taskDBDao = new TaskDBDAO();
         userDBDao = new UserDBDAO();
     }
 
+    
+    
      public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) { 
     //  Adds a new session to the Session table of the database given the sessions details. Generates an id key    
         String sql = "INSERT INTO Sessions(associatedUser, associatedTask, startTime, finishTime) VALUES (?,?,?,?)";
@@ -137,13 +143,15 @@ public class SessionDBDAO {
     }
 
      
-    public void addFinishTimeToSession(Session currentSession) { 
+    public void addFinishTimeToSession(Session currentSession) throws SQLException { 
     //  Adds a strartTime to a given Session   
         LocalDateTime LDTnow = LocalDateTime.now();
         String finishTime = LDTnow.toString();
         currentSession.setFinishTime(finishTime);
         String startTime = currentSession.getStartTime();
         long[] duration = calculateDurationOfASession(startTime, finishTime);
+        int currentTaskID = currentSession.getAssociatedTask();
+        Task currentTask = taskDBDao.getTask(currentTaskID);
         
     }
     
@@ -154,11 +162,13 @@ public class SessionDBDAO {
         LocalDateTime finishLDT = LocalDateTime.parse(finishTime);
         LocalDateTime tempLDT = LocalDateTime.from(startLDT);
 
-        long hours = startLDT.until( finishLDT, ChronoUnit.HOURS );
+        long hours = tempLDT.until( finishLDT, ChronoUnit.HOURS );
         tempLDT = tempLDT.plusHours(hours);
 
         long minutes = tempLDT.until( finishLDT, ChronoUnit.MINUTES );
         tempLDT = tempLDT.plusMinutes( minutes );  // probably don't need this line
+        duration[0] = hours;
+        duration[1] = minutes;
         return duration;
     }
             

@@ -38,7 +38,10 @@ public class TaskDBDAO {
         String sql = "INSERT INTO Task(taskName, description, associatedProjectID) VALUES (?,?,?)";
         List<Session> emptySessionList = new ArrayList<>();
         emptySessionList = null;
-        Task newTask = new Task(0, taskName, description, associatedProjectID, emptySessionList);
+        long[] taskDuration = new long[2];
+        taskDuration[0] = 0;  // set taskDuration hours to 0
+        taskDuration[1] = 0;  // set taskDuration minutes to 0
+        Task newTask = new Task(0, taskName, description, associatedProjectID, emptySessionList, taskDuration);
         try (Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, taskName);
@@ -66,6 +69,7 @@ public class TaskDBDAO {
     
     public Task getTask(int taskID) throws SQLException {
         Task task = null;
+        long [] taskDuration = new long[2];
         try(Connection con = dbc.getConnection()) {
             String sql = "SELECT * FROM Tasks WHERE id = '" + taskID + "'";
             Statement statement = con.createStatement();
@@ -76,7 +80,9 @@ public class TaskDBDAO {
                 String description =  rs.getString("Description");   
                 int associatedProjectID = rs.getInt("associatedProject");
                 List<Session> allSessionsOfATask = sessionDBDao.getAllSessionsOfATask(taskID);
-                Task taskInProject = new Task(taskID, taskName, description, associatedProjectID, allSessionsOfATask);
+                taskDuration[0] = rs.getLong("durationHours");
+                taskDuration[1] = rs.getLong("durationMinutes");
+                Task taskInProject = new Task(taskID, taskName, description, associatedProjectID, allSessionsOfATask, taskDuration);
             }    
         }
         return task ;
@@ -85,6 +91,7 @@ public class TaskDBDAO {
     
     public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID) throws SQLException {
         List<Task> allTaskIDsAndNamesOfAProject = new ArrayList<>();
+        long [] taskDuration = new long[2];
         try(Connection con = dbc.getConnection()) {
             String sql = "SELECT id, name FROM Tasks WHERE associatedProject = '" + projectID + "'";
             Statement statement = con.createStatement();
@@ -93,7 +100,9 @@ public class TaskDBDAO {
             {
                 int taskID = rs.getInt("id");
                 String taskName =  rs.getString("name");
-                Task taskInProject = new Task(taskID, taskName, null, projectID, null);
+                taskDuration[0] = rs.getLong("durationHours");
+                taskDuration[1] = rs.getLong("durationMinutes");
+                Task taskInProject = new Task(taskID, taskName, null, projectID, null, taskDuration);
                 allTaskIDsAndNamesOfAProject.add(taskInProject); 
             }    
         }

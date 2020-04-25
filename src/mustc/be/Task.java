@@ -18,15 +18,17 @@ public class Task {
     private int associatedProjectID;  // the project that the task is assigned to.
 //or  private List<int> associatedUserIDs;  // the people to whom the task is assigned to.
     private List<Session> sessions;  //time??
-//    private int taskTime;  //  total time used on a task  ... maybe
+    private long[] taskDuration;  //  total time used on a task
 
     
-    public Task(int taskID, String name, String description, int associatedProject, List<Session> sessions) {
+    public Task(int taskID, String name, String description, int associatedProject, List<Session> sessions, long[] taskDuration) {
         this.taskID = taskID;
         this.taskName = taskName;
         this.description = description;
         this.associatedProjectID = associatedProjectID;
         this.sessions = sessions;
+        this.taskDuration = taskDuration;
+        
     }
 
     
@@ -70,6 +72,11 @@ public class Task {
         this.sessions = sessions;
     }
     
-    
-    
+    public long[] getTaskDuration() {
+        return taskDuration;
+    }
+
+     public void setTaskDuration(long[] taskDuration) {
+        this.taskDuration = taskDuration;
+    }
 }
