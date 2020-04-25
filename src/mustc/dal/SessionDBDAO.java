@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -13,7 +13,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -126,7 +128,43 @@ public class SessionDBDAO {
         return allSessionIDsOfATask ;
     } 
          
-         
+       
+    public void addStartTimeToSession(Session currentSession) { 
+    //  Adds a strartTime to a given Session   
+        LocalDateTime LDTnow = LocalDateTime.now();
+        String startTime = LDTnow.toString();
+        currentSession.setStartTime(startTime);
+    }
+
+     
+    public void addFinishTimeToSession(Session currentSession) { 
+    //  Adds a strartTime to a given Session   
+        LocalDateTime LDTnow = LocalDateTime.now();
+        String finishTime = LDTnow.toString();
+        currentSession.setFinishTime(finishTime);
+        String startTime = currentSession.getStartTime();
+        long[] duration = calculateDurationOfASession(startTime, finishTime);
+        
+    }
+    
+    
+    private long[] calculateDurationOfASession(String startTime, String finishTime) {
+        long[] duration = new long[2];
+        LocalDateTime startLDT = LocalDateTime.parse(startTime);
+        LocalDateTime finishLDT = LocalDateTime.parse(finishTime);
+        LocalDateTime tempLDT = LocalDateTime.from(startLDT);
+
+        long hours = startLDT.until( finishLDT, ChronoUnit.HOURS );
+        tempLDT = tempLDT.plusHours(hours);
+
+        long minutes = tempLDT.until( finishLDT, ChronoUnit.MINUTES );
+        tempLDT = tempLDT.plusMinutes( minutes );  // probably don't need this line
+        return duration;
+    }
+            
+            
+            
+            
 /*    public List<User> getAllUserIDsAndNamesOfATask(int taskID) throws SQLException {
         List<Integer> allSessionsIDsOfATask = new ArrayList<>();
         allSessionsIDsOfATask = getAllSessionIDsOfATask(taskID); 
