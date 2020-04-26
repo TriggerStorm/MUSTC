@@ -6,12 +6,15 @@
 package mustc.gui.controller;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import mustc.be.Client;
+import mustc.dal.ClientDBDAO;
 
 /**
  *
@@ -23,11 +26,13 @@ public class UserViewController implements Initializable {
     private Label label;
     @FXML
     private Button button;
+    private ClientDBDAO cbdb;
     
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+    private void handleButtonAction(ActionEvent event) throws SQLException {
+        ClientDBDAO cbdb = new ClientDBDAO();
+        Client c = new Client(8,"","",7,"");
+        cbdb.editClient(c, "", 0, "", "oooo");
     }
     
     @Override

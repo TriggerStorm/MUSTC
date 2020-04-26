@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 class DBConnection {
      
-    private static final String PROP_FILE = "assets/DBProperties.properties";
+    private static final String PROP_FILE = "DBProperties/DBProperties.properties";
     private SQLServerDataSource ds;
      /* Gets a connection to the database using a property file to fill in the
      * parameters.
