@@ -30,9 +30,11 @@ public class UserViewController implements Initializable {
     
     @FXML
     private void handleButtonAction(ActionEvent event) throws SQLException {
-        ClientDBDAO cbdb = new ClientDBDAO();
-        Client c = new Client(8,"","",7,"");
-        cbdb.editClient(c, "", 0, "", "oooo");
+      //  ClientDBDAO cbdb = new ClientDBDAO();
+       // Client c = new Client(8,"","",7,"");
+       // System.out.println(cbdb.getSpecificClient(8).getEmail()+"emaill");
+       // System.out.println(cbdb.addNewClientToDB("name", 0, "logo", "email").getName());
+               
     }
     
     @Override

@@ -111,8 +111,7 @@ public class ClientDBDAO {
              PreparedStatement pstmt = con.prepareStatement(sql);   
              pstmt.setInt(1,id);
              pstmt.execute();
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            ResultSet rs = pstmt.executeQuery();
             
             while(rs.next()) //While you have something in the results
             {
