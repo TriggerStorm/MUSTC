@@ -147,7 +147,7 @@
       </ScrollPane>
       <TabPane layoutX="245.0" layoutY="27.0" prefHeight="423.0" prefWidth="773.0" side="LEFT" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="tab_pj" text="Project">
+          <Tab fx:id="tab_pj" onSelectionChanged="#tap_handel_project" text="Project">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -165,7 +165,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="tab_task" text="Task">
+          <Tab fx:id="tab_task" onSelectionChanged="#tap_handel_task" text="Task">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -194,7 +194,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="tab_stat" text="Statistic">
+            <Tab fx:id="tab_stat" onSelectionChanged="#tap_handel_stats" text="Statistic">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="422.0" prefWidth="362.0">
                      <children>
@@ -217,7 +217,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="tab_sesion" text="Sesion">
+            <Tab fx:id="tab_sesion" onSelectionChanged="#tap_handel_sesion" text="Sesion">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

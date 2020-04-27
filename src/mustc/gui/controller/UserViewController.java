@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
@@ -136,6 +137,7 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private TextField sesion_search;
     @FXML
+    
     private ScrollPane Sp_last3;
     int MaxWidth;
     boolean min;
@@ -233,6 +235,22 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private void handel_startsotp(ActionEvent event) {
         
+    }
+
+    @FXML
+    private void tap_handel_project(Event event) {
+    }
+
+    @FXML
+    private void tap_handel_task(Event event) {
+    }
+
+    @FXML
+    private void tap_handel_stats(Event event) {
+    }
+
+    @FXML
+    private void tap_handel_sesion(Event event) {
     }
     
 
