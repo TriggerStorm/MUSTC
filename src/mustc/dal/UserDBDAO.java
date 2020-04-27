@@ -92,7 +92,7 @@ public class UserDBDAO {
         try (  //Get a connection to the database.
             Connection con = dbc.getConnection()) {  
             //Create a prepared statement.
-            String sql = "UPDATE Users SET userName = ?, email = ?, password = ?, salary = ? , isAdmin = ? WHERE email = ?";
+            String sql = "UPDATE Users SET userName = ?, email = ?, password = ?, salary = ? , Admin = ? WHERE email = ?";
             PreparedStatement pstmt = con.prepareStatement(sql);
             //Set parameter values.
             pstmt.setString(1, userName);
@@ -102,7 +102,7 @@ public class UserDBDAO {
             int admin = 0;
             if(isAdmin == true)
                 admin = 1;
-            pstmt.setInt(8, admin);
+            pstmt.setInt(5, admin);
             //Execute SQL query.
             pstmt.executeUpdate();
             userToEdit.setUserName(userName);

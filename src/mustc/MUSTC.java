@@ -19,12 +19,15 @@ public class MUSTC extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("gui/view/FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("gui/view/UserView.fxml"));
         
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
         stage.show();
+        stage.setMaxHeight(488);
+        stage.setMaxWidth(260);
+        
     }
 
     /**
