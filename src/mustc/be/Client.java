@@ -16,15 +16,15 @@ public class Client {
     private String clientName;
     private String imgLocation;
     private float standardRate;
-    private List<Project> projectList;
+    private String email;
 
     
-    public Client(int id, String name, String imgLocation, float standardRate, List<Project> projectList) {
+    public Client(int id, String name, String imgLocation, float standardRate, String email) {
         this.clientID = clientID;
         this.clientName = clientName;
         this.imgLocation = imgLocation;
         this.standardRate = standardRate;
-        this.projectList = projectList;
+        this.email = email;
     }
 
     
@@ -60,12 +60,12 @@ public class Client {
         this.standardRate = standardRate;
     }
 
-    public List<Project> getProjectList() {
-        return projectList;
+    public String getEmail() {
+        return email;
     }
 
-    public void setProjectList(List<Project> projectList) {
-        this.projectList = projectList;
+    public void setEmail(String email) {
+        this.email = email;
     }
     
     
