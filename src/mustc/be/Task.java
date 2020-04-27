@@ -12,9 +12,71 @@ import java.util.List;
  * @author Trigger, Filip, Cecillia and Alan
  */
 public class Task {
-    private int id;
+    private int taskID;
+    private String taskName;
     private String description;
-    private int userKey;  // the person whom the task is assigned to.
+    private int associatedProjectID;  // the project that the task is assigned to.
+//or  private List<int> associatedUserIDs;  // the people to whom the task is assigned to.
     private List<Session> sessions;  //time??
-    private int taskTime;  //  total time used on a task  ... maybe
+    private long[] taskDuration;  //  total time used on a task
+
+    
+    public Task(int taskID, String name, String description, int associatedProject, List<Session> sessions, long[] taskDuration) {
+        this.taskID = taskID;
+        this.taskName = taskName;
+        this.description = description;
+        this.associatedProjectID = associatedProjectID;
+        this.sessions = sessions;
+        this.taskDuration = taskDuration;
+        
+    }
+
+    
+    public int getTaskId() {
+        return taskID;
+    }
+
+    public void setTaskId(int id) {
+        this.taskID = taskID;
+    }
+
+    public String getName() {
+        return taskName;
+    }
+
+    public void setName(String name) {
+        this.taskName = taskName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getAssociatedProjectID() {
+        return associatedProjectID;
+    }
+
+    public void setAssociatedProject(int associatedProjectID) {
+        this.associatedProjectID = associatedProjectID;
+    }
+
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(List<Session> sessions) {
+        this.sessions = sessions;
+    }
+    
+    public long[] getTaskDuration() {
+        return taskDuration;
+    }
+
+     public void setTaskDuration(long[] taskDuration) {
+        this.taskDuration = taskDuration;
+    }
 }

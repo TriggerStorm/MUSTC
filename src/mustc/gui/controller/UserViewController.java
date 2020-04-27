@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -29,6 +30,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import javax.swing.JFrame;
 
+
 /**
  *
  * @author Trigger
@@ -37,6 +39,7 @@ public class UserViewController extends JFrame implements Initializable {
     
     private Label label;
     @FXML
+
     private TextField tf_newtask;
     @FXML
     private ComboBox<?> cb_project;
@@ -142,6 +145,7 @@ public class UserViewController extends JFrame implements Initializable {
     int MaxWidth;
     boolean min;
     
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -195,8 +199,8 @@ public class UserViewController extends JFrame implements Initializable {
     public void toggelSize(){
         
         if(min == false){    
-            Sp_last3.setVisible(true);
-            min = true;
+                Sp_last3.setVisible(true);
+                min = true;
            
                 System.out.println("true");
                 Stage stage = (Stage) Sp_last3.getScene().getWindow();
@@ -207,21 +211,18 @@ public class UserViewController extends JFrame implements Initializable {
                 MaxWidth = 260;
             }
         else{
-            Sp_last3.setVisible(false);
-            min = false;
+                Sp_last3.setVisible(false);
+                 min = false;
             
-            System.out.println("false");
-            Stage stage = (Stage) Sp_last3.getScene().getWindow();
-            stage.setMaxHeight(248);
-            stage.setMaxWidth(255);
-            stage.setMinHeight(248);
-            stage.setMinWidth(255);
+                System.out.println("false");
+                Stage stage = (Stage) Sp_last3.getScene().getWindow();
+                stage.setMaxHeight(248);
+                stage.setMaxWidth(255);
+                stage.setMinHeight(248);
+                stage.setMinWidth(255);
         }
     }
  
-    
-    
-
     @FXML
     private void handle_view(ActionEvent event) {
         sizeExpantion();
