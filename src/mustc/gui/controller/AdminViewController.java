@@ -18,6 +18,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -219,17 +220,20 @@ public class AdminViewController implements Initializable {
     private JFXButton bn_user_eddit;
     @FXML
     private JFXButton bn_user_delete;
+    @FXML
+    private ScrollPane Sp_last3;
     int MaxWidth;
-    /**
-     * Initializes the controller class.
-     */
+    boolean min;
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        //to do
     }    
 
     public AdminViewController() {
         MaxWidth = 260;
+        min = true;
     }
     
     public void SS(){
@@ -238,27 +242,76 @@ public class AdminViewController implements Initializable {
         if(MaxWidth == 260){
         
         Stage stage = (Stage) bn_expandview.getScene().getWindow();
-        stage.setMaxHeight(530);
+        stage.setMaxHeight(488);
         stage.setMaxWidth(1044);
-        stage.setMinHeight(530);
+        stage.setMinHeight(488);
         stage.setMinWidth(1044);
         MaxWidth = 1044;
+        Sp_last3.setVisible(true);
+            min = true;
         
         }
         else{
-        Stage stage = (Stage) bn_expandview.getScene().getWindow();
-        stage.setMaxHeight(488);
-        stage.setMaxWidth(260);
-        stage.setMinHeight(488);
-        stage.setMinWidth(260);
-        MaxWidth = 260;
-        
+            if(min == false){
+                Stage stage = (Stage) bn_expandview.getScene().getWindow();
+                stage.setMaxHeight(488);
+                stage.setMaxWidth(1044);
+                stage.setMinHeight(488);
+                stage.setMinWidth(1044);
+                MaxWidth = 1044;
+                Sp_last3.setVisible(true);
+                min = true;
+            }
+            else{
+                Stage stage = (Stage) bn_expandview.getScene().getWindow();
+                stage.setMaxHeight(488);
+                stage.setMaxWidth(260);
+                stage.setMinHeight(488);
+                stage.setMinWidth(260);
+                MaxWidth = 260;
+                Sp_last3.setVisible(true);
+                min = true;
+            }
         }
        
     }
+    public void ToggelSize(){
+        
+        if(min == false){    
+            Sp_last3.setVisible(true);
+            min = true;
+           
+                System.out.println("true");
+                Stage stage = (Stage) Sp_last3.getScene().getWindow();
+                stage.setMaxHeight(488);
+                stage.setMaxWidth(260);
+                stage.setMinHeight(488);
+                stage.setMinWidth(260);
+                MaxWidth = 260;
+            }
+        else{
+            Sp_last3.setVisible(false);
+            min = false;
+            
+            System.out.println("false");
+            Stage stage = (Stage) Sp_last3.getScene().getWindow();
+            stage.setMaxHeight(248);
+            stage.setMaxWidth(255);
+            stage.setMinHeight(248);
+            stage.setMinWidth(255);
+        }
+    }
+ 
+    
+    
 
     @FXML
-    private void handel_view(ActionEvent event) {
+    private void handle_view(ActionEvent event) {
         SS();
+    }
+
+    @FXML
+    private void toggel_size(ActionEvent event) {
+        ToggelSize();
     }
 }
