@@ -10,7 +10,6 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,18 +26,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
-import javax.swing.JFrame;
-
 
 /**
+ * FXML Controller class
  *
  * @author Trigger
  */
-public class UserViewController extends JFrame implements Initializable {
-    
-    private Label label;
-    @FXML
+public class AdminViewController implements Initializable {
 
+    @FXML
     private TextField tf_newtask;
     @FXML
     private ComboBox<?> cb_project;
@@ -75,8 +71,6 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private TableColumn<?, ?> Col_pj_nroftask;
     @FXML
-    private TableColumn<?, ?> Col_pj_myhours;
-    @FXML
     private TextField pj_search;
     @FXML
     private Tab tab_task;
@@ -88,8 +82,6 @@ public class UserViewController extends JFrame implements Initializable {
     private TableColumn<?, ?> Col_task_project;
     @FXML
     private TableColumn<?, ?> Col_task_devs;
-    @FXML
-    private TableColumn<?, ?> Col_task_myhours;
     @FXML
     private JFXTextField task_name;
     @FXML
@@ -119,10 +111,6 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private JFXDatePicker dp_stat_to;
     @FXML
-    private Label lb_stat_taskhours;
-    @FXML
-    private Label lb_stat_totalhours;
-    @FXML
     private TextField stat_search;
     @FXML
     private Tab tab_sesion;
@@ -139,18 +127,111 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private TextField sesion_search;
     @FXML
+    private Tab tab_clint;
+    @FXML
+    private TableView<?> Tbv_pj1;
+    @FXML
+    private TableColumn<?, ?> Col_clint_name;
+    @FXML
+    private TableColumn<?, ?> Col_clint_email;
+    @FXML
+    private TableColumn<?, ?> Col_clint_nrofpj;
+    @FXML
+    private TableColumn<?, ?> Col_clint_$perhour;
+    @FXML
+    private TableColumn<?, ?> Col_clint_totalhours;
+    @FXML
+    private TableColumn<?, ?> Col_clint_totalprice;
+    @FXML
+    private TextField clint_search;
+    @FXML
+    private JFXTextField tf_clint_name;
+    @FXML
+    private JFXButton bn_clint_add;
+    @FXML
+    private JFXButton bn_clint_eddit;
+    @FXML
+    private JFXButton bn_clint_delete;
+    @FXML
+    private JFXTextField tf_clint_email;
+    @FXML
+    private JFXTextField tf_clint_$perhour;
+    @FXML
+    private TableColumn<?, ?> Col_pj_totalhours;
+    @FXML
+    private TableColumn<?, ?> Col_pj_totalprice;
+    @FXML
+    private JFXTextField tf_pj_name;
+    @FXML
+    private JFXTextField tf_pj_nr;
+    @FXML
+    private JFXTextField tf_pj_$perhour;
+    @FXML
+    private JFXComboBox<?> cb_pj_clint;
+    @FXML
+    private JFXButton bn_pj_add;
+    @FXML
+    private JFXButton bn_pj_eddit;
+    @FXML
+    private JFXButton bn_pj_delete;
+    @FXML
+    private JFXDatePicker dp_pj_from;
+    @FXML
+    private JFXDatePicker dp_pj_to;
+    @FXML
+    private TableColumn<?, ?> Col_task_$perhour;
+    @FXML
+    private TableColumn<?, ?> Col_task_totalhours;
+    @FXML
+    private TableColumn<?, ?> Col_task_totalprice;
+    @FXML
+    private JFXTextField task_$perhour;
+    @FXML
+    private Label lb_stat_priceperhour;
+    @FXML
+    private Label lb_stat_totalprice;
+    @FXML
+    private JFXComboBox<?> cb_stat_clint;
+    @FXML
+    private JFXComboBox<?> cb_stat_dev;
+    @FXML
+    private Tab tab_user;
+    @FXML
+    private TableColumn<?, ?> col_user_name;
+    @FXML
+    private TableColumn<?, ?> col_user_hoursthisweek;
+    @FXML
+    private TableColumn<?, ?> col_user_$perhour;
+    @FXML
+    private TableColumn<?, ?> col_user_admin;
+    @FXML
+    private TableColumn<?, ?> col_user_startdate;
+    @FXML
+    private TextField user_search;
+    @FXML
+    private JFXTextField tf_user_name;
+    @FXML
+    private JFXTextField tf_user_$perhour;
+    @FXML
+    private JFXComboBox<?> cb_user_admin;
+    @FXML
+    private JFXButton bn_user_add;
+    @FXML
+    private JFXButton bn_user_eddit;
+    @FXML
+    private JFXButton bn_user_delete;
+    @FXML
     private ScrollPane Sp_last3;
     int MaxWidth;
     boolean min;
     
-
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //to do
     }    
 
-    public UserViewController() {
+    public AdminViewController() {
         MaxWidth = 260;
         min = true;
     }
@@ -233,12 +314,4 @@ public class UserViewController extends JFrame implements Initializable {
     private void toggel_size(ActionEvent event) {
         ToggelSize();
     }
-
-    @FXML
-    private void handel_startsotp(ActionEvent event) {
-        
-    }
-    
-
-    
 }
