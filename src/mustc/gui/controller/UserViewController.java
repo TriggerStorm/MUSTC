@@ -139,6 +139,7 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private TextField sesion_search;
     @FXML
+    
     private ScrollPane Sp_last3;
     int MaxWidth;
     boolean min;
@@ -155,7 +156,7 @@ public class UserViewController extends JFrame implements Initializable {
         min = true;
     }
     
-    public void SS(){
+    public void sizeExpantion(){
         
         
         if(MaxWidth == 260){
@@ -194,7 +195,7 @@ public class UserViewController extends JFrame implements Initializable {
         }
        
     }
-    public void ToggelSize(){
+    public void toggelSize(){
         
         if(min == false){    
                 Sp_last3.setVisible(true);
@@ -221,17 +222,14 @@ public class UserViewController extends JFrame implements Initializable {
         }
     }
  
-    
-    
-
     @FXML
     private void handle_view(ActionEvent event) {
-        SS();
+        sizeExpantion();
     }
 
     @FXML
     private void toggel_size(ActionEvent event) {
-        ToggelSize();
+        toggelSize();
     }
 
     @FXML
