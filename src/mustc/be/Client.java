@@ -26,6 +26,11 @@ public class Client {
         this.standardRate = standardRate;
         this.email = email;
     }
+    
+    //admin
+    public Client(String clientName, String email, String nrOfProjects, String standardRate, String totalHours, String totalPrice){
+    
+    }
 
     
     public int getId() {

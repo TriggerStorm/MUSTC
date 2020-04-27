@@ -30,7 +30,15 @@ public class Task {
         this.taskDuration = taskDuration;
         
     }
-
+    
+    //admin
+    public Task(String taskName, String project, String devs, String taskRate, String totalHours, String totalPrice){
+    
+    }
+    //User
+    public Task(String taskName, String project, String devs, String myHours){
+    
+    }
     
     public int getTaskId() {
         return taskID;

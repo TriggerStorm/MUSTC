@@ -31,6 +31,10 @@ public class User {
         this.isAdmin = isAdmin;
     }
 
+    //admin
+    public User(int userID, String userName, String hoursThisWeek, String salary, String admin, String startDate){
+    
+    }
     
     public int getUserId() {
         return userID;

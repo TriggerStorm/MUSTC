@@ -26,9 +26,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import javax.swing.JFrame;
+import mustc.be.Project;
 
 
 /**
@@ -68,15 +70,15 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private TableView<?> Tbv_pj;
     @FXML
-    private TableColumn<?, ?> Col_pj_name;
+    private TableColumn<Project, String> Col_pj_name;
     @FXML
-    private TableColumn<?, ?> Col_pj_clint;
+    private TableColumn<Project, String> Col_pj_clint;
     @FXML
-    private TableColumn<?, ?> Col_pj_contact;
+    private TableColumn<Project, String> Col_pj_contact;
     @FXML
-    private TableColumn<?, ?> Col_pj_nroftask;
+    private TableColumn<Project, String> Col_pj_nroftask;
     @FXML
-    private TableColumn<?, ?> Col_pj_myhours;
+    private TableColumn<Project, String> Col_pj_myhours;
     @FXML
     private TextField pj_search;
     @FXML
@@ -240,18 +242,27 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void tap_handel_project(Event event) {
+        Col_pj_name.setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
+        Col_pj_clint.setCellValueFactory(new PropertyValueFactory<Project, String>("clint"));
+        Col_pj_contact.setCellValueFactory(new PropertyValueFactory<Project, String>("contact"));
+        Col_pj_nroftask.setCellValueFactory(new PropertyValueFactory<Project, String>("nroftask"));
+        Col_pj_myhours.setCellValueFactory(new PropertyValueFactory<Project, String>("myhours"));
+        //Tbv_pj.setItems(pjList);
     }
 
     @FXML
     private void tap_handel_task(Event event) {
+        
     }
 
     @FXML
     private void tap_handel_stats(Event event) {
+        
     }
 
     @FXML
     private void tap_handel_sesion(Event event) {
+        
     }
     
 

@@ -21,6 +21,7 @@ public class Project {
     private List<Task> taskList;
     private boolean isClosed;
     
+    
 
     public Project(int projectID, String projectName, int associatedClientID, int phoneNr, float projectRate, int allocatedHours, List<Task> taskList, boolean isClosed) {
         this.projectID = projectID;
@@ -32,7 +33,21 @@ public class Project {
         this.taskList = taskList;
         this.isClosed = isClosed;
     }
+    //user
+    public Project(String id, String projectName, String clintName, String phoneNr, String nrOfTask, String myHours){
+        
+    }
+    //admin
+    public Project(String id, String projectName, String clintName, String phoneNr, String nrOfTask, String projectRate, String totalHours, String totalPrice){
+        
+    }
 
+    @Override
+    public String toString() {
+        return "Project{" + "phoneNr=" + phoneNr + '}';
+    }
+
+    
     
     public int getId() {
         return projectID;
