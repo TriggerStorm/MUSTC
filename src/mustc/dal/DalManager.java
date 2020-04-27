@@ -28,9 +28,9 @@ public class DalManager implements DalFaçade {
     
  // ProjectDBDAO methods       
     @Override
-    public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int hoursAllocated, boolean isClosed) {
+    public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int allocatedHours) {
         try {
-            return projectDBDao.addNewProjectToDB(projectName, associatedClientID, phoneNr, projectRate, hoursAllocated, isClosed);
+            return projectDBDao.addNewProjectToDB(projectName, associatedClientID, phoneNr, projectRate, allocatedHours);
         } catch (SQLException ex) {
             Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -38,16 +38,16 @@ public class DalManager implements DalFaçade {
     }
     
     @Override
-    public Project getProject(int projectID) {
+    public Project getProjectForUser(int projectID) {
         try {
-            return projectDBDao.getProject(projectID);
+            return projectDBDao.getProjectForUser(projectID);
         } catch (SQLException ex) {
             Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
     
-    @Override
+/*    @Override
     public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID) {
         try {
             return projectDBDao.getAllProjectIDsAndNamesOfAClient(clientID);
@@ -56,7 +56,7 @@ public class DalManager implements DalFaçade {
         }
         return null;
     }
-    
+ */   
     @Override
     public Project editProject(Project editedProject, String projectName, int associatedClientID, float projectRate, int allocatedHours, boolean isClosed) {
         return projectDBDao.editProject(editedProject, projectName, associatedClientID, projectRate, allocatedHours, isClosed);
@@ -85,7 +85,7 @@ public class DalManager implements DalFaçade {
         return null;
     }
     
-    @Override
+/*    @Override
     public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID) {
         try {
             return taskDBDao.getAllTaskIDsAndNamesOfAProject(projectID);
@@ -94,7 +94,7 @@ public class DalManager implements DalFaçade {
         }
         return null;
     }
-    
+ */   
     @Override
     public Task editTask(Task editedTask, String taskName, String description, int associatedProjectID) {
         return taskDBDao.editTask(editedTask, taskName, description, associatedProjectID);

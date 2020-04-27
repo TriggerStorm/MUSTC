@@ -20,16 +20,16 @@ public interface DalFaçade {
     
        
 // ProjectDBDAO methods    
-    public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int hoursAllocated, boolean isClosed);
-    public Project getProject(int projectID);
-    public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID);
+    public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int allocatedHours);
+    public Project getProjectForUser(int projectID);
+//    public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID);
     public Project editProject (Project editedProject, String projectName, int associatedClientID, float projectRate, int allocatedHours, boolean isClosed);
 
     
 // TaskDBDAO methods        
     public Task addNewTaskToDB(String taskName, String description, int associatedProjectID);
     public Task getTask(int taskID);
-    public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID);
+ //   public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID);
     public Task editTask (Task editedTask, String taskName, String description, int associatedProjectID);
     public void removeTaskFromDB(Task taskToDelete);
   

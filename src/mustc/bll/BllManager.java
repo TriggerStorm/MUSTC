@@ -23,20 +23,20 @@ public class BllManager implements IBLL {
     
  // ProjectDBDAO methods           
     @Override
-    public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int hoursAllocated, boolean isClosed) {
-        return dalManager.addNewProjectToDB(projectName, associatedClientID, phoneNr, projectRate, hoursAllocated, isClosed);
+    public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int allocatedHours) {
+        return dalManager.addNewProjectToDB(projectName, associatedClientID, phoneNr, projectRate, allocatedHours);
     }
 
     @Override
-    public Project getProject(int projectID) {
-        return dalManager.getProject(projectID);
+    public Project getProjectForUser(int projectID) {
+        return dalManager.getProjectForUser(projectID);
     }
 
-    @Override
+/*    @Override
     public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID) {
         return dalManager.getAllProjectIDsAndNamesOfAClient(clientID);
     }
-
+*/
     @Override
     public Project editProject(Project editedProject, String projectName, int associatedClientID, float projectRate, int allocatedHours, boolean isClosed) {
         return dalManager.editProject(editedProject, projectName, associatedClientID, projectRate, allocatedHours, isClosed);
@@ -55,11 +55,11 @@ public class BllManager implements IBLL {
         return dalManager.getTask(taskID);
     }
 
-    @Override
+/*    @Override
     public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID) {
         return dalManager.getAllTaskIDsAndNamesOfAProject(projectID);
     }
-
+*/
     @Override
     public Task editTask(Task editedTask, String taskName, String description, int associatedProjectID) {
         return dalManager.editTask(editedTask, taskName, description, associatedProjectID);

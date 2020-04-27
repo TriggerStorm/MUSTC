@@ -149,14 +149,15 @@ public class SessionDBDAO {
         String finishTime = LDTnow.toString();
         currentSession.setFinishTime(finishTime);
         String startTime = currentSession.getStartTime();
-        long[] sessionDuration = calculateDurationOfASession(startTime, finishTime);
-        long sessionkHours = sessionDuration[0];
-        long sessionMinutes = sessionDuration[1];
         int associatedTaskID = currentSession.getAssociatedTask();
         Task currentTask = taskDBDao.getTask(associatedTaskID);
-        long[] taskDuration = currentTask.getTaskDuration();
-        long taskHours = taskDuration[0];
-        long taskMinutes = taskDuration[1];
+ /*       int[] sessionDuration = calculateDurationOfASession(startTime, finishTime);
+        int sessionkHours = sessionDuration[0];
+        int sessionMinutes = sessionDuration[1];
+        
+ //       int[] taskDuration = currentTask.getTaskDuration();
+        int taskHours = taskDuration[0];
+        int taskMinutes = taskDuration[1];
         taskMinutes += sessionMinutes;
         if (taskMinutes >= 60) {
             taskMinutes =- 60;
@@ -166,7 +167,7 @@ public class SessionDBDAO {
         taskDuration[0] = taskHours;
         taskDuration[1] = taskMinutes;   
         currentTask.setTaskDuration(taskDuration);
-  //      int associatedUserID = loggedInUser.getId();
+ */ //      int associatedUserID = loggedInUser.getId();
   //      addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime) { 
 
         
@@ -174,22 +175,22 @@ public class SessionDBDAO {
     }
     
     
-    private long[] calculateDurationOfASession(String startTime, String finishTime) {
-        long[] duration = new long[2];
+/*    private int[] calculateDurationOfASession(String startTime, String finishTime) {
+        int[] duration = new int[2];
         LocalDateTime startLDT = LocalDateTime.parse(startTime);
         LocalDateTime finishLDT = LocalDateTime.parse(finishTime);
         LocalDateTime tempLDT = LocalDateTime.from(startLDT);
 
-        long hours = tempLDT.until( finishLDT, ChronoUnit.HOURS );
+        int hours = (int) tempLDT.until( finishLDT, ChronoUnit.HOURS );
         tempLDT = tempLDT.plusHours(hours);
 
-        long minutes = tempLDT.until( finishLDT, ChronoUnit.MINUTES );
+        int minutes = (int) tempLDT.until( finishLDT, ChronoUnit.MINUTES );
         tempLDT = tempLDT.plusMinutes( minutes );  // probably don't need this line
         duration[0] = hours;
         duration[1] = minutes;
         return duration;
     }
-            
+*/            
             
             
             
