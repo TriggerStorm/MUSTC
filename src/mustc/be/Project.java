@@ -15,17 +15,20 @@ public class Project {
     private int projectID;
     private String projectName;
     private int associatedClientID;  // the person whom the task is assigned to.
+    private int phoneNr;
     private float projectRate;
-    private int hoursAllocated;
+    private int allocatedHours;
     private List<Task> taskList;
     private boolean isClosed;
     
 
-    public Project(int projectID, String projectName, int associatedClientID, float projectRate, int hoursAllocated, List<Task> taskList, boolean isClosed) {
+    public Project(int projectID, String projectName, int associatedClientID, int phoneNr, float projectRate, int allocatedHours, List<Task> taskList, boolean isClosed) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.associatedClientID = associatedClientID;
+        this.phoneNr = phoneNr;
         this.projectRate = projectRate;
+        this.allocatedHours =allocatedHours;
         this.taskList = taskList;
         this.isClosed = isClosed;
     }
@@ -55,6 +58,14 @@ public class Project {
         this.associatedClientID = associatedClientID;
     }
 
+    public int getPhoneNr() {
+        return phoneNr;
+    }
+
+    public void setPhoneNr(int phoneNr) {
+        this.phoneNr = phoneNr;
+    }
+
     public float getProjectRate() {
         return projectRate;
     }
@@ -63,12 +74,12 @@ public class Project {
         this.projectRate = projectRate;
     }
 
-     public int getHoursAllocated() {
-        return hoursAllocated;
+     public int getAllocatedHours() {
+        return allocatedHours;
     }
 
-    public void setHoursAllocated(int hoursAllocated) {
-        this.hoursAllocated = hoursAllocated;
+    public void setAllocatedHours(int allocatedHours) {
+        this.allocatedHours = allocatedHours;
     }
 
     public List<Task> getTaskList() {
