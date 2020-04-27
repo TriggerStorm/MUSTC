@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mustc.be.Client;
 import mustc.be.Project;
 import mustc.be.Task;
 import mustc.be.Session;
@@ -23,6 +24,7 @@ public class DalManager implements DalFaçade {
     private TaskDBDAO taskDBDao;
     private SessionDBDAO sessionDBDao;
     private UserDBDAO userDBDao;
+    private ClientDBDAO clientDBDao;
     
   
     
@@ -166,5 +168,48 @@ public class DalManager implements DalFaçade {
         userDBDao.removeUserFromDB(userToDelete);
     }
 
-    
+    // ClientDBDAO methods
+    @Override
+    public Client addNewClientToDB(String clientName,float standardRate,String logoImgLocation,String email){
+        try {
+            return clientDBDao.addNewClientToDB(clientName, standardRate, logoImgLocation, email);
+        } catch (SQLException ex) {
+            Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public List<Client> getAllClients() {
+        try {
+            return clientDBDao.getAllClients();
+        } catch (SQLException ex) {
+            Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public Client editClient(Client editedClient, String name, float standardRate, String logoImgLocation, String email) {
+     return clientDBDao.editClient(editedClient, name, standardRate, logoImgLocation, email);
+    }
+
+    @Override
+    public Client getSpecificClient(int id) {
+        try {
+            return clientDBDao.getSpecificClient(id);
+        } catch (SQLException ex) {
+            Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteClient(Client clientToDelete) {
+        try {
+            clientDBDao.deleteClient(clientToDelete);
+        } catch (SQLException ex) {
+            Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

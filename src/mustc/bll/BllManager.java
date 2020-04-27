@@ -6,6 +6,7 @@
 package mustc.bll;
 
 import java.util.List;
+import mustc.be.Client;
 import mustc.be.Project;
 import mustc.be.Session;
 import mustc.be.Task;
@@ -116,4 +117,30 @@ public class BllManager implements IBLL {
         dalManager.removeUserFromDB(userToDelete);
     }
     
+    
+    // ClientDBDAO methods
+    @Override
+    public Client addNewClientToDB(String clientName,float standardRate,String logoImgLocation,String email){
+       return dalManager.addNewClientToDB(clientName, standardRate, logoImgLocation, email);
+    }
+
+    @Override
+    public List<Client> getAllClients() {
+      return dalManager.getAllClients();
+    }
+
+    @Override
+    public Client editClient(Client editedClient, String name, float standardRate, String logoImgLocation, String email) {
+     return dalManager.editClient(editedClient, name, standardRate, logoImgLocation, email);
+    }
+
+    @Override
+    public Client getSpecificClient(int id) {
+     return dalManager.getSpecificClient(id);
+    }
+
+    @Override
+    public void deleteClient(Client clientToDelete) {
+     dalManager.deleteClient(clientToDelete);
+    }
 }

@@ -6,6 +6,7 @@
 package mustc.bll;
 
 import java.util.List;
+import mustc.be.Client;
 import mustc.be.Project;
 import mustc.be.Task;
 import mustc.be.Session;
@@ -47,5 +48,11 @@ public interface IBLL {
     public void removeUserFromDB(User userToDelete);
     
  
+// ClientDBDAO methods
+    public Client addNewClientToDB(String clientName,float standardRate,String logoImgLocation,String email);
+    public List<Client> getAllClients();
+    public Client editClient (Client editedClient,String name,float standardRate,String logoImgLocation, String email);
+    public Client getSpecificClient(int id);
+    public void deleteClient(Client clientToDelete);
 }
 
