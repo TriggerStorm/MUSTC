@@ -27,10 +27,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import javax.swing.JFrame;
 import mustc.be.Project;
+import mustc.be.Session;
+import mustc.be.Task;
+import mustc.be.User;
+import mustc.gui.model.UserViewModel;
 
 
 /**
@@ -68,7 +74,7 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private Tab tab_pj;
     @FXML
-    private TableView<?> Tbv_pj;
+    private TableView<Project> Tbv_pj;
     @FXML
     private TableColumn<Project, String> Col_pj_name;
     @FXML
@@ -84,15 +90,15 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private Tab tab_task;
     @FXML
-    private TableView<?> tbv_task;
+    private TableView<Task> tbv_task;
     @FXML
-    private TableColumn<?, ?> Col_task_taskname;
+    private TableColumn<Task, String> Col_task_taskname;
     @FXML
-    private TableColumn<?, ?> Col_task_project;
+    private TableColumn<Task, String> Col_task_project;
     @FXML
-    private TableColumn<?, ?> Col_task_devs;
+    private TableColumn<Task, String> Col_task_devs;
     @FXML
-    private TableColumn<?, ?> Col_task_myhours;
+    private TableColumn<Task, String> Col_task_myhours;
     @FXML
     private JFXTextField task_name;
     @FXML
@@ -130,28 +136,68 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private Tab tab_sesion;
     @FXML
-    private TableColumn<?, ?> col_sesion_taskname;
+    private TableView<Session> TBV_Session;
     @FXML
-    private TableColumn<?, ?> col_sesion_date;
+    private TableColumn<Session, String> col_sesion_taskname;
     @FXML
-    private TableColumn<?, ?> col_sesion_start;
+    private TableColumn<Session, String> col_sesion_date;
     @FXML
-    private TableColumn<?, ?> col_sesion_stop;
+    private TableColumn<Session, String> col_sesion_start;
     @FXML
-    private TableColumn<?, ?> col_sesion_myhours;
+    private TableColumn<Session, String> col_sesion_stop;
+    @FXML
+    private TableColumn<Session, String> col_sesion_myhours;
     @FXML
     private TextField sesion_search;
     @FXML
-    
     private ScrollPane Sp_last3;
+    
+    @FXML
+    private JFXButton bn_task1;
+    @FXML
+    private JFXComboBox<Task> cb_task1;
+    @FXML
+    private ImageView img_task1;
+    @FXML
+    private JFXButton bn_task2;
+    @FXML
+    private JFXComboBox<String> cb_task2;
+    @FXML
+    private ImageView img_task2;
+    @FXML
+    private JFXButton bn_task3;
+    @FXML
+    private JFXComboBox<String> cb_task3;
+    @FXML
+    private ImageView img_task3;
+   
+    private UserViewModel userModel;
+    
     int MaxWidth;
     boolean min;
+    
+    
+    
     
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //to do
+        userModel = new UserViewModel();
+        cb_task1.setItems(userModel.getAllTask());
+        //cb_task1.setItems(userModel.someStrings());
+        cb_task2.setItems(userModel.someStrings());
+        cb_task3.setItems(userModel.someStrings());
+        bn_task1.setText("Winzy  Call");
+        bn_task2.setText("Wopzywa  Call");
+        bn_task3.setText("Stranger  Call");
+        /*Image image1 = new Image(userModel.taskImg1());
+        Image image2 = new Image(userModel.taskImg2());
+        Image image3 = new Image(userModel.taskImg3());
+        img_task1.setImage(image1);
+        img_task2.setImage(image2);
+        img_task3.setImage(image3);*/
+        
     }    
 
     public UserViewController() {
@@ -242,17 +288,21 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void tap_handel_project(Event event) {
-        Col_pj_name.setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
+        /*Col_pj_name.setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
         Col_pj_clint.setCellValueFactory(new PropertyValueFactory<Project, String>("clint"));
         Col_pj_contact.setCellValueFactory(new PropertyValueFactory<Project, String>("contact"));
         Col_pj_nroftask.setCellValueFactory(new PropertyValueFactory<Project, String>("nroftask"));
         Col_pj_myhours.setCellValueFactory(new PropertyValueFactory<Project, String>("myhours"));
-        //Tbv_pj.setItems(pjList);
+        Tbv_pj.setItems(userModel.getAllProject());*/
     }
 
     @FXML
     private void tap_handel_task(Event event) {
-        
+        Col_task_taskname.setCellValueFactory(new PropertyValueFactory<Task, String>("name"));
+        Col_task_project.setCellValueFactory(new PropertyValueFactory<Task, String>("Project"));
+        Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("devs"));
+        Col_task_myhours.setCellValueFactory(new PropertyValueFactory<Task, String>("myHours"));
+        tbv_task.setItems(userModel.getAllTask());
     }
 
     @FXML
@@ -262,7 +312,29 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void tap_handel_sesion(Event event) {
+        col_sesion_taskname.setCellValueFactory(new PropertyValueFactory<Session, String>("taskName"));
+        col_sesion_date.setCellValueFactory(new PropertyValueFactory<Session, String>("date"));
+        col_sesion_start.setCellValueFactory(new PropertyValueFactory<Session, String>("start"));
+        col_sesion_stop.setCellValueFactory(new PropertyValueFactory<Session, String>("stop"));
+        col_sesion_myhours.setCellValueFactory(new PropertyValueFactory<Session, String>("myHours"));
+        TBV_Session.setItems(userModel.getAllSession());
         
+    }
+
+    @FXML
+    private void handel_task1(ActionEvent event) {
+        //cb_task1.getItems();
+        //bn_task1.setText(cb_task1.getSelectedItem().toString());
+        
+                
+    }
+
+    @FXML
+    private void handle_task2(ActionEvent event) {
+    }
+
+    @FXML
+    private void handle_task3(ActionEvent event) {
     }
     
 

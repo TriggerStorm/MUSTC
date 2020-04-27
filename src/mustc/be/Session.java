@@ -27,6 +27,8 @@ public class Session {
         this.startTime = startTime;
         this.finishTime = finishTime;
     }
+    
+    
 
     
     public int getSessionId() {

@@ -57,88 +57,70 @@
          <content>
             <FlowPane fx:id="fp_last3task" prefHeight="194.0" prefWidth="200.0">
                <children>
-                  <StackPane prefHeight="62.0" prefWidth="184.0">
+                  <StackPane layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="189.0">
                      <children>
-                        <JFXButton prefHeight="62.0" prefWidth="184.0" style="-fx-background-color: lightgrey;" text="Time Controll: Task Call">
+                        <JFXButton fx:id="bn_task1" onAction="#handel_task1" prefHeight="76.0" prefWidth="200.0" style="-fx-background-color: lightgrey;" text="Time Controll: Call">
                            <padding>
-                              <Insets bottom="35.0" />
+                              <Insets bottom="40.0" left="75.0" />
                            </padding>
-                           <graphic>
-                              <ImageView fitHeight="26.0" fitWidth="27.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" scaleX="7.0" scaleY="2.5" translateX="65.0" translateY="15.0">
-                                 <image>
-                                    <Image url="@../assets/work%20out%20img.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
                         </JFXButton>
-                        <JFXComboBox prefHeight="25.0" prefWidth="82.0" promptText="Other">
+                        <JFXComboBox fx:id="cb_task1" minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" promptText="Other">
                            <StackPane.margin>
-                              <Insets left="126.0" top="30.0" />
+                              <Insets left="80.0" top="40.0" />
                            </StackPane.margin>
                         </JFXComboBox>
+                        <ImageView fx:id="img_task1" fitHeight="76.0" fitWidth="81.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                           <StackPane.margin>
+                              <Insets right="110.0" />
+                           </StackPane.margin>
+                           <image>
+                              <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </StackPane>
-                  <StackPane prefHeight="62.0" prefWidth="184.0">
+                  <StackPane layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="189.0">
                      <children>
-                        <JFXButton prefHeight="62.0" prefWidth="184.0" style="-fx-background-color: lightgrey;" text="Time Controll: Task Call">
+                        <JFXButton fx:id="bn_task2" onAction="#handle_task2" prefHeight="76.0" prefWidth="200.0" style="-fx-background-color: lightgrey;" text="Time Controll: Call">
                            <padding>
-                              <Insets bottom="35.0" />
+                              <Insets bottom="40.0" left="75.0" />
                            </padding>
-                           <graphic>
-                              <ImageView fitHeight="26.0" fitWidth="27.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" scaleX="7.0" scaleY="2.5" translateX="65.0" translateY="15.0">
-                                 <image>
-                                    <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
                         </JFXButton>
-                        <JFXComboBox prefHeight="25.0" prefWidth="82.0" promptText="Other">
+                        <JFXComboBox fx:id="cb_task2" minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" promptText="Other">
                            <StackPane.margin>
-                              <Insets left="126.0" top="30.0" />
+                              <Insets left="80.0" top="40.0" />
                            </StackPane.margin>
                         </JFXComboBox>
+                        <ImageView fx:id="img_task2" fitHeight="76.0" fitWidth="81.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                           <StackPane.margin>
+                              <Insets right="110.0" />
+                           </StackPane.margin>
+                           <image>
+                              <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </StackPane>
-                  <StackPane prefHeight="62.0" prefWidth="184.0">
+                  <StackPane layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="189.0">
                      <children>
-                        <JFXButton prefHeight="62.0" prefWidth="184.0" style="-fx-background-color: lightgrey;" text="Time Controll: Task Call">
+                        <JFXButton fx:id="bn_task3" onAction="#handle_task3" prefHeight="76.0" prefWidth="200.0" style="-fx-background-color: lightgrey;" text="Time Controll: Call">
                            <padding>
-                              <Insets bottom="35.0" />
+                              <Insets bottom="40.0" left="75.0" />
                            </padding>
-                           <graphic>
-                              <ImageView fitHeight="26.0" fitWidth="27.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" scaleX="7.0" scaleY="2.5" translateX="65.0" translateY="15.0">
-                                 <image>
-                                    <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
                         </JFXButton>
-                        <JFXComboBox prefHeight="25.0" prefWidth="82.0" promptText="Other">
+                        <JFXComboBox fx:id="cb_task3" minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" promptText="Other">
                            <StackPane.margin>
-                              <Insets left="126.0" top="30.0" />
+                              <Insets left="80.0" top="40.0" />
                            </StackPane.margin>
                         </JFXComboBox>
-                     </children>
-                  </StackPane>
-                  <StackPane prefHeight="62.0" prefWidth="184.0">
-                     <children>
-                        <JFXButton prefHeight="62.0" prefWidth="184.0" style="-fx-background-color: lightgrey;" text="Time Controll: Task Call">
-                           <padding>
-                              <Insets bottom="35.0" />
-                           </padding>
-                           <graphic>
-                              <ImageView fitHeight="26.0" fitWidth="27.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" scaleX="7.0" scaleY="2.5" translateX="65.0" translateY="15.0">
-                                 <image>
-                                    <Image url="@../assets/work%20out%20img.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                        <JFXComboBox prefHeight="25.0" prefWidth="82.0" promptText="Other">
+                        <ImageView fx:id="img_task3" fitHeight="76.0" fitWidth="81.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                            <StackPane.margin>
-                              <Insets left="126.0" top="30.0" />
+                              <Insets right="110.0" />
                            </StackPane.margin>
-                        </JFXComboBox>
+                           <image>
+                              <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </StackPane>
                </children>
@@ -221,7 +203,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView prefHeight="422.0" prefWidth="740.0">
+                        <TableView fx:id="TBV_Session" prefHeight="422.0" prefWidth="740.0">
                            <columns>
                               <TableColumn fx:id="col_sesion_taskname" prefWidth="123.0" text="Task name" />
                               <TableColumn fx:id="col_sesion_date" prefWidth="123.0" text="Date" />

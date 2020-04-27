@@ -27,6 +27,8 @@ public class MUSTC extends Application {
         stage.show();
         stage.setMaxHeight(488);
         stage.setMaxWidth(260);
+        stage.setMinHeight(488);
+        stage.setMinWidth(260);
         
     }
 

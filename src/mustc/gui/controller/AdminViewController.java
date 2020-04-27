@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
@@ -24,8 +25,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import mustc.be.Client;
+import mustc.be.Project;
+import mustc.be.Session;
+import mustc.be.Task;
+import mustc.be.User;
+import mustc.gui.model.AdminModel;
 
 /**
  * FXML Controller class
@@ -61,27 +69,37 @@ public class AdminViewController implements Initializable {
     @FXML
     private Tab tab_pj;
     @FXML
-    private TableView<?> Tbv_pj;
+    private TableView<Project> Tbv_pj;
     @FXML
-    private TableColumn<?, ?> Col_pj_name;
+    private TableColumn<Project, String> Col_pj_name;
     @FXML
-    private TableColumn<?, ?> Col_pj_clint;
+    private TableColumn<Project, String> Col_pj_clint;
     @FXML
-    private TableColumn<?, ?> Col_pj_contact;
+    private TableColumn<Project, String> Col_pj_contact;
     @FXML
-    private TableColumn<?, ?> Col_pj_nroftask;
+    private TableColumn<Project, String> Col_pj_nroftask;
+    @FXML
+    private TableColumn<Project, String> Col_pj_totalhours;
+    @FXML
+    private TableColumn<Project, String> Col_pj_totalprice;
     @FXML
     private TextField pj_search;
     @FXML
     private Tab tab_task;
     @FXML
-    private TableView<?> tbv_task;
+    private TableView<Task> tbv_task;
     @FXML
-    private TableColumn<?, ?> Col_task_taskname;
+    private TableColumn<Task, String> Col_task_taskname;
     @FXML
-    private TableColumn<?, ?> Col_task_project;
+    private TableColumn<Task, String> Col_task_project;
     @FXML
-    private TableColumn<?, ?> Col_task_devs;
+    private TableColumn<Task, String> Col_task_devs;
+    @FXML
+    private TableColumn<Task, String> Col_task_$perhour;
+    @FXML
+    private TableColumn<Task, String> Col_task_totalhours;
+    @FXML
+    private TableColumn<Task, String> Col_task_totalprice;
     @FXML
     private JFXTextField task_name;
     @FXML
@@ -115,33 +133,35 @@ public class AdminViewController implements Initializable {
     @FXML
     private Tab tab_sesion;
     @FXML
-    private TableColumn<?, ?> col_sesion_taskname;
+    private TableView<Session> tbv_session;
     @FXML
-    private TableColumn<?, ?> col_sesion_date;
+    private TableColumn<Session, String> col_sesion_taskname;
     @FXML
-    private TableColumn<?, ?> col_sesion_start;
+    private TableColumn<Session, String> col_sesion_date;
     @FXML
-    private TableColumn<?, ?> col_sesion_stop;
+    private TableColumn<Session, String> col_sesion_start;
     @FXML
-    private TableColumn<?, ?> col_sesion_myhours;
+    private TableColumn<Session, String> col_sesion_stop;
+    @FXML
+    private TableColumn<Session, String> col_sesion_myhours;
     @FXML
     private TextField sesion_search;
     @FXML
     private Tab tab_clint;
     @FXML
-    private TableView<?> Tbv_pj1;
+    private TableView<Client> Tbv_Clint;
     @FXML
-    private TableColumn<?, ?> Col_clint_name;
+    private TableColumn<Client, String> Col_clint_name;
     @FXML
-    private TableColumn<?, ?> Col_clint_email;
+    private TableColumn<Client, String> Col_clint_email;
     @FXML
-    private TableColumn<?, ?> Col_clint_nrofpj;
+    private TableColumn<Client, String> Col_clint_nrofpj;
     @FXML
-    private TableColumn<?, ?> Col_clint_$perhour;
+    private TableColumn<Client, String> Col_clint_$perhour;
     @FXML
-    private TableColumn<?, ?> Col_clint_totalhours;
+    private TableColumn<Client, String> Col_clint_totalhours;
     @FXML
-    private TableColumn<?, ?> Col_clint_totalprice;
+    private TableColumn<Client, String> Col_clint_totalprice;
     @FXML
     private TextField clint_search;
     @FXML
@@ -156,10 +176,6 @@ public class AdminViewController implements Initializable {
     private JFXTextField tf_clint_email;
     @FXML
     private JFXTextField tf_clint_$perhour;
-    @FXML
-    private TableColumn<?, ?> Col_pj_totalhours;
-    @FXML
-    private TableColumn<?, ?> Col_pj_totalprice;
     @FXML
     private JFXTextField tf_pj_name;
     @FXML
@@ -179,12 +195,6 @@ public class AdminViewController implements Initializable {
     @FXML
     private JFXDatePicker dp_pj_to;
     @FXML
-    private TableColumn<?, ?> Col_task_$perhour;
-    @FXML
-    private TableColumn<?, ?> Col_task_totalhours;
-    @FXML
-    private TableColumn<?, ?> Col_task_totalprice;
-    @FXML
     private JFXTextField task_$perhour;
     @FXML
     private Label lb_stat_priceperhour;
@@ -197,15 +207,17 @@ public class AdminViewController implements Initializable {
     @FXML
     private Tab tab_user;
     @FXML
-    private TableColumn<?, ?> col_user_name;
+    private TableView<User> tbv_user;
     @FXML
-    private TableColumn<?, ?> col_user_hoursthisweek;
+    private TableColumn<User, String> col_user_name;
     @FXML
-    private TableColumn<?, ?> col_user_$perhour;
+    private TableColumn<User, String> col_user_hoursthisweek;
     @FXML
-    private TableColumn<?, ?> col_user_admin;
+    private TableColumn<User, String> col_user_$perhour;
     @FXML
-    private TableColumn<?, ?> col_user_startdate;
+    private TableColumn<User, String> col_user_admin;
+    @FXML
+    private TableColumn<User, String> col_user_startdate;
     @FXML
     private TextField user_search;
     @FXML
@@ -222,13 +234,19 @@ public class AdminViewController implements Initializable {
     private JFXButton bn_user_delete;
     @FXML
     private ScrollPane Sp_last3;
+    
+    private AdminModel adminModel;
     int MaxWidth;
     boolean min;
     
     
+    
+
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //to do
+        adminModel = new AdminModel();
     }    
 
     public AdminViewController() {
@@ -305,7 +323,6 @@ public class AdminViewController implements Initializable {
     
     
 
-    @FXML
     private void handle_view(ActionEvent event) {
         SS();
     }
@@ -313,5 +330,69 @@ public class AdminViewController implements Initializable {
     @FXML
     private void toggel_size(ActionEvent event) {
         ToggelSize();
+    }
+
+    
+
+    @FXML
+    private void handle_tap_clint(Event event) {
+        Col_clint_name.setCellValueFactory(new PropertyValueFactory<Client, String>("clientName"));
+        Col_clint_email.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
+        Col_clint_nrofpj.setCellValueFactory(new PropertyValueFactory<Client, String>("nrOfProjects"));
+        Col_clint_$perhour.setCellValueFactory(new PropertyValueFactory<Client, String>("standardRate"));
+        Col_clint_totalhours.setCellValueFactory(new PropertyValueFactory<Client, String>("totalHours"));
+        Col_clint_totalprice.setCellValueFactory(new PropertyValueFactory<Client, String>("totalPrice"));
+        Tbv_Clint.setItems(adminModel.getAllClient());
+    }
+
+    @FXML
+    private void handle_tap_project(Event event) {
+        
+        Col_pj_name.setCellValueFactory(new PropertyValueFactory<Project, String>("projectName"));
+        Col_pj_clint.setCellValueFactory(new PropertyValueFactory<Project, String>("clintName"));
+        Col_pj_contact.setCellValueFactory(new PropertyValueFactory<Project, String>("phoneNr"));
+        Col_pj_nroftask.setCellValueFactory(new PropertyValueFactory<Project, String>("nrOfTask"));
+        Col_pj_totalhours.setCellValueFactory(new PropertyValueFactory<Project, String>("totalHours"));
+        Col_pj_totalprice.setCellValueFactory(new PropertyValueFactory<Project, String>("totalPrice"));
+        //.setCellValueFactory(new PropertyValueFactory<Project, String>("projectRate"));
+                Tbv_pj.setItems(adminModel.getAllProject());
+    }
+
+    @FXML
+    private void handle_tap_task(Event event) {
+       
+        Col_task_taskname.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
+        Col_task_project.setCellValueFactory(new PropertyValueFactory<Task, String>("project"));
+        Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("devs"));
+        Col_task_$perhour.setCellValueFactory(new PropertyValueFactory<Task, String>("taskRate"));
+        Col_task_totalhours.setCellValueFactory(new PropertyValueFactory<Task, String>("totalHours"));
+        Col_task_totalprice.setCellValueFactory(new PropertyValueFactory<Task, String>("totalPrice"));
+                 tbv_task.setItems(adminModel.getAllTask());
+    }
+
+    @FXML
+    private void handle_tap_stats(Event event) {
+    }
+
+    @FXML
+    private void handle_tap_sessions(Event event) {
+        
+        col_sesion_taskname.setCellValueFactory(new PropertyValueFactory<Session, String>("taskName"));
+        col_sesion_date.setCellValueFactory(new PropertyValueFactory<Session, String>("date"));
+        col_sesion_start.setCellValueFactory(new PropertyValueFactory<Session, String>("start"));
+        col_sesion_stop.setCellValueFactory(new PropertyValueFactory<Session, String>("stop"));
+        col_sesion_myhours.setCellValueFactory(new PropertyValueFactory<Session, String>("myHours"));
+            tbv_session.setItems(adminModel.getAllSessions());
+    }
+
+    @FXML
+    private void handle_tap_user(Event event) {
+        
+        col_user_name.setCellValueFactory(new PropertyValueFactory<User, String>("userName"));
+        col_user_hoursthisweek.setCellValueFactory(new PropertyValueFactory<User, String>("hoursThisWeek"));
+        col_user_$perhour.setCellValueFactory(new PropertyValueFactory<User, String>("salary"));
+        col_user_admin.setCellValueFactory(new PropertyValueFactory<User, String>("admin"));
+        col_user_startdate.setCellValueFactory(new PropertyValueFactory<User, String>("startDate"));
+            tbv_user.setItems(adminModel.getAllUser());
     }
 }

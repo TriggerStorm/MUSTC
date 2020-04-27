@@ -34,7 +34,7 @@ public class User {
     //admin
     public User(int userID, String userName, String hoursThisWeek, String salary, String admin, String startDate){
     
-    }
+     }
     
     public int getUserId() {
         return userID;

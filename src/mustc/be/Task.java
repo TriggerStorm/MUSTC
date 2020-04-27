@@ -30,7 +30,9 @@ public class Task {
         this.taskDuration = taskDuration;
         
     }
-    
+    public Task(String taskName){
+        this.taskName = taskName;
+    }
     //admin
     public Task(String taskName, String project, String devs, String taskRate, String totalHours, String totalPrice){
     

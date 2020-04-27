@@ -66,7 +66,7 @@
                            <graphic>
                               <ImageView fitHeight="26.0" fitWidth="27.0" opacity="0.4" pickOnBounds="true" preserveRatio="true" scaleX="7.0" scaleY="2.5" translateX="65.0" translateY="15.0">
                                  <image>
-                                    <Image url="@../assets/work%20out%20img.png" />
+                                    <Image url="@../assets/wo.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -147,11 +147,11 @@
       </ScrollPane>
       <TabPane layoutX="252.0" layoutY="29.0" prefHeight="421.0" prefWidth="766.0" side="LEFT" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab fx:id="tab_clint" text="Clint">
+            <Tab fx:id="tab_clint" onSelectionChanged="#handle_tap_clint" text="Clint">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="Tbv_pj1" prefHeight="392.0" prefWidth="740.0">
+                        <TableView fx:id="Tbv_Clint" prefHeight="392.0" prefWidth="740.0">
                            <columns>
                               <TableColumn fx:id="Col_clint_name" prefWidth="105.0" text="Name" />
                               <TableColumn fx:id="Col_clint_email" prefWidth="105.0" text="Email" />
@@ -177,7 +177,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-          <Tab fx:id="tab_pj" text="Project">
+          <Tab fx:id="tab_pj" onSelectionChanged="#handle_tap_project" text="Project">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -210,7 +210,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="tab_task" text="Task">
+          <Tab fx:id="tab_task" onSelectionChanged="#handle_tap_task" text="Task">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -242,7 +242,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="tab_stat" text="Statistic">
+            <Tab fx:id="tab_stat" onSelectionChanged="#handle_tap_stats" text="Statistic">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="422.0" prefWidth="362.0">
                      <children>
@@ -267,11 +267,11 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="tab_sesion" text="Sesion">
+            <Tab fx:id="tab_sesion" onSelectionChanged="#handle_tap_sessions" text="Sesion">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView prefHeight="422.0" prefWidth="740.0">
+                        <TableView fx:id="tbv_session" prefHeight="422.0" prefWidth="740.0">
                            <columns>
                               <TableColumn fx:id="col_sesion_taskname" prefWidth="123.0" text="Task name" />
                               <TableColumn fx:id="col_sesion_date" prefWidth="123.0" text="Date" />
@@ -285,11 +285,11 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="tab_user" text="User">
+            <Tab fx:id="tab_user" onSelectionChanged="#handle_tap_user" text="User">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView prefHeight="391.0" prefWidth="740.0">
+                        <TableView fx:id="tbv_user" prefHeight="391.0" prefWidth="740.0">
                            <columns>
                               <TableColumn fx:id="col_user_name" prefWidth="123.0" text="Name" />
                               <TableColumn fx:id="col_user_hoursthisweek" prefWidth="123.0" text="Hours this week" />
