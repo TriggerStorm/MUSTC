@@ -149,10 +149,28 @@ public class SessionDBDAO {
         String finishTime = LDTnow.toString();
         currentSession.setFinishTime(finishTime);
         String startTime = currentSession.getStartTime();
-        long[] duration = calculateDurationOfASession(startTime, finishTime);
-        int currentTaskID = currentSession.getAssociatedTask();
-        Task currentTask = taskDBDao.getTask(currentTaskID);
+        long[] sessionDuration = calculateDurationOfASession(startTime, finishTime);
+        long sessionkHours = sessionDuration[0];
+        long sessionMinutes = sessionDuration[1];
+        int associatedTaskID = currentSession.getAssociatedTask();
+        Task currentTask = taskDBDao.getTask(associatedTaskID);
+        long[] taskDuration = currentTask.getTaskDuration();
+        long taskHours = taskDuration[0];
+        long taskMinutes = taskDuration[1];
+        taskMinutes += sessionMinutes;
+        if (taskMinutes >= 60) {
+            taskMinutes =- 60;
+            taskHours ++;
+        }
+        taskHours += sessionkHours;
+        taskDuration[0] = taskHours;
+        taskDuration[1] = taskMinutes;   
+        currentTask.setTaskDuration(taskDuration);
+  //      int associatedUserID = loggedInUser.getId();
+  //      addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime) { 
+
         
+
     }
     
     
