@@ -197,8 +197,8 @@ public class UserViewController extends JFrame implements Initializable {
     public void ToggelSize(){
         
         if(min == false){    
-            Sp_last3.setVisible(true);
-            min = true;
+                Sp_last3.setVisible(true);
+                min = true;
            
                 System.out.println("true");
                 Stage stage = (Stage) Sp_last3.getScene().getWindow();
@@ -209,15 +209,15 @@ public class UserViewController extends JFrame implements Initializable {
                 MaxWidth = 260;
             }
         else{
-            Sp_last3.setVisible(false);
-            min = false;
+                Sp_last3.setVisible(false);
+                 min = false;
             
-            System.out.println("false");
-            Stage stage = (Stage) Sp_last3.getScene().getWindow();
-            stage.setMaxHeight(248);
-            stage.setMaxWidth(255);
-            stage.setMinHeight(248);
-            stage.setMinWidth(255);
+                System.out.println("false");
+                Stage stage = (Stage) Sp_last3.getScene().getWindow();
+                stage.setMaxHeight(248);
+                stage.setMaxWidth(255);
+                stage.setMinHeight(248);
+                stage.setMinWidth(255);
         }
     }
  
