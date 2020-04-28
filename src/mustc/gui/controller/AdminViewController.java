@@ -387,7 +387,7 @@ public class AdminViewController implements Initializable {
         Col_task_project.setCellValueFactory(new PropertyValueFactory<Task, String>("project"));
         Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("devs"));
         Col_task_$perhour.setCellValueFactory(new PropertyValueFactory<Task, String>("taskRate"));
-        Col_task_totalhours.setCellValueFactory(new PropertyValueFactory<Task, String>("totalHours"));
+        Col_task_totalhours.setCellValueFactory(new PropertyValueFactory<Task, String>("taskDuration"));
         Col_task_totalprice.setCellValueFactory(new PropertyValueFactory<Task, String>("totalPrice"));
                  tbv_task.setItems(adminModel.getAllTask());
     }

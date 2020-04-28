@@ -29,7 +29,8 @@ public class UserViewModel {
 
     public UserViewModel() {
         bllManager = new BllManager();
-        task = new Task("test");
+        task = new Task("teast2");
+        
         
     }
     

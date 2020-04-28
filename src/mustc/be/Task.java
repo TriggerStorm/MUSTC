@@ -5,6 +5,7 @@
  */
 package mustc.be;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,19 +20,20 @@ public class Task {
 //or  private List<int> associatedUserIDs;  // the people to whom the task is assigned to.
     private List<Session> sessions;  //time??
     private long[] taskDuration;  //  total time used on a task
-
+    
     
     public Task(int taskID, String name, String description, int associatedProject, List<Session> sessions, long[] taskDuration) {
         this.taskID = taskID;
-        this.taskName = taskName;
+        this.taskName = name;
         this.description = description;
-        this.associatedProjectID = associatedProjectID;
+        this.associatedProjectID = associatedProject;
         this.sessions = sessions;
         this.taskDuration = taskDuration;
         
     }
-    public Task(String taskName){
+    public Task(String taskName ){
         this.taskName = taskName;
+        
     }
     //admin
     public Task(String taskName, String project, String devs, String taskRate, String totalHours, String totalPrice){
@@ -41,6 +43,18 @@ public class Task {
     public Task(String taskName, String project, String devs, String myHours){
     
     }
+
+    
+
+    @Override
+    public String toString() {
+        return  taskName;// + taskDuration ;
+    }
+
+    
+
+    
+    
     
     public int getTaskId() {
         return taskID;

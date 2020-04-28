@@ -33,7 +33,7 @@ public class AdminModel {
 
     public AdminModel() {
         bllManager = new BllManager();
-        task = new Task("test");
+        task = new Task("teast2");
     }
     
     
@@ -92,7 +92,17 @@ public class AdminModel {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    //
+    //task
+
+    public void addNewTaskToDB(String trim, Object selectedItem, String trim0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void editTask(String trim, Object selectedItem, String trim0) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void removeTaskFromDB(){}
     
     
 }
