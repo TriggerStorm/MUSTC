@@ -76,9 +76,9 @@ public class SessionDBDAO {
     public Session getSession(int sessionID) throws SQLException {
         Session session; 
         try(Connection con = dbc.getConnection()) {
-            String sql = "SELECT * FROM Sessions WHERE id = '" + sessionID + "'";
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            String sql = "SELECT * FROM Sessions WHERE id = ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery(sql);
             while(rs.next()) // While you have something in the results
             {
                 int associatedUserID = rs.getInt("AssociatedUser");
@@ -100,9 +100,9 @@ public class SessionDBDAO {
     public List<Session> getAllSessionsOfATask(int taskID) throws SQLException {
         List<Session> allSessionsOfATask = new ArrayList<>();
         try(Connection con = dbc.getConnection()) {
-            String sql = "SELECT * FROM Tasks WHERE associatedTask = '" + taskID + "'";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            String sql = "SELECT * FROM Tasks WHERE associatedTask = ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery(sql);
             while(rs.next()) // While you have something in the results
             {
                 int sessionID = rs.getInt("id");
@@ -118,7 +118,7 @@ public class SessionDBDAO {
     }
           
          
-    public List<Integer> getAllSessionIDsOfATask(int taskID) throws SQLException {  
+/*    public List<Integer> getAllSessionIDsOfATask(int taskID) throws SQLException {  
 // method only needed for getAllUserIDsAndNamesOfATask. May not need
         List<Integer> allSessionIDsOfATask = new ArrayList<>();
         try(Connection con = dbc.getConnection()) {
@@ -133,7 +133,7 @@ public class SessionDBDAO {
         }
         return allSessionIDsOfATask ;
     } 
-         
+ */        
        
     public void addStartTimeToSession(Session currentSession) { 
     //  Adds a strartTime to a given Session   

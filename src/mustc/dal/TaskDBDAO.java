@@ -71,9 +71,9 @@ public class TaskDBDAO {
         Task task = null;
         int [] taskDuration = new int[2];
         try(Connection con = dbc.getConnection()) {
-            String sql = "SELECT * FROM Tasks WHERE id = '" + taskID + "'";
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            String sql = "SELECT * FROM Tasks WHERE id = ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery(sql);
             while(rs.next()) //While you have something in the results
             {
                 String taskName =  rs.getString("Name");
@@ -93,9 +93,9 @@ public class TaskDBDAO {
         List<Task> allTaskIDsAndNamesOfAProject = new ArrayList<>();
         int [] taskDuration = new int[2];
         try(Connection con = dbc.getConnection()) {
-            String sql = "SELECT id, name FROM Tasks WHERE associatedProject = '" + projectID + "'";
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            String sql = "SELECT id, name FROM Tasks WHERE associatedProject = ?";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery(sql);
             while(rs.next()) //While you have something in the results
             {
                 int taskID = rs.getInt("id");
@@ -112,7 +112,7 @@ public class TaskDBDAO {
     
     public Task editTask (Task editedTask, String taskName, String description, int associatedProjectID) { 
     //  Edits a Task in the Task table of the database given the Projects new details.  
-        String sql = "UPDATE Task SET name = ?, description = ?, associatedProject = ?";
+        String sql = "UPDATE Task SET name = ?, description = ?, associatedProject = ? WHERE id = '" + editedTask.getTaskId() + "'";
         try ( Connection con = dbc.getConnection()) {
             //Create a prepared statement.
             PreparedStatement pstmt = con.prepareStatement(sql);
@@ -136,7 +136,7 @@ public class TaskDBDAO {
         
     public void removeTaskFromDB(Task taskToDelete) {
     //  Removes a user from the User table of the database given a User data object
-        String sql = "DELETE FROM Tasks WHERE id = ?";
+        String sql = "DELETE FROM Tasks WHERE id = '" + taskToDelete.getTaskId() + "'";
         try (Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql);
             pstmt.setInt(1,taskToDelete.getTaskId());

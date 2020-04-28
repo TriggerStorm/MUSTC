@@ -89,10 +89,10 @@ public class ProjectDBDAO {
         String clientName;
         int phoneNr = 00000000;
         List<Task> taskList = new ArrayList<>(); //  Tasks here only contain id, name and projectID
-        String sql = "SELECT name, associatedClient, projectRate FROM Projects WHERE id ='" + projectID + "'";
+        String sql = "SELECT name, associatedClient, phoneNr FROM Projects WHERE id = ?";
         try(Connection con = dbc.getConnection()) {
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery(sql);
             while(rs.next()) //While you have something in the results
             {
                 projectName = rs.getString("name");
@@ -125,10 +125,10 @@ public class ProjectDBDAO {
         List<Task> taskList = new ArrayList<>(); //  Tasks here only contain id, name and projectID
         boolean isClosed = false;
 
-        String sql = "SELECT name, associatedClient, projectRate FROM Projects WHERE id ='" + projectID + "'";
+        String sql = "SELECT name, associatedClient, projectRate FROM Projects WHERE id = ?";
         try(Connection con = dbc.getConnection()) {
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery(sql);
             while(rs.next()) //While you have something in the results
             {
                 projectName = rs.getString("name");
@@ -176,7 +176,8 @@ public class ProjectDBDAO {
 
     public Project editProject (Project editedProject, String projectName, int associatedClientID, float projectRate, int allocatedHours, boolean isClosed) { 
     //  Edits a Project in the Projects table of the database given the Projects new details.  
-        String sql = "UPDATE Projects SET name = ?, projectRate = ?, allocatedHours = ?, closed = ? WHERE email = ?";
+        int projectID = editedProject.getProjectId();
+        String sql = "UPDATE Projects SET name = ?, projectRate = ?, allocatedHours = ?, closed = ? WHERE id = '" + projectID + "'";
         try ( Connection con = dbc.getConnection()) {
             //Create a prepared statement.
             PreparedStatement pstmt = con.prepareStatement(sql);

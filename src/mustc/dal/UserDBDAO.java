@@ -68,8 +68,8 @@ public class UserDBDAO {
         User user = null;
         try(Connection con = dbc.getConnection()) {
             String sql = "SELECT userName, email, password, salary, isAdmin FROM Users WHERE id ='" + userID + "'";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery(sql);
             while(rs.next()) //While you have something in the results
             {
                 String userName = rs.getString("userName");
@@ -122,9 +122,9 @@ public class UserDBDAO {
          
     public void removeUserFromDB(User userToDelete) {
     //  Removes a user from the Users table of the database given a User data object
-        String stat = "DELETE FROM Users WHERE id =?";
+        String sql = "DELETE FROM Users WHERE id = '" + userToDelete.getUserId() + "'";
         try (Connection con = dbc.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement(stat);
+            PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setInt(1,userToDelete.getUserId());
             stmt.execute();
         } catch (SQLException ex) {
