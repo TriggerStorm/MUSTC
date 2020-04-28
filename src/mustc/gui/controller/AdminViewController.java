@@ -26,6 +26,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import mustc.be.Client;
@@ -83,8 +84,6 @@ public class AdminViewController implements Initializable {
     @FXML
     private TableColumn<Project, String> Col_pj_totalprice;
     @FXML
-    private TextField pj_search;
-    @FXML
     private Tab tab_task;
     @FXML
     private TableView<Task> tbv_task;
@@ -115,8 +114,6 @@ public class AdminViewController implements Initializable {
     @FXML
     private JFXDatePicker dp_task_to;
     @FXML
-    private TextField task_search;
-    @FXML
     private Tab tab_stat;
     @FXML
     private BarChart<?, ?> stat_graf;
@@ -129,14 +126,11 @@ public class AdminViewController implements Initializable {
     @FXML
     private JFXDatePicker dp_stat_to;
     @FXML
-    private TextField stat_search;
-    @FXML
     private Tab tab_sesion;
     @FXML
     private TableView<Session> tbv_session;
     @FXML
     private TableColumn<Session, String> col_sesion_taskname;
-    @FXML
     private TableColumn<Session, String> col_sesion_date;
     @FXML
     private TableColumn<Session, String> col_sesion_start;
@@ -144,8 +138,6 @@ public class AdminViewController implements Initializable {
     private TableColumn<Session, String> col_sesion_stop;
     @FXML
     private TableColumn<Session, String> col_sesion_myhours;
-    @FXML
-    private TextField sesion_search;
     @FXML
     private Tab tab_clint;
     @FXML
@@ -162,8 +154,6 @@ public class AdminViewController implements Initializable {
     private TableColumn<Client, String> Col_clint_totalhours;
     @FXML
     private TableColumn<Client, String> Col_clint_totalprice;
-    @FXML
-    private TextField clint_search;
     @FXML
     private JFXTextField tf_clint_name;
     @FXML
@@ -219,8 +209,6 @@ public class AdminViewController implements Initializable {
     @FXML
     private TableColumn<User, String> col_user_startdate;
     @FXML
-    private TextField user_search;
-    @FXML
     private JFXTextField tf_user_name;
     @FXML
     private JFXTextField tf_user_$perhour;
@@ -235,18 +223,51 @@ public class AdminViewController implements Initializable {
     @FXML
     private ScrollPane Sp_last3;
     
+    
+    @FXML
+    private JFXButton bn_task1;
+    @FXML
+    private JFXComboBox<Task> cb_task1;
+    @FXML
+    private ImageView img_task1;
+    @FXML
+    private JFXButton bn_task2;
+    @FXML
+    private JFXComboBox<String> cb_task2;
+    @FXML
+    private ImageView img_task2;
+    @FXML
+    private JFXButton bn_task3;
+    @FXML
+    private JFXComboBox<String> cb_task3;
+    @FXML
+    private ImageView img_task3;
+    
+    
     private AdminModel adminModel;
     int MaxWidth;
     boolean min;
-    
-    
-    
 
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         adminModel = new AdminModel();
+        //cb_task1.setSelectionModel(Task);
+        cb_task1.setItems(adminModel.getAllTask());
+        
+        //cb_task1.setItems(userModel.someStrings());
+        cb_task2.setItems(adminModel.someStrings());
+        cb_task3.setItems(adminModel.someStrings());
+        bn_task1.setText("Winzy  Call");
+        bn_task2.setText("Wopzywa  Call");
+        bn_task3.setText("Stranger  Call");
+        /*Image image1 = new Image(userModel.taskImg1());
+        Image image2 = new Image(userModel.taskImg2());
+        Image image3 = new Image(userModel.taskImg3());
+        img_task1.setImage(image1);
+        img_task2.setImage(image2);
+        img_task3.setImage(image3);*/
     }    
 
     public AdminViewController() {
@@ -254,7 +275,7 @@ public class AdminViewController implements Initializable {
         min = true;
     }
     
-    public void SS(){
+    public void sizeExpantion(){
         
         
         if(MaxWidth == 260){
@@ -323,15 +344,16 @@ public class AdminViewController implements Initializable {
     
     
 
-    private void handle_view(ActionEvent event) {
-        SS();
-    }
+    
 
     @FXML
     private void toggel_size(ActionEvent event) {
         ToggelSize();
     }
-
+    @FXML
+    private void handel_view(ActionEvent event) {
+        sizeExpantion();
+    }
     
 
     @FXML
@@ -342,7 +364,7 @@ public class AdminViewController implements Initializable {
         Col_clint_$perhour.setCellValueFactory(new PropertyValueFactory<Client, String>("standardRate"));
         Col_clint_totalhours.setCellValueFactory(new PropertyValueFactory<Client, String>("totalHours"));
         Col_clint_totalprice.setCellValueFactory(new PropertyValueFactory<Client, String>("totalPrice"));
-        Tbv_Clint.setItems(adminModel.getAllClient());
+        //Tbv_Clint.setItems(adminModel.getAllClient());
     }
 
     @FXML
@@ -361,7 +383,7 @@ public class AdminViewController implements Initializable {
     @FXML
     private void handle_tap_task(Event event) {
        
-        Col_task_taskname.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
+        Col_task_taskname.setCellValueFactory(new PropertyValueFactory<Task, String>("Name"));
         Col_task_project.setCellValueFactory(new PropertyValueFactory<Task, String>("project"));
         Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("devs"));
         Col_task_$perhour.setCellValueFactory(new PropertyValueFactory<Task, String>("taskRate"));
@@ -394,5 +416,108 @@ public class AdminViewController implements Initializable {
         col_user_admin.setCellValueFactory(new PropertyValueFactory<User, String>("admin"));
         col_user_startdate.setCellValueFactory(new PropertyValueFactory<User, String>("startDate"));
             tbv_user.setItems(adminModel.getAllUser());
+    }
+
+    
+
+    @FXML
+    private void handel_task1(ActionEvent event) {
+    }
+
+    @FXML
+    private void handle_task2(ActionEvent event) {
+    }
+
+    @FXML
+    private void handle_task3(ActionEvent event) {
+    }
+
+    @FXML
+    private void handel_client_add(ActionEvent event) {
+        /*adminModel.addNewClientToDB(
+                tf_clint_name.getText().trim(),
+                tf_clint_email.getText().trim(),
+                tf_clint_$perhour.getText().trim());*/
+    }
+
+    @FXML
+    private void handel_client_eddit(ActionEvent event) {
+        /*adminModel.editClient(clientToEdit,
+                tf_clint_name.getText().trim(),
+                tf_clint_email.getText().trim(),
+                tf_clint_$perhour.getText().trim());*/
+    }
+
+    @FXML
+    private void handel_client_delete(ActionEvent event) {
+        //adminModel.removeClientFromDB(clientToDelete)
+                
+    }
+
+    @FXML
+    private void handel_project_add(ActionEvent event) {
+       adminModel.addNewProjectToDB(
+                tf_pj_name.getText().trim(),
+                cb_pj_clint.getSelectionModel().getSelectedItem(),
+                tf_pj_nr.getText().trim(),
+                tf_pj_$perhour.getText().trim());
+                
+    }
+
+    @FXML
+    private void handel_project_eddit(ActionEvent event) {
+       /* adminModel.editProject(
+                editedProject,
+                tf_pj_name.getText().trim(),
+                cb_pj_clint.getSelectionModel().getSelectedItem(),
+                tf_pj_nr.getText().trim(),
+                tf_pj_$perhour.getText().trim());*/
+    }
+
+    @FXML
+    private void handel_project_delete(ActionEvent event) {
+        /*adminModel.removeProjectFromDB(Tbv_pj.getSelectionModel().getSelectedItems());*/
+    }
+
+    @FXML
+    private void handel_task_add(ActionEvent event) {
+        /*adminModel.addNewTaskToDB(
+                task_name.getText().trim(),
+                cb_task_project.getSelectionModel().getSelectedItem(),
+                task_$perhour.getText().trim());*/
+    }
+
+    @FXML
+    private void handel_task_eddit(ActionEvent event) {
+        /*adminModel.editTask(editedTask,
+                task_name.getText().trim(),
+                cb_task_project.getSelectionModel().getSelectedItem(),
+                task_$perhour.getText().trim());*/
+    }
+
+    @FXML
+    private void handel_task_delete(ActionEvent event) {
+        /*adminModel.removeTaskFromDB(taskToDelete);*/
+    }
+
+    @FXML
+    private void handel_user_add(ActionEvent event) {
+        /*adminModel.addNewUserToDB(
+                tf_user_name.getText().trim(),
+                cb_user_admin.getSelectionModel().getSelectedItem(),
+                tf_user_$perhour.getText().trim());*/
+    }
+
+    @FXML
+    private void handel_user_eddit(ActionEvent event) {
+        /*adminModel.editUser(userToEdit,
+                tf_user_name.getText().trim(),
+                cb_user_admin.getSelectionModel().getSelectedItem(),
+                tf_user_$perhour.getText().trim());*/
+    }
+
+    @FXML
+    private void handel_user_delete(ActionEvent event) {
+       /*adminModel.removeUserFromDB(userToDelete);*/
     }
 }

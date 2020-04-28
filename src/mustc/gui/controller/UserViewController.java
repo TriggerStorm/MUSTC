@@ -86,8 +86,6 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private TableColumn<Project, String> Col_pj_myhours;
     @FXML
-    private TextField pj_search;
-    @FXML
     private Tab tab_task;
     @FXML
     private TableView<Task> tbv_task;
@@ -114,8 +112,6 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private JFXDatePicker dp_task_to;
     @FXML
-    private TextField task_search;
-    @FXML
     private Tab tab_stat;
     @FXML
     private BarChart<?, ?> stat_graf;
@@ -132,8 +128,6 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private Label lb_stat_totalhours;
     @FXML
-    private TextField stat_search;
-    @FXML
     private Tab tab_sesion;
     @FXML
     private TableView<Session> TBV_Session;
@@ -147,8 +141,6 @@ public class UserViewController extends JFrame implements Initializable {
     private TableColumn<Session, String> col_sesion_stop;
     @FXML
     private TableColumn<Session, String> col_sesion_myhours;
-    @FXML
-    private TextField sesion_search;
     @FXML
     private ScrollPane Sp_last3;
     
@@ -184,13 +176,16 @@ public class UserViewController extends JFrame implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userModel = new UserViewModel();
+        //cb_task1.setCellFactory("name");
+        cb_task1.setPromptText("call");
         cb_task1.setItems(userModel.getAllTask());
         //cb_task1.setItems(userModel.someStrings());
         cb_task2.setItems(userModel.someStrings());
         cb_task3.setItems(userModel.someStrings());
-        bn_task1.setText("Winzy  Call");
+        bn_task1.setText("Winzy");
         bn_task2.setText("Wopzywa  Call");
         bn_task3.setText("Stranger  Call");
+        
         /*Image image1 = new Image(userModel.taskImg1());
         Image image2 = new Image(userModel.taskImg2());
         Image image3 = new Image(userModel.taskImg3());
@@ -270,7 +265,17 @@ public class UserViewController extends JFrame implements Initializable {
                 stage.setMinWidth(255);
         }
     }
- 
+    
+    public void addTask(){
+        /*if(task_name != null){
+        userModel.addNewTaskToDB(
+                task_name.getText().trim(),
+                cb_task_project.getSelectionModel().getSelectedItem());
+        }
+        else
+        */
+    }
+    
     @FXML
     private void handle_view(ActionEvent event) {
         sizeExpantion();
@@ -323,8 +328,10 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void handel_task1(ActionEvent event) {
-        //cb_task1.getItems();
-        //bn_task1.setText(cb_task1.getSelectedItem().toString());
+        Task selectedItem = cb_task1.getSelectionModel().getSelectedItem();
+        String toString = selectedItem.toString();
+        bn_task1.setText("Task"+ " " + toString);
+        System.out.println(toString);
         
                 
     }
