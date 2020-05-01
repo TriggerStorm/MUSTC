@@ -237,5 +237,6 @@
             </Tab>
         </tabs>
       </TabPane>
+      <Button fx:id="test" layoutX="193.0" layoutY="410.0" mnemonicParsing="false" onAction="#test" prefHeight="27.0" prefWidth="27.0" text="Button" />
    </children>
 </AnchorPane>

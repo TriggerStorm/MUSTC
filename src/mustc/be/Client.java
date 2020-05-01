@@ -9,38 +9,52 @@ import java.util.List;
 
 /**
  *
- * @author Trigger, Filip, Cecillia and Alan
+ * @author Trigger and Alan
  */
 public class Client {
     private int clientID;
     private String clientName;
     private String imgLocation;
-    private float standardRate;
     private String email;
+    private float standardRate;
+    private int totalHours;
+    private int noOfProjects;
 
-    
-    public Client(int id, String name, String imgLocation, float standardRate, String email) {
+// Full constructor    
+    public Client(int clientID, String clientName, String imgLocation, String email, float standardRate, int totalHours, int noOfProjects) {
         this.clientID = clientID;
         this.clientName = clientName;
         this.imgLocation = imgLocation;
-        this.standardRate = standardRate;
         this.email = email;
+        this.standardRate = standardRate;
+        this.totalHours = totalHours;
+        this.noOfProjects = noOfProjects;
+    }
+
+    // GUI constructor1  
+    public Client(int clientID, String clientName, String email, float standardRate, int totalHours, int noOfProjects) {
+        this.clientID = clientID;
+        this.clientName = clientName;
+        this.email = email;
+        this.standardRate = standardRate;
+        this.totalHours = totalHours;
+        this.noOfProjects = noOfProjects;
     }
 
     
-    public int getId() {
+    public int getClientId() {
         return clientID;
     }
 
-    public void setId(int clientID) {
+    public void setClientId(int clientID) {
         this.clientID = clientID;
     }
 
-    public String getName() {
+    public String getClientName() {
         return clientName;
     }
 
-    public void setName(String clientName) {
+    public void setClientName(String clientName) {
         this.clientName = clientName;
     }
 
@@ -51,15 +65,7 @@ public class Client {
     public void setImgLocation(String imgLocation) {
         this.imgLocation = imgLocation;
     }
-
-    public float getStandardRate() {
-        return standardRate;
-    }
-
-    public void setStandardRate(float standardRate) {
-        this.standardRate = standardRate;
-    }
-
+ 
     public String getEmail() {
         return email;
     }
@@ -68,6 +74,27 @@ public class Client {
         this.email = email;
     }
     
-    
-    
+    public float getStandardRate() {
+        return standardRate;
+    }
+
+    public void setStandardRate(float standardRate) {
+        this.standardRate = standardRate;
+    }
+
+    public int getTotalHours() {
+        return totalHours;
+    }
+
+    public void setTotalHours(int totalHours) {
+        this.totalHours = totalHours;
+    }
+
+    public int getNoOfProjects() {
+        return noOfProjects;
+    }
+
+    public void setNoOfProjects(int noOfProjects) {
+        this.noOfProjects = noOfProjects;
+    }
 }

@@ -19,7 +19,7 @@ import mustc.be.Client;
 
 /**
  *
- * @author macos
+ * @author Trigger and Alan
  */
 public class ClientDBDAO {
     private DBConnection dbc;
@@ -29,11 +29,11 @@ public class ClientDBDAO {
         dbc = new DBConnection();
     }
     
-    public Client addNewClientToDB(String clientName,float standardRate,String logoImgLocation,String email) throws SQLException { 
+    public Client addNewClientToDB(String clientName, String logoImgLocation, String email, float standardRate) throws SQLException { 
     //  Adds a new Client to the DB, and returns the updated Client to the GUI
-        String sql = "INSERT INTO Clients(Name, logoImgLocation, standardRate, email) VALUES (?,?,?,?)";
-        Client newClient = new Client(0,clientName,logoImgLocation,standardRate,email);
+        Client newClient = new Client(0,clientName,logoImgLocation, email, standardRate, 0, 0);
         try (Connection con = dbc.getConnection()) {
+            String sql = "INSERT INTO Clients(Name, logoImgLocation, standardRate, email) VALUES (?,?,?,?)";
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, clientName);
             pstmt.setString(2, logoImgLocation);
@@ -45,7 +45,7 @@ public class ClientDBDAO {
             }
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    newClient.setId((int) generatedKeys.getLong(1));
+                    newClient.setClientId((int) generatedKeys.getLong(1));
                 } else {
                     throw new SQLException("Creating Client failed, no ID obtained.");
                 } 
@@ -58,41 +58,87 @@ public class ClientDBDAO {
         return newClient;
     }
     
-     public List<Client> getAllClients() throws SQLException {
-    //  Returns all Clients  
-        List<Client> allClients = new ArrayList<>();
+     
+    public Client getClient(int clientID) throws SQLException {
+    //  Returns specific Client
         try(Connection con = dbc.getConnection()){
-            String sql = "SELECT * FROM Clients";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            String sql = "SELECT * FROM Clients WHERE id = '" + clientID + "'"; 
+             PreparedStatement pstmt = con.prepareStatement(sql);   
+ //            pstmt.setInt(1,clientID);
+             pstmt.execute();
+            ResultSet rs = pstmt.executeQuery();
+            
             while(rs.next()) //While you have something in the results
             {
-                int clientID =  rs.getInt("id");
+                clientID =  rs.getInt("id");
                 String clientName = rs.getString("name");
                 String logoImgLocation = rs.getString("logoImgLocation");
                 float standardRate = rs.getFloat("standardRate");
                 String email = rs.getString("email");
-                
-                allClients.add(new Client(clientID,clientName,logoImgLocation,standardRate,email)); 
+                int totalHours = 232;  // MOCK DATA
+                int noOfProjects = getNoOfProjectsOfAClient(clientID);
+                return new Client(clientID,clientName,logoImgLocation,email, standardRate, totalHours, noOfProjects); 
+            }    
+        }
+        return null;
+    }
+    
+     
+    public List<Client> getAllClients() throws SQLException {
+    //  Returns all Clients  
+        List<Client> allClients = new ArrayList<>();
+        try(Connection con = dbc.getConnection()){
+            String sql = "SELECT * FROM Clients";
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                int clientID =  rs.getInt("id");
+                String clientName = rs.getString("name");
+                String logoImgLocation = rs.getString("logoImgLocation");  // not used here yet
+                float standardRate = rs.getFloat("standardRate");
+                String email = rs.getString("email");
+                int totalHours = 222;  // mock data
+                int noOfProjects = getNoOfProjectsOfAClient(clientID);
+                allClients.add(new Client(clientID, clientName, email, standardRate, totalHours, noOfProjects));
             }    
         }
         return allClients;
     }
     
-    public Client editClient (Client editedClient,String name,float standardRate,String logoImgLocation, String email) { 
+     
+    private int getNoOfProjectsOfAClient(int clientID) throws SQLException {
+        int noOfProjectsOfAClient = 0;
+        try(Connection con = dbc.getConnection()){
+            String sql = "SELECT id FROM Projects WHERE associatedClient ='" + clientID + "'"; 
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()) //While you have something in the results
+            {
+                noOfProjectsOfAClient ++; 
+            }    
+        }
+System.out.println("");        
+System.out.println("noOfProjectsOfAClient" );        
+        return noOfProjectsOfAClient;
+    }
+     
+     
+    public Client editClient (Client editedClient,String clientName,float standardRate,String logoImgLocation, String email) { 
     //  Edits a client  
         String sql = "UPDATE Clients SET name = ?, standardRate = ?, logoImgLocation = ?, email = ? WHERE id = ?";
         try ( Connection con = dbc.getConnection()) {
             //Create a prepared statement.
             PreparedStatement pstmt = con.prepareStatement(sql);
             //Set parameter values.
-            pstmt.setString(1, name);
+            pstmt.setString(1, clientName);
             pstmt.setFloat(2, standardRate);
             pstmt.setString(3, logoImgLocation);
             pstmt.setString(4, email);
-            pstmt.setInt(5, editedClient.getId());
+            pstmt.setInt(5, editedClient.getClientId());
             pstmt.executeUpdate();  //Execute SQL query.
-            editedClient.setName(name);
+            editedClient.setClientName(clientName);
             editedClient.setImgLocation(logoImgLocation);
             editedClient.setStandardRate(standardRate);
             editedClient.setEmail(email);
@@ -104,36 +150,14 @@ public class ClientDBDAO {
         }
         return null; 
     }
-    public Client getSpecificClient(int id) throws SQLException {
-    //  Returns specific Client
-        try(Connection con = dbc.getConnection()){
-            String sql = "SELECT * FROM Clients WHERE id = ?";
-             PreparedStatement pstmt = con.prepareStatement(sql);   
-             pstmt.setInt(1,id);
-             pstmt.execute();
-            ResultSet rs = pstmt.executeQuery();
-            
-            while(rs.next()) //While you have something in the results
-            {
-                int clientID =  rs.getInt("id");
-                String clientName = rs.getString("name");
-                String logoImgLocation = rs.getString("logoImgLocation");
-                float standardRate = rs.getFloat("standardRate");
-                String email = rs.getString("email");
-                
-               return new Client(clientID,clientName,logoImgLocation,standardRate,email); 
-            }    
-        }
-        return null;
-    }
+   
     
-    
-    public void deleteClient(Client clientToDelete) throws SQLException {
+    public void removeClientFromDB(Client clientToDelete) throws SQLException {
     //  Delete specific Client
         try(Connection con = dbc.getConnection()){
             String sql = "DELETE FROM Clients WHERE id = ?";
              PreparedStatement pstmt = con.prepareStatement(sql);   
-             pstmt.setInt(1,clientToDelete.getId());
+             pstmt.setInt(1,clientToDelete.getClientId());
              pstmt.execute();
         }
        

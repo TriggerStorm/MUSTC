@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author Trigger, Filip, Cecillia and Alan
+ * @author Trigger and Alan
  */
 public class Project {
     private int projectID;  // for User & Admin
@@ -19,15 +19,16 @@ public class Project {
     private int phoneNr;  // for User & Admin
     private float projectRate;  // for Admin
     private int allocatedHours;  // for Admin
-    private String myHours;  // for User
-    private String totalHours;  // for Admin
-    private String totalPrice;  // for Admin
+    private double myProjectHours;  // for User
+    private double totalHours;  // for Admin
+    private int totalPrice;  // for Admin
     private List<Task> taskList;  // for User & Admin
+    private int noOfTasks;
     private boolean isClosed;  // for Admin
   
     
 //  Full constructor      
-    public Project(int projectID, String projectName, int associatedClientID, String clientName, int phoneNr, float projectRate, int allocatedHours, String myHours, String totalHours, String totalPrice, List<Task> taskList, boolean isClosed) {
+    public Project(int projectID, String projectName, int associatedClientID, String clientName, int phoneNr, float projectRate, int allocatedHours, double myProjectHours, double totalHours, int totalPrice, List<Task> taskList, int noOfTasks, boolean isClosed) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.associatedClientID = associatedClientID;
@@ -35,28 +36,53 @@ public class Project {
         this.phoneNr = phoneNr;
         this.projectRate = projectRate;
         this.allocatedHours = allocatedHours;
-        this.myHours = myHours;
+        this.myProjectHours = myProjectHours;
         this.totalHours = totalHours;
         this.totalPrice = totalPrice;
         this.taskList = taskList;
+        this.noOfTasks = noOfTasks;
         this.isClosed = isClosed;
        }
     
     
-//  User constructor  
-    public Project(int projectID, String projectName, int associatedClientID,  String clientName, int phoneNr, String myHours, List<Task> taskList) {
+//  User constructor1  
+    public Project(int projectID, String projectName, int associatedClientID,  String clientName, int phoneNr, double myProjectHours, List<Task> taskList) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.associatedClientID = associatedClientID;
         this.clientName = clientName;
         this.phoneNr = phoneNr;
-        this.myHours = myHours;
+        this.myProjectHours = myProjectHours;
         this.taskList = taskList;
     }
 
     
-//  Admin constructor      
-    public Project(int projectID, String projectName, int associatedClientID, String clientName, int phoneNr, float projectRate, int allocatedHours, String totalHours, String totalPrice, List<Task> taskList, boolean isClosed) {
+    //  User constructor2  
+    public Project(int projectID, String projectName, String clientName, int phoneNr, double myProjectHours, int noOfTasks) {
+        this.projectID = projectID;
+        this.projectName = projectName;
+        this.clientName = clientName;
+        this.phoneNr = phoneNr;
+        this.myProjectHours = myProjectHours;
+        this.noOfTasks = noOfTasks;
+    }
+
+    
+//  Admin constructor1      
+    public Project(int projectID, String projectName, String clientName, int phoneNr, float projectRate, double totalHours, int totalPrice, int noOfTasks) {
+        this.projectID = projectID;
+        this.projectName = projectName;
+        this.clientName = clientName;
+        this.phoneNr = phoneNr;
+        this.projectRate = projectRate;
+        this.totalHours = totalHours;
+        this.totalPrice = totalPrice;
+        this.noOfTasks = noOfTasks;
+
+       }
+    
+//  Admin constructor2      
+    public Project(int projectID, String projectName, int associatedClientID, String clientName, int phoneNr, float projectRate, int allocatedHours, double totalHours, int totalPrice, List<Task> taskList, boolean isClosed) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.associatedClientID = associatedClientID;
@@ -68,16 +94,14 @@ public class Project {
         this.totalPrice = totalPrice;
         this.taskList = taskList;
         this.isClosed = isClosed;
-       }
-    
-    
+       }    
 
         
-    public int getProjectId() {
+    public int getProjectID() {
         return projectID;
     }
 
-    public void setProjectId(int projectID) {
+    public void setProjectID(int projectID) {
         this.projectID = projectID;
     }
 
@@ -93,7 +117,7 @@ public class Project {
         return associatedClientID;
     }
 
-    public void setAssociatedClient(int associatedClientID) {
+    public void setAssociatedClientID(int associatedClientID) {
         this.associatedClientID = associatedClientID;
     }
 
@@ -121,7 +145,7 @@ public class Project {
         this.projectRate = projectRate;
     }
 
-     public int getAllocatedHours() {
+    public int getAllocatedHours() {
         return allocatedHours;
     }
 
@@ -129,27 +153,27 @@ public class Project {
         this.allocatedHours = allocatedHours;
     }
 
-    public String getMyHours() {
-        return myHours;
+    public double getMyProjectHours() {
+        return myProjectHours;
     }
 
-    public void getMyHours(String myHours) {
-        this.myHours = myHours;
+    public void setMyProjectHours(double myProjectHours) {
+        this.myProjectHours = myProjectHours;
     }
     
-    public String getTotalHours() {
+    public double getTotalHours() {
         return totalHours;
     }
 
-    public void setTotalHours(String totalHours) {
+    public void setTotalHours(double totalHours) {
         this.totalHours = totalHours;
     }
     
-    public String getTotalPrice() {
+    public int getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(String totalPrice) {
+    public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
     }
     
@@ -161,6 +185,14 @@ public class Project {
         this.taskList = taskList;
     }
 
+    public int getNoOfTasks() {
+        return noOfTasks;
+    }
+
+    public void setNoOfTasks(int noOfTasks) {
+        this.noOfTasks = noOfTasks;
+    }
+    
     public boolean isClosed() {
         return isClosed;
     }

@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 
 /**
  *
- * @author Trigger, Filip, Cecillia and Alan
+ * @author Trigger and Alan
  */
 public class Session {
     private int sessionID;
+//      private String description;
     private int associatedUserID;  // the person whom the Session is assigned to.
     private int associatedTaskID;  // the Task whom the Session is assigned to.
     private String startTime;
@@ -20,8 +21,9 @@ public class Session {
 //    private int sessionTime;  //  difference between start time and finish time ...maybe?
 
     
-    public Session(int sessionID, int associatedUser, int associatedTask, String startTime, String finishTime) {
+    public Session(int sessionID, int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
         this.sessionID = sessionID;
+//          this.description = description;
         this.associatedUserID = associatedUserID;
         this.associatedTaskID = associatedTaskID;
         this.startTime = startTime;
@@ -29,11 +31,11 @@ public class Session {
     }
 
     
-    public int getSessionId() {
+    public int getSessionID() {
         return sessionID;
     }
 
-    public void setSessionId(int id) {
+    public void setSessionID(int sessionID) {
         this.sessionID = sessionID;
     }
 
@@ -45,11 +47,11 @@ public class Session {
         this.associatedUserID = associatedUserID;
     }
 
-    public int getAssociatedTask() {
+    public int getAssociatedTaskID() {
         return associatedTaskID;
     }
 
-    public void setAssociatedTask(int associatedTaskID) {
+    public void setAssociatedTaskID(int associatedTaskID) {
         this.associatedTaskID = associatedTaskID;
     }
 

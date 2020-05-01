@@ -7,6 +7,7 @@ package mustc.dal;
 
 import java.sql.SQLException;
 import java.util.List;
+import mustc.be.Client;
 import mustc.be.Project;
 import mustc.be.Task;
 import mustc.be.Session;
@@ -14,22 +15,33 @@ import mustc.be.User;
 
 /**
  *
- * @author Trigger, Filip, Cecillia and Alan
+ * @author Trigger and Alan
  */
 public interface DalFaçade {
     
-       
+ // ClientDBDAO methods    
+    public Client addNewClientToDB(String clientName, String logoImgLocation, String email, float standardRate);
+    public Client getClient(int clientID);
+    public List<Client> getAllClients();
+    public Client editClient (Client editedClient,String clientName,float standardRate,String logoImgLocation, String email);
+    public void removeClientFromDB(Client clientToDelete);
+     
+
 // ProjectDBDAO methods    
     public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int allocatedHours);
     public Project getProjectForUser(int projectID);
-//    public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID);
-    public Project editProject (Project editedProject, String projectName, int associatedClientID, float projectRate, int allocatedHours, boolean isClosed);
+    public List<Project> getAllProjectsForUser();
+    public Project getProjectForAdmin(int projectID);
+    public List<Project> getAllProjectsForAdmin();
+    public Project editProject (Project editedProject, String projectName, /*int associatedClientID,*/ int phoneNr, float projectRate, int allocatedHours, boolean isClosed);
 
     
 // TaskDBDAO methods        
     public Task addNewTaskToDB(String taskName, String description, int associatedProjectID);
-    public Task getTask(int taskID);
- //   public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID);
+    public Task getTaskForUser(int taskID);
+    public List<Task> getAllUsersTasks(); // not working yet    
+    public Task getTaskForAdmin(int taskID);
+    public List<Task> getAllTasksForAdmin();
     public Task editTask (Task editedTask, String taskName, String description, int associatedProjectID);
     public void removeTaskFromDB(Task taskToDelete);
   
@@ -38,6 +50,7 @@ public interface DalFaçade {
     public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime);
     public Session getSession(int sessionID);
     public List<Session> getAllSessionsOfATask(int taskID);
+    public Session editSession (Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime);
     public void removeSessionFromDB(Session sessionToDelete);
   
     

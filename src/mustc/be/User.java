@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author Trigger, Filip, Cecillia and Alan
+ * @author Trigger and Alan
  */
 public class User {
     
@@ -32,11 +32,11 @@ public class User {
     }
 
     
-    public int getUserId() {
+    public int getUserID() {
         return userID;
     }
 
-    public void setUserId(int id) {
+    public void setUserID(int userID) {
         this.userID = userID;
     }
 

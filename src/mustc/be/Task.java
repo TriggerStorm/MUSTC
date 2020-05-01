@@ -14,71 +14,125 @@ import java.util.List;
 public class Task {
     private int taskID;
     private String taskName;
-    private String description;
     private int associatedProjectID;  // the project that the task is assigned to.
-//or  private List<int> associatedUserIDs;  // the people to whom the task is assigned to.
+    private String projectName;
+    private float projectRate;
+    private double myTaskHours;
+    private double totalTaskHours;  //  total time used on a task in minutes
+    String developers; 
     private List<Session> sessions;  //time??
- //   private int[] taskDuration;  //  total time used on a task
 
-    
-    public Task(int taskID, String name, String description, int associatedProject, List<Session> sessions/*, int[] taskDuration*/) {
+
+// Full constructor    
+    public Task(int taskID, String taskName , int associatedProjectID, String projectName, float projectRate, double myTaskHours, double totalTaskHours, String developers, List<Session> sessions/*, int[] totalTaskHours*/) {
         this.taskID = taskID;
         this.taskName = taskName;
-        this.description = description;
         this.associatedProjectID = associatedProjectID;
+        this.projectName = projectName;
+        this.projectRate = projectRate;        
+        this.myTaskHours = myTaskHours;
+        this.totalTaskHours = totalTaskHours;
+        this.developers = developers; 
         this.sessions = sessions;
-//        this.taskDuration = taskDuration;
-        
     }
 
     
-    public int getTaskId() {
+// Admin constructor for GUI
+    public Task(int taskID, String taskName , int associatedProjectID, String projectName, float projectRate, double totalTaskHours, String developers/* List<Session> sessions/*, int[] totalTaskHours*/) {
+        this.taskID = taskID;
+        this.taskName = taskName;
+        this.associatedProjectID = associatedProjectID;
+        this.projectName = projectName;
+        this.projectRate = projectRate;                
+        this.totalTaskHours = totalTaskHours;
+        this.developers = developers; 
+ //       this.sessions = sessions;
+    }
+    
+    
+// User constructor for GUI
+    public Task(int taskID, String taskName, int associatedProjectID, String projectName, double myTaskHours, String developers) {
+        this.taskID = taskID;
+        this.taskName = taskName;
+        this.associatedProjectID = associatedProjectID;
+        this.projectName = projectName;
+        this.myTaskHours = myTaskHours;
+        this.developers = developers; 
+//        this.totalTaskHours = totalTaskHours;
+    }
+
+    
+    public int getTaskID() {
         return taskID;
     }
 
-    public void setTaskId(int id) {
+    public void setTaskId(int taskID) {
         this.taskID = taskID;
     }
 
-    public String getName() {
+    public String getTaskName() {
         return taskName;
     }
 
-    public void setName(String name) {
+    public void setTaskName(String taskName) {
         this.taskName = taskName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public int getAssociatedProjectID() {
         return associatedProjectID;
     }
 
-    public void setAssociatedProject(int associatedProjectID) {
+    public void setAssociatedProjectID(int associatedProjectID) {
         this.associatedProjectID = associatedProjectID;
     }
 
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+    
+    public float getProjectRate() {
+        return projectRate;
+    }
+
+    public void setProjectRate(float projectRate) {
+        this.projectRate = projectRate;
+    }
+     
+    public double getMyTaskHours() {
+        return myTaskHours;
+    }
+
+    public void setMyTaskHours(double myTaskHours) {
+        this.myTaskHours = myTaskHours;
+    }
+     
+    public double getTotalTaskHours() {
+        return totalTaskHours;
+    }
+
+    public void setTotalTaskHours(double totalTaskHours) {
+        this.totalTaskHours = totalTaskHours;
+    }
+    
+    public String getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(String developers) {
+        this.developers = developers;
+    }
+    
     public List<Session> getSessions() {
         return sessions;
     }
 
- /*   public void setSessions(List<Session> sessions) {
+    public void setSessions(List<Session> sessions) {
         this.sessions = sessions;
     }
-    
-    public int[] getTaskDuration() {
-        return taskDuration;
-    }
-
-     public void setTaskDuration(int[] taskDuration) {
-        this.taskDuration = taskDuration;
-    }
-*/
-     
+   
+ 
 }
