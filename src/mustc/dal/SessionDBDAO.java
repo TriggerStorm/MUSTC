@@ -25,27 +25,27 @@ import mustc.be.User;
 
 /**
  *
- * @author Trigger, Filip, Cecillia and Alan
+ * @author Trigger and Alan
  */
 public class SessionDBDAO {
     private DBConnection dbc;
     private UserDBDAO userDBDao;
-    private TaskDBDAO taskDBDao;
+ //   private TaskDBDAO taskDBDao;
 
     
     
     public SessionDBDAO() {
         dbc = new DBConnection();
-        taskDBDao = new TaskDBDAO();
+ //       taskDBDao = new TaskDBDAO();
         userDBDao = new UserDBDAO();
     }
 
     
     
      public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) { 
-    //  Adds a new session to the Session table of the database given the sessions details. Generates an id key    
-        String sql = "INSERT INTO Sessions(associatedUser, associatedTask, startTime, finishTime) VALUES (?,?,?,?)";
+    //  Adds a new Session to the Sessions table of the database given the sessions details. Generates an id key    
         Session newSession = new Session(0, associatedUserID, associatedTaskID, startTime, finishTime);
+        String sql = "INSERT INTO Sessions(associatedUser, associatedTask, startTime, finishTime) VALUES (?,?,?,?)";
         try (Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, associatedUserID);
@@ -58,27 +58,28 @@ public class SessionDBDAO {
             }
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    newSession.setSessionId((int) generatedKeys.getLong(1));
+                    newSession.setSessionID((int) generatedKeys.getLong(1));
                 } else {
                     throw new SQLException("Creating Session failed, no ID obtained.");
                 } 
-                return newSession;
             }
         } catch (SQLServerException ex) {
             Logger.getLogger(SessionDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(SessionDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return newSession;
     }
      
      
     public Session getSession(int sessionID) throws SQLException {
-        Session session; 
+    //  Returns a Session data object given a Session id
+        Session session = null; 
+        String sql = "SELECT * FROM Sessions WHERE id = '" + sessionID + "'";
         try(Connection con = dbc.getConnection()) {
-            String sql = "SELECT * FROM Sessions WHERE id = '" + sessionID + "'";
-            Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
             while(rs.next()) // While you have something in the results
             {
                 int associatedUserID = rs.getInt("AssociatedUser");
@@ -90,27 +91,34 @@ public class SessionDBDAO {
     //            java.sql.Date startTime = rs.getDate("StartTime");
     //            java.sql.Date finishTime = rs.getDate("FinishTime");
                 session = new Session(sessionID, associatedUserID, associatedTaskID, startTime, finishTime);
-                return session ;
             }    
         }
-        return null ;
+        return session ;
     }
     
           
     public List<Session> getAllSessionsOfATask(int taskID) throws SQLException {
         List<Session> allSessionsOfATask = new ArrayList<>();
+//        allSessionsOfATask = null;
+        String sql = "SELECT * FROM Sessions WHERE associatedTask = '" + taskID + "'"; 
         try(Connection con = dbc.getConnection()) {
-            String sql = "SELECT * FROM Tasks WHERE associatedTask = '" + taskID + "'";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
             while(rs.next()) // While you have something in the results
             {
                 int sessionID = rs.getInt("id");
                 int AssociatedUserID =  rs.getInt("associatedUser");
                 int associatedTaskID =  rs.getInt("associatedTask");
-                String startTime = rs.getString("startTime");
-                String finishTime = rs.getString("finishTime");            
-                Session sessionInTask = new Session(sessionID, AssociatedUserID, associatedTaskID, startTime, finishTime);
+                String startTime = "0"; //rs.getString("startTime");
+                String finishTime = "1"; //rs.getString("finishTime");            
+ /*System.out.println("");
+ System.out.println("ID = " + sessionID);               
+ System.out.println("AssociatedUserID = " + AssociatedUserID);               
+ System.out.println("associatedTaskID = " + associatedTaskID);               
+ System.out.println("startTime = " + startTime);               
+ System.out.println("finishTime = " + finishTime);               
+ */               Session sessionInTask = new Session(sessionID, AssociatedUserID, associatedTaskID, startTime, finishTime);
                 allSessionsOfATask.add(sessionInTask); 
             }    
         }
@@ -118,7 +126,7 @@ public class SessionDBDAO {
     }
           
          
-    public List<Integer> getAllSessionIDsOfATask(int taskID) throws SQLException {  
+/*    public List<Integer> getAllSessionIDsOfATask(int taskID) throws SQLException {  
 // method only needed for getAllUserIDsAndNamesOfATask. May not need
         List<Integer> allSessionIDsOfATask = new ArrayList<>();
         try(Connection con = dbc.getConnection()) {
@@ -133,9 +141,9 @@ public class SessionDBDAO {
         }
         return allSessionIDsOfATask ;
     } 
-         
+ */        
        
-    public void addStartTimeToSession(Session currentSession) { 
+    private void addStartTimeToSession(Session currentSession) { 
     //  Adds a strartTime to a given Session   
         LocalDateTime LDTnow = LocalDateTime.now();
         String startTime = LDTnow.toString();
@@ -143,35 +151,54 @@ public class SessionDBDAO {
     }
 
      
-    public void addFinishTimeToSession(Session currentSession) throws SQLException { 
+    private void addFinishTimeToSession(Session currentSession) throws SQLException { 
     //  Adds a strartTime to a given Session   
         LocalDateTime LDTnow = LocalDateTime.now();
         String finishTime = LDTnow.toString();
         currentSession.setFinishTime(finishTime);
         String startTime = currentSession.getStartTime();
-        long[] duration = calculateDurationOfASession(startTime, finishTime);
-        int currentTaskID = currentSession.getAssociatedTask();
-        Task currentTask = taskDBDao.getTask(currentTaskID);
+        int associatedTaskID = currentSession.getAssociatedTaskID();
+ //       Task currentTask = taskDBDao.getTask(associatedTaskID);  // HAD TO COMMENT OUT 
+ /*       int[] sessionDuration = calculateDurationOfASession(startTime, finishTime);
+        int sessionkHours = sessionDuration[0];
+        int sessionMinutes = sessionDuration[1];
         
+ //       int[] taskDuration = currentTask.getTaskDuration();
+        int taskHours = taskDuration[0];
+        int taskMinutes = taskDuration[1];
+        taskMinutes += sessionMinutes;
+        if (taskMinutes >= 60) {
+            taskMinutes =- 60;
+            taskHours ++;
+        }
+        taskHours += sessionkHours;
+        taskDuration[0] = taskHours;
+        taskDuration[1] = taskMinutes;   
+        currentTask.setTaskDuration(taskDuration);
+ */ //      int associatedUserID = loggedInUser.getId();
+  //      addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime) { 
+
+        
+
     }
     
     
-    private long[] calculateDurationOfASession(String startTime, String finishTime) {
-        long[] duration = new long[2];
+/*    private int[] calculateDurationOfASession(String startTime, String finishTime) {
+        int[] duration = new int[2];
         LocalDateTime startLDT = LocalDateTime.parse(startTime);
         LocalDateTime finishLDT = LocalDateTime.parse(finishTime);
         LocalDateTime tempLDT = LocalDateTime.from(startLDT);
 
-        long hours = tempLDT.until( finishLDT, ChronoUnit.HOURS );
+        int hours = (int) tempLDT.until( finishLDT, ChronoUnit.HOURS );
         tempLDT = tempLDT.plusHours(hours);
 
-        long minutes = tempLDT.until( finishLDT, ChronoUnit.MINUTES );
+        int minutes = (int) tempLDT.until( finishLDT, ChronoUnit.MINUTES );
         tempLDT = tempLDT.plusMinutes( minutes );  // probably don't need this line
         duration[0] = hours;
         duration[1] = minutes;
         return duration;
     }
-            
+*/            
             
             
             
@@ -199,12 +226,41 @@ public class SessionDBDAO {
     }
  */         
      
+    
+    
+    public Session editSession (Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime) { 
+    //  Edits a Session in the Session table of the database given the Sessions new details.  
+        String sql = "UPDATE Sessions SET associatedUser = ?, associatedTask = ?, startTime = ?, finishTime = ? WHERE id = '" + editedSession.getSessionID()+ "'";
+        try (  //Get a connection to the database.
+            Connection con = dbc.getConnection()) {  
+            //Create a prepared statement.
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            //Set parameter values.
+            pstmt.setInt(1, associatedUserID);
+            pstmt.setInt(2, associatedTaskID);
+            pstmt.setString(3, startTime);
+            pstmt.setString(4, finishTime);
+            pstmt.executeUpdate();  // Execute SQL query.
+            editedSession.setAssociatedUserID(associatedUserID);
+            editedSession.setAssociatedTaskID(associatedTaskID);
+            editedSession.setStartTime(startTime);   
+            editedSession.setFinishTime(finishTime);
+            return editedSession;
+        } catch (SQLServerException ex) {
+            Logger.getLogger(SessionDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SessionDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+       
     public void removeSessionFromDB(Session sessionToDelete) {
     //  Removes a session from the Session table of the database given a Session data object
-        String sql = "DELETE FROM Tasks WHERE id = ?";
+        String sql = "DELETE FROM Sessions WHERE id = ?";
         try (Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1,sessionToDelete.getSessionId());
+            pstmt.setInt(1,sessionToDelete.getSessionID());
             pstmt.execute();
         } catch (SQLException ex) {
             System.out.println("Exception " + ex);

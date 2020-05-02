@@ -11,6 +11,8 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -37,6 +39,7 @@ import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
 import mustc.gui.model.UserViewModel;
+
 
 
 /**
@@ -344,6 +347,6 @@ public class UserViewController extends JFrame implements Initializable {
     private void handle_task3(ActionEvent event) {
     }
     
-
     
 }
+    

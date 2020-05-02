@@ -17,7 +17,7 @@ import mustc.be.User;
 
 /**
  *
- * @author Trigger, Filip, Cecillia and Alan
+ * @author Trigger and Alan
  */
 public class UserDBDAO {
     private DBConnection dbc;
@@ -30,8 +30,8 @@ public class UserDBDAO {
     
     public User addNewUserToDB(String userName, String email, String password, float salary, boolean isAdmin) { 
     //  Adds a new user to the User table of the database given the users details. Generated an id key    
+        User newUser = new User(10, userName, email, password, salary, isAdmin);
         String sql = "INSERT INTO Users(name, email, password, salary, admin) VALUES (?,?,?,?,?)";
-        User newUser = new User(0, userName, email, password, salary, isAdmin);
         try (Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, userName);
@@ -44,35 +44,35 @@ public class UserDBDAO {
             pstmt.setInt(5, admin);
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Creating user failed, no rows affected.");
+                throw new SQLException("Creating User failed, no rows affected.");
             }
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    newUser.setUserId((int) generatedKeys.getLong(1));
+                    newUser.setUserID((int) generatedKeys.getLong(1));
                 } else {
-                    throw new SQLException("Creating user failed, no ID obtained.");
+                    throw new SQLException("Creating User failed, no ID obtained.");
                 } 
-                return newUser;
             }
         } catch (SQLServerException ex) {
             Logger.getLogger(UserDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(UserDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+        return newUser;
     }
      
     
     public User getUser(int userID) throws SQLException {
-    //  Returns a spacific user data object given their user id
+    //  Returns a User data object given a User id
         User user = null;
+        String sql = "SELECT * FROM Users WHERE id = '" + userID + "'";  //  userName, email, password, salary, isAdmin 
         try(Connection con = dbc.getConnection()) {
-            String sql = "SELECT userName, email, password, salary, isAdmin FROM Users WHERE id ='" + userID + "'";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
             while(rs.next()) //While you have something in the results
             {
-                String userName = rs.getString("userName");
+                String userName = rs.getString("name");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
                 Float salary = rs.getFloat("salary");
@@ -87,12 +87,12 @@ public class UserDBDAO {
     }   
  
          
-    public User editUser (User userToEdit, String userName, String email, String password, Float salary, boolean isAdmin) { 
+    public User editUser (User editedUser, String userName, String email, String password, Float salary, boolean isAdmin) { 
     //  Edits a user in the User table of the database given the users new details.  
+        String sql = "UPDATE Users SET name = ?, email = ?, password = ?, salary = ? , admin = ? WHERE id = '" + editedUser.getUserID() + "'";
         try (  //Get a connection to the database.
             Connection con = dbc.getConnection()) {  
             //Create a prepared statement.
-            String sql = "UPDATE Users SET userName = ?, email = ?, password = ?, salary = ? , Admin = ? WHERE email = ?";
             PreparedStatement pstmt = con.prepareStatement(sql);
             //Set parameter values.
             pstmt.setString(1, userName);
@@ -103,14 +103,13 @@ public class UserDBDAO {
             if(isAdmin == true)
                 admin = 1;
             pstmt.setInt(5, admin);
-            //Execute SQL query.
-            pstmt.executeUpdate();
-            userToEdit.setUserName(userName);
-            userToEdit.setEmail(email);
-            userToEdit.setPassword(password);   
-            userToEdit.setSalary(salary);
-            userToEdit.setIsAdmin(isAdmin);
-            return userToEdit;
+            pstmt.executeUpdate();  // Execute SQL query.
+            editedUser.setUserName(userName);
+            editedUser.setEmail(email);
+            editedUser.setPassword(password);   
+            editedUser.setSalary(salary);
+            editedUser.setIsAdmin(isAdmin);
+            return editedUser;
         } catch (SQLServerException ex) {
             Logger.getLogger(UserDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -121,12 +120,12 @@ public class UserDBDAO {
 
          
     public void removeUserFromDB(User userToDelete) {
-    //  Removes a user from the Users table of the database given a User data object
-        String stat = "DELETE FROM Users WHERE id =?";
+    //  Removes a User from the Users table of the database given a User data object
+        String sql = "DELETE FROM Users WHERE id = ?";//'" + userToDelete.getUserId() + "'";
         try (Connection con = dbc.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement(stat);
-            stmt.setInt(1,userToDelete.getUserId());
-            stmt.execute();
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1,userToDelete.getUserID());
+            pstmt.execute();
         } catch (SQLException ex) {
             System.out.println("Exception " + ex);
         }
