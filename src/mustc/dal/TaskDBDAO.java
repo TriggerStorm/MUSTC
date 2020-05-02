@@ -72,6 +72,7 @@ public class TaskDBDAO {
     
     public Task getTaskForUser(int taskID) throws SQLException {
     //  Returns a Task from the DB where ID = taskID
+System.out.println("TASK");
         Task taskInProject = null;
 //        int [] taskDuration = new int[2];
         String sql = "SELECT * FROM Tasks WHERE id = '" + taskID + "'"; 
