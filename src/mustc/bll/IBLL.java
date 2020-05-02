@@ -55,9 +55,10 @@ public interface IBLL {
   
     
 // UserDBDAO methods  // not tweeked for GUI yet
-    public User addNewUserToDB(String userName, String email, String password, float salary, boolean isAdmin); 
+    public User addNewUserToDB(String userName, String email, String password, float salary, String status); 
     public User getUser(int userID);
-    public User editUser (User userToEdit, String userName, String email, String password, Float salary, boolean isAdmin); 
+    public List<User> getAllUsers();
+    public User editUser (User userToEdit, String userName, String email, String password, Float salary, String status); 
     public void removeUserFromDB(User userToDelete);
     
  

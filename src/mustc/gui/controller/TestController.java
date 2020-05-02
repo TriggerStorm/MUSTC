@@ -7,12 +7,14 @@ package mustc.gui.controller;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import mustc.be.Task;
+import mustc.be.User;
 import mustc.bll.BllManager;
 import mustc.dal.ClientDBDAO;
 import mustc.dal.DalManager;
@@ -28,7 +30,6 @@ import mustc.dal.UserDBDAO;
  */
 public class TestController implements Initializable {
     private BllManager bllManager;
-    private DalManager dalManager;
     
     
     @FXML
@@ -98,11 +99,11 @@ public class TestController implements Initializable {
   */      
  
  //    Task test = taskDBDao.addNewTaskToDB("testname", "stuff", 4);
-     Task test = bllManager.getTaskForUser(2);
+ //    Task test = taskDBDao.getTaskForUser(2);
  //       Task test = taskDBDao.editTask(testt, "ed", "it", 2);
  //       taskDBDao.removeTaskFromDB(test);
  
-        System.out.println("");
+ /*       System.out.println("");
         System.out.println("ID = " + test.getTaskID());
         System.out.println(test.getTaskName());
         System.out.println(test.getAssociatedProjectID());
@@ -165,16 +166,22 @@ public class TestController implements Initializable {
  //      User test = userDBDao.getUser(13);
  //    User test = userDBDao.editUser( testu,  "edited",  "editeda",  "editedb",  1035f,  false);
  //    userDBDao.removeUserFromDB(test);
- 
-/*       System.out.println("");
+        List<User> allUsers = bllManager.getAllUsers();
+        for (int i = 0; i < allUsers.size(); i++) {
+            User test = allUsers.get(i); 
+        
+       System.out.println("");
        System.out.println("ID = " + test.getUserID());
         System.out.println(test.getUserName());
         System.out.println(test.getEmail());
-        System.out.println(test.getPassword());
+ //       System.out.println(test.getPassword());
         System.out.println(test.getSalary());
-        System.out.println(test.getIsAdmin());
+        System.out.println(test.getStatus());
         System.out.println("");
-*/
+        }
+        
+        
+        
         float standardRate = 799;
  //       Client ctest = clientDBDao.addNewClientToDB("smurf co", "imageplace", "a@dfs.cc", standardRate);
  //      Client ctest = clientDBDao.getClient(9);

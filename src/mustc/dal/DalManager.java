@@ -170,7 +170,6 @@ public class DalManager implements DalFaçade {
     
    @Override
     public Task getTaskForUser(int taskID) {
-System.out.println("DAL");
         try {
             return taskDBDao.getTaskForUser(taskID);
         } catch (SQLException ex) {
@@ -274,8 +273,8 @@ System.out.println("DAL");
 // UserDBDAO methods    
     
     @Override
-    public User addNewUserToDB(String userName, String email, String password, float salary, boolean isAdmin) {
-        return userDBDao.addNewUserToDB(userName, email, password, salary, isAdmin);
+    public User addNewUserToDB(String userName, String email, String password, float salary, String status) {
+        return userDBDao.addNewUserToDB(userName, email, password, salary, status);
     }
     
     
@@ -289,10 +288,21 @@ System.out.println("DAL");
         return null;
     }
     
+     
+    @Override
+    public List<User> getAllUsers() {
+        try {
+            return userDBDao.getAllUsers();
+        } catch (SQLException ex) {
+            Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     
     @Override
-    public User editUser(User userToEdit, String userName, String email, String password, Float salary, boolean isAdmin) {
-        return userDBDao.editUser(userToEdit, userName, email, password, salary, isAdmin);
+    public User editUser(User userToEdit, String userName, String email, String password, Float salary, String status) {
+        return userDBDao.editUser(userToEdit, userName, email, password, salary, status);
     }
     
     
@@ -301,6 +311,6 @@ System.out.println("DAL");
         userDBDao.removeUserFromDB(userToDelete);
     }
 
-    
+   
    
 }

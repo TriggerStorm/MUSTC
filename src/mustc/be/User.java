@@ -18,19 +18,30 @@ public class User {
     private String email;
     private String password;
     private float salary;  // do we really need this?
-    private boolean isAdmin;  // or 0 = developer, 1 = admin, 2 = project owner.
+    private String status;
  //   private List<Task> usersTasks;  //  may be faster to process if we have this.
 
     
-    public User(int userID, String userName, String email, String password, float salary, boolean isAdmin) {
+ // Full constructor         
+    public User(int userID, String userName, String email, String password, float salary, String status) {
         this.userID = userID;
         this.userName = userName;
         this.email = email;
         this.password = password;
         this.salary = salary;
-        this.isAdmin = isAdmin;
+        this.status = status;
     }
 
+//User constructor for GUI (Admin only)
+    public User(int userID, String userName, String email , float salary, String status) {
+        this.userID = userID;
+        this.userName = userName;
+        this.email = email;
+        this.salary = salary;       
+        this.status = status;
+    }
+
+    
     
     public int getUserID() {
         return userID;
@@ -72,14 +83,12 @@ public class User {
         this.salary = salary;
     }
 
-    public boolean getIsAdmin() {
-        return isAdmin;
+     public String getStatus() {
+        return status;
     }
 
-    public void setIsAdmin(boolean isAdmin) {
-        this.isAdmin = isAdmin;
+    public void setStatus(String status) {
+        this.status = status;
     }
-    
-    
     
 }
