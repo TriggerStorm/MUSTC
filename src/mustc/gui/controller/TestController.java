@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import mustc.be.Project;
 import mustc.be.Task;
 import mustc.be.User;
 import mustc.bll.BllManager;
@@ -62,9 +63,10 @@ public class TestController implements Initializable {
      
  //       Project test = projectDBDao.addNewProjectToDB("testy", 9, 66661234, aHours, 999);
  //       Project test = projectDBDao.getProjectForUser(5);
- /*       Project testp = projectDBDao.getProjectForAdmin(7);
-        Project test = projectDBDao.editProject(testp, "bob's job", 55555555, aHours, 1200, true);
- */
+        Project testp = projectDBDao.getProjectForAdmin(7);
+ //       Project test = projectDBDao.editProject(testp, "bob's job", 55555555, aHours, 1200, true);
+         bllManager.removeProjectFromDB(testp);
+ 
  
  /*List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
         for (int i = 0; i < allProjects.size(); i++) {
@@ -166,7 +168,7 @@ public class TestController implements Initializable {
  //      User test = userDBDao.getUser(13);
  //    User test = userDBDao.editUser( testu,  "edited",  "editeda",  "editedb",  1035f,  false);
  //    userDBDao.removeUserFromDB(test);
-        List<User> allUsers = bllManager.getAllUsers();
+ /*       List<User> allUsers = bllManager.getAllUsers();
         for (int i = 0; i < allUsers.size(); i++) {
             User test = allUsers.get(i); 
         
@@ -179,7 +181,7 @@ public class TestController implements Initializable {
         System.out.println(test.getStatus());
         System.out.println("");
         }
-        
+ *)       
         
         
         float standardRate = 799;
@@ -201,8 +203,8 @@ public class TestController implements Initializable {
         System.out.println(test.getNoOfProjects());
         System.out.println("");
         }
-         System.out.println("test finish");
 */
-    }
+          System.out.println("test finish");
+   }
     
 }

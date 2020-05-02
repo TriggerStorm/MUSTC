@@ -152,7 +152,13 @@ public class DalManager implements DalFaçade {
         return projectDBDao.editProject(editedProject, projectName, /*associatedClientID,*/ phoneNr, projectRate, allocatedHours, isClosed);
     }
     
-    
+ 
+    @Override
+    public void removeProjectFromDB(Project projectToDelete) {
+        projectDBDao.removeProjectFromDB(projectToDelete);
+    }
+
+      
     
     
 // TaskDBDAO methods    
@@ -311,6 +317,5 @@ public class DalManager implements DalFaçade {
         userDBDao.removeUserFromDB(userToDelete);
     }
 
-   
    
 }

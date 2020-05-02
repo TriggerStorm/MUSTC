@@ -34,6 +34,7 @@ public interface DalFaçade {
     public Project getProjectForAdmin(int projectID);
     public List<Project> getAllProjectsForAdmin();
     public Project editProject (Project editedProject, String projectName, /*int associatedClientID,*/ int phoneNr, float projectRate, int allocatedHours, boolean isClosed);
+    public void removeProjectFromDB(Project projectToDelete);
 
     
 // TaskDBDAO methods        

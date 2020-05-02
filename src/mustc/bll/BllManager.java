@@ -99,6 +99,11 @@ public class BllManager implements IBLL {
         return dalManager.editProject(editedProject, projectName, associatedClientID, projectRate, allocatedHours, isClosed);
     }
 
+    @Override
+    public void removeProjectFromDB(Project projectToDelete) {
+        dalManager.removeProjectFromDB(projectToDelete);
+    }
+    
     
     
     
