@@ -26,7 +26,17 @@ public class DalManager implements DalFaçade {
     private SessionDBDAO sessionDBDao;
     private UserDBDAO userDBDao;
     
-  
+    
+    public DalManager() {
+        clientDBDao = new ClientDBDAO();
+        projectDBDao = new ProjectDBDAO();
+        taskDBDao = new TaskDBDAO();
+        sessionDBDao = new SessionDBDAO();
+        userDBDao = new UserDBDAO();
+    }
+   
+   
+    
  // ClientDBDAO methods    
  
     @Override
@@ -160,6 +170,7 @@ public class DalManager implements DalFaçade {
     
    @Override
     public Task getTaskForUser(int taskID) {
+System.out.println("DAL");
         try {
             return taskDBDao.getTaskForUser(taskID);
         } catch (SQLException ex) {

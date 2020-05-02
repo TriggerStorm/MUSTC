@@ -20,7 +20,14 @@ import mustc.dal.DalManager;
 public class BllManager implements IBLL {
     private DalManager dalManager;
     
-   
+    
+    public BllManager() {
+        dalManager = new DalManager();
+    }
+    
+    
+    
+    
 // ClientDBDAO methods    
 
     @Override
@@ -105,7 +112,8 @@ public class BllManager implements IBLL {
     
     @Override
     public Task getTaskForUser(int taskID) {
-         return dalManager.getTaskForUser(taskID);
+         System.out.println("BLL");
+        return dalManager.getTaskForUser(taskID);
     }
 
     

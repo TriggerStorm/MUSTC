@@ -86,7 +86,31 @@ public class UserDBDAO {
         return user;
     }   
  
-         
+    public User getAllUser(int userID) throws SQLException {
+    //  Returns a User data object given a User id
+        User user = null;
+        String sql = "SELECT * FROM Users WHERE id = '" + userID + "'";  //  userName, email, password, salary, isAdmin 
+        try(Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                String userName = rs.getString("name");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                Float salary = rs.getFloat("salary");
+                int admin = rs.getInt("admin");
+                boolean isAdmin = false;
+                if(admin == 1)
+                    isAdmin = true;
+               user = new User(userID, userName, email, password, salary, isAdmin); 
+            }    
+        }
+        return user;
+    }   
+ 
+    
     public User editUser (User editedUser, String userName, String email, String password, Float salary, boolean isAdmin) { 
     //  Edits a user in the User table of the database given the users new details.  
         String sql = "UPDATE Users SET name = ?, email = ?, password = ?, salary = ? , admin = ? WHERE id = '" + editedUser.getUserID() + "'";
