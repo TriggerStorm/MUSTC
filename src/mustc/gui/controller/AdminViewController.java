@@ -10,6 +10,8 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -34,6 +36,9 @@ import mustc.be.Project;
 import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
+import mustc.bll.BllManager;
+import mustc.dal.DalManager;
+import mustc.dal.ProjectDBDAO;
 import mustc.gui.model.AdminModel;
 
 /**
@@ -247,21 +252,27 @@ public class AdminViewController implements Initializable {
     private AdminModel adminModel;
     int MaxWidth;
     boolean min;
+    private ProjectDBDAO ProjectDBDAO;
+   private BllManager BllManager;
+   private DalManager DalManager;
 
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        DalManager = new DalManager();
+        BllManager = new BllManager();
         adminModel = new AdminModel();
+        ProjectDBDAO = new ProjectDBDAO();
         //cb_task1.setSelectionModel(Task);
-        cb_task1.setItems(adminModel.getAllTask());
+   // cb_task1.setItems(adminModel.getAllTask());
         
         //cb_task1.setItems(userModel.someStrings());
-        cb_task2.setItems(adminModel.someStrings());
-        cb_task3.setItems(adminModel.someStrings());
-        bn_task1.setText("Winzy  Call");
-        bn_task2.setText("Wopzywa  Call");
-        bn_task3.setText("Stranger  Call");
+   // cb_task2.setItems(adminModel.someStrings());
+   //cb_task3.setItems(adminModel.someStrings());
+      bn_task1.setText("Winzy  Call");
+      bn_task2.setText("Wopzywa  Call");
+      bn_task3.setText("Stranger  Call");
         /*Image image1 = new Image(userModel.taskImg1());
         Image image2 = new Image(userModel.taskImg2());
         Image image3 = new Image(userModel.taskImg3());
@@ -360,7 +371,7 @@ public class AdminViewController implements Initializable {
     private void handle_tap_clint(Event event) {
         Col_clint_name.setCellValueFactory(new PropertyValueFactory<Client, String>("clientName"));
         Col_clint_email.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
-        Col_clint_nrofpj.setCellValueFactory(new PropertyValueFactory<Client, String>("nrOfProjects"));
+        Col_clint_nrofpj.setCellValueFactory(new PropertyValueFactory<Client, String>("noOfProjects"));
         Col_clint_$perhour.setCellValueFactory(new PropertyValueFactory<Client, String>("standardRate"));
         Col_clint_totalhours.setCellValueFactory(new PropertyValueFactory<Client, String>("totalHours"));
         Col_clint_totalprice.setCellValueFactory(new PropertyValueFactory<Client, String>("totalPrice"));
@@ -378,6 +389,7 @@ public class AdminViewController implements Initializable {
         Col_pj_totalprice.setCellValueFactory(new PropertyValueFactory<Project, String>("totalPrice"));
         //.setCellValueFactory(new PropertyValueFactory<Project, String>("projectRate"));
                 Tbv_pj.setItems(adminModel.getAllProject());
+                
     }
 
     @FXML
@@ -421,7 +433,11 @@ public class AdminViewController implements Initializable {
     
 
     @FXML
-    private void handel_task1(ActionEvent event) {
+    private void handel_task1(ActionEvent event) throws SQLException {
+        //ProjectDBDAO.getAllProjectsForAdmin();
+        //adminModel.getAllProject();
+        BllManager.getAllProjectsForAdmin();
+        DalManager.getAllProjectsForAdmin();
     }
 
     @FXML

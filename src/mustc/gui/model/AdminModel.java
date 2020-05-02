@@ -33,30 +33,31 @@ public class AdminModel {
 
     public AdminModel() {
         bllManager = new BllManager();
-        task = new Task("teast2");
+       // task = new Task("teast2");
+        
     }
     
     
 
     public ObservableList<Project> getAllProject() {
-        return null;
-        // List<Project> allProjcets = bllManager.getAllProjects();
-       //pjList = FXCollections.observableArrayList(allProjcets);
-       //return pjList;
+        
+       List<Project> allProjcets = bllManager.getAllProjectsForAdmin();
+       pjList = FXCollections.observableArrayList(allProjcets);
+       return pjList;
     }
 
     public ObservableList<Client> getAllClient() {
-        return null;
-        // List<Client> allClients = bllManager.getAllClient();
-       //clientList = FXCollections.observableArrayList(allClients);
-       //return clientList;
+        
+        List<Client> allClients = bllManager.getAllClients();
+        clientList = FXCollections.observableArrayList(allClients);
+        return clientList;
     }
 
     public ObservableList<Task> getAllTask() {
-        List<Task> allTask =  new ArrayList<>();
-        allTask.add(task);
+       // List<Task> allTask =  new ArrayList<>();
+      //  allTask.add(task);
         
-         // List<Task> allTask = bllManager.getAllTask();
+          List<Task> allTask = bllManager.getAllTasksForAdmin();
          taskList = FXCollections.observableArrayList(allTask);
          return taskList;
     }
@@ -69,9 +70,9 @@ public class AdminModel {
 
     public ObservableList<User> getAllUser() {
         return null;
-        // List<User> allUser = bllManager.getAllUsers();
-       //userList = FXCollections.observableArrayList(allUser);
-       //return userList;
+         //List<User> allUser = bllManager.getAllUsers();
+         //userList = FXCollections.observableArrayList(allUser);
+        // return userList;
     }
     
     public ObservableList<String> someStrings(){

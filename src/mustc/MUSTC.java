@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 /**
  *
  * @author Trigger, Filip, Cecillia and Alan
@@ -20,6 +21,8 @@ public class MUSTC extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("gui/view/AdminView.fxml"));
+        
+        
         
         Scene scene = new Scene(root);
         

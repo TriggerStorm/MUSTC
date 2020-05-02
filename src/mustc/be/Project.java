@@ -57,20 +57,18 @@ public class Project {
         this.myProjectHours = myProjectHours;
         this.taskList = taskList;
     }
-    //user
-    public Project(String id, String projectName, String clintName, String phoneNr, String nrOfTask, String myHours){
-        
-    }
-    //admin
-    public Project(String id, String projectName, String clintName, String phoneNr, String nrOfTask, String projectRate, String totalHours, String totalPrice){
-        
-    }
 
     @Override
     public String toString() {
+        return "Project{" + "projectID=" + projectID + ", projectName=" + projectName + ", associatedClientID=" + associatedClientID + ", clientName=" + clientName + ", phoneNr=" + phoneNr + ", projectRate=" + projectRate + ", allocatedHours=" + allocatedHours + ", myProjectHours=" + myProjectHours + ", totalHours=" + totalHours + ", totalPrice=" + totalPrice + ", taskList=" + taskList + ", noOfTasks=" + noOfTasks + ", isClosed=" + isClosed + '}';
+    }
+    
+
+   /* @Override
+    public String toString() {
         return "Project{" + "phoneNr=" + phoneNr + '}';
     }
-
+*/
     
     
     //  User constructor2  

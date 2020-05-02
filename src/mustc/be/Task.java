@@ -41,14 +41,7 @@ public class Task {
         this.taskName = taskName;
         
     }
-    //admin
-    public Task(String taskName, String project, String devs, String taskRate, String totalHours, String totalPrice){
     
-    }
-    //User
-    public Task(String taskName, String project, String devs, String myHours){
-    
-    }
 
     
 
