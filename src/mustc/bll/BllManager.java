@@ -150,7 +150,13 @@ public class BllManager implements IBLL {
         dalManager.removeTaskFromDB(taskToDelete);
     }
 
-    
+   
+    @Override
+    public List<Task> getUsersThreeRecentTasks(User loggedInUser) {
+        return dalManager.getUsersThreeRecentTasks(loggedInUser);
+        }
+
+      
     
     
 // SessionDBDAO methods                    

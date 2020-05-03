@@ -63,9 +63,9 @@ public class TestController implements Initializable {
      
  //       Project test = projectDBDao.addNewProjectToDB("testy", 9, 66661234, aHours, 999);
  //       Project test = projectDBDao.getProjectForUser(5);
-        Project testp = projectDBDao.getProjectForAdmin(7);
+ //       Project testp = projectDBDao.getProjectForAdmin(7);
  //       Project test = projectDBDao.editProject(testp, "bob's job", 55555555, aHours, 1200, true);
-         bllManager.removeProjectFromDB(testp);
+ //        bllManager.removeProjectFromDB(testp);
  
  
  /*List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
@@ -100,6 +100,9 @@ public class TestController implements Initializable {
         }
   */      
  
+    User testUser = userDBDao.getUser(3);
+      List<Task> recentTask = taskDBDao.getUsersThreeRecentTasks(testUser);
+      
  //    Task test = taskDBDao.addNewTaskToDB("testname", "stuff", 4);
  //    Task test = taskDBDao.getTaskForUser(2);
  //       Task test = taskDBDao.editTask(testt, "ed", "it", 2);
@@ -153,7 +156,8 @@ public class TestController implements Initializable {
   //      Session test = sessionDBDao.getSession(19);
  //       Session test = sessionDBDao.editSession(tests, 16, 10, "2020-04-20 16:36:00.0", "2020-04-20 17:58:00.0");
  //       sessionDBDao.removeSessionFromDB(test);
- 
+     
+
  /*     System.out.println("");
         System.out.println("ID = " + test.getSessionID());
         System.out.println(test.getAssociatedUserID());

@@ -11,13 +11,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mustc.be.Project;
 import mustc.be.Session;
 import mustc.be.Task;
+import mustc.be.User;
 
 /**
  *
@@ -154,10 +157,10 @@ public class TaskDBDAO {
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()) //While you have something in the results
             {
-                int taskID =  rs.getInt("id");
+                int taskID = rs.getInt("id");
                 String taskName = rs.getString("name");
-                int associatedProjectID =rs.getInt("associatedProject");
-                ProjectDBDAO projectDBDao= new ProjectDBDAO();  // TEMP
+                int associatedProjectID = rs.getInt("associatedProject");
+                ProjectDBDAO projectDBDao = new ProjectDBDAO();  // TEMP
                 String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP
                 float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMP
                 double totalTaskHours = 667.75;  // MOCK DATA
@@ -236,4 +239,74 @@ public class TaskDBDAO {
     }
       
     
+    public List<Task> getUsersThreeRecentTasks(User loggedInUser) throws SQLException {
+    //  Returns a list of maximum size 3 of the three most recent distinct Tasks of the loggedInUser
+        List<Task> recentTasks = new ArrayList<>();
+        int recentTask1ID = -1;  // Initialiser value - not a real taskID        
+        int recentTask2ID = -1;  // Initialiser value - not a real taskID   
+        int recentTask3ID = -1;  // Initialiser value - not a real taskID   
+        List<Session> allLoggedInUserSessions = sessionDBDao.getAllSessionsStartTimeAndTaskID(loggedInUser);
+        //  Get recentTask1
+        if (allLoggedInUserSessions.size() > 0) {
+            Session recentSession1 =  allLoggedInUserSessions.get(0);
+            recentTask1ID = recentSession1.getAssociatedTaskID();
+System.out.println("recentTask1ID = " + recentTask1ID); 
+            Task recentTask1 = getTaskForUser(recentTask1ID);  // makes recentTask1 the the first Task from recentSession list 
+            recentTasks.add(recentTask1);
+        } else recentTasks = null; //  ?? MAYBE
+        int counter = 1;  // counter keeps track of the session being examines for duplicate TaskIDs
+        //  Get recentTask2
+        while (counter < allLoggedInUserSessions.size()) {
+            Session recentSession2 =  allLoggedInUserSessions.get(counter);
+            if (recentSession2.getAssociatedTaskID() != recentTask1ID) {
+                recentTask2ID = recentSession2.getAssociatedTaskID();
+System.out.println("recentTask2ID = " + recentTask2ID); 
+                Task recentTask2 = getTaskForUser(recentTask2ID);  // makes recentTask2 the the second distinct Task from recentSession list                 
+                recentTasks.add(recentTask2);
+                break;
+            } else counter++;
+        }
+        //  Get recentTask3          
+        while (counter < allLoggedInUserSessions.size()) {
+            Session recentSession3 =  allLoggedInUserSessions.get(counter);
+            if ((recentSession3.getAssociatedTaskID() != recentTask1ID) && (recentSession3.getAssociatedTaskID() != recentTask2ID)) {
+                recentTask3ID = recentSession3.getAssociatedTaskID();
+System.out.println("recentTask3ID = " + recentTask3ID); 
+                Task recentTask3 = getTaskForUser(recentTask3ID);  // makes recentTask2 the the second distinct Task from recentSession list                 
+                recentTasks.add(recentTask3);
+                break;
+            } else counter++;
+        }
+        return recentTasks;
+
+//     allLoggedInUserSessions.sort(startTime);
+  //  Comparable<Session> timeSorter = Comparator.comparing(Session::getName);  
+   //    PriorityQueue<Session> priorityQueue = new PriorityQueue<>( timeSorter );
+    
+ /*       int loggedInUserID = loggedInUser.getUserID();
+        int recentTaskID = 0;
+         String startTime = "";
+//        String sql = "SELECT associatedTask FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'" AND id =0;//+ ORDER BY startTime DESC;
+//        String sql = "SELECT MAX(startTime), associatedTask FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'";// AND id =0;//+ ORDER BY startTime DESC;
+         String sql = "SELECT MAX(StartTime) FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'";// AND id =0;//+ ORDER BY startTime DESC;
+        try(Connection con = dbc.getConnection()){
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+    //            LocalDateTime testLDT = rs.getDate(startTime);
+                 startTime = rs.getString("StartTime");
+  //              recentTaskID = rs.getInt("id");
+  System.out.println("startTime = " + startTime);
+
+//System.out.println("task1 ID = " + recentTaskID);
+                Task recentTask = getTaskForUser(recentTaskID);
+                recentTasks.add(recentTask);
+            }
+*/
+    }
+
+   
+    
+
 }
