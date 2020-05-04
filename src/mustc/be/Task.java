@@ -41,14 +41,19 @@ public class Task {
         this.taskName = taskName;
         
     }
-    
-
-    
 
     @Override
     public String toString() {
-        return  taskName;// + taskDuration ;
+        return "Task{" + "taskID=" + taskID + ", taskName=" + taskName + ", associatedProjectID=" + associatedProjectID + ", projectName=" + projectName + ", projectRate=" + projectRate + ", myTaskHours=" + myTaskHours + ", totalTaskHours=" + totalTaskHours + ", developers=" + developers + ", sessions=" + sessions + '}';
     }
+    
+
+    
+
+    /*@Override
+    public String toString() {
+        return  taskName;// + taskDuration ;
+    }*/
 
     
 

@@ -170,6 +170,8 @@ public class UserViewController extends JFrame implements Initializable {
     
     int MaxWidth;
     boolean min;
+    @FXML
+    private Button test;
     
     
     
@@ -346,6 +348,10 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void handle_task3(ActionEvent event) {
+    }
+
+    @FXML
+    private void test(ActionEvent event) {
     }
     
     
