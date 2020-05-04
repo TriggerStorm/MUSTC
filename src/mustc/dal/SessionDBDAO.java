@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -124,8 +127,39 @@ public class SessionDBDAO {
         }
         return allSessionsOfATask ;
     }
-          
-         
+    
+    public List<Session> getAllSessionsStartTimeAndTaskID(User loggedInUser) throws SQLException {
+    // UNTESTED
+  //      PriorityQueue<Task> allUserTasksPQ = new PriorityQueue<>(comparator);
+  
+        List<Session> allLoggedInUserSessions = new ArrayList<>();
+        int loggedInUserID = loggedInUser.getUserID();
+        String sql = "SELECT associatedTask, StartTime FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'"; 
+        try(Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) // While you have something in the results
+            {
+                int associatedTaskID =  rs.getInt("associatedTask");
+                String startTime = rs.getString("startTime");
+               Session loggedInUserSession = new Session(associatedTaskID, startTime);
+                allLoggedInUserSessions.add(loggedInUserSession); 
+            }    
+        }
+        Collections.sort(allLoggedInUserSessions);//new Comparator<Session>()) {
+          for (int i = 0; i < allLoggedInUserSessions.size(); i++) {
+            Session session = allLoggedInUserSessions.get(i);
+              System.out.println("");
+               System.out.println(session.getStartTime());
+              
+        }
+  
+        return allLoggedInUserSessions ;
+    }
+    
+     
+     
 /*    public List<Integer> getAllSessionIDsOfATask(int taskID) throws SQLException {  
 // method only needed for getAllUserIDsAndNamesOfATask. May not need
         List<Integer> allSessionIDsOfATask = new ArrayList<>();

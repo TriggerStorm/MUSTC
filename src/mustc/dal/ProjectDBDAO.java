@@ -292,4 +292,15 @@ System.out.println(" client Name = " + clientName);
     }
       
       
+    public void removeProjectFromDB(Project projectToDelete) {
+    //  Removes a session from the Session table of the database given a Session data object
+        String sql = "DELETE FROM Projects WHERE id = ?";
+        try (Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1,projectToDelete.getProjectID());
+            pstmt.execute();
+        } catch (SQLException ex) {
+            System.out.println("Exception " + ex);
+        }
+    }
 }

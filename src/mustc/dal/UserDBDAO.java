@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mustc.be.User;
@@ -28,9 +30,9 @@ public class UserDBDAO {
     } 
     
     
-    public User addNewUserToDB(String userName, String email, String password, float salary, boolean isAdmin) { 
+    public User addNewUserToDB(String userName, String email, String password, float salary, String status) { 
     //  Adds a new user to the User table of the database given the users details. Generated an id key    
-        User newUser = new User(10, userName, email, password, salary, isAdmin);
+        User newUser = new User(10, userName, email, password, salary, status);
         String sql = "INSERT INTO Users(name, email, password, salary, admin) VALUES (?,?,?,?,?)";
         try (Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -39,7 +41,7 @@ public class UserDBDAO {
             pstmt.setString(3, password);
             pstmt.setFloat(4, salary);
             int admin = 0;
-            if(isAdmin == true)
+            if(status.equals("Admin"))
                 admin = 1;
             pstmt.setInt(5, admin);
             int affectedRows = pstmt.executeUpdate();
@@ -77,41 +79,43 @@ public class UserDBDAO {
                 String password = rs.getString("password");
                 Float salary = rs.getFloat("salary");
                 int admin = rs.getInt("admin");
-                boolean isAdmin = false;
+                String status = "Developer";
                 if(admin == 1)
-                    isAdmin = true;
-               user = new User(userID, userName, email, password, salary, isAdmin); 
+                    status = "Admin";
+               user = new User(userID, userName, email, password, salary, status); 
             }    
         }
         return user;
     }   
  
-    public User getAllUser(int userID) throws SQLException {
+    public List<User> getAllUsers() throws SQLException {
     //  Returns a User data object given a User id
-        User user = null;
-        String sql = "SELECT * FROM Users WHERE id = '" + userID + "'";  //  userName, email, password, salary, isAdmin 
+        List<User> allUsers = new ArrayList<>();
+    //    allUsers = null;
+        String sql = "SELECT id, name, email, salary, admin FROM Users";  //  userName, email, password, salary, isAdmin 
         try(Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql);   
             pstmt.execute();    
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()) //While you have something in the results
             {
+                int userID = rs.getInt("id");
                 String userName = rs.getString("name");
                 String email = rs.getString("email");
-                String password = rs.getString("password");
                 Float salary = rs.getFloat("salary");
                 int admin = rs.getInt("admin");
-                boolean isAdmin = false;
+                String status = "Developer";
                 if(admin == 1)
-                    isAdmin = true;
-               user = new User(userID, userName, email, password, salary, isAdmin); 
+                    status = "Admin";
+               User user = new User(userID, userName, email, salary, status); 
+                allUsers.add(user);
             }    
         }
-        return user;
+        return allUsers;
     }   
  
     
-    public User editUser (User editedUser, String userName, String email, String password, Float salary, boolean isAdmin) { 
+    public User editUser (User editedUser, String userName, String email, String password, Float salary, String status) { 
     //  Edits a user in the User table of the database given the users new details.  
         String sql = "UPDATE Users SET name = ?, email = ?, password = ?, salary = ? , admin = ? WHERE id = '" + editedUser.getUserID() + "'";
         try (  //Get a connection to the database.
@@ -124,7 +128,7 @@ public class UserDBDAO {
             pstmt.setString(3, password);
             pstmt.setFloat(4, salary);
             int admin = 0;
-            if(isAdmin == true)
+            if(status.equals("Admin"))
                 admin = 1;
             pstmt.setInt(5, admin);
             pstmt.executeUpdate();  // Execute SQL query.
@@ -132,7 +136,7 @@ public class UserDBDAO {
             editedUser.setEmail(email);
             editedUser.setPassword(password);   
             editedUser.setSalary(salary);
-            editedUser.setIsAdmin(isAdmin);
+            editedUser.setStatus(status);
             return editedUser;
         } catch (SQLServerException ex) {
             Logger.getLogger(UserDBDAO.class.getName()).log(Level.SEVERE, null, ex);

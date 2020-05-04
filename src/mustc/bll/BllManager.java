@@ -99,6 +99,11 @@ public class BllManager implements IBLL {
         return dalManager.editProject(editedProject, projectName, associatedClientID, projectRate, allocatedHours, isClosed);
     }
 
+    @Override
+    public void removeProjectFromDB(Project projectToDelete) {
+        dalManager.removeProjectFromDB(projectToDelete);
+    }
+    
     
     
     
@@ -112,7 +117,6 @@ public class BllManager implements IBLL {
     
     @Override
     public Task getTaskForUser(int taskID) {
-         System.out.println("BLL");
         return dalManager.getTaskForUser(taskID);
     }
 
@@ -146,7 +150,13 @@ public class BllManager implements IBLL {
         dalManager.removeTaskFromDB(taskToDelete);
     }
 
-    
+   
+    @Override
+    public List<Task> getUsersThreeRecentTasks(User loggedInUser) {
+        return dalManager.getUsersThreeRecentTasks(loggedInUser);
+        }
+
+      
     
     
 // SessionDBDAO methods                    
@@ -180,8 +190,8 @@ public class BllManager implements IBLL {
     
 // UserDBDAO methods        
     @Override
-    public User addNewUserToDB(String userName, String email, String password, float salary, boolean isAdmin) {
-        return dalManager.addNewUserToDB(userName, email, password, salary, isAdmin);
+    public User addNewUserToDB(String userName, String email, String password, float salary, String status) {
+        return dalManager.addNewUserToDB(userName, email, password, salary, status);
     }
 
     @Override
@@ -189,9 +199,15 @@ public class BllManager implements IBLL {
         return dalManager.getUser(userID);
     }
 
+
     @Override
-    public User editUser(User userToEdit, String userName, String email, String password, Float salary, boolean isAdmin) {
-        return dalManager.editUser(userToEdit, userName, email, password, salary, isAdmin);
+    public List<User> getAllUsers() {
+        return dalManager.getAllUsers();
+    }
+
+    @Override
+    public User editUser(User userToEdit, String userName, String email, String password, Float salary, String status) {
+        return dalManager.editUser(userToEdit, userName, email, password, salary, status);
     }
 
     @Override
@@ -199,6 +215,5 @@ public class BllManager implements IBLL {
         dalManager.removeUserFromDB(userToDelete);
     }
 
-    
    
 }
