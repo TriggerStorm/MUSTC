@@ -31,7 +31,7 @@ public class TaskDBDAO {
     private SessionDBDAO sessionDBDao;    
     public TaskDBDAO() {
             dbc = new DBConnection();
-            sessionDBDao = new SessionDBDAO();
+            sessionDBDao = new SessionDBDAO();  // DANGEROUS??
     }        
 
     public Task addNewTaskToDB(String taskName, int associatedProjectID) throws SQLException { 
@@ -245,7 +245,7 @@ public class TaskDBDAO {
         int recentTask1ID = -1;  // Initialiser value - not a real taskID        
         int recentTask2ID = -1;  // Initialiser value - not a real taskID   
         int recentTask3ID = -1;  // Initialiser value - not a real taskID   
-        List<Session> allLoggedInUserSessions = sessionDBDao.getAllSessionsStartTimeAndTaskID(loggedInUser);
+        List<Session> allLoggedInUserSessions = sessionDBDao.getAllLoggedInUsersSessionsStartTimseAndTaskIDs(loggedInUser);
         //  Get recentTask1
         if (allLoggedInUserSessions.size() > 0) {
             Session recentSession1 =  allLoggedInUserSessions.get(0);
@@ -306,7 +306,21 @@ System.out.println("recentTask3ID = " + recentTask3ID);
 */
     }
 
-   
+    public String getTaskName(int taskID) throws SQLException {
+        //  Returns a User data object given a User id
+        String taskName = "mock";
+        String sql = "SELECT name FROM Tasks WHERE id = '" + taskID + "'";  //  userName, email, password, salary, isAdmin 
+        try(Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                taskName = rs.getString("name");
+            }    
+        }
+        return taskName;
+    }
     
 
 }

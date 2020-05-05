@@ -171,6 +171,11 @@ public class BllManager implements IBLL {
     }
 
     @Override
+    public List<Session> getAllSessionsOfAUser(User loggedInUser) {
+        return dalManager.getAllSessionsOfAUser(loggedInUser);
+    }
+
+    @Override
     public List<Session> getAllSessionsOfATask(int taskID) {
         return dalManager.getAllSessionsOfATask(taskID);
     }

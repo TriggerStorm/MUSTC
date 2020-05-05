@@ -233,7 +233,7 @@ public class DalManager implements DalFaçade {
    @Override
     public List<Task> getUsersThreeRecentTasks(User loggedInUser) {
         try {
-            taskDBDao.getUsersThreeRecentTasks(loggedInUser);
+            return taskDBDao.getUsersThreeRecentTasks(loggedInUser);
         } catch (SQLException ex) {
             Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -246,8 +246,13 @@ public class DalManager implements DalFaçade {
     
     @Override
     public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
-        return sessionDBDao.addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime);
-    }
+        try {
+            return sessionDBDao.addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime);
+        } catch (SQLException ex) {
+            Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+   }
     
     
     @Override
@@ -260,7 +265,18 @@ public class DalManager implements DalFaçade {
         return null;
     }
 
-    
+ 
+    @Override
+    public List<Session> getAllSessionsOfAUser(User loggedInUser) {
+        try {
+            return sessionDBDao.getAllSessionsOfAUser(loggedInUser);
+        } catch (SQLException ex) {
+            Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+     
     @Override
     public List<Session> getAllSessionsOfATask(int taskID) {
         try {
@@ -327,6 +343,5 @@ public class DalManager implements DalFaçade {
         userDBDao.removeUserFromDB(userToDelete);
     }
 
-  
    
 }

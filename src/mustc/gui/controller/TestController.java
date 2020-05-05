@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import mustc.be.Project;
+import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
 import mustc.bll.BllManager;
@@ -100,9 +101,9 @@ public class TestController implements Initializable {
         }
   */      
  
-    User testUser = userDBDao.getUser(3);
+ /*   User testUser = userDBDao.getUser(14);
       List<Task> recentTask = taskDBDao.getUsersThreeRecentTasks(testUser);
-      
+ */     
  //    Task test = taskDBDao.addNewTaskToDB("testname", "stuff", 4);
  //    Task test = taskDBDao.getTaskForUser(2);
  //       Task test = taskDBDao.editTask(testt, "ed", "it", 2);
@@ -119,9 +120,9 @@ public class TestController implements Initializable {
         System.out.println("null");
         } else {
         System.out.println(test.getSessions().size()); 
-        }  */
+        }  
         System.out.println("");
- 
+ */
 /*        List<Task> allTasks = taskDBDao.getAllTasksForUser();
         for (int i = 0; i < allTasks.size(); i++) {
             Task test = allTasks.get(i);
@@ -156,16 +157,20 @@ public class TestController implements Initializable {
   //      Session test = sessionDBDao.getSession(19);
  //       Session test = sessionDBDao.editSession(tests, 16, 10, "2020-04-20 16:36:00.0", "2020-04-20 17:58:00.0");
  //       sessionDBDao.removeSessionFromDB(test);
-     
-
- /*     System.out.println("");
+         User loggedInUser = userDBDao.getUser(1);
+         List<Session> allUserSessions = sessionDBDao.getAllSessionsOfAUser(loggedInUser);
+         for (int i = 0; i < allUserSessions.size(); i++) {
+            Session test = allUserSessions.get(i);
+            
+      System.out.println("");
         System.out.println("ID = " + test.getSessionID());
-        System.out.println(test.getAssociatedUserID());
+//        System.out.println(test.getAssociatedUserID());
         System.out.println(test.getAssociatedTaskID());
-        System.out.println(test.getStartTime());
+         System.out.println(test.getAssociatedTaskName());
+       System.out.println(test.getStartTime());
         System.out.println(test.getFinishTime());
         System.out.println("");
-  */      
+         } 
         
        
  //      User test = userDBDao.addNewUserToDB("Test", "test@test.com", "test", 666, true);

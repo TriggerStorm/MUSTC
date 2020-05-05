@@ -51,6 +51,7 @@ public interface IBLL {
 // SessionDBDAO methods            
     public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime);
     public Session getSession(int sessionID);
+    public List<Session> getAllSessionsOfAUser(User loggedInUser);
     public List<Session> getAllSessionsOfATask(int taskID);
     public Session editSession (Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime);
     public void removeSessionFromDB(Session sessionToDelete);
