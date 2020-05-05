@@ -105,7 +105,7 @@ public class Session implements Comparable<Session>{
     }
 
     public String getAssociatedTaskName() {
-        return associatedUserName;
+        return associatedTaskName;
     }
 
     public void setAssociatedTaskName(String associatedTaskName) {

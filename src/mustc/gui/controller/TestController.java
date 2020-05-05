@@ -158,13 +158,15 @@ public class TestController implements Initializable {
  //       Session test = sessionDBDao.editSession(tests, 16, 10, "2020-04-20 16:36:00.0", "2020-04-20 17:58:00.0");
  //       sessionDBDao.removeSessionFromDB(test);
          User loggedInUser = userDBDao.getUser(1);
-         List<Session> allUserSessions = sessionDBDao.getAllSessionsOfAUser(loggedInUser);
+ //        List<Session> allUserSessions = sessionDBDao.getAllSessionsOfAUser(loggedInUser);
+         List<Session> allUserSessions = sessionDBDao.getAllSessions();
          for (int i = 0; i < allUserSessions.size(); i++) {
             Session test = allUserSessions.get(i);
             
       System.out.println("");
         System.out.println("ID = " + test.getSessionID());
-//        System.out.println(test.getAssociatedUserID());
+        System.out.println(test.getAssociatedUserID());
+         System.out.println(test.getAssociatedUserName());
         System.out.println(test.getAssociatedTaskID());
          System.out.println(test.getAssociatedTaskName());
        System.out.println(test.getStartTime());
