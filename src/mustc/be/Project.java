@@ -58,17 +58,16 @@ public class Project {
         this.taskList = taskList;
     }
 
-    @Override
-    public String toString() {
-        return "Project{" + "projectID=" + projectID + ", projectName=" + projectName + ", associatedClientID=" + associatedClientID + ", clientName=" + clientName + ", phoneNr=" + phoneNr + ", projectRate=" + projectRate + ", allocatedHours=" + allocatedHours + ", myProjectHours=" + myProjectHours + ", totalHours=" + totalHours + ", totalPrice=" + totalPrice + ", taskList=" + taskList + ", noOfTasks=" + noOfTasks + ", isClosed=" + isClosed + '}';
-    }
-    
-
    /* @Override
     public String toString() {
-        return "Project{" + "phoneNr=" + phoneNr + '}';
-    }
-*/
+        return "Project{" + "projectID=" + projectID + ", projectName=" + projectName + ", associatedClientID=" + associatedClientID + ", clientName=" + clientName + ", phoneNr=" + phoneNr + ", projectRate=" + projectRate + ", allocatedHours=" + allocatedHours + ", myProjectHours=" + myProjectHours + ", totalHours=" + totalHours + ", totalPrice=" + totalPrice + ", taskList=" + taskList + ", noOfTasks=" + noOfTasks + ", isClosed=" + isClosed + '}';
+    }*/
+    
+    @Override
+    public String toString() {
+        return projectName;
+     }
+  
     
     
     //  User constructor2  

@@ -14,14 +14,14 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Trigger, Filip, Cecillia and Alan
+ * @author Trigger,and Alan
  */
 public class MUSTC extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("gui/view/Test.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("gui/view/UserView.fxml"));
 
         
         Scene scene = new Scene(root);

@@ -27,6 +27,8 @@ public class UserViewModel {
     private ObservableList<Session> sessionList; 
     private ObservableList<String> sString; 
     private Task task;
+    private ObservableList<Project> pj;
+    
     
     private ObservableList<Task> g1;
     private ObservableList<Task> g2;
@@ -49,13 +51,22 @@ public class UserViewModel {
         
     }
     
+    public ObservableList<Project> getAllProjectList(){
+      List<Project> allProjcets = bllManager.getAllProjectsForAdmin();
+      pj = FXCollections.observableArrayList(allProjcets);
+      
+      return pj;
+    }
+    
     // Task
     public ObservableList<Task> getAllTask(){
-         List<Task> allTask = bllManager.getAllUsersTasks();
+        return null;
+        /* List<Task> allTask = bllManager.getAllUsersTasks();
          taskList = FXCollections.observableArrayList(allTask);
-         return taskList;
+         return taskList;*/
     }
    
+    
    
     // Session
     public ObservableList<Session> getAllSession(){

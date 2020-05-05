@@ -54,7 +54,7 @@ public class UserViewController extends JFrame implements Initializable {
 
     private TextField tf_newtask;
     @FXML
-    private ComboBox<?> cb_project;
+    private ComboBox<Project> cb_project;
     @FXML
     private Button bn_add;
     @FXML
@@ -196,6 +196,7 @@ public class UserViewController extends JFrame implements Initializable {
         cb_task3.setPromptText(cb_task3.getItems().get(0).getTaskName());
         bn_task3.setText(cb_task3.getItems().get(0).getProjectName());
         
+        cb_project.setItems(userModel.getAllProjectList());
         /*Image image1 = new Image(userModel.taskImg1());
         Image image2 = new Image(userModel.taskImg2());
         Image image3 = new Image(userModel.taskImg3());
