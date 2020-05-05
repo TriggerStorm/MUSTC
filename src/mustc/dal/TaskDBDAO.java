@@ -92,7 +92,7 @@ public class TaskDBDAO {
                 ProjectDBDAO projectDBDao = new ProjectDBDAO();
                 String projectName = projectDBDao.getProjectName(associatedProjectID);
  /* } */            double myTaskHours = 45.25;  // MOCK DATA 
-                String developers = "";  // TO BE DONE
+                String developers = "o";  // TO BE DONE
                 taskInProject = new Task(taskID, taskName, associatedProjectID, projectName, myTaskHours, developers/*, taskDuration*/);       
             }    
         }
@@ -249,10 +249,12 @@ public class TaskDBDAO {
         //  Get recentTask1
         if (allLoggedInUserSessions.size() > 0) {
             Session recentSession1 =  allLoggedInUserSessions.get(0);
+            System.out.println("rs"+ recentSession1 );
             recentTask1ID = recentSession1.getAssociatedTaskID();
 System.out.println("recentTask1ID = " + recentTask1ID); 
             Task recentTask1 = getTaskForUser(recentTask1ID);  // makes recentTask1 the the first Task from recentSession list 
             recentTasks.add(recentTask1);
+            System.out.println("t1" + recentTask1);
         } else recentTasks = null; //  ?? MAYBE
         int counter = 1;  // counter keeps track of the session being examines for duplicate TaskIDs
         //  Get recentTask2
@@ -263,6 +265,7 @@ System.out.println("recentTask1ID = " + recentTask1ID);
 System.out.println("recentTask2ID = " + recentTask2ID); 
                 Task recentTask2 = getTaskForUser(recentTask2ID);  // makes recentTask2 the the second distinct Task from recentSession list                 
                 recentTasks.add(recentTask2);
+                System.out.println("t2" + recentTask2);
                 break;
             } else counter++;
         }
@@ -274,6 +277,7 @@ System.out.println("recentTask2ID = " + recentTask2ID);
 System.out.println("recentTask3ID = " + recentTask3ID); 
                 Task recentTask3 = getTaskForUser(recentTask3ID);  // makes recentTask2 the the second distinct Task from recentSession list                 
                 recentTasks.add(recentTask3);
+                System.out.println("t3" + recentTask3);
                 break;
             } else counter++;
         }

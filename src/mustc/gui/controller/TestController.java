@@ -101,7 +101,7 @@ public class TestController implements Initializable {
   */      
  
     User testUser = userDBDao.getUser(3);
-      List<Task> recentTask = taskDBDao.getUsersThreeRecentTasks(testUser);
+      //List<Task> recentTask = taskDBDao.getUsersThreeRecentTasks(testUser);
       
  //    Task test = taskDBDao.addNewTaskToDB("testname", "stuff", 4);
  //    Task test = taskDBDao.getTaskForUser(2);

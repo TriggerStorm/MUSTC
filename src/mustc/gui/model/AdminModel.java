@@ -30,11 +30,17 @@ public class AdminModel {
     private Task task;
     private ObservableList<Client> clientList;
     private ObservableList<User> userList;
-
+    private ObservableList<Task> task3;
+    private ObservableList<Task> task1;
+    private ObservableList<Task> g1;
+    private ObservableList<Task> g2;
+    private ObservableList<Task> g3;
+    
     public AdminModel() {
         bllManager = new BllManager();
-       // task = new Task("teast2");
         
+       
+ 
     }
     
     
@@ -69,10 +75,10 @@ public class AdminModel {
      }
 
     public ObservableList<User> getAllUser() {
-        return null;
-         //List<User> allUser = bllManager.getAllUsers();
-         //userList = FXCollections.observableArrayList(allUser);
-        // return userList;
+        
+         List<User> allUser = bllManager.getAllUsers();
+         userList = FXCollections.observableArrayList(allUser);
+         return userList;
     }
     
     public ObservableList<String> someStrings(){
@@ -106,4 +112,61 @@ public class AdminModel {
     public void removeTaskFromDB(){}
     
     
+    // user
+    public void addNewUserToDB(String userName, String email, String password, float salary, String status) {
+        bllManager.addNewUserToDB(userName, email, password, 0, status);
+    }
+    
+    //3 task
+    public void getUsersThreeRecentTaskss(User loggedInUser){
+        
+        User t = bllManager.getUser(1); // mok data
+        bllManager.getUsersThreeRecentTasks(t);
+        
+    }
+    public ObservableList<Task> get1() {
+        User t = bllManager.getUser(1);
+        Task g2 =  bllManager.getUsersThreeRecentTasks(t).get(0);
+        g1 = FXCollections.observableArrayList(g2);
+        
+        return g1;
+    }
+    public ObservableList<Task> get2() {
+    User t = bllManager.getUser(1);
+        Task g20 =  bllManager.getUsersThreeRecentTasks(t).get(1);
+        g2 = FXCollections.observableArrayList(g20);
+        
+        return g2;
+        
+    }
+    public ObservableList<Task> get3() {
+    User t = bllManager.getUser(1);
+        Task g2 =  bllManager.getUsersThreeRecentTasks(t).get(2);
+        g3 = FXCollections.observableArrayList(g2);
+        
+        return g3;
+        
+    }
+    
+    public Project getProjectForUser(int projectID){
+       return bllManager.getProjectForUser(projectID);
+    }
+    
+    public ObservableList<Task> getAllTaskFromProjectId(){
+        List<Task> allTask =  new ArrayList<>();
+        Task t1 = new Task("t1" + 0,0);
+        Task t2 = new Task("t2" + 5,5);
+        Task t3 = new Task("t3" + 1,5);
+        allTask.add(t1);
+        allTask.add(t2);
+        allTask.add(t3);
+        
+        task3 = FXCollections.observableArrayList(allTask);
+        
+        return task3;
+    }
+    
+    public Task getTaskForUser(int taskID) {
+        return bllManager.getTaskForUser(taskID);
+    }
 }

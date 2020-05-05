@@ -30,6 +30,11 @@ public class Session implements Comparable<Session>{
         this.startTime = startTime;
         this.finishTime = finishTime;
     }
+
+    @Override
+    public String toString() {
+        return "Session{" + "sessionID=" + sessionID + ", associatedUserID=" + associatedUserID + ", associatedTaskID=" + associatedTaskID + ", startTime=" + startTime + ", finishTime=" + finishTime + '}';
+    }
     
     
 

@@ -32,6 +32,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javax.swing.JFrame;
 import mustc.be.Project;
@@ -64,8 +65,6 @@ public class UserViewController extends JFrame implements Initializable {
     private Button bn_start_stop;
     @FXML
     private Label lb_tasktime;
-    @FXML
-    private Label lb_timetoday;
     @FXML
     private Label lb_loginuser;
     @FXML
@@ -136,13 +135,11 @@ public class UserViewController extends JFrame implements Initializable {
     private TableView<Session> TBV_Session;
     @FXML
     private TableColumn<Session, String> col_sesion_taskname;
-    @FXML
     private TableColumn<Session, String> col_sesion_date;
     @FXML
     private TableColumn<Session, String> col_sesion_start;
     @FXML
     private TableColumn<Session, String> col_sesion_stop;
-    @FXML
     private TableColumn<Session, String> col_sesion_myhours;
     @FXML
     private ScrollPane Sp_last3;
@@ -156,13 +153,13 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private JFXButton bn_task2;
     @FXML
-    private JFXComboBox<String> cb_task2;
+    private JFXComboBox<Task> cb_task2;
     @FXML
     private ImageView img_task2;
     @FXML
     private JFXButton bn_task3;
     @FXML
-    private JFXComboBox<String> cb_task3;
+    private JFXComboBox<Task> cb_task3;
     @FXML
     private ImageView img_task3;
    
@@ -171,7 +168,9 @@ public class UserViewController extends JFrame implements Initializable {
     int MaxWidth;
     boolean min;
     @FXML
-    private Button test;
+    private Text lb_task;
+    @FXML
+    private Text tb_project;
     
     
     
@@ -181,15 +180,21 @@ public class UserViewController extends JFrame implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userModel = new UserViewModel();
-        //cb_task1.setCellFactory("name");
-        cb_task1.setPromptText("call");
-        cb_task1.setItems(userModel.getAllTask());
-        //cb_task1.setItems(userModel.someStrings());
-        cb_task2.setItems(userModel.someStrings());
-        cb_task3.setItems(userModel.someStrings());
-        bn_task1.setText("Winzy");
-        bn_task2.setText("Wopzywa  Call");
-        bn_task3.setText("Stranger  Call");
+        
+        setProject();
+        setTask();
+                
+        cb_task1.setItems(userModel.get1());// dont work
+        cb_task1.setPromptText(cb_task1.getItems().get(0).getTaskName());
+        bn_task1.setText(cb_task1.getItems().get(0).getProjectName());
+        //resent task 2
+        cb_task2.setItems(userModel.get2());
+        cb_task2.setPromptText(cb_task2.getItems().get(0).getTaskName());
+        bn_task2.setText(cb_task2.getItems().get(0).getProjectName());
+        //recent task 3
+        cb_task3.setItems(userModel.get3());
+        cb_task3.setPromptText(cb_task3.getItems().get(0).getTaskName());
+        bn_task3.setText(cb_task3.getItems().get(0).getProjectName());
         
         /*Image image1 = new Image(userModel.taskImg1());
         Image image2 = new Image(userModel.taskImg2());
@@ -271,6 +276,7 @@ public class UserViewController extends JFrame implements Initializable {
         }
     }
     
+    
     public void addTask(){
         /*if(task_name != null){
         userModel.addNewTaskToDB(
@@ -296,7 +302,27 @@ public class UserViewController extends JFrame implements Initializable {
         
     }
 
+    
+    public void setProject(){
+    Col_pj_name.setCellValueFactory(new PropertyValueFactory<Project, String>("projectName"));
+        Col_pj_clint.setCellValueFactory(new PropertyValueFactory<Project, String>("clientName"));
+        Col_pj_contact.setCellValueFactory(new PropertyValueFactory<Project, String>("phoneNr"));
+        Col_pj_nroftask.setCellValueFactory(new PropertyValueFactory<Project, String>("noOfTasks"));
+        Col_pj_myhours.setCellValueFactory(new PropertyValueFactory<Project, String>("myProjectHours"));
+       
+        
+                Tbv_pj.setItems(userModel.getAllProject());
+    }
 
+    public void setTask(){
+        Col_task_taskname.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
+        Col_task_project.setCellValueFactory(new PropertyValueFactory<Task, String>("projectName"));
+        Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("developers"));
+        Col_task_myhours.setCellValueFactory(new PropertyValueFactory<Task, String>("myTaskHours"));
+       
+                 tbv_task.setItems(userModel.getAllTask());
+    }
+    
     @FXML
     private void tap_handel_project(Event event) {
         /*Col_pj_name.setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
@@ -309,11 +335,11 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void tap_handel_task(Event event) {
-        Col_task_taskname.setCellValueFactory(new PropertyValueFactory<Task, String>("name"));
+       /* Col_task_taskname.setCellValueFactory(new PropertyValueFactory<Task, String>("name"));
         Col_task_project.setCellValueFactory(new PropertyValueFactory<Task, String>("Project"));
         Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("devs"));
         Col_task_myhours.setCellValueFactory(new PropertyValueFactory<Task, String>("myHours"));
-        tbv_task.setItems(userModel.getAllTask());
+        tbv_task.setItems(userModel.getAllTask());*/
     }
 
     @FXML
@@ -323,21 +349,21 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void tap_handel_sesion(Event event) {
-        col_sesion_taskname.setCellValueFactory(new PropertyValueFactory<Session, String>("taskName"));
+       /* col_sesion_taskname.setCellValueFactory(new PropertyValueFactory<Session, String>("taskName"));
         col_sesion_date.setCellValueFactory(new PropertyValueFactory<Session, String>("date"));
         col_sesion_start.setCellValueFactory(new PropertyValueFactory<Session, String>("start"));
         col_sesion_stop.setCellValueFactory(new PropertyValueFactory<Session, String>("stop"));
         col_sesion_myhours.setCellValueFactory(new PropertyValueFactory<Session, String>("myHours"));
-        TBV_Session.setItems(userModel.getAllSession());
+        TBV_Session.setItems(userModel.getAllSession());*/
         
     }
 
     @FXML
     private void handel_task1(ActionEvent event) {
-        Task selectedItem = cb_task1.getSelectionModel().getSelectedItem();
+        /*Task selectedItem = cb_task1.getSelectionModel().getSelectedItem();
         String toString = selectedItem.toString();
         bn_task1.setText("Task"+ " " + toString);
-        System.out.println(toString);
+        System.out.println(toString);*/
         
                 
     }
@@ -350,9 +376,6 @@ public class UserViewController extends JFrame implements Initializable {
     private void handle_task3(ActionEvent event) {
     }
 
-    @FXML
-    private void test(ActionEvent event) {
-    }
     
     
 

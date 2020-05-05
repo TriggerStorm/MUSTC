@@ -233,7 +233,7 @@ public class DalManager implements DalFaçade {
    @Override
     public List<Task> getUsersThreeRecentTasks(User loggedInUser) {
         try {
-            taskDBDao.getUsersThreeRecentTasks(loggedInUser);
+           return taskDBDao.getUsersThreeRecentTasks(loggedInUser);
         } catch (SQLException ex) {
             Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
         }

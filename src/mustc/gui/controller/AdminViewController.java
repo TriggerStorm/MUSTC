@@ -30,6 +30,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import mustc.be.Client;
 import mustc.be.Project;
@@ -62,8 +63,6 @@ public class AdminViewController implements Initializable {
     private Button bn_start_stop;
     @FXML
     private Label lb_tasktime;
-    @FXML
-    private Label lb_timetoday;
     @FXML
     private Label lb_loginuser;
     @FXML
@@ -158,8 +157,6 @@ public class AdminViewController implements Initializable {
     @FXML
     private TableColumn<Client, String> Col_clint_totalhours;
     @FXML
-    private TableColumn<Client, String> Col_clint_totalprice;
-    @FXML
     private JFXTextField tf_clint_name;
     @FXML
     private JFXButton bn_clint_add;
@@ -234,13 +231,13 @@ public class AdminViewController implements Initializable {
     @FXML
     private JFXButton bn_task2;
     @FXML
-    private JFXComboBox<String> cb_task2;
+    private JFXComboBox<Task> cb_task2;
     @FXML
     private ImageView img_task2;
     @FXML
     private JFXButton bn_task3;
     @FXML
-    private JFXComboBox<String> cb_task3;
+    private JFXComboBox<Task> cb_task3;
     @FXML
     private ImageView img_task3;
     
@@ -248,8 +245,32 @@ public class AdminViewController implements Initializable {
     private AdminModel adminModel;
     int MaxWidth;
     boolean min;
+    
+    
     @FXML
     private TableColumn<?, ?> col_sesion_Developers;
+    @FXML
+    private Button bn_filepath;
+    @FXML
+    private JFXTextField tf_user_email;
+    @FXML
+    private JFXTextField tf_user_password;
+    @FXML
+    private Text lb_task;
+    @FXML
+    private Text tb_project;
+    @FXML
+    private JFXTextField tf_session_name;
+    @FXML
+    private JFXTextField tf_session_dev;
+    @FXML
+    private JFXTextField tf_session_start;
+    @FXML
+    private JFXTextField tf_session_stop;
+    @FXML
+    private JFXButton bn_session_edit;
+    @FXML
+    private JFXButton bn_session_delete;
     
     
     
@@ -264,15 +285,26 @@ public class AdminViewController implements Initializable {
         setClint();
         setProject();
         setTask();
+        setUser();
+        
+        //adminModel.getUsersThreeRecentTasks(adminModel.getUser(1));
         //cb_task1.setSelectionModel(Task);
         // cb_task1.setItems(adminModel.getAllTask());
+       
+        //recent task 1
+        cb_task1.setItems(adminModel.get1());// dont work
+        cb_task1.setPromptText(cb_task1.getItems().get(0).getTaskName());
+        bn_task1.setText(cb_task1.getItems().get(0).getProjectName());
+        //resent task 2
+        cb_task2.setItems(adminModel.get2());
+        cb_task2.setPromptText(cb_task2.getItems().get(0).getTaskName());
+        bn_task2.setText(cb_task2.getItems().get(0).getProjectName());
+        //recent task 3
+        cb_task3.setItems(adminModel.get3());
+        cb_task3.setPromptText(cb_task3.getItems().get(0).getTaskName());
+        bn_task3.setText(cb_task3.getItems().get(0).getProjectName());
         
-        //cb_task1.setItems(userModel.someStrings());
-        // cb_task2.setItems(adminModel.someStrings());
-        //cb_task3.setItems(adminModel.someStrings());
-      bn_task1.setText("Winzy  Call");
-      bn_task2.setText("Wopzywa  Call");
-      bn_task3.setText("Stranger  Call");
+        //image work in progress
         /*Image image1 = new Image(userModel.taskImg1());
         Image image2 = new Image(userModel.taskImg2());
         Image image3 = new Image(userModel.taskImg3());
@@ -384,7 +416,15 @@ public class AdminViewController implements Initializable {
        // Col_task_totalprice.setCellValueFactory(new PropertyValueFactory<Task, String>("totalPrice"));
                  tbv_task.setItems(adminModel.getAllTask());
     }
-
+    
+    public void setUser(){
+    col_user_name.setCellValueFactory(new PropertyValueFactory<User, String>("userName"));
+        col_user_$perhour.setCellValueFactory(new PropertyValueFactory<User, String>("salary"));
+        col_user_email.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
+        col_user_status.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
+        
+            tbv_user.setItems(adminModel.getAllUser());
+    }
     @FXML
     private void toggel_size(ActionEvent event) {
         ToggelSize();
@@ -402,7 +442,7 @@ public class AdminViewController implements Initializable {
         Col_clint_nrofpj.setCellValueFactory(new PropertyValueFactory<Client, String>("noOfProjects"));
         Col_clint_$perhour.setCellValueFactory(new PropertyValueFactory<Client, String>("standardRate"));
         Col_clint_totalhours.setCellValueFactory(new PropertyValueFactory<Client, String>("totalHours"));
-       // Col_clint_totalprice.setCellValueFactory(new PropertyValueFactory<Client, String>("totalPrice"));
+        // Col_clint_totalprice.setCellValueFactory(new PropertyValueFactory<Client, String>("totalPrice"));
         Tbv_Clint.setItems(adminModel.getAllClient());*/
     }
 
@@ -428,7 +468,7 @@ public class AdminViewController implements Initializable {
         Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("developers"));
         Col_task_$perhour.setCellValueFactory(new PropertyValueFactory<Task, String>("projectRate"));
         Col_task_totalhours.setCellValueFactory(new PropertyValueFactory<Task, String>("totalTaskHours"));
-       // Col_task_totalprice.setCellValueFactory(new PropertyValueFactory<Task, String>("totalPrice"));
+        // Col_task_totalprice.setCellValueFactory(new PropertyValueFactory<Task, String>("totalPrice"));
                  tbv_task.setItems(adminModel.getAllTask());*/
     }
 
@@ -449,30 +489,44 @@ public class AdminViewController implements Initializable {
 
     @FXML
     private void handle_tap_user(Event event) {
-        
+        /*
         col_user_name.setCellValueFactory(new PropertyValueFactory<User, String>("userName"));
         col_user_$perhour.setCellValueFactory(new PropertyValueFactory<User, String>("salary"));
         col_user_email.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
         col_user_status.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
         
-            tbv_user.setItems(adminModel.getAllUser());
+            tbv_user.setItems(adminModel.getAllUser());*/
     }
 
     
 
     @FXML
     private void handel_task1(ActionEvent event) throws SQLException {
-        //ProjectDBDAO.getAllProjectsForAdmin();
-        //adminModel.getAllProject();
+        //cb_task1.getSelectionModel().getSelectedItem();
+       // System.out.println("t1" + bn_task1.getText());
+       System.out.println("cb1"+ cb_task1.getSelectionModel().getSelectedItem().getAssociatedProjectID());
+       // System.out.println("cb1"+ cb_task1.getSelectionModel().getSelectedItem().getTaskID());
+        //if
+            
+            lb_task.setText(cb_task1.getSelectionModel().getSelectedItem().getTaskName());
+            tb_project.setText(cb_task1.getSelectionModel().getSelectedItem().getProjectName());
+        //else
+            //lb_task.setText(cb_task1.getItems().get(0).getTaskName());
+            //tb_project.setText(cb_task1.getItems().get(0).getProjectName());
+        
         
     }
 
     @FXML
     private void handle_task2(ActionEvent event) {
+        lb_task.setText(cb_task2.getSelectionModel().getSelectedItem().getTaskName());
+            tb_project.setText(cb_task2.getSelectionModel().getSelectedItem().getProjectName());
     }
 
     @FXML
     private void handle_task3(ActionEvent event) {
+        lb_task.setText(cb_task3.getSelectionModel().getSelectedItem().getTaskName());
+            tb_project.setText(cb_task3.getSelectionModel().getSelectedItem().getProjectName());
     }
 
     @FXML
@@ -499,11 +553,11 @@ public class AdminViewController implements Initializable {
 
     @FXML
     private void handel_project_add(ActionEvent event) {
-        adminModel.addNewProjectToDB(
+       /* adminModel.addNewProjectToDB(
                 tf_pj_name.getText().trim(),
                 cb_pj_clint.getSelectionModel().getSelectedItem(),
                 tf_pj_nr.getText().trim(),
-                tf_pj_$perhour.getText().trim());
+                tf_pj_$perhour.getText().trim());*/
                 
     }
 
@@ -547,8 +601,10 @@ public class AdminViewController implements Initializable {
     private void handel_user_add(ActionEvent event) {
         /*adminModel.addNewUserToDB(
                 tf_user_name.getText().trim(),
-                cb_user_admin.getSelectionModel().getSelectedItem(),
-                tf_user_$perhour.getText().trim());*/
+                tf_user_email.getText().trim(),
+                tf_user_password.getText().trim(),
+                tf_user_$perhour.getText().trim(),// add convter to flote
+                cb_user_admin.getSelectionModel().getSelectedItem());*/
     }
 
     @FXML
@@ -562,5 +618,17 @@ public class AdminViewController implements Initializable {
     @FXML
     private void handel_user_delete(ActionEvent event) {
        /*adminModel.removeUserFromDB(userToDelete);*/
+    }
+
+    @FXML
+    private void handle_filepath(ActionEvent event) {
+    }
+
+    @FXML
+    private void handel_session_edit(ActionEvent event) {
+    }
+
+    @FXML
+    private void handel_session_delete(ActionEvent event) {
     }
 }

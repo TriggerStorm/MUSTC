@@ -37,23 +37,24 @@ public class Task {
         this.developers = developers; 
         this.sessions = sessions;
     }
-    public Task(String taskName ){
+    public Task(String taskName,double totalTaskHours ){
         this.taskName = taskName;
+        this.totalTaskHours = totalTaskHours;
         
     }
 
-    @Override
+   /* @Override
     public String toString() {
         return "Task{" + "taskID=" + taskID + ", taskName=" + taskName + ", associatedProjectID=" + associatedProjectID + ", projectName=" + projectName + ", projectRate=" + projectRate + ", myTaskHours=" + myTaskHours + ", totalTaskHours=" + totalTaskHours + ", developers=" + developers + ", sessions=" + sessions + '}';
-    }
+    }*/
     
 
     
 
-    /*@Override
+    @Override
     public String toString() {
         return  taskName;// + taskDuration ;
-    }*/
+    }
 
     
 

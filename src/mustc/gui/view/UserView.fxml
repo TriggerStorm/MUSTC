@@ -37,11 +37,13 @@
       <Button fx:id="bn_add" layoutX="186.0" layoutY="33.0" mnemonicParsing="false" text="add" AnchorPane.leftAnchor="186.0" AnchorPane.topAnchor="35.0" />
       <TextField fx:id="search" layoutX="20.0" layoutY="70.0" prefHeight="25.0" prefWidth="162.0" promptText="Search" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0" />
       <ToggleButton fx:id="tb_toggle" layoutX="197.0" layoutY="70.0" mnemonicParsing="false" onAction="#toggel_size" prefHeight="25.0" prefWidth="23.0" />
-      <Button fx:id="bn_start_stop" layoutX="16.0" layoutY="355.0" mnemonicParsing="false" onAction="#handel_startsotp" prefHeight="40.0" prefWidth="81.0" text="Start/Stop" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="16.0" />
-      <Label fx:id="lb_tasktime" layoutX="195.0" layoutY="356.0" text="1:39" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="195.0" />
-      <Label fx:id="lb_timetoday" layoutX="195.0" layoutY="379.0" text="1:39" AnchorPane.bottomAnchor="54.0" AnchorPane.leftAnchor="195.0" />
-      <Text layoutX="150.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Task" wrappingWidth="29.44921875" AnchorPane.bottomAnchor="77.98828125" AnchorPane.leftAnchor="150.0" />
-      <Text layoutX="147.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="today" AnchorPane.bottomAnchor="55.98828125" AnchorPane.leftAnchor="147.0" />
+      <Button fx:id="bn_start_stop" layoutX="16.0" layoutY="355.0" mnemonicParsing="false" onAction="#handel_startsotp" prefHeight="40.0" prefWidth="52.0" text="Start" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="16.0" />
+      <Label fx:id="lb_tasktime" layoutX="195.0" layoutY="356.0" text="01:25:54" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="163.0">
+         <font>
+            <Font size="17.0" />
+         </font></Label>
+      <Text fx:id="lb_task" layoutX="150.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Task" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="76.0" />
+      <Text fx:id="tb_project" layoutX="147.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="76.0" />
       <ToolBar layoutY="1.0" prefHeight="25.0" prefWidth="242.0" style="-fx-background-color: lightgrey;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <Label text="MUSTC" />
@@ -202,11 +204,9 @@
                      <children>
                         <TableView fx:id="TBV_Session" prefHeight="422.0" prefWidth="740.0">
                            <columns>
-                              <TableColumn fx:id="col_sesion_taskname" prefWidth="148.0" text="Task name" />
-                              <TableColumn fx:id="col_sesion_date" prefWidth="148.0" text="Date" />
-                              <TableColumn fx:id="col_sesion_start" prefWidth="148.0" text="Start" />
-                              <TableColumn fx:id="col_sesion_stop" prefWidth="148.0" text="Stop" />
-                              <TableColumn fx:id="col_sesion_myhours" prefWidth="148.0" text="My hours" />
+                              <TableColumn fx:id="col_sesion_taskname" prefWidth="246.0" text="Task name" />
+                              <TableColumn fx:id="col_sesion_start" prefWidth="246.0" text="Start" />
+                              <TableColumn fx:id="col_sesion_stop" prefWidth="246.0" text="Stop" />
                            </columns>
                         </TableView>
                      </children>
@@ -215,6 +215,5 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Button fx:id="test" layoutX="193.0" layoutY="410.0" mnemonicParsing="false" onAction="#test" prefHeight="27.0" prefWidth="27.0" text="Button" />
    </children>
 </AnchorPane>
