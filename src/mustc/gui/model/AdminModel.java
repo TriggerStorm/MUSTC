@@ -5,6 +5,7 @@
  */
 package mustc.gui.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +36,7 @@ public class AdminModel {
     private ObservableList<Task> g1;
     private ObservableList<Task> g2;
     private ObservableList<Task> g3;
+     private ObservableList<Project> pj;
     
     public AdminModel() {
         bllManager = new BllManager();
@@ -51,14 +53,23 @@ public class AdminModel {
        pjList = FXCollections.observableArrayList(allProjcets);
        return pjList;
     }
-
+    public ObservableList<Project> getAllProjectsIDsAndNames() {
+        List<Project> allProjcets =bllManager.getAllProjectsIDsAndNames();
+        pj = FXCollections.observableArrayList(allProjcets);
+        return pj;
+    }
+    
     public ObservableList<Client> getAllClient() {
         
         List<Client> allClients = bllManager.getAllClients();
         clientList = FXCollections.observableArrayList(allClients);
         return clientList;
     }
-
+    
+    public Task addNewTaskToDB(String taskName, String description, int associatedProjectID){
+       
+       return bllManager.addNewTaskToDB(taskName, description, associatedProjectID);
+   }
     public ObservableList<Task> getAllTask() {
        // List<Task> allTask =  new ArrayList<>();
       //  allTask.add(task);
@@ -68,10 +79,10 @@ public class AdminModel {
          return taskList;
     }
      public ObservableList<Session>getAllSessions(){
-         return null;
-         // List<Session> allSession = bllManager.getAllSession();
-         //sessionList = FXCollections.observableArrayList(allSession);
-         //return sessionList;
+         
+          List<Session> allSession = bllManager.getAllSessions();
+         sessionList = FXCollections.observableArrayList(allSession);
+         return sessionList;
      }
 
     public ObservableList<User> getAllUser() {
@@ -168,5 +179,11 @@ public class AdminModel {
     
     public Task getTaskForUser(int taskID) {
         return bllManager.getTaskForUser(taskID);
+    }
+    public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
+       return bllManager.addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime);
+    }
+    public String localDateTimeToString(LocalDateTime LDT) {
+        return bllManager.localDateTimeToString(LDT);
     }
 }

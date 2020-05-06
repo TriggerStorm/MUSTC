@@ -159,5 +159,19 @@ public class UserDBDAO {
         }
     }
     
-    
+    public String getUserName(int userID) throws SQLException {
+        //  Returns a User data object given a User id
+        String userName = "mock";
+        String sql = "SELECT name FROM Users WHERE id = '" + userID + "'";  //  userName, email, password, salary, isAdmin 
+        try(Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                userName = rs.getString("name");
+            }    
+        }
+        return userName;
+    }
 }

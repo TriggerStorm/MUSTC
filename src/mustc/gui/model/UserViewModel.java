@@ -5,6 +5,7 @@
  */
 package mustc.gui.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -60,20 +61,23 @@ public class UserViewModel {
     
     // Task
     public ObservableList<Task> getAllTask(){
-        return null;
-        /* List<Task> allTask = bllManager.getAllUsersTasks();
+        
+         List<Task> allTask = bllManager.getAllTasksForUser();
          taskList = FXCollections.observableArrayList(allTask);
-         return taskList;*/
+         return taskList;
     }
    
     
-   
+    public Task addNewTaskToDB(String taskName, String description, int associatedProjectID){
+       
+       return bllManager.addNewTaskToDB(taskName, description, associatedProjectID);
+   }
     // Session
     public ObservableList<Session> getAllSession(){
-        return null;
-         // List<Session> allSession = bllManager.getAllSession();
-         //sessionList = FXCollections.observableArrayList(allSession);
-         //return sessionList;
+          User t = bllManager.getUser(1);
+          List<Session> allSession = bllManager.getAllSessionsOfAUser(t);
+          sessionList = FXCollections.observableArrayList(allSession);
+          return sessionList;
     }
     
     public ObservableList<Task> get1() {
@@ -99,6 +103,10 @@ public class UserViewModel {
         return g3;
         
     }
-    
-    
+    public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
+       return bllManager.addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime);
+    }
+    public String localDateTimeToString(LocalDateTime LDT) {
+        return bllManager.localDateTimeToString(LDT);
+    }
 }

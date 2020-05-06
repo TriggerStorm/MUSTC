@@ -45,9 +45,9 @@ public class SessionDBDAO {
 
     
     
-     public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) { 
+     public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) throws SQLException { 
     //  Adds a new Session to the Sessions table of the database given the sessions details. Generates an id key    
-        Session newSession = new Session(0, associatedUserID, associatedTaskID, startTime, finishTime);
+        Session newSession = new Session(0, associatedUserID, ""/* associatedUserName*/, associatedTaskID, ""/*associatedTaskName*/, startTime, finishTime);
         String sql = "INSERT INTO Sessions(associatedUser, associatedTask, startTime, finishTime) VALUES (?,?,?,?)";
         try (Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -70,7 +70,9 @@ public class SessionDBDAO {
             Logger.getLogger(SessionDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(SessionDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }            
+        String associatedUserName = getSessionsUserName(associatedUserID);           
+
         return newSession;
     }
      
@@ -93,14 +95,78 @@ public class SessionDBDAO {
     //            LocalDateTime startTime = sqlStartTime.toLocalDate();
     //            java.sql.Date startTime = rs.getDate("StartTime");
     //            java.sql.Date finishTime = rs.getDate("FinishTime");
-                session = new Session(sessionID, associatedUserID, associatedTaskID, startTime, finishTime);
+                String associatedUserName = getSessionsUserName(associatedUserID); 
+                String associatedTaskName = getSessionsTaskName( associatedTaskID);
+                session = new Session(sessionID, associatedUserID, associatedUserName, associatedTaskID, associatedTaskName, startTime, finishTime);
             }    
         }
         return session ;
     }
     
-          
-    public List<Session> getAllSessionsOfATask(int taskID) throws SQLException {
+     public List<Session> getAllSessions() throws SQLException { // Admin view
+    // Returns a list of Sessions where the associatedUser = loggedInUser
+        List<Session> allLoggedInUserSessions = new ArrayList<>();
+        String sql = "SELECT * FROM Sessions"; 
+        try(Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) // While you have something in the results
+            {
+                int sessionID = rs.getInt("id");
+                int associatedUserID = rs.getInt("AssociatedUser");
+                String associatedUserName = getSessionsUserName(associatedUserID);
+                int associatedTaskID =  rs.getInt("associatedTask");
+                String associatedTaskName = getSessionsTaskName(associatedTaskID);
+                String startTime = rs.getString("startTime");
+                 String finishTime = rs.getString("FinishTime");
+                Session loggedInUserSession = new Session(sessionID, associatedUserID, associatedUserName, associatedTaskID, associatedTaskName, startTime, finishTime);
+                allLoggedInUserSessions.add(loggedInUserSession); 
+            }    
+        }
+        Collections.sort(allLoggedInUserSessions);//new Comparator<Session>()) {
+          for (int i = 0; i < allLoggedInUserSessions.size(); i++) {
+            Session session = allLoggedInUserSessions.get(i);
+              System.out.println("");
+               System.out.println(session.getStartTime());
+              
+        }
+  
+        return allLoggedInUserSessions ;
+    }
+ 
+       public List<Session> getAllSessionsOfAUser(User loggedInUser) throws SQLException { // Admin view
+    // Returns a list of Sessions where the associatedUser = loggedInUser
+        List<Session> allLoggedInUserSessions = new ArrayList<>();
+        int loggedInUserID = loggedInUser.getUserID();
+        String sql = "SELECT * FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'"; 
+        try(Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) // While you have something in the results
+            {
+                int sessionID = rs.getInt("id");
+                int associatedTaskID =  rs.getInt("associatedTask");
+                String associatedTaskName = getSessionsTaskName(associatedTaskID);
+                String startTime = rs.getString("startTime");
+                 String finishTime = rs.getString("FinishTime");
+                Session loggedInUserSession = new Session(sessionID, associatedTaskID, associatedTaskName, startTime, finishTime);
+                allLoggedInUserSessions.add(loggedInUserSession); 
+            }    
+        }
+        Collections.sort(allLoggedInUserSessions);//new Comparator<Session>()) {
+          for (int i = 0; i < allLoggedInUserSessions.size(); i++) {
+            Session session = allLoggedInUserSessions.get(i);
+              System.out.println("");
+               System.out.println(session.getStartTime());
+              
+        }
+  
+        return allLoggedInUserSessions ;
+    }
+     
+    public List<Session> getAllSessionsOfATask(int taskID) throws SQLException {  // Work in progress
         List<Session> allSessionsOfATask = new ArrayList<>();
 //        allSessionsOfATask = null;
         String sql = "SELECT * FROM Sessions WHERE associatedTask = '" + taskID + "'"; 
@@ -112,26 +178,25 @@ public class SessionDBDAO {
             {
                 int sessionID = rs.getInt("id");
                 int AssociatedUserID =  rs.getInt("associatedUser");
-                int associatedTaskID =  rs.getInt("associatedTask");
-                String startTime = "0"; //rs.getString("startTime");
-                String finishTime = "1"; //rs.getString("finishTime");            
+ //               int associatedTaskID =  rs.getInt("associatedTask");
+                String startTime = rs.getString("startTime");
+                String finishTime = rs.getString("finishTime");
+                String associatedUserName = getSessionsUserName(AssociatedUserID);
  /*System.out.println("");
  System.out.println("ID = " + sessionID);               
  System.out.println("AssociatedUserID = " + AssociatedUserID);               
  System.out.println("associatedTaskID = " + associatedTaskID);               
  System.out.println("startTime = " + startTime);               
  System.out.println("finishTime = " + finishTime);               
- */               Session sessionInTask = new Session(sessionID, AssociatedUserID, associatedTaskID, startTime, finishTime);
+ */               Session sessionInTask = new Session(sessionID, AssociatedUserID, associatedUserName, startTime, finishTime);
                 allSessionsOfATask.add(sessionInTask); 
             }    
         }
         return allSessionsOfATask ;
     }
     
-    public List<Session> getAllSessionsStartTimeAndTaskID(User loggedInUser) throws SQLException {
-    // UNTESTED
-  //      PriorityQueue<Task> allUserTasksPQ = new PriorityQueue<>(comparator);
-  
+    public List<Session> getAllLoggedInUsersSessionsStartTimseAndTaskIDs(User loggedInUser) throws SQLException {
+    // Returns a list of Sessions where the associatedUser = loggedInUser
         List<Session> allLoggedInUserSessions = new ArrayList<>();
         int loggedInUserID = loggedInUser.getUserID();
         String sql = "SELECT associatedTask, StartTime FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'"; 
@@ -143,7 +208,7 @@ public class SessionDBDAO {
             {
                 int associatedTaskID =  rs.getInt("associatedTask");
                 String startTime = rs.getString("startTime");
-               Session loggedInUserSession = new Session(associatedTaskID, startTime);
+                Session loggedInUserSession = new Session(associatedTaskID, startTime);
                 allLoggedInUserSessions.add(loggedInUserSession); 
             }    
         }
@@ -300,6 +365,20 @@ public class SessionDBDAO {
             System.out.println("Exception " + ex);
         }
     }
-      
+     
+    
+    private String getSessionsUserName(int associatedUserID) throws SQLException {
+        UserDBDAO userDBDao = new UserDBDAO();
+        String associatedUserName = userDBDao.getUserName(associatedUserID);
+        return associatedUserName;
+    }
+    
+    
+    private String getSessionsTaskName(int associatedTaskID) throws SQLException {
+        TaskDBDAO taskDBDao = new TaskDBDAO();
+        String associatedTaskName = taskDBDao.getTaskName(associatedTaskID);
+        return associatedTaskName;
+    }
+    
     
 }

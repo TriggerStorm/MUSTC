@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -52,7 +53,7 @@ public class AdminViewController implements Initializable {
     @FXML
     private TextField tf_newtask;
     @FXML
-    private ComboBox<?> cb_project;
+    private ComboBox<Project> cb_project;
     @FXML
     private Button bn_add;
     @FXML
@@ -137,7 +138,8 @@ public class AdminViewController implements Initializable {
     private TableView<Session> tbv_session;
     @FXML
     private TableColumn<Session, String> col_sesion_taskname;
-    private TableColumn<Session, String> col_sesion_date;
+    @FXML
+    private TableColumn<Session, String> col_sesion_Developers;
     @FXML
     private TableColumn<Session, String> col_sesion_start;
     @FXML
@@ -245,10 +247,11 @@ public class AdminViewController implements Initializable {
     private AdminModel adminModel;
     int MaxWidth;
     boolean min;
+    boolean isStarted;
+    String startTime;
+    Task selectTask;
     
     
-    @FXML
-    private TableColumn<?, ?> col_sesion_Developers;
     @FXML
     private Button bn_filepath;
     @FXML
@@ -286,6 +289,7 @@ public class AdminViewController implements Initializable {
         setProject();
         setTask();
         setUser();
+        setSession();
         
         //adminModel.getUsersThreeRecentTasks(adminModel.getUser(1));
         //cb_task1.setSelectionModel(Task);
@@ -304,6 +308,8 @@ public class AdminViewController implements Initializable {
         cb_task3.setPromptText(cb_task3.getItems().get(0).getTaskName());
         bn_task3.setText(cb_task3.getItems().get(0).getProjectName());
         
+        cb_project.setItems(adminModel.getAllProjectsIDsAndNames());
+        
         //image work in progress
         /*Image image1 = new Image(userModel.taskImg1());
         Image image2 = new Image(userModel.taskImg2());
@@ -316,6 +322,7 @@ public class AdminViewController implements Initializable {
     public AdminViewController() {
         MaxWidth = 260;
         min = true;
+        isStarted = false;
     }
     
     public void sizeExpantion(){
@@ -425,6 +432,20 @@ public class AdminViewController implements Initializable {
         
             tbv_user.setItems(adminModel.getAllUser());
     }
+    
+    public void setSession(){
+     col_sesion_taskname.setCellValueFactory(new PropertyValueFactory<Session, String>("associatedTaskName"));
+        col_sesion_Developers.setCellValueFactory(new PropertyValueFactory<Session, String>("associatedUserName"));
+        col_sesion_start.setCellValueFactory(new PropertyValueFactory<Session, String>("startTime"));
+        col_sesion_stop.setCellValueFactory(new PropertyValueFactory<Session, String>("finishTime"));
+        
+            tbv_session.setItems(adminModel.getAllSessions());
+    }
+    
+    public void addTask(){
+        adminModel.addNewTaskToDB(tf_newtask.getText(),"as",cb_project.getSelectionModel().getSelectedItem().getProjectID());
+    }
+    
     @FXML
     private void toggel_size(ActionEvent event) {
         ToggelSize();
@@ -507,7 +528,7 @@ public class AdminViewController implements Initializable {
        System.out.println("cb1"+ cb_task1.getSelectionModel().getSelectedItem().getAssociatedProjectID());
        // System.out.println("cb1"+ cb_task1.getSelectionModel().getSelectedItem().getTaskID());
         //if
-            
+            selectTask = cb_task1.getSelectionModel().getSelectedItem();
             lb_task.setText(cb_task1.getSelectionModel().getSelectedItem().getTaskName());
             tb_project.setText(cb_task1.getSelectionModel().getSelectedItem().getProjectName());
         //else
@@ -519,12 +540,14 @@ public class AdminViewController implements Initializable {
 
     @FXML
     private void handle_task2(ActionEvent event) {
+        selectTask = cb_task2.getSelectionModel().getSelectedItem();
         lb_task.setText(cb_task2.getSelectionModel().getSelectedItem().getTaskName());
             tb_project.setText(cb_task2.getSelectionModel().getSelectedItem().getProjectName());
     }
 
     @FXML
     private void handle_task3(ActionEvent event) {
+        selectTask = cb_task3.getSelectionModel().getSelectedItem();
         lb_task.setText(cb_task3.getSelectionModel().getSelectedItem().getTaskName());
             tb_project.setText(cb_task3.getSelectionModel().getSelectedItem().getProjectName());
     }
@@ -630,5 +653,35 @@ public class AdminViewController implements Initializable {
 
     @FXML
     private void handel_session_delete(ActionEvent event) {
+    }
+
+    @FXML
+    private void handle_start_stop(ActionEvent event) {
+        
+        if(isStarted == false)
+            {
+            isStarted = true;
+             bn_start_stop.setText("Stop");
+            LocalDateTime LDTnow = LocalDateTime.now();
+            
+            startTime = adminModel.localDateTimeToString(LDTnow);
+            }
+                else{
+             isStarted = false;
+                bn_start_stop.setText("Start");
+            
+             int lu = 1;
+            
+             LocalDateTime LDTnow = LocalDateTime.now();
+             String StopTime = adminModel.localDateTimeToString(LDTnow);
+             adminModel.addNewSessionToDB(lu, selectTask.getTaskID(), startTime, StopTime);
+            ;
+        }
+        
+    }
+
+    @FXML
+    private void handel_addTaskminview(ActionEvent event) {
+        addTask();
     }
 }

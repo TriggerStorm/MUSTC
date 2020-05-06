@@ -34,10 +34,10 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f4f4f4" height="445.0" stroke="WHITE" strokeType="INSIDE" width="240.0" />
       <TextField fx:id="tf_newtask" layoutX="102.0" layoutY="35.0" prefHeight="25.0" prefWidth="75.0" promptText="New Task" AnchorPane.leftAnchor="102.0" AnchorPane.topAnchor="35.0" />
       <ComboBox fx:id="cb_project" layoutX="16.0" layoutY="35.0" prefHeight="25.0" prefWidth="81.0" promptText="Project" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="35.0" />
-      <Button fx:id="bn_add" layoutX="186.0" layoutY="33.0" mnemonicParsing="false" text="add" AnchorPane.leftAnchor="186.0" AnchorPane.topAnchor="35.0" />
+      <Button fx:id="bn_add" layoutX="186.0" layoutY="33.0" mnemonicParsing="false" onAction="#handel_addTaskminview" text="add" AnchorPane.leftAnchor="186.0" AnchorPane.topAnchor="35.0" />
       <TextField fx:id="search" layoutX="20.0" layoutY="70.0" prefHeight="25.0" prefWidth="162.0" promptText="Search" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0" />
       <ToggleButton fx:id="tb_toggle" layoutX="197.0" layoutY="70.0" mnemonicParsing="false" onAction="#toggel_size" prefHeight="25.0" prefWidth="23.0" />
-      <Button fx:id="bn_start_stop" layoutX="19.0" layoutY="355.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="52.0" text="Start" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="19.0" />
+      <Button fx:id="bn_start_stop" layoutX="19.0" layoutY="355.0" mnemonicParsing="false" onAction="#handle_start_stop" prefHeight="40.0" prefWidth="52.0" text="Start" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="19.0" />
       <Label fx:id="lb_tasktime" layoutX="163.0" layoutY="365.0" text="01:25:54" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="163.0">
          <font>
             <Font size="17.0" />
@@ -194,7 +194,7 @@
                            </columns>
                         </TableView>
                         <JFXTextField fx:id="tf_session_name" layoutX="56.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Name" />
-                        <JFXTextField fx:id="tf_session_dev" layoutX="305.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Name" text="Developers" />
+                        <JFXTextField fx:id="tf_session_dev" layoutX="305.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Developers" />
                         <JFXTextField fx:id="tf_session_start" layoutX="139.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Start" />
                         <JFXTextField fx:id="tf_session_stop" layoutX="222.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Stop" />
                         <Label layoutX="3.0" layoutY="397.0" text="Session">

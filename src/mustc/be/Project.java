@@ -27,10 +27,8 @@ public class Project {
     private boolean isClosed;  // for Admin
   
     
-
 //  Full constructor      
     public Project(int projectID, String projectName, int associatedClientID, String clientName, int phoneNr, float projectRate, int allocatedHours, double myProjectHours, double totalHours, int totalPrice, List<Task> taskList, int noOfTasks, boolean isClosed) {
-
         this.projectID = projectID;
         this.projectName = projectName;
         this.associatedClientID = associatedClientID;
@@ -58,17 +56,6 @@ public class Project {
         this.taskList = taskList;
     }
 
-   /* @Override
-    public String toString() {
-        return "Project{" + "projectID=" + projectID + ", projectName=" + projectName + ", associatedClientID=" + associatedClientID + ", clientName=" + clientName + ", phoneNr=" + phoneNr + ", projectRate=" + projectRate + ", allocatedHours=" + allocatedHours + ", myProjectHours=" + myProjectHours + ", totalHours=" + totalHours + ", totalPrice=" + totalPrice + ", taskList=" + taskList + ", noOfTasks=" + noOfTasks + ", isClosed=" + isClosed + '}';
-    }*/
-    
-    @Override
-    public String toString() {
-        return projectName;
-     }
-  
-    
     
     //  User constructor2  
     public Project(int projectID, String projectName, String clientName, int phoneNr, double myProjectHours, int noOfTasks) {
@@ -108,6 +95,17 @@ public class Project {
         this.taskList = taskList;
         this.isClosed = isClosed;
        }    
+    
+    //  etName constructor      
+    public Project(int projectID, String projectName) {
+        this.projectID = projectID;
+        this.projectName = projectName;
+       }    
+
+    @Override
+    public String toString() {
+        return  projectName;
+    }
 
         
     public int getProjectID() {

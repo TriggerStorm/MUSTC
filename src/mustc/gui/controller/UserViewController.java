@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -135,12 +136,12 @@ public class UserViewController extends JFrame implements Initializable {
     private TableView<Session> TBV_Session;
     @FXML
     private TableColumn<Session, String> col_sesion_taskname;
-    private TableColumn<Session, String> col_sesion_date;
+    
     @FXML
     private TableColumn<Session, String> col_sesion_start;
     @FXML
     private TableColumn<Session, String> col_sesion_stop;
-    private TableColumn<Session, String> col_sesion_myhours;
+    
     @FXML
     private ScrollPane Sp_last3;
     
@@ -167,10 +168,16 @@ public class UserViewController extends JFrame implements Initializable {
     
     int MaxWidth;
     boolean min;
+   
+    boolean isStarted;
+    Task selectTask;
+    String startTime;
+    
     @FXML
     private Text lb_task;
     @FXML
     private Text tb_project;
+    private TableColumn<Session, String> col_sesion_tn1;
     
     
     
@@ -183,6 +190,7 @@ public class UserViewController extends JFrame implements Initializable {
         
         setProject();
         setTask();
+        setSession();
                 
         cb_task1.setItems(userModel.get1());// dont work
         cb_task1.setPromptText(cb_task1.getItems().get(0).getTaskName());
@@ -279,13 +287,7 @@ public class UserViewController extends JFrame implements Initializable {
     
     
     public void addTask(){
-        /*if(task_name != null){
-        userModel.addNewTaskToDB(
-                task_name.getText().trim(),
-                cb_task_project.getSelectionModel().getSelectedItem());
-        }
-        else
-        */
+        userModel.addNewTaskToDB(tf_newtask.getText(),"as",cb_project.getSelectionModel().getSelectedItem().getProjectID());
     }
     
     @FXML
@@ -298,10 +300,6 @@ public class UserViewController extends JFrame implements Initializable {
         toggelSize();
     }
 
-    @FXML
-    private void handel_startsotp(ActionEvent event) {
-        
-    }
 
     
     public void setProject(){
@@ -322,6 +320,14 @@ public class UserViewController extends JFrame implements Initializable {
         Col_task_myhours.setCellValueFactory(new PropertyValueFactory<Task, String>("myTaskHours"));
        
                  tbv_task.setItems(userModel.getAllTask());
+    }
+    
+    public void setSession(){
+        col_sesion_taskname.setCellValueFactory(new PropertyValueFactory<Session, String>("associatedTaskName"));
+        col_sesion_start.setCellValueFactory(new PropertyValueFactory<Session, String>("startTime"));
+        col_sesion_stop.setCellValueFactory(new PropertyValueFactory<Session, String>("finishTime"));
+        
+        TBV_Session.setItems(userModel.getAllSession());
     }
     
     @FXML
@@ -361,23 +367,55 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void handel_task1(ActionEvent event) {
-        /*Task selectedItem = cb_task1.getSelectionModel().getSelectedItem();
-        String toString = selectedItem.toString();
-        bn_task1.setText("Task"+ " " + toString);
-        System.out.println(toString);*/
         
+        selectTask = cb_task1.getSelectionModel().getSelectedItem();
+        lb_task.setText(cb_task1.getSelectionModel().getSelectedItem().getTaskName());
+            tb_project.setText(cb_task1.getSelectionModel().getSelectedItem().getProjectName());
                 
     }
 
     @FXML
     private void handle_task2(ActionEvent event) {
+        selectTask = cb_task1.getSelectionModel().getSelectedItem();
+        lb_task.setText(cb_task1.getSelectionModel().getSelectedItem().getTaskName());
+            tb_project.setText(cb_task1.getSelectionModel().getSelectedItem().getProjectName());
     }
 
     @FXML
     private void handle_task3(ActionEvent event) {
+        selectTask = cb_task3.getSelectionModel().getSelectedItem();
+        lb_task.setText(cb_task3.getSelectionModel().getSelectedItem().getTaskName());
+            tb_project.setText(cb_task3.getSelectionModel().getSelectedItem().getProjectName());
     }
 
-    
+    @FXML
+    private void handel_addTaskminview(ActionEvent event) {
+        addTask();
+    }
+
+    @FXML
+    private void handel_start_stop(ActionEvent event) {
+        if(isStarted == false)
+            {
+            isStarted = true;
+             bn_start_stop.setText("Stop");
+            LocalDateTime LDTnow = LocalDateTime.now();
+            
+            startTime = userModel.localDateTimeToString(LDTnow);
+            }
+                else{
+             isStarted = false;
+                bn_start_stop.setText("Start");
+            
+             int lu = 1;
+            
+             LocalDateTime LDTnow = LocalDateTime.now();
+             String StopTime = userModel.localDateTimeToString(LDTnow);
+             userModel.addNewSessionToDB(lu, selectTask.getTaskID(), startTime, StopTime);
+            ;
+    }
+
+    }
     
 
 }

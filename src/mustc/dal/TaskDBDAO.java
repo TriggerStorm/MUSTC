@@ -31,10 +31,12 @@ public class TaskDBDAO {
     private SessionDBDAO sessionDBDao;    
     public TaskDBDAO() {
             dbc = new DBConnection();
-            sessionDBDao = new SessionDBDAO();
+            sessionDBDao = new SessionDBDAO();  // DANGEROUS??
     }        
-
-    public Task addNewTaskToDB(String taskName, int associatedProjectID) throws SQLException { 
+    
+   
+            
+    public Task addNewTaskToDB(String taskName,String description, int associatedProjectID) throws SQLException { 
     //  Adds a new Task to the DB, and returns the updated Project to the GUI
     ProjectDBDAO projectDBDao = new ProjectDBDAO();
     String projectName = projectDBDao.getProjectName(associatedProjectID);  // ADD TO DB
@@ -49,10 +51,11 @@ public class TaskDBDAO {
  //       taskDuration[1] = 0;  // set taskDuration minutes to 0
         Task newTask = new Task(0, taskName, associatedProjectID, projectName, projectRate, myTaskHours, totalTaskHours, developers, emptySessionList);
         try (Connection con = dbc.getConnection()) {
-            String sql = "INSERT INTO Tasks(name, associatedProject) VALUES (?,?)";
+            String sql = "INSERT INTO Tasks(name, description ,associatedProject) VALUES (?,?,?)";
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, taskName);
-            pstmt.setInt(2, associatedProjectID);
+            pstmt.setString(2, description);
+            pstmt.setInt(3, associatedProjectID);
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Creating Task failed, no rows affected.");
@@ -92,15 +95,39 @@ public class TaskDBDAO {
                 ProjectDBDAO projectDBDao = new ProjectDBDAO();
                 String projectName = projectDBDao.getProjectName(associatedProjectID);
  /* } */            double myTaskHours = 45.25;  // MOCK DATA 
-                String developers = "o";  // TO BE DONE
+                String developers = "";  // TO BE DONE
                 taskInProject = new Task(taskID, taskName, associatedProjectID, projectName, myTaskHours, developers/*, taskDuration*/);       
             }    
         }
         return taskInProject ;
     }
     
-     
-    public List<Task> getAllUsersTasks() throws SQLException {
+    public List<Task> getAllTasksForUser() throws SQLException {
+        List<Task> allTasksForAdmin = new ArrayList<>();
+        try(Connection con = dbc.getConnection()){
+            String sql = "SELECT id, name, associatedProject FROM Tasks";
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                int taskID = rs.getInt("id");
+                String taskName = rs.getString("name");
+                int associatedProjectID = rs.getInt("associatedProject");
+                ProjectDBDAO projectDBDao = new ProjectDBDAO();  // TEMP
+                String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP
+     //           float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMP
+                double myTaskHours = 667.75;  // MOCK DATA
+                String developers = "Bob, Sue";  // MOCK DATA
+                Task taskForAdmin = new Task(taskID, taskName, associatedProjectID, projectName, myTaskHours, developers);
+                allTasksForAdmin.add(taskForAdmin);
+            }    
+        }
+       return allTasksForAdmin; 
+    }
+    
+    
+/*    public List<Task> getAllUsersTasks() throws SQLException {
         List<Task> allUsersTasks = new ArrayList<>();
         int loggedInUserID = 3;   // MOCK DATA
         try(Connection con = dbc.getConnection()){
@@ -123,7 +150,7 @@ public class TaskDBDAO {
         }
         return allUsersTasks; 
     }
-     
+*/     
      
     public Task getTaskForAdmin(int taskID) throws SQLException {
     //  Returns a Task from the DB where ID = taskID
@@ -148,7 +175,8 @@ public class TaskDBDAO {
         return taskInProject ;
     }
       
-     public List<Task> getAllTasksForAdmin() throws SQLException {
+    
+    public List<Task> getAllTasksForAdmin() throws SQLException {
         List<Task> allTasksForAdmin = new ArrayList<>();
         try(Connection con = dbc.getConnection()){
             String sql = "SELECT id, name, associatedProject FROM Tasks";
@@ -245,16 +273,14 @@ public class TaskDBDAO {
         int recentTask1ID = -1;  // Initialiser value - not a real taskID        
         int recentTask2ID = -1;  // Initialiser value - not a real taskID   
         int recentTask3ID = -1;  // Initialiser value - not a real taskID   
-        List<Session> allLoggedInUserSessions = sessionDBDao.getAllSessionsStartTimeAndTaskID(loggedInUser);
+        List<Session> allLoggedInUserSessions = sessionDBDao.getAllLoggedInUsersSessionsStartTimseAndTaskIDs(loggedInUser);
         //  Get recentTask1
         if (allLoggedInUserSessions.size() > 0) {
             Session recentSession1 =  allLoggedInUserSessions.get(0);
-            System.out.println("rs"+ recentSession1 );
             recentTask1ID = recentSession1.getAssociatedTaskID();
 System.out.println("recentTask1ID = " + recentTask1ID); 
             Task recentTask1 = getTaskForUser(recentTask1ID);  // makes recentTask1 the the first Task from recentSession list 
             recentTasks.add(recentTask1);
-            System.out.println("t1" + recentTask1);
         } else recentTasks = null; //  ?? MAYBE
         int counter = 1;  // counter keeps track of the session being examines for duplicate TaskIDs
         //  Get recentTask2
@@ -265,7 +291,6 @@ System.out.println("recentTask1ID = " + recentTask1ID);
 System.out.println("recentTask2ID = " + recentTask2ID); 
                 Task recentTask2 = getTaskForUser(recentTask2ID);  // makes recentTask2 the the second distinct Task from recentSession list                 
                 recentTasks.add(recentTask2);
-                System.out.println("t2" + recentTask2);
                 break;
             } else counter++;
         }
@@ -277,7 +302,6 @@ System.out.println("recentTask2ID = " + recentTask2ID);
 System.out.println("recentTask3ID = " + recentTask3ID); 
                 Task recentTask3 = getTaskForUser(recentTask3ID);  // makes recentTask2 the the second distinct Task from recentSession list                 
                 recentTasks.add(recentTask3);
-                System.out.println("t3" + recentTask3);
                 break;
             } else counter++;
         }
@@ -310,7 +334,22 @@ System.out.println("recentTask3ID = " + recentTask3ID);
 */
     }
 
-   
+    public String getTaskName(int taskID) throws SQLException {
+        //  Returns a User data object given a User id
+        String taskName = "mock";
+        String sql = "SELECT name FROM Tasks WHERE id = '" + taskID + "'";  //  userName, email, password, salary, isAdmin 
+        try(Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                taskName = rs.getString("name");
+            }    
+        }
+        return taskName;
+    }
+    
     
 
 }

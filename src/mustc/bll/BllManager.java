@@ -5,6 +5,7 @@
  */
 package mustc.bll;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import mustc.be.Client;
 import mustc.be.Project;
@@ -12,17 +13,18 @@ import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
 import mustc.dal.DalManager;
-
+import mustc.bll.TimeUtilities;
 /**
  *
  * @author Trigger and Alan
  */
 public class BllManager implements IBLL {
     private DalManager dalManager;
-    
+    private TimeUtilities timeUtilities;
     
     public BllManager() {
         dalManager = new DalManager();
+        timeUtilities = new TimeUtilities();
     }
     
     
@@ -95,10 +97,17 @@ public class BllManager implements IBLL {
 
     
     @Override
+    public List<Project> getAllProjectsIDsAndNames() {
+        return dalManager.getAllProjectsIDsAndNames();
+    }
+    
+    
+    @Override
     public Project editProject(Project editedProject, String projectName, int associatedClientID, float projectRate, int allocatedHours, boolean isClosed) {
         return dalManager.editProject(editedProject, projectName, associatedClientID, projectRate, allocatedHours, isClosed);
     }
 
+    
     @Override
     public void removeProjectFromDB(Project projectToDelete) {
         dalManager.removeProjectFromDB(projectToDelete);
@@ -120,12 +129,18 @@ public class BllManager implements IBLL {
         return dalManager.getTaskForUser(taskID);
     }
 
-    
+
     @Override
+    public List<Task> getAllTasksForUser() {
+        return dalManager.getAllTasksForUser();
+    }
+
+    
+ /*   @Override
     public List<Task> getAllUsersTasks() {
          return dalManager.getAllUsersTasks();
     }
-
+*/
     
     @Override
     public Task getTaskForAdmin(int taskID) {
@@ -168,6 +183,16 @@ public class BllManager implements IBLL {
     @Override
     public Session getSession(int sessionID) {
         return dalManager.getSession(sessionID);
+    }
+
+    @Override
+    public List<Session> getAllSessions() {
+        return dalManager.getAllSessions();
+    }
+
+    @Override
+    public List<Session> getAllSessionsOfAUser(User loggedInUser) {
+        return dalManager.getAllSessionsOfAUser(loggedInUser);
     }
 
     @Override
@@ -216,4 +241,19 @@ public class BllManager implements IBLL {
     }
 
    
+    
+    
+ // TimeUtilites (BLL)
+    @Override
+    public String localDateTimeToString(LocalDateTime LDT) {
+        return timeUtilities.localDateTimeToString(LDT);
+    }
+
+    @Override
+    public LocalDateTime stringToLocalDateTime(String dateString) {
+        return timeUtilities.stringToLocalDateTime(dateString);
+    }
+
+   
+    
 }

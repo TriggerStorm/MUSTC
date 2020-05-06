@@ -203,6 +203,24 @@ System.out.println(" client Name = " + clientName);
         return allProjectsForAdmin; 
     }
     
+     public List<Project> getAllProjectsIDsAndNames() throws SQLException {
+        List<Project> allProjectsIDsAndNames = new ArrayList<>();
+        try(Connection con = dbc.getConnection()){
+            String sql = "SELECT id, name FROM Projects";
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                int projectID =  rs.getInt("id");
+                String projectName = rs.getString("name");
+                Project projectIDandName = new Project(projectID, projectName);
+                allProjectsIDsAndNames.add(projectIDandName);
+            }    
+        }
+        return allProjectsIDsAndNames; 
+    }
+    
     
     public int getTaskListCountForAProject(int projectID) throws SQLException {
         List<Task> projectTaskList = new ArrayList<>();
@@ -221,6 +239,7 @@ System.out.println(" client Name = " + clientName);
         return projectTaskListCount; 
     }
         
+    
     public String getProjectName(int projectID) throws SQLException {
         return getProjectForUser(projectID).getProjectName();  // NEW BE NEEDED w- id + name
     } 

@@ -41,10 +41,7 @@ public class Client {
         this.noOfProjects = noOfProjects;
     }
     
-    //admin
-    //public Client(String clientName, String email, String nrOfProjects, String standardRate, String totalHours, String totalPrice){
     
-    //}
 
     
     public int getClientId() {
