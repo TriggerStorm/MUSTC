@@ -138,7 +138,7 @@
                         <TableView fx:id="Tbv_pj" prefHeight="422.0" prefWidth="740.0">
                           <columns>
                             <TableColumn fx:id="Col_pj_name" prefWidth="148.0" text="Name" />
-                            <TableColumn fx:id="Col_pj_clint" prefWidth="148.0" text="Clint" />
+                            <TableColumn fx:id="Col_pj_clint" prefWidth="148.0" text="Client" />
                               <TableColumn fx:id="Col_pj_contact" prefWidth="148.0" text="Contact info" />
                               <TableColumn fx:id="Col_pj_nroftask" prefWidth="148.0" text="Nr of task" />
                               <TableColumn fx:id="Col_pj_myhours" prefWidth="148.0" text="My hours" />
@@ -168,8 +168,8 @@
                         <JFXTextField fx:id="task_name" layoutX="43.0" layoutY="392.0" prefHeight="25.0" prefWidth="81.0" text="Name " />
                         <JFXComboBox fx:id="cb_task_project" layoutX="142.0" layoutY="392.0" prefHeight="25.0" prefWidth="81.0" promptText="Project" />
                         <JFXButton fx:id="bn_task_add" layoutX="239.0" layoutY="395.0" style="-fx-background-color: lightgrey;" text="Add" />
-                        <JFXButton fx:id="bn_task_eddit" layoutX="274.0" layoutY="395.0" style="-fx-background-color: lightgrey;" text="eddit" />
-                        <JFXButton fx:id="bn_task_delete" layoutX="315.0" layoutY="395.0" style="-fx-background-color: lightgrey;" text="Delete" />
+                        <JFXButton fx:id="bn_task_eddit" layoutX="274.0" layoutY="395.0" style="-fx-background-color: lightgrey;" text="edit" />
+                        <JFXButton fx:id="bn_task_delete" layoutX="308.0" layoutY="395.0" style="-fx-background-color: lightgrey;" text="Delete" />
                         <JFXDatePicker fx:id="dp_task_from" layoutX="548.0" layoutY="391.0" prefHeight="28.0" prefWidth="95.0" />
                         <JFXDatePicker fx:id="dp_task_to" layoutX="643.0" layoutY="391.0" prefHeight="28.0" prefWidth="95.0" />
                      </children>
@@ -198,7 +198,7 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="tab_sesion" onSelectionChanged="#tap_handel_sesion" text="Sesion">
+            <Tab fx:id="tab_sesion" onSelectionChanged="#tap_handel_sesion" text="Session">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

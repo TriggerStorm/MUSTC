@@ -69,6 +69,7 @@ public class AdminModel {
     public Task addNewTaskToDB(String taskName, String description, int associatedProjectID){
        
        return bllManager.addNewTaskToDB(taskName, description, associatedProjectID);
+       
    }
     public ObservableList<Task> getAllTask() {
        // List<Task> allTask =  new ArrayList<>();
