@@ -5,6 +5,7 @@
  */
 package mustc.bll;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import mustc.be.Client;
 import mustc.be.Project;
@@ -33,6 +34,7 @@ public interface IBLL {
     public List<Project> getAllProjectsForUser();
     public Project getProjectForAdmin(int projectID);
     public List<Project> getAllProjectsForAdmin();
+    public List<Project> getAllProjectsIDsAndNames();
     public Project editProject (Project editedProject, String projectName, /*int associatedClientID,*/ int phoneNr, float projectRate, int allocatedHours, boolean isClosed);
     public void removeProjectFromDB(Project projectToDelete);
 
@@ -40,7 +42,8 @@ public interface IBLL {
 // TaskDBDAO methods        
     public Task addNewTaskToDB(String taskName, String description, int associatedProjectID);
     public Task getTaskForUser(int taskID);
-    public List<Task> getAllUsersTasks(); // not working yet    
+    public List<Task> getAllTasksForUser();
+//    public List<Task> getAllUsersTasks(); // not working yet    
     public Task getTaskForAdmin(int taskID);
     public List<Task> getAllTasksForAdmin();
     public Task editTask (Task editedTask, String taskName, String description, int associatedProjectID);
@@ -51,6 +54,7 @@ public interface IBLL {
 // SessionDBDAO methods            
     public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime);
     public Session getSession(int sessionID);
+    public List<Session> getAllSessions();  // Admin view
     public List<Session> getAllSessionsOfAUser(User loggedInUser);
     public List<Session> getAllSessionsOfATask(int taskID);
     public Session editSession (Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime);
@@ -64,5 +68,11 @@ public interface IBLL {
     public User editUser (User userToEdit, String userName, String email, String password, Float salary, String status); 
     public void removeUserFromDB(User userToDelete);
     
- 
+     
+     
+// TimeUtilites (BLL)
+    public String localDateTimeToString(LocalDateTime LDT);
+    public LocalDateTime stringToLocalDateTime(String dateString);
+
+    
 }

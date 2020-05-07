@@ -95,6 +95,12 @@ public class Project {
         this.taskList = taskList;
         this.isClosed = isClosed;
        }    
+    
+    //  etName constructor      
+    public Project(int projectID, String projectName) {
+        this.projectID = projectID;
+        this.projectName = projectName;
+       }    
 
         
     public int getProjectID() {

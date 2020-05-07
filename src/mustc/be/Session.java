@@ -20,11 +20,13 @@ public class Session implements Comparable<Session>{
     private String associatedTaskName;  // the person whom the Session is assigned to.    
     private String startTime;
     private String finishTime;
+    private LocalDateTime startLDT;  // TEMP
+    private LocalDateTime finishLDT;  // TEMP
 //    private int duration;  //  difference between start time and finish time ...maybe?
 
     
 // Full constructor        
-    public Session(int sessionID, int associatedUserID, String associatedUserName, int associatedTaskID, String associatedTaskName, String startTime, String finishTime) {
+    public Session(int sessionID, int associatedUserID, String associatedUserName, int associatedTaskID, String associatedTaskName, String startTime, String finishTime/*, LocalDateTime startLDT, LocalDateTime finishLDT*/) {
         this.sessionID = sessionID;
 //        this.description = description;
         this.associatedUserID = associatedUserID;
@@ -33,6 +35,8 @@ public class Session implements Comparable<Session>{
         this.associatedTaskName = associatedTaskName;
         this.startTime = startTime;
         this.finishTime = finishTime;
+ //       this.startLDT = startLDT;
+ //       this.finishLDT = finishLDT;
     }
 
 // User constructor        
@@ -40,9 +44,20 @@ public class Session implements Comparable<Session>{
         this.sessionID = sessionID;
 //        this.description = description;
         this.associatedTaskID = associatedTaskID;
-        this.associatedUserName = associatedTaskName;
+        this.associatedTaskName = associatedTaskName;
         this.startTime = startTime;
         this.finishTime = finishTime;
+    }
+    
+    
+    // TEST constructor        
+    public Session(int sessionID, int associatedTaskID, String associatedTaskName, LocalDateTime startLDT, LocalDateTime finishLDT) {
+        this.sessionID = sessionID;
+//        this.description = description;
+        this.associatedTaskID = associatedTaskID;
+        this.associatedTaskName = associatedTaskName;
+        this.startLDT = startLDT;
+        this.finishLDT = finishLDT;
     }
  /*   
 // Admin constructor        
@@ -57,6 +72,22 @@ public class Session implements Comparable<Session>{
         this.finishTime = finishTime;
     }
  */   
+
+    public LocalDateTime getStartLDT() {
+        return startLDT;
+    }
+
+    public void setStartLDT(LocalDateTime startLDT) {
+        this.startLDT = startLDT;
+    }
+
+    public LocalDateTime getFinishLDT() {
+        return finishLDT;
+    }
+
+    public void setFinishLDT(LocalDateTime finishLDT) {
+        this.finishLDT = finishLDT;
+    }
     
 
     
@@ -68,7 +99,9 @@ public class Session implements Comparable<Session>{
 
    @Override
     public int compareTo(Session session) {   // EXPERIMENT for getting latest tasks using sessionDBDao
-        return Integer.compare(this.getAssociatedUserID(), session.getAssociatedTaskID()); //was getAssociatedTaskID, worked but not right
+    return this.startLDT.compareTo(session.startLDT);
+
+//        return Integer.compare(this.getAssociatedUserID(), session.getAssociatedTaskID()); //was getAssociatedTaskID, worked but not right
         //       return this.getAssociatedUserID().compareTo(session.getAssociatedTaskID());
     }   
     

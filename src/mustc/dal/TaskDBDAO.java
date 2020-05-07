@@ -99,8 +99,32 @@ public class TaskDBDAO {
         return taskInProject ;
     }
     
-     
-    public List<Task> getAllUsersTasks() throws SQLException {
+    public List<Task> getAllTasksForUser() throws SQLException {
+        List<Task> allTasksForAdmin = new ArrayList<>();
+        try(Connection con = dbc.getConnection()){
+            String sql = "SELECT id, name, associatedProject FROM Tasks";
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                int taskID = rs.getInt("id");
+                String taskName = rs.getString("name");
+                int associatedProjectID = rs.getInt("associatedProject");
+                ProjectDBDAO projectDBDao = new ProjectDBDAO();  // TEMP
+                String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP
+     //           float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMP
+                double myTaskHours = 667.75;  // MOCK DATA
+                String developers = "Bob, Sue";  // MOCK DATA
+                Task taskForAdmin = new Task(taskID, taskName, associatedProjectID, projectName, myTaskHours, developers);
+                allTasksForAdmin.add(taskForAdmin);
+            }    
+        }
+       return allTasksForAdmin; 
+    }
+    
+    
+/*    public List<Task> getAllUsersTasks() throws SQLException {
         List<Task> allUsersTasks = new ArrayList<>();
         int loggedInUserID = 3;   // MOCK DATA
         try(Connection con = dbc.getConnection()){
@@ -123,7 +147,7 @@ public class TaskDBDAO {
         }
         return allUsersTasks; 
     }
-     
+*/     
      
     public Task getTaskForAdmin(int taskID) throws SQLException {
     //  Returns a Task from the DB where ID = taskID
@@ -148,7 +172,8 @@ public class TaskDBDAO {
         return taskInProject ;
     }
       
-     public List<Task> getAllTasksForAdmin() throws SQLException {
+    
+    public List<Task> getAllTasksForAdmin() throws SQLException {
         List<Task> allTasksForAdmin = new ArrayList<>();
         try(Connection con = dbc.getConnection()){
             String sql = "SELECT id, name, associatedProject FROM Tasks";
