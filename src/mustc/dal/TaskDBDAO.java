@@ -273,6 +273,8 @@ public class TaskDBDAO {
         int recentTask1ID = -1;  // Initialiser value - not a real taskID        
         int recentTask2ID = -1;  // Initialiser value - not a real taskID   
         int recentTask3ID = -1;  // Initialiser value - not a real taskID   
+System.out.println("getUsersThreeRecentTasks = "); 
+        
         List<Session> allLoggedInUserSessions = sessionDBDao.getAllLoggedInUsersSessionsStartTimseAndTaskIDs(loggedInUser);
         //  Get recentTask1
         if (allLoggedInUserSessions.size() > 0) {

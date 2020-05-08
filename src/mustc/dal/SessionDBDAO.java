@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
+import mustc.bll.TimeUtilities;
 
 /**
  *
@@ -33,6 +34,7 @@ import mustc.be.User;
 public class SessionDBDAO {
     private DBConnection dbc;
     private UserDBDAO userDBDao;
+    private TimeUtilities timeUtilities;
  //   private TaskDBDAO taskDBDao;
 
     
@@ -41,6 +43,7 @@ public class SessionDBDAO {
         dbc = new DBConnection();
  //       taskDBDao = new TaskDBDAO();
         userDBDao = new UserDBDAO();
+        timeUtilities = new TimeUtilities();
     }
 
     
@@ -198,8 +201,10 @@ public class SessionDBDAO {
     public List<Session> getAllLoggedInUsersSessionsStartTimseAndTaskIDs(User loggedInUser) throws SQLException {
     // Returns a list of Sessions where the associatedUser = loggedInUser
         List<Session> allLoggedInUserSessions = new ArrayList<>();
-        int loggedInUserID = loggedInUser.getUserID();
-        String sql = "SELECT associatedTask, StartTime FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'"; 
+ //       int loggedInUserID = loggedInUser.getUserID();
+         int loggedInUserID = 1;  // MOCK
+
+ String sql = "SELECT associatedTask, StartTime FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'"; 
         try(Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql);   
             pstmt.execute();    
@@ -208,10 +213,12 @@ public class SessionDBDAO {
             {
                 int associatedTaskID =  rs.getInt("associatedTask");
                 String startTime = rs.getString("startTime");
-                Session loggedInUserSession = new Session(associatedTaskID, startTime);
+                LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
+                Session loggedInUserSession = new Session(associatedTaskID, startLDT);
                 allLoggedInUserSessions.add(loggedInUserSession); 
             }    
         }
+        System.out.println(" Sorting");
         Collections.sort(allLoggedInUserSessions);//new Comparator<Session>()) {
           for (int i = 0; i < allLoggedInUserSessions.size(); i++) {
             Session session = allLoggedInUserSessions.get(i);
