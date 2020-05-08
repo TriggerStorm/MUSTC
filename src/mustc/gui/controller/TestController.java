@@ -282,27 +282,27 @@ else
     public void orderTest() {
         ArrayList<Session> allSessions = new ArrayList<>();
         String dts1 =  "2020-05-02 12:01:02";    
-        LocalDateTime ldt1 = stringToLocalDate(dts1) ;       
+        LocalDateTime ldt1 = stringToLocalDateTime(dts1) ;       
         Session task1 = new Session(1, 3, "A", ldt1, ldt1);
         allSessions.add(task1);  
 
         String dts2 =  "2020-05-02 05:01:02";    
-         LocalDateTime ldt2 = stringToLocalDate(dts2) ;       
+         LocalDateTime ldt2 = stringToLocalDateTime(dts2) ;       
          Session task2 = new Session(2, 1, "B", ldt2, ldt2);
         allSessions.add(task2);  //      LocalDateTime ldt1 = stringToLocalDate(dts1) ;       
         
         String dts3 =  "2020-05-08 05:01:02";    
-        LocalDateTime ldt3 = stringToLocalDate(dts3) ;       
+        LocalDateTime ldt3 = stringToLocalDateTime(dts3) ;       
         Session task3 = new Session(3, 2, "C", ldt3, ldt3);
         allSessions.add(task3);  //      LocalDateTime ldt1 = stringToLocalDate(dts1) ;       
         
         String dts4 =  "2020-05-01 05:01:02";    
-         LocalDateTime ldt4 = stringToLocalDate(dts4) ;       
+         LocalDateTime ldt4 = stringToLocalDateTime(dts4) ;       
          Session task4 = new Session(4, 4, "D", ldt4, ldt4);
          allSessions.add(task4);  //      LocalDateTime ldt1 = stringToLocalDate(dts1) ;       
                       
         String dts5 =  "2020-05-06 05:01:02";    
-       LocalDateTime ldt5 = stringToLocalDate(dts5) ;       
+       LocalDateTime ldt5 = stringToLocalDateTime(dts5) ;       
         Session task5 = new Session(5, 2, "E", ldt5, ldt5);
          allSessions.add(task5);  //      LocalDateTime ldt1 = stringToLocalDate(dts1) ;       
            
@@ -344,10 +344,15 @@ else
         return dateNowString;
     } 
     
-    public LocalDateTime stringToLocalDate(String dateString) {
+    public LocalDateTime stringToLocalDateTime(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd['T'HH:mm:ss[Z]]");
         String[] parts = dateString.split(" ");
-        String sqlSTR = parts[0] + "T" + parts[1];
+  //      String time = parts[1];
+  //      String time2 = time.substring(0,8);  // https://stackoverflow.com/questions/17685977/cut-java-string-at-a-number-of-character
+   //     System.out.println("time 2 = " + time2);
+
+        String sqlSTR = parts[0] + "T" + parts[1].substring(0,8);  // https://stackoverflow.com/questions/17685977/cut-java-string-at-a-number-of-character
+        
         LocalDateTime LDT = LocalDateTime.parse(sqlSTR, formatter);
         return LDT;
     }

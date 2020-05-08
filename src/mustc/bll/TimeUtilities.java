@@ -26,7 +26,9 @@ public class TimeUtilities {
     public LocalDateTime stringToLocalDateTime(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd['T'HH:mm:ss[Z]]");
         String[] parts = dateString.split(" ");
-        String sqlSTR = parts[0] + "T" + parts[1];
+        String time = parts[1];
+        String[] parts2 = time.split(".");
+        String sqlSTR = parts[0] + "T" + parts[1].substring(0,8);  // https://stackoverflow.com/questions/17685977/cut-java-string-at-a-number-of-character
         LocalDateTime LDT = LocalDateTime.parse(sqlSTR, formatter);
         return LDT;
     }

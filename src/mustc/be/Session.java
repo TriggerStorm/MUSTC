@@ -76,15 +76,19 @@ public class Session implements Comparable<Session>{
    
     
 // RecentTasks constructor            
-    public Session(int associatedTaskID, LocalDateTime startLDT) {
+    public Session(int associatedTaskID, String startTime /*LocalDateTime startLDT*/) {
         this.associatedTaskID = associatedTaskID;
-        this.startLDT = startLDT;
-    }
+   //     this.startLDT = startLDT;
+         this.startTime = startTime;
+   }
 
    @Override
     public int compareTo(Session session) {   // EXPERIMENT for getting latest tasks using sessionDBDao
-    return this.startLDT.compareTo(session.startLDT);
-    }   
+        
+   //     return this.startLDT.compareTo(session.startLDT);
+   //             return this.getAssociatedUserID().compareTo(session.getAssociatedTaskID());
+     return Integer.compare(this.getAssociatedUserID(), session.getAssociatedTaskID());
+  }   
     
     public int getSessionID() {
         return sessionID;

@@ -26,6 +26,7 @@ import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
 import mustc.bll.TimeUtilities;
+import mustc.gui.controller.TestController;
 
 /**
  *
@@ -35,6 +36,7 @@ public class SessionDBDAO {
     private DBConnection dbc;
     private UserDBDAO userDBDao;
     private TimeUtilities timeUtilities;
+    private TestController testController;
  //   private TaskDBDAO taskDBDao;
 
     
@@ -44,6 +46,7 @@ public class SessionDBDAO {
  //       taskDBDao = new TaskDBDAO();
         userDBDao = new UserDBDAO();
         timeUtilities = new TimeUtilities();
+    testController = new TestController();
     }
 
     
@@ -121,7 +124,7 @@ public class SessionDBDAO {
                 String associatedUserName = getSessionsUserName(associatedUserID);
                 int associatedTaskID =  rs.getInt("associatedTask");
                 String associatedTaskName = getSessionsTaskName(associatedTaskID);
-                String startTime = rs.getString("startTime");
+                String startTime = rs.getString("startTime");                
                  String finishTime = rs.getString("FinishTime");
                 Session loggedInUserSession = new Session(sessionID, associatedUserID, associatedUserName, associatedTaskID, associatedTaskName, startTime, finishTime);
                 allLoggedInUserSessions.add(loggedInUserSession); 
@@ -214,7 +217,9 @@ public class SessionDBDAO {
                 int associatedTaskID =  rs.getInt("associatedTask");
                 String startTime = rs.getString("startTime");
                 LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
-                Session loggedInUserSession = new Session(associatedTaskID, startLDT);
+ //                LocalDateTime startLDT = testController.stringToLocalDateTime(startTime);  // TEST
+               System.out.println("sTime = " + startTime);
+                Session loggedInUserSession = new Session(associatedTaskID, startTime);
                 allLoggedInUserSessions.add(loggedInUserSession); 
             }    
         }
