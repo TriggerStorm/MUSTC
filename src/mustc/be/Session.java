@@ -76,18 +76,19 @@ public class Session implements Comparable<Session>{
    
     
 // RecentTasks constructor            
-    public Session(int associatedTaskID, String startTime /*LocalDateTime startLDT*/) {
+    public Session(int associatedTaskID, /*String startTime */LocalDateTime startLDT) {
         this.associatedTaskID = associatedTaskID;
-   //     this.startLDT = startLDT;
-         this.startTime = startTime;
+        this.startLDT = startLDT;
+ //        this.startTime = startTime;
    }
 
    @Override
     public int compareTo(Session session) {   // EXPERIMENT for getting latest tasks using sessionDBDao
-        
-   //     return this.startLDT.compareTo(session.startLDT);
+        System.out.println("this LDT = "+ this.startLDT);
+        System.out.println("session LDT = "+ session.startLDT);
+       return this.startLDT.compareTo(session.startLDT);  //  https://stackoverflow.com/questions/5927109/sort-objects-in-arraylist-by-date#5927408
    //             return this.getAssociatedUserID().compareTo(session.getAssociatedTaskID());
-     return Integer.compare(this.getAssociatedUserID(), session.getAssociatedTaskID());
+  //   return Integer.compare(this.getAssociatedUserID(), session.getAssociatedTaskID());
   }   
     
     public int getSessionID() {

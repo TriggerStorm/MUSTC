@@ -111,7 +111,7 @@ public class SessionDBDAO {
     
      public List<Session> getAllSessions() throws SQLException { // Admin view
     // Returns a list of Sessions where the associatedUser = loggedInUser
-        List<Session> allLoggedInUserSessions = new ArrayList<>();
+        List<Session> allSessions = new ArrayList<>();
         String sql = "SELECT * FROM Sessions"; 
         try(Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql);   
@@ -125,23 +125,27 @@ public class SessionDBDAO {
                 int associatedTaskID =  rs.getInt("associatedTask");
                 String associatedTaskName = getSessionsTaskName(associatedTaskID);
                 String startTime = rs.getString("startTime");                
-                 String finishTime = rs.getString("FinishTime");
-                Session loggedInUserSession = new Session(sessionID, associatedUserID, associatedUserName, associatedTaskID, associatedTaskName, startTime, finishTime);
-                allLoggedInUserSessions.add(loggedInUserSession); 
+                String finishTime = rs.getString("FinishTime");
+                Session session = new Session(sessionID, associatedUserID, associatedUserName, associatedTaskID, associatedTaskName, startTime, finishTime);
+   // NEW    
+                LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
+                session.setStartLDT(startLDT);
+   //
+                allSessions.add(session); 
             }    
         }
-        Collections.sort(allLoggedInUserSessions);//new Comparator<Session>()) {
-          for (int i = 0; i < allLoggedInUserSessions.size(); i++) {
-            Session session = allLoggedInUserSessions.get(i);
+    //  DO I NEED THIS here??
+ /*   Collections.sort(allSessions);//new Comparator<Session>()) {
+          for (int i = 0; i < allSessions.size(); i++) {
+            Session session = allSessions.get(i);
               System.out.println("");
-               System.out.println(session.getStartTime());
-              
+               System.out.println(session.getStartTime());            
         }
-  
-        return allLoggedInUserSessions ;
+  */
+        return allSessions ;
     }
  
-       public List<Session> getAllSessionsOfAUser(User loggedInUser) throws SQLException { // Admin view
+       public List<Session> getAllSessionsOfAUser(User loggedInUser) throws SQLException { // User view
     // Returns a list of Sessions where the associatedUser = loggedInUser
         List<Session> allLoggedInUserSessions = new ArrayList<>();
         int loggedInUserID = loggedInUser.getUserID();
@@ -161,14 +165,15 @@ public class SessionDBDAO {
                 allLoggedInUserSessions.add(loggedInUserSession); 
             }    
         }
-        Collections.sort(allLoggedInUserSessions);//new Comparator<Session>()) {
+      //  DO I NEED THIS here??
+/*      Collections.sort(allLoggedInUserSessions, Collections.reverseOrder());  // https://beginnersbook.com/2013/12/sort-arraylist-in-descending-order-in-java/
+       //Collections.sort(allLoggedInUserSessions);//new Comparator<Session>()) {
           for (int i = 0; i < allLoggedInUserSessions.size(); i++) {
             Session session = allLoggedInUserSessions.get(i);
               System.out.println("");
                System.out.println(session.getStartTime());
-              
         }
-  
+ */ 
         return allLoggedInUserSessions ;
     }
      
@@ -217,14 +222,13 @@ public class SessionDBDAO {
                 int associatedTaskID =  rs.getInt("associatedTask");
                 String startTime = rs.getString("startTime");
                 LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
- //                LocalDateTime startLDT = testController.stringToLocalDateTime(startTime);  // TEST
-               System.out.println("sTime = " + startTime);
-                Session loggedInUserSession = new Session(associatedTaskID, startTime);
+                Session loggedInUserSession = new Session(associatedTaskID, startLDT);
                 allLoggedInUserSessions.add(loggedInUserSession); 
             }    
         }
         System.out.println(" Sorting");
-        Collections.sort(allLoggedInUserSessions);//new Comparator<Session>()) {
+         Collections.sort(allLoggedInUserSessions, Collections.reverseOrder());  // https://beginnersbook.com/2013/12/sort-arraylist-in-descending-order-in-java/
+//       Collections.sort(allLoggedInUserSessions);//new Comparator<Session>()) {
           for (int i = 0; i < allLoggedInUserSessions.size(); i++) {
             Session session = allLoggedInUserSessions.get(i);
               System.out.println("");
@@ -234,6 +238,7 @@ public class SessionDBDAO {
   
         return allLoggedInUserSessions ;
     }
+    
     
      
      
