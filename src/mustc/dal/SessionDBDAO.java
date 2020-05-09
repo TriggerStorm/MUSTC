@@ -127,25 +127,27 @@ public class SessionDBDAO {
                 String startTime = rs.getString("startTime");                
                 String finishTime = rs.getString("FinishTime");
                 Session session = new Session(sessionID, associatedUserID, associatedUserName, associatedTaskID, associatedTaskName, startTime, finishTime);
-   // NEW    
-                LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
-                session.setStartLDT(startLDT);
-   //
+// Need next bit... but here?
+/*                LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
+                session.setStartLDT(startLDT);  //  Sets startLDT (LocalDateTime) of Session to LDT version of startTime
+                LocalDateTime finishLDT = timeUtilities.stringToLocalDateTime(finishTime);
+                session.setFinishLDT(finishLDT);  //  Sets finishLDT (LocalDateTime) of Session to LDT version of finishTime
+*/ 
+                setSessionsLDTs(session);
+int minutes = calculateDurationOfASession(session);
                 allSessions.add(session); 
+ //
+ //DURATION TEST
+                int duration = -1;
+                
             }    
         }
-    //  DO I NEED THIS here??
- /*   Collections.sort(allSessions);//new Comparator<Session>()) {
-          for (int i = 0; i < allSessions.size(); i++) {
-            Session session = allSessions.get(i);
-              System.out.println("");
-               System.out.println(session.getStartTime());            
-        }
-  */
         return allSessions ;
     }
  
-       public List<Session> getAllSessionsOfAUser(User loggedInUser) throws SQLException { // User view
+       
+     
+    public List<Session> getAllSessionsOfAUser(User loggedInUser) throws SQLException { // User view
     // Returns a list of Sessions where the associatedUser = loggedInUser
         List<Session> allLoggedInUserSessions = new ArrayList<>();
         int loggedInUserID = loggedInUser.getUserID();
@@ -165,18 +167,10 @@ public class SessionDBDAO {
                 allLoggedInUserSessions.add(loggedInUserSession); 
             }    
         }
-      //  DO I NEED THIS here??
-/*      Collections.sort(allLoggedInUserSessions, Collections.reverseOrder());  // https://beginnersbook.com/2013/12/sort-arraylist-in-descending-order-in-java/
-       //Collections.sort(allLoggedInUserSessions);//new Comparator<Session>()) {
-          for (int i = 0; i < allLoggedInUserSessions.size(); i++) {
-            Session session = allLoggedInUserSessions.get(i);
-              System.out.println("");
-               System.out.println(session.getStartTime());
-        }
- */ 
         return allLoggedInUserSessions ;
     }
      
+       
     public List<Session> getAllSessionsOfATask(int taskID) throws SQLException {  // Work in progress
         List<Session> allSessionsOfATask = new ArrayList<>();
 //        allSessionsOfATask = null;
@@ -298,8 +292,19 @@ public class SessionDBDAO {
 
     }
     
+    private int calculateDurationOfASession(Session session/*String startTime, String finishTime*/) {
+    // Return the number of minutes in a given session
+    //  https://stackoverflow.com/questions/25747499/java-8-difference-between-two-localdatetime-in-multiple-units#26954864
+        String startTime = session.getStartTime();
+        String finishTime = session.getFinishTime();
+        int duration = (int) ChronoUnit.MINUTES.between(session.getStartLDT(), session.getFinishLDT());
+System.out.println("Start: " + startTime + "    Finish: " + finishTime + "    Duration: " + duration);
+        session.setDuration(duration);
+        return duration;
+    }
     
-/*    private int[] calculateDurationOfASession(String startTime, String finishTime) {
+    
+ /*   private int[] calculateDurationOfASession(String startTime, String finishTime) {
         int[] duration = new int[2];
         LocalDateTime startLDT = LocalDateTime.parse(startTime);
         LocalDateTime finishLDT = LocalDateTime.parse(finishTime);
@@ -314,7 +319,7 @@ public class SessionDBDAO {
         duration[1] = minutes;
         return duration;
     }
-*/            
+ */           
             
             
             
@@ -395,6 +400,14 @@ public class SessionDBDAO {
         TaskDBDAO taskDBDao = new TaskDBDAO();
         String associatedTaskName = taskDBDao.getTaskName(associatedTaskID);
         return associatedTaskName;
+    }
+    
+     
+    private void setSessionsLDTs(Session session) {
+        LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(session.getStartTime());
+        session.setStartLDT(startLDT);  //  Sets startLDT (LocalDateTime) of Session to LDT version of startTime
+        LocalDateTime finishLDT = timeUtilities.stringToLocalDateTime(session.getFinishTime());
+        session.setFinishLDT(finishLDT);  //  Sets finishLDT (LocalDateTime) of Session to LDT version of finishTime     
     }
     
     

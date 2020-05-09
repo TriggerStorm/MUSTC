@@ -22,11 +22,11 @@ public class Session implements Comparable<Session>{
     private String finishTime;
     private LocalDateTime startLDT;  // TEMP
     private LocalDateTime finishLDT;  // TEMP
-//    private int duration;  //  difference between start time and finish time ...maybe?
+    private int duration;  //  difference between start time and finish time ...maybe?
 
     
 // Full constructor        
-    public Session(int sessionID, int associatedUserID, String associatedUserName, int associatedTaskID, String associatedTaskName, String startTime, String finishTime/*, LocalDateTime startLDT, LocalDateTime finishLDT*/) {
+    public Session(int sessionID, int associatedUserID, String associatedUserName, int associatedTaskID, String associatedTaskName, String startTime, String finishTime, LocalDateTime startLDT, LocalDateTime finishLDT, int duration) {
         this.sessionID = sessionID;
 //        this.description = description;
         this.associatedUserID = associatedUserID;
@@ -35,8 +35,21 @@ public class Session implements Comparable<Session>{
         this.associatedTaskName = associatedTaskName;
         this.startTime = startTime;
         this.finishTime = finishTime;
- //       this.startLDT = startLDT;
- //       this.finishLDT = finishLDT;
+        this.startLDT = startLDT;
+        this.finishLDT = finishLDT;
+        this.duration = duration;
+    }
+
+// Admin constructor        
+    public Session(int sessionID, int associatedUserID, String associatedUserName, int associatedTaskID, String associatedTaskName, String startTime, String finishTime) {
+        this.sessionID = sessionID;
+//        this.description = description;
+        this.associatedUserID = associatedUserID;
+        this.associatedUserName = associatedUserName;
+        this.associatedTaskID = associatedTaskID;
+        this.associatedTaskName = associatedTaskName;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
     }
 
 // User constructor        
@@ -50,7 +63,7 @@ public class Session implements Comparable<Session>{
     }
     
     
-    // TEST constructor        
+    // Ordering by DateTime constructor        
     public Session(int sessionID, int associatedTaskID, String associatedTaskName, LocalDateTime startLDT, LocalDateTime finishLDT) {
         this.sessionID = sessionID;
 //        this.description = description;
@@ -59,19 +72,7 @@ public class Session implements Comparable<Session>{
         this.startLDT = startLDT;
         this.finishLDT = finishLDT; // Do I need this?
     }
- /*   
-// Admin constructor        
-    public Session(int sessionID, int associatedUserID, String associatedUserName, String startTime, String finishTime) {
-        this.sessionID = sessionID;
-//        this.description = description;
-        this.associatedUserID = associatedUserID;
-        this.associatedUserName = associatedUserName;
-        this.associatedTaskID = associatedTaskID;
-        this.associatedUserName = associatedUserName;
-        this.startTime = startTime;
-        this.finishTime = finishTime;
-    }
- */   
+
 
    
     
@@ -83,7 +84,8 @@ public class Session implements Comparable<Session>{
    }
 
    @Override
-    public int compareTo(Session session) {   // EXPERIMENT for getting latest tasks using sessionDBDao
+    public int compareTo(Session session) {   
+    // Comparator used for getting recent tasks using sessionDBDao
         System.out.println("this LDT = "+ this.startLDT);
         System.out.println("session LDT = "+ session.startLDT);
        return this.startLDT.compareTo(session.startLDT);  //  https://stackoverflow.com/questions/5927109/sort-objects-in-arraylist-by-date#5927408
@@ -162,7 +164,14 @@ public class Session implements Comparable<Session>{
     public void setFinishLDT(LocalDateTime finishLDT) {
         this.finishLDT = finishLDT;
     }
-    
+     
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 
     
 }
