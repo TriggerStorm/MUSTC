@@ -302,21 +302,23 @@ System.out.println("Session ID: " + sessionID /*+ "    Duration: " + duration*/)
     
     
     private int calculateDurationOfASession(Session session/*String startTime, String finishTime*/) {
-System.out.println("calculateDurationOfASession");
+//System.out.println("calculateDurationOfASession");
     // Return the number of minutes in a given session
-       String startTime = session.getStartTime();
+        String startTime = session.getStartTime();
         String finishTime = session.getFinishTime();
-        LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(session.getStartTime());
+//System.out.println("startTime: " + startTime);
+//System.out.println("finishTime: " + finishTime);
+       LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(session.getStartTime());
         LocalDateTime finishLDT = timeUtilities.stringToLocalDateTime(session.getFinishTime());
         int duration = (int) ChronoUnit.MINUTES.between(startLDT, finishLDT);  //  https://stackoverflow.com/questions/25747499/java-8-difference-between-two-localdatetime-in-multiple-units#26954864
 
-System.out.println("Start: " + startTime + "    Finish: " + finishTime + "    Duration: " + duration);
+//System.out.println("Start: " + startTime + "    Finish: " + finishTime + "    Duration: " + duration);
        return duration;
     }
  
     
     public int calculateTotalDurationOfATask(int taskID /*Task task*/) throws SQLException {
-System.out.println("calculateTotalDurationOfATask");
+//System.out.println("calculateTotalDurationOfATask");
         int taskDuration = 0;
     //    int taskID = 6;  //task.getTaskID();  //MOCK DATA
         List<Session> allSessionsInATask = getAllSessionsOfATask(taskID);  //new ArrayList<>();
@@ -325,11 +327,9 @@ System.out.println("calculateTotalDurationOfATask");
             int sessionDuration = calculateDurationOfASession(session);
             int updatedDuration = taskDuration + sessionDuration;
             taskDuration = updatedDuration;
-System.out.println("Task: " + taskID + "    Session: " + session.getSessionID() + "   Duration = " + sessionDuration);
+//System.out.println("Task: " + taskID + "    Session: " + session.getSessionID() + "   Duration = " + sessionDuration);
         }
-System.out.println("");
-System.out.println("Task Duration" + taskDuration);
-System.out.println("");
+//System.out.println("Task Duration: " + taskDuration);
         return taskDuration;
     }    
  

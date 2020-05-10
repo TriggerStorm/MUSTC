@@ -68,9 +68,12 @@ public class TestController implements Initializable {
         System.out.println("test start");
      float aHours = 350;
   
-     
- 
-     
+  //   int duration = sessionDBDao.calculateTotalDurationOfATask(3);  //  TEST
+   //      System.out.println("test duration" + duration);
+  
+ double totalProjectHours = taskDBDao.getTotalMinutesOfAProject(2);
+              System.out.println("test totalProjectHours" + totalProjectHours);
+
  //       Project test = projectDBDao.addNewProjectToDB("testy", 9, 66661234, aHours, 999);
  //       Project test = projectDBDao.getProjectForUser(5);
  //       Project testp = projectDBDao.getProjectForAdmin(7);
@@ -266,7 +269,7 @@ else
   //  Session test = sessionDBDao.addNewSessionToDB(2, 5, DTN, DTN);
 
     
-      orderTest();
+ //     orderTest();
 
   
   
@@ -278,7 +281,7 @@ else
     
     
     
-    
+ /*   
     public void orderTest() {
         ArrayList<Session> allSessions = new ArrayList<>();
         String dts1 =  "2020-05-02 12:01:02";    
@@ -329,7 +332,7 @@ else
         
         }
   
-    
+  */  
     
     
     

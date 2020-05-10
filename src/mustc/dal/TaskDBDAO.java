@@ -201,9 +201,8 @@ public class TaskDBDAO {
     }
      
      
-/*    public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID) throws SQLException {
-        List<Task> allTaskIDsAndNamesOfAProject = new ArrayList<>();
-        int [] taskDuration = new int[2];
+ /*   public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID) throws SQLException {
+        List<Task> allTaskIDsAndTaskNamesOfAProject = new ArrayList<>();
         try(Connection con = dbc.getConnection()) {
             String sql = "SELECT id, name FROM Tasks WHERE associatedProject = '" + projectID + "'";
             Statement stmt = con.createStatement();
@@ -212,15 +211,61 @@ public class TaskDBDAO {
             {
                 int taskID = rs.getInt("id");
                 String taskName =  rs.getString("name");
- //               taskDuration[0] = rs.getInt("durationHours");
- //               taskDuration[1] = rs.getInt("durationMinutes");
-                Task taskInProject = new Task(taskID, taskName, null, projectID, null/*, taskDuration);*/
-/*                allTaskIDsAndNamesOfAProject.add(taskInProject); 
+  //              Task taskInProject = new Task(taskID, taskName, null, projectID, null/*, taskDuration);*/
+//                allTaskIDsAndNamesOfAProject.add(taskInProject); 
+ /*           }    
+        }
+        return allTaskIDsAndTaskNamesOfAProject ;
+    }
+  */  
+    
+    
+    public List<Task> getAllTasksOfAProject(int projectID) throws SQLException {
+        List<Task> allTasksOfAProject = new ArrayList<>();
+    //    double totalProjectHours = 0;
+        try(Connection con = dbc.getConnection()){
+            String sql = "SELECT * FROM Tasks WHERE associatedProject = '" + projectID + "'";
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                int taskID = rs.getInt("id");
+                String taskName = rs.getString("name");
+                int associatedProjectID = rs.getInt("associatedProject");
+                ProjectDBDAO projectDBDao = new ProjectDBDAO();  // TEMP
+                String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP
+                float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMP
+                double totalTaskHours = sessionDBDao.calculateTotalDurationOfATask(taskID);
+        //        totalProjectHours += totalTaskHours;
+System.out.println("taskID: " + taskID + "   totalTaskHours:  " + totalTaskHours);               
+// 667.75;  // MOCK DATA
+                String developers = "Bob, Sue";
+                Task taskOfAProject = new Task(taskID, taskName, associatedProjectID, projectName, projectRate, totalTaskHours, developers);
+                allTasksOfAProject.add(taskOfAProject);
             }    
         }
-        return allTaskIDsAndNamesOfAProject ;
+        return allTasksOfAProject;
     }
- */   
+    
+    
+    public double getTotalMinutesOfAProject(int projectID) throws SQLException {
+        int totalProjectHours = 0;
+        int totalTaskHours;
+        List<Task> allTasksOfAProject = getAllTasksOfAProject(projectID);  //new ArrayList<>();
+        for (int i = 0; i < allTasksOfAProject.size(); i++) {
+            Task task = allTasksOfAProject.get(i);
+            int taskID = task.getTaskID();
+            totalTaskHours = sessionDBDao.calculateTotalDurationOfATask(taskID);// task.getTotalTaskHours();
+System.out.println("Task: " + taskID + "   TotalTaskHours: " + totalTaskHours);    
+//            int taskHours = sessionDBDao.calculateTotalDurationOfATask(taskID);
+            totalProjectHours += totalTaskHours;
+ //           taskDuration = updatedDuration;    
+        }
+    System.out.println("totalProjectHours: " + totalProjectHours);    
+    return totalProjectHours;
+    }
+    
     
     public Task editTask (Task editedTask, String taskName , int associatedProjectID) { 
     //  Edits a Task in the Task table of the database given the Projects new details.  

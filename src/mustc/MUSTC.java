@@ -21,7 +21,8 @@ public class MUSTC extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-        Parent root = FXMLLoader.load(getClass().getResource("gui/view/AdminView.fxml"));
+ //       Parent root = FXMLLoader.load(getClass().getResource("gui/view/AdminView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("gui/view/Test.fxml"));
 
         
         Scene scene = new Scene(root);
