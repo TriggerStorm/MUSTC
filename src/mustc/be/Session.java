@@ -62,6 +62,16 @@ public class Session implements Comparable<Session>{
         this.finishTime = finishTime;
     }
     
+// getDuration constructor        
+    public Session(int sessionID, int associatedTaskID, String associatedTaskName, String startTime, String finishTime, int duration) {
+        this.sessionID = sessionID;
+//        this.description = description;
+        this.associatedTaskID = associatedTaskID;
+        this.associatedTaskName = associatedTaskName;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
+    }
+    
     
     // Ordering by DateTime constructor        
     public Session(int sessionID, int associatedTaskID, String associatedTaskName, LocalDateTime startLDT, LocalDateTime finishLDT) {
