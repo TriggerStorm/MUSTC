@@ -32,6 +32,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -103,7 +104,7 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private JFXTextField task_name;
     @FXML
-    private JFXComboBox<?> cb_task_project;
+    private JFXComboBox<Project> cb_task_project;
     @FXML
     private JFXButton bn_task_add;
     @FXML
@@ -173,11 +174,27 @@ public class UserViewController extends JFrame implements Initializable {
     Task selectTask;
     String startTime;
     
+    Session SessionToedit;
+    Task taskToedit;
+    
+    
     @FXML
     private Text lb_task;
     @FXML
     private Text tb_project;
     private TableColumn<Session, String> col_sesion_tn1;
+    @FXML
+    private JFXTextField tf_session_name;
+    @FXML
+    private JFXTextField tf_session_dev;
+    @FXML
+    private JFXTextField tf_session_start;
+    @FXML
+    private JFXTextField tf_session_stop;
+    @FXML
+    private JFXButton bn_session_edit;
+    @FXML
+    private JFXButton bn_session_delete;
     
     
     
@@ -204,7 +221,7 @@ public class UserViewController extends JFrame implements Initializable {
         cb_task3.setPromptText(cb_task3.getItems().get(0).getTaskName());
         bn_task3.setText(cb_task3.getItems().get(0).getProjectName());
         
-        cb_project.setItems(userModel.getAllProjectList());
+        cb_project.setItems(userModel.getAllProjectsIDsAndNames());
         /*Image image1 = new Image(userModel.taskImg1());
         Image image2 = new Image(userModel.taskImg2());
         Image image3 = new Image(userModel.taskImg3());
@@ -212,6 +229,7 @@ public class UserViewController extends JFrame implements Initializable {
         img_task2.setImage(image2);
         img_task3.setImage(image3);*/
         
+        cb_task_project.setItems(userModel.getAllProjectsIDsAndNames());
     }    
 
     public UserViewController() {
@@ -376,9 +394,9 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void handle_task2(ActionEvent event) {
-        selectTask = cb_task1.getSelectionModel().getSelectedItem();
-        lb_task.setText(cb_task1.getSelectionModel().getSelectedItem().getTaskName());
-            tb_project.setText(cb_task1.getSelectionModel().getSelectedItem().getProjectName());
+        selectTask = cb_task2.getSelectionModel().getSelectedItem();
+        lb_task.setText(cb_task2.getSelectionModel().getSelectedItem().getTaskName());
+            tb_project.setText(cb_task2.getSelectionModel().getSelectedItem().getProjectName());
     }
 
     @FXML
@@ -415,6 +433,57 @@ public class UserViewController extends JFrame implements Initializable {
             ;
     }
 
+    }
+
+    @FXML
+    private void handel_session_edit(ActionEvent event) {
+        userModel.editSession(SessionToedit,
+                SessionToedit.getAssociatedUserID(),
+                SessionToedit.getAssociatedTaskID(),
+                tf_session_start.getText(),
+                tf_session_stop.getText());
+    }
+
+    @FXML
+    private void handel_session_delete(ActionEvent event) {
+        userModel.removeSessionFromDB(SessionToedit);
+    }
+
+    @FXML
+    private void handel_pick_task(MouseEvent event) {
+        taskToedit = tbv_task.getSelectionModel().getSelectedItem();
+        task_name.setText(taskToedit.getTaskName());
+        cb_task_project.setPromptText(taskToedit.getProjectName());
+    }
+
+    @FXML
+    private void handel_pick_session(MouseEvent event) {
+        SessionToedit = TBV_Session.getSelectionModel().getSelectedItem();
+        tf_session_name.setText(SessionToedit.getAssociatedTaskName());
+        tf_session_start.setText(SessionToedit.getStartTime());
+        tf_session_stop.setText(SessionToedit.getFinishTime());
+        tf_session_dev.setText(SessionToedit.getAssociatedUserName());
+    }
+
+    @FXML
+    private void handel_add_task(ActionEvent event) {
+        userModel.addNewTaskToDB(
+                task_name.getText().trim(),             
+                cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
+                true);
+    }
+
+    @FXML
+    private void handel_edit_task(ActionEvent event) {
+        userModel.editTask(taskToedit,
+                task_name.getText().trim(),
+                "test",
+                taskToedit.getAssociatedProjectID());      
+    }
+
+    @FXML
+    private void handel_delete_task(ActionEvent event) {
+         userModel.removeTaskFromDB(taskToedit);
     }
     
 

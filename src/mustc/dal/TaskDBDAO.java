@@ -172,7 +172,8 @@ public class TaskDBDAO {
                 float projectRate = projectDBDao.getProjectRate(associatedProjectID);
                 int totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID);
                 String developers = "Bob, Sue";
-                int billable = rs.getInt("description");  // String description needs to be replaced in DB with int billable 
+                String billableSTR = rs.getString("Description");
+                int billable = Integer.parseInt(billableSTR);    /*rs.getInt("description");*/  // String description needs to be replaced in DB with int billable 
                 boolean isBillable = convertIntToBoolean(billable);
                 Task taskForAdmin = new Task(taskID, taskName, associatedProjectID, projectName, projectRate, totalTaskMinutes, developers, isBillable);
                 allTasksForAdmin.add(taskForAdmin);

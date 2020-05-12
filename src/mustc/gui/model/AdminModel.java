@@ -27,7 +27,6 @@ public class AdminModel {
     private ObservableList<Project> pjList;
     private ObservableList<Task> taskList;
     private ObservableList<Session> sessionList; 
-    private ObservableList<String> sString; 
     private Task task;
     private ObservableList<Client> clientList;
     private ObservableList<User> userList;
@@ -36,7 +35,8 @@ public class AdminModel {
     private ObservableList<Task> g1;
     private ObservableList<Task> g2;
     private ObservableList<Task> g3;
-     private ObservableList<Project> pj;
+    private ObservableList<Project> pj;
+    private ObservableList<String> admin;
     
     public AdminModel() {
         bllManager = new BllManager();
@@ -45,19 +45,19 @@ public class AdminModel {
  
     }
     
-    
-
-    public ObservableList<Project> getAllProject() {
+    public ObservableList<String> getAdmin(){
+          List<String> admins = new ArrayList<>();
+        String s1 = new String("Admin");
+        String s2 = new String ("dev");
+        admins.add(s1);
+        admins.add(s2);
         
-       List<Project> allProjcets = bllManager.getAllProjectsForAdmin();
-       pjList = FXCollections.observableArrayList(allProjcets);
-       return pjList;
+        admin = FXCollections.observableArrayList(admins);
+        
+        return admin;
     }
-    public ObservableList<Project> getAllProjectsIDsAndNames() {
-        List<Project> allProjcets =bllManager.getAllProjectsIDsAndNames();
-        pj = FXCollections.observableArrayList(allProjcets);
-        return pj;
-    }
+
+    
     
     public ObservableList<Client> getAllClient() {
         
@@ -66,16 +66,11 @@ public class AdminModel {
         return clientList;
     }
     
-    public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable){
-       
-       return bllManager.addNewTaskToDB(taskName, associatedProjectID, isBillable);
-       
-   }
+
+    
+
     public ObservableList<Task> getAllTask() {
-       // List<Task> allTask =  new ArrayList<>();
-      //  allTask.add(task);
-        
-          List<Task> allTask = bllManager.getAllTasksForAdmin();
+         List<Task> allTask = bllManager.getAllTasksForAdmin();
          taskList = FXCollections.observableArrayList(allTask);
          return taskList;
     }
@@ -93,40 +88,82 @@ public class AdminModel {
          return userList;
     }
     
-    public ObservableList<String> someStrings(){
-        List<String> Strings = Arrays.asList("hey","you","test","done");
-        sString = FXCollections.observableArrayList(Strings);
-        return sString;
+    //Client
+    
+    public Client addNewClientToDB(String clientName, String logoImgLocation, String email, float standardRate) {
+        return bllManager.addNewClientToDB(clientName, logoImgLocation, email, standardRate);
     }
+    
+    public Client editClient(Client editedClient, String clientName, float standardRate, String logoImgLocation, String email) {
+        return bllManager.editClient(editedClient, clientName, standardRate, logoImgLocation, email);
+    }
+    
+    public void removeClientFromDB(Client clientToDelete) {
+        bllManager.removeClientFromDB(clientToDelete);
+    }
+    
     //pj
-    public void addNewProjectToDB(String trim, Object selectedItem, String trim0, String trim1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public ObservableList<Project> getAllProject() {
+        
+       List<Project> allProjcets = bllManager.getAllProjectsForAdmin();
+       pjList = FXCollections.observableArrayList(allProjcets);
+       return pjList;
+    }
+    public ObservableList<Project> getAllProjectsIDsAndNames() {
+        List<Project> allProjcets =bllManager.getAllProjectsIDsAndNames();
+        pj = FXCollections.observableArrayList(allProjcets);
+        return pj;
+    }
+    public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int allocatedHours) {
+        return bllManager.addNewProjectToDB(projectName, associatedClientID, phoneNr, projectRate, allocatedHours);
     }
 
-    public void editProject(Project editedProject, String trim, Object selectedItem, String trim0, String trim1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Project editProject(Project editedProject, String projectName, int associatedClientID, float projectRate, int allocatedHours, boolean isClosed) {
+        return bllManager.editProject(editedProject, projectName, associatedClientID, projectRate, allocatedHours, isClosed);
     }
 
-    public void removeProjectFromDB(ObservableList<Project> selectedItems) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void removeProjectFromDB(Project projectToDelete) {
+        bllManager.removeProjectFromDB(projectToDelete);
     }
     
     //task
 
-    public void addNewTaskToDB(String trim, Object selectedItem, String trim0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable){
+       
+       return bllManager.addNewTaskToDB(taskName, associatedProjectID, isBillable);
+       
+   }
 
-    public void editTask(String trim, Object selectedItem, String trim0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Task editTask(Task editedTask, String taskName, String description, int associatedProjectID) {
+        return bllManager.editTask(editedTask, taskName, description, associatedProjectID);
     }
     
-    public void removeTaskFromDB(){}
+    public void removeTaskFromDB(Task taskToDelete) {
+        bllManager.removeTaskFromDB(taskToDelete);
+    }
     
     
     // user
     public void addNewUserToDB(String userName, String email, String password, float salary, String status) {
-        bllManager.addNewUserToDB(userName, email, password, 0, status);
+        bllManager.addNewUserToDB(userName, email, password, salary, status);
+    }
+    
+    public User editUser(User userToEdit, String userName, String email, String password, Float salary, String status) {
+        return bllManager.editUser(userToEdit, userName, email, password, salary, status);
+    }
+    
+    public void removeUserFromDB(User userToDelete) {
+        bllManager.removeUserFromDB(userToDelete);
+    }
+    
+    // Session
+    public Session editSession(Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
+        return bllManager.getSession(associatedTaskID);
+    }
+    
+    public void removeSessionFromDB(Session sessionToDelete) {
+        bllManager.removeSessionFromDB(sessionToDelete);
     }
     
     //3 task
@@ -164,7 +201,7 @@ public class AdminModel {
        return bllManager.getProjectForUser(projectID);
     }
     
-    public ObservableList<Task> getAllTaskFromProjectId(){
+    /*public ObservableList<Task> getAllTaskFromProjectId(){
         List<Task> allTask =  new ArrayList<>();
         Task t1 = new Task("t1" + 0,0);
         Task t2 = new Task("t2" + 5,5);
@@ -176,7 +213,7 @@ public class AdminModel {
         task3 = FXCollections.observableArrayList(allTask);
         
         return task3;
-    }
+    }*/
     
     public Task getTaskForUser(int taskID) {
         return bllManager.getTaskForUser(taskID);

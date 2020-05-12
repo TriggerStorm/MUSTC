@@ -40,6 +40,11 @@ public class Client {
         this.totalHours = totalHours;
         this.noOfProjects = noOfProjects;
     }
+
+    @Override
+    public String toString() {
+        return clientName;
+    }
     
     
 
