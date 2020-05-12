@@ -305,7 +305,7 @@ public class UserViewController extends JFrame implements Initializable {
     
     
     public void addTask(){
-        userModel.addNewTaskToDB(tf_newtask.getText(),"as",cb_project.getSelectionModel().getSelectedItem().getProjectID());
+        userModel.addNewTaskToDB(tf_newtask.getText(),cb_project.getSelectionModel().getSelectedItem().getProjectID(), true);
     }
     
     @FXML

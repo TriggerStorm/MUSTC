@@ -36,26 +36,27 @@ public class TaskDBDAO {
     
    
             
-    public Task addNewTaskToDB(String taskName,String description, int associatedProjectID) throws SQLException { 
+    public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable) throws SQLException { 
     //  Adds a new Task to the DB, and returns the updated Project to the GUI
     ProjectDBDAO projectDBDao = new ProjectDBDAO();
     String projectName = projectDBDao.getProjectName(associatedProjectID);  // ADD TO DB
     float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMO
-        double myTaskHours = 0;
-        double totalTaskHours = 345.50;    // ADD TO DB
-        String developers = "";    // ADD TO DB
+        int usersTaskMinutes = 0;
+        int totalTaskMinutes = 0;    // ADD TO DB?
+        String developers = "";    // ADD TO DB?
         List<Session> emptySessionList = new ArrayList<>();
         emptySessionList = null;
  //       int[] taskDuration = new int[2];
  //       taskDuration[0] = 0;  // set taskDuration hours to 0
  //       taskDuration[1] = 0;  // set taskDuration minutes to 0
-        Task newTask = new Task(0, taskName, associatedProjectID, projectName, projectRate, myTaskHours, totalTaskHours, developers, emptySessionList);
+        Task newTask = new Task(0, taskName, associatedProjectID, projectName, projectRate, usersTaskMinutes, totalTaskMinutes, developers, emptySessionList, isBillable);
         try (Connection con = dbc.getConnection()) {
-            String sql = "INSERT INTO Tasks(name, description ,associatedProject) VALUES (?,?,?)";
+            String sql = "INSERT INTO Tasks(name ,associatedProject, description) VALUES (?,?,?)";  // String description needs to be replaced in DB with int billable
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, taskName);
-            pstmt.setString(2, description);
-            pstmt.setInt(3, associatedProjectID);
+            pstmt.setInt(2, associatedProjectID);
+            int billable = convertBooleanToInt(isBillable);
+            pstmt.setInt(3, billable);
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Creating Task failed, no rows affected.");
@@ -94,9 +95,9 @@ public class TaskDBDAO {
 //  { To BE REPLACED BY DB
                 ProjectDBDAO projectDBDao = new ProjectDBDAO();
                 String projectName = projectDBDao.getProjectName(associatedProjectID);
- /* } */            double myTaskHours = 45.25;  // MOCK DATA 
+ /* } */            int usersTaskMinutes = 127;  // MOCK DATA 
                 String developers = "";  // TO BE DONE
-                taskInProject = new Task(taskID, taskName, associatedProjectID, projectName, myTaskHours, developers/*, taskDuration*/);       
+                taskInProject = new Task(taskID, taskName, associatedProjectID, projectName, usersTaskMinutes, developers);       
             }    
         }
         return taskInProject ;
@@ -117,40 +118,15 @@ public class TaskDBDAO {
                 ProjectDBDAO projectDBDao = new ProjectDBDAO();  // TEMP
                 String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP
      //           float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMP
-                double myTaskHours = 667.75;  // MOCK DATA
+                int usersTaskMinutes = 267;  // MOCK DATA
                 String developers = "Bob, Sue";  // MOCK DATA
-                Task taskForAdmin = new Task(taskID, taskName, associatedProjectID, projectName, myTaskHours, developers);
+                Task taskForAdmin = new Task(taskID, taskName, associatedProjectID, projectName, usersTaskMinutes, developers);
                 allTasksForAdmin.add(taskForAdmin);
             }    
         }
        return allTasksForAdmin; 
     }
     
-    
-/*    public List<Task> getAllUsersTasks() throws SQLException {
-        List<Task> allUsersTasks = new ArrayList<>();
-        int loggedInUserID = 3;   // MOCK DATA
-        try(Connection con = dbc.getConnection()){
-               String sql = "SELECT id, name, associatedProject FROM Tasks INNER JOIN Tasks.Users.id ="; // work in progress
-            PreparedStatement pstmt = con.prepareStatement(sql);   
-            pstmt.execute();    
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()) //While you have something in the results
-            {
-                int taskID =  rs.getInt("id");
-                String taskName = rs.getString("name");
-                int associatedProjectID =rs.getInt("associatedProject");
-                ProjectDBDAO projectDBDao= new ProjectDBDAO();  // TEMP
-                String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP 
-                double myTaskHours = 707.75;  // MOCK DATA
-                String developers = "Mike, Karen";  // MOCK DATA
-                Task taskForUser = new Task(taskID, taskName, associatedProjectID, projectName, myTaskHours, developers);
-                allUsersTasks.add(taskForUser);
-            }    
-        }
-        return allUsersTasks; 
-    }
-*/     
      
     public Task getTaskForAdmin(int taskID) throws SQLException {
     //  Returns a Task from the DB where ID = taskID
@@ -168,8 +144,11 @@ public class TaskDBDAO {
                 ProjectDBDAO projectDBDao= new ProjectDBDAO();  // TEMP
                 String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP
                 float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMP               List<Session> allSessionsOfATask = sessionDBDao.getAllSessionsOfATask(taskID);
+                int totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID);  //  REPLACE WITH MODEL LATER
                 String developers = "Gus, John, BumbleWeed";  // MOCK DATA
-                taskInProject = new Task(taskID, taskName, associatedProjectID, projectName, projectRate, developers);       
+                int billable = rs.getInt("description");  // String description needs to be replaced in DB with int billable 
+                boolean isBillable = convertIntToBoolean(billable);
+                taskInProject = new Task(taskID, taskName, associatedProjectID, projectName, projectRate, totalTaskMinutes, developers, isBillable);       
             }    
         }
         return taskInProject ;
@@ -188,39 +167,80 @@ public class TaskDBDAO {
                 int taskID = rs.getInt("id");
                 String taskName = rs.getString("name");
                 int associatedProjectID = rs.getInt("associatedProject");
-                ProjectDBDAO projectDBDao = new ProjectDBDAO();  // TEMP
-                String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP
-                float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMP
-                double totalTaskHours = 667.75;  // MOCK DATA
+                ProjectDBDAO projectDBDao = new ProjectDBDAO();  // MAYBE this and next 3 lines
+                String projectName = projectDBDao.getProjectName(associatedProjectID);
+                float projectRate = projectDBDao.getProjectRate(associatedProjectID);
+                int totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID);
                 String developers = "Bob, Sue";
-                Task taskForAdmin = new Task(taskID, taskName, associatedProjectID, projectName, projectRate, totalTaskHours, developers);
+                int billable = rs.getInt("description");  // String description needs to be replaced in DB with int billable 
+                boolean isBillable = convertIntToBoolean(billable);
+                Task taskForAdmin = new Task(taskID, taskName, associatedProjectID, projectName, projectRate, totalTaskMinutes, developers, isBillable);
                 allTasksForAdmin.add(taskForAdmin);
             }    
         }
        return allTasksForAdmin; 
     }
      
-     
-/*    public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID) throws SQLException {
-        List<Task> allTaskIDsAndNamesOfAProject = new ArrayList<>();
-        int [] taskDuration = new int[2];
-        try(Connection con = dbc.getConnection()) {
-            String sql = "SELECT id, name FROM Tasks WHERE associatedProject = '" + projectID + "'";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
+    
+    public List<Task> getAllTasksOfAProject(int projectID) throws SQLException {
+        List<Task> allTasksOfAProject = new ArrayList<>();
+    //    double totalBillableProjectMinutes = 0;
+        try(Connection con = dbc.getConnection()){
+            String sql = "SELECT * FROM Tasks WHERE associatedProject = '" + projectID + "'";
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
             while(rs.next()) //While you have something in the results
             {
                 int taskID = rs.getInt("id");
-                String taskName =  rs.getString("name");
- //               taskDuration[0] = rs.getInt("durationHours");
- //               taskDuration[1] = rs.getInt("durationMinutes");
-                Task taskInProject = new Task(taskID, taskName, null, projectID, null/*, taskDuration);*/
-/*                allTaskIDsAndNamesOfAProject.add(taskInProject); 
+                String taskName = rs.getString("name");
+                int associatedProjectID = rs.getInt("associatedProject");
+                ProjectDBDAO projectDBDao = new ProjectDBDAO();  // TEMP
+                String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP
+                float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMP
+                int totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID); 
+        //        totalBillableProjectMinutes += totalTaskHours;
+                String developers = "Bob, Sue";
+                int billable = rs.getInt("description");  // String description needs to be replaced in DB with int billable 
+System.out.println("taskID: " + taskID + "   Billable: " + billable);               
+  
+                boolean isBillable = convertIntToBoolean(billable);
+ System.out.println("taskID: " + taskID + "   totalTaskHours:  " + totalTaskMinutes + "   isBillable" + isBillable);               
+               Task taskOfAProject = new Task(taskID, taskName, associatedProjectID, projectName, projectRate, totalTaskMinutes, developers, isBillable);
+                allTasksOfAProject.add(taskOfAProject);
             }    
         }
-        return allTaskIDsAndNamesOfAProject ;
+        return allTasksOfAProject;
     }
- */   
+    
+     
+    public int[] getTotalMinutesOfAProject(int projectID) throws SQLException {
+        int[] totalProjectMinutes = new int[2];
+        totalProjectMinutes[0] = 0;
+        totalProjectMinutes[1] = 0;
+        int totalBillableProjectMinutes = 0;
+        int totalUnbillableProjectHours = 0;
+        int totalTaskMinutes;
+        List<Task> allTasksOfAProject = getAllTasksOfAProject(projectID);  //new ArrayList<>();
+        for (int i = 0; i < allTasksOfAProject.size(); i++) {
+            Task task = allTasksOfAProject.get(i);
+            int taskID = task.getTaskID();
+            
+            totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID);// task.getTotalTaskHours();
+System.out.println("Task: " + taskID + "   TotalTaskHours: " + totalTaskMinutes);    
+            if (task.getIsBillable() == true) {
+                totalBillableProjectMinutes += totalTaskMinutes;
+            } else {
+                totalUnbillableProjectHours += totalTaskMinutes;
+            }
+        }
+System.out.println("totalBillableProjectMinutes: " + totalBillableProjectMinutes);    
+System.out.println("totalUnbillableProjectHours: " + totalUnbillableProjectHours);    
+        totalProjectMinutes[0] = totalUnbillableProjectHours;
+        totalProjectMinutes[1] = totalBillableProjectMinutes;
+        return totalProjectMinutes;
+    }
+    
     
     public Task editTask (Task editedTask, String taskName , int associatedProjectID) { 
     //  Edits a Task in the Task table of the database given the Projects new details.  
@@ -273,6 +293,8 @@ public class TaskDBDAO {
         int recentTask1ID = -1;  // Initialiser value - not a real taskID        
         int recentTask2ID = -1;  // Initialiser value - not a real taskID   
         int recentTask3ID = -1;  // Initialiser value - not a real taskID   
+System.out.println("getUsersThreeRecentTasks = "); 
+        
         List<Session> allLoggedInUserSessions = sessionDBDao.getAllLoggedInUsersSessionsStartTimseAndTaskIDs(loggedInUser);
         //  Get recentTask1
         if (allLoggedInUserSessions.size() > 0) {
@@ -306,35 +328,10 @@ System.out.println("recentTask3ID = " + recentTask3ID);
             } else counter++;
         }
         return recentTasks;
-
-//     allLoggedInUserSessions.sort(startTime);
-  //  Comparable<Session> timeSorter = Comparator.comparing(Session::getName);  
-   //    PriorityQueue<Session> priorityQueue = new PriorityQueue<>( timeSorter );
-    
- /*       int loggedInUserID = loggedInUser.getUserID();
-        int recentTaskID = 0;
-         String startTime = "";
-//        String sql = "SELECT associatedTask FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'" AND id =0;//+ ORDER BY startTime DESC;
-//        String sql = "SELECT MAX(startTime), associatedTask FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'";// AND id =0;//+ ORDER BY startTime DESC;
-         String sql = "SELECT MAX(StartTime) FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'";// AND id =0;//+ ORDER BY startTime DESC;
-        try(Connection con = dbc.getConnection()){
-            PreparedStatement pstmt = con.prepareStatement(sql);   
-            pstmt.execute();    
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()) //While you have something in the results
-    //            LocalDateTime testLDT = rs.getDate(startTime);
-                 startTime = rs.getString("StartTime");
-  //              recentTaskID = rs.getInt("id");
-  System.out.println("startTime = " + startTime);
-
-//System.out.println("task1 ID = " + recentTaskID);
-                Task recentTask = getTaskForUser(recentTaskID);
-                recentTasks.add(recentTask);
-            }
-*/
     }
 
-    public String getTaskName(int taskID) throws SQLException {
+    
+     public String getTaskName(int taskID) throws SQLException {  //  USED??
         //  Returns a User data object given a User id
         String taskName = "mock";
         String sql = "SELECT name FROM Tasks WHERE id = '" + taskID + "'";  //  userName, email, password, salary, isAdmin 
@@ -350,6 +347,85 @@ System.out.println("recentTask3ID = " + recentTask3ID);
         return taskName;
     }
     
+     
+
+     
+     
+//  CONVERTERS
+     
+    private int convertBooleanToInt(boolean isBillable) {
+        int billable = 0;
+        if (isBillable == true) {
+            billable = 1;
+        }
+        return billable;
+    }
+    
+            
+    private boolean convertIntToBoolean(int billable) {
+        boolean isBillable = false;
+        if (billable == 1) {
+            isBillable = true;
+        }
+        return isBillable;
+    }
+      
+    
+    
+    
+    
+    
+    
+//  UNUSED CODE
+     
+     
+     
+/*    public List<Task> getAllUsersTasks() throws SQLException {
+        List<Task> allUsersTasks = new ArrayList<>();
+        int loggedInUserID = 3;   // MOCK DATA
+        try(Connection con = dbc.getConnection()){
+               String sql = "SELECT id, name, associatedProject FROM Tasks INNER JOIN Tasks.Users.id ="; // work in progress
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                int taskID =  rs.getInt("id");
+                String taskName = rs.getString("name");
+                int associatedProjectID =rs.getInt("associatedProject");
+                ProjectDBDAO projectDBDao= new ProjectDBDAO();  // TEMP
+                String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP 
+                double myTaskHours = 707.75;  // MOCK DATA
+                String developers = "Mike, Karen";  // MOCK DATA
+                Task taskForUser = new Task(taskID, taskName, associatedProjectID, projectName, myTaskHours, developers);
+                allUsersTasks.add(taskForUser);
+            }    
+        }
+        return allUsersTasks; 
+    }
+*/     
+     
+     
+    /*   
+    public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID) throws SQLException {
+        List<Task> allTaskIDsAndTaskNamesOfAProject = new ArrayList<>();
+        try(Connection con = dbc.getConnection()) {
+            String sql = "SELECT id, name FROM Tasks WHERE associatedProject = '" + projectID + "'";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()) //While you have something in the results
+            {
+                int taskID = rs.getInt("id");
+                String taskName =  rs.getString("name");
+  //              Task taskInProject = new Task(taskID, taskName, null, projectID, null/*, taskDuration);*/
+//                allTaskIDsAndNamesOfAProject.add(taskInProject); 
+ /*           }    
+        }
+        return allTaskIDsAndTaskNamesOfAProject ;
+    }
+  */  
+    
+   
     
 
 }

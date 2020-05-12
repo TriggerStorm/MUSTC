@@ -460,8 +460,8 @@ public class AdminViewController implements Initializable {
             tbv_session.setItems(adminModel.getAllSessions());
     }
     
-    public void addTask(){
-        adminModel.addNewTaskToDB(tf_newtask.getText(),"as",cb_project.getSelectionModel().getSelectedItem().getProjectID());
+    public void addTask(){  //  COMMENTED OUT FOR NOW
+       adminModel.addNewTaskToDB(tf_newtask.getText(),cb_project.getSelectionModel().getSelectedItem().getProjectID(), true);
     }
     
     @FXML

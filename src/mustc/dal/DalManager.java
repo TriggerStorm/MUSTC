@@ -175,9 +175,11 @@ public class DalManager implements DalFaçade {
 // TaskDBDAO methods    
     
     @Override
-    public Task addNewTaskToDB(String taskName, String description, int associatedProjectID) {
+    public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable) {
         try {
-            return taskDBDao.addNewTaskToDB(taskName,description, associatedProjectID);
+            return taskDBDao.addNewTaskToDB(taskName, associatedProjectID, isBillable);
+            
+            //     return null;
         } catch (SQLException ex) {
             Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -39,15 +39,16 @@ public class ProjectDBDAO {
     //  Adds a new Admin created Project to the DB, and returns the updated Admin Project to the GUI
         String clientName = clientDBDao.getClient(associatedClientID).getClientName();
 System.out.println(" client Name = " + clientName);        
-        double myProjectHours = 0;
-        int totalHours = 0;
+        int usersProjectMinutes = 0;
+        int totalBillableMinutes = 0;
+        int totalUnbillableMinutes = 0;
         int totalPrice = 0;
         List<Task> emptyTaskList = new ArrayList<>();
         emptyTaskList = null;
         int noOfTasks = 0;
         boolean isClosed = false;  //  New Project is open by default
         int closed = 0;  //  New Project is open by default
-        Project newProject = new Project(0, projectName, associatedClientID, clientName, phoneNr, projectRate, allocatedHours, myProjectHours, totalHours, totalPrice, emptyTaskList, noOfTasks, isClosed);
+        Project newProject = new Project(0, projectName, associatedClientID, clientName, phoneNr, projectRate, allocatedHours, usersProjectMinutes, totalBillableMinutes, totalUnbillableMinutes, totalPrice, emptyTaskList, noOfTasks, isClosed);
         String sql = "INSERT INTO Projects(name, associatedClient, phoneNr, projectRate, allocatedHours, closed) VALUES (?,?,?,?,?,?)";
         try (Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -74,7 +75,7 @@ System.out.println(" client Name = " + clientName);
             Logger.getLogger(ProjectDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         int adminProjectID = newProject.getProjectID();
-        Project adminProject = new Project(adminProjectID, projectName, associatedClientID, clientName, phoneNr, projectRate, allocatedHours, totalHours, totalPrice, emptyTaskList, isClosed);
+        Project adminProject = new Project(adminProjectID, projectName, associatedClientID, clientName, phoneNr, projectRate, allocatedHours, totalBillableMinutes, totalUnbillableMinutes, totalPrice, emptyTaskList, isClosed);
         return adminProject;
     }
     
@@ -102,10 +103,10 @@ System.out.println(" client Name = " + clientName);
         clientName = clientDBDao.getClient(associatedClientID).getClientName();
         int loggedInUserId;  // TO GET FETCHED LATER
         loggedInUserId = -1;  // TO BE CALCULATED
-        double myProjectHours = getMyHoursForAProject(loggedInUserId, projectID);
+        int usersProjectMinutes = getUsersProjectMinutes(loggedInUserId, projectID);
         taskList = null;  // may use method below
         //taskDBDao.getAllTaskIDsAndNamesOfAProject(projectID);
-        projectForUser = new Project(projectID, projectName, associatedClientID, clientName, phoneNr, myProjectHours, taskList); 
+        projectForUser = new Project(projectID, projectName, associatedClientID, clientName, phoneNr, usersProjectMinutes, taskList); 
         return projectForUser;
     }   
     
@@ -125,8 +126,8 @@ System.out.println(" client Name = " + clientName);
                 String clientName = clientDBDao.getClient(associatedClientID).getClientName() ;
                 int phoneNr = rs.getInt("phoneNr");
                 int noOfTasks = getTaskListCountForAProject(projectID);
-                double myProjectHours = 667.75;  // MOCK DATA
-                Project projectForUser = new Project(projectID, projectName, clientName, phoneNr, myProjectHours, noOfTasks);
+                int usersProjectMinutes = 667;  // MOCK DATA
+                Project projectForUser = new Project(projectID, projectName, clientName, phoneNr, usersProjectMinutes, noOfTasks);
                 projectForUser.setNoOfTasks(noOfTasks);
                 allProjectsForAUser.add(projectForUser);
             }    
@@ -144,7 +145,8 @@ System.out.println(" client Name = " + clientName);
         int phoneNr = 00000000;
         Float projectRate = 0f;
         int allocatedHours = 0;
-        double totalHours = 222.25;  // mock data
+        int totalBillableMinutes = 111;  // mock data
+        int totalUnbillableMinutes = 222;  // mock data
         int totalPrice = 77777;  // mock data
         List<Task> taskList = new ArrayList<>(); //  Tasks here only contain id, name and projectID
         boolean isClosed = false;
@@ -171,7 +173,7 @@ System.out.println(" client Name = " + clientName);
         loggedInUserId = -1;  // TO BE CALCULATED
         taskList = null;  //may use method below
         //taskList = taskDBDao.getAllTaskIDsAndNamesOfAProject(projectID);
-        projectForAdmin = new Project(projectID, projectName, associatedClientID, clientName, phoneNr, projectRate, allocatedHours, totalHours, totalPrice, taskList, isClosed);
+        projectForAdmin = new Project(projectID, projectName, associatedClientID, clientName, phoneNr, projectRate, allocatedHours, totalBillableMinutes, totalUnbillableMinutes, totalPrice, taskList, isClosed);
         return projectForAdmin;
     }   
     
@@ -191,10 +193,12 @@ System.out.println(" client Name = " + clientName);
                 String clientName = clientDBDao.getClient(associatedClientID).getClientName() ;
                 int phoneNr = rs.getInt("phoneNr");
                 float projectRate = rs.getFloat("projectRate");
-                double totalHours = 333.5; // MOCK DATA
-                int totalPrice = (int) (totalHours * projectRate);
+                int[] totalMinutesOfAProject = taskDBDao.getTotalMinutesOfAProject(projectID);
+                int totalBillableMinutes = totalMinutesOfAProject[1];
+                int totalUnbillableMinutes = totalMinutesOfAProject[0];
+                int totalPrice = (int) (totalBillableMinutes * projectRate);
                 int noOfTasks = getTaskListCountForAProject(projectID);
-                Project projectForAdmin = new Project(projectID, projectName, clientName, phoneNr, projectRate, totalHours, totalPrice, noOfTasks);
+                Project projectForAdmin = new Project(projectID, projectName, clientName, phoneNr, projectRate, totalBillableMinutes, totalUnbillableMinutes, totalPrice, noOfTasks);
                 projectForAdmin.setNoOfTasks(noOfTasks);
                 projectForAdmin.setTotalPrice(totalPrice);
                 allProjectsForAdmin.add(projectForAdmin);
@@ -222,7 +226,7 @@ System.out.println(" client Name = " + clientName);
     }
     
     
-    public int getTaskListCountForAProject(int projectID) throws SQLException {
+    private int getTaskListCountForAProject(int projectID) throws SQLException {
         List<Task> projectTaskList = new ArrayList<>();
         projectTaskList = null;
         int projectTaskListCount = 0;
@@ -249,34 +253,12 @@ System.out.println(" client Name = " + clientName);
         return getProjectForAdmin(projectID).getProjectRate();  // NEW BE NEEDED w- id + Rate
     } 
     
-    private float getMyHoursForAProject(int userID, int projectID) {
-    float myHours = -1;  // METHOD NOT WRITTEN   
-    return myHours;   
+    private int getUsersProjectMinutes(int userID, int projectID) {
+    int usersProjectMinutes = -1;  // METHOD NOT WRITTEN   
+    return usersProjectMinutes;   
     }
 
  
-   
-
-    
-    
- /*   public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID) throws SQLException {
-    //  Returns all Projects for all Client   
-        List<Project> allProjectIDsAndNamesOfAClient = new ArrayList<>();
-        try(Connection con = dbc.getConnection()){
-            String sql = "SELECT id AND name FROM Projects WHERE associatedClient = '" + clientID + "'";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()) //While you have something in the results
-            {
-                int projectID =  rs.getInt("id");
-                String projectName = rs.getString("name");
-                allProjectIDsAndNamesOfAClient.add(new Project(projectID, projectName, 0, 0, 0, 0, null, false)); 
-            }    
-        }
-        return allProjectIDsAndNamesOfAClient;
-    }
-*/
-
     public Project editProject (Project editedProject, String projectName, /*int associatedClientID,*/ int phoneNr, float projectRate, int allocatedHours, boolean isClosed) { 
     //  Returns an Admin edited Project in the Projects table of the database, given the Projects new details.  
         int projectID = editedProject.getProjectID();
@@ -322,4 +304,31 @@ System.out.println(" client Name = " + clientName);
             System.out.println("Exception " + ex);
         }
     }
+
+
+
+
+
+    
+    
+ /*   public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID) throws SQLException {
+    //  Returns all Projects for all Client   
+        List<Project> allProjectIDsAndNamesOfAClient = new ArrayList<>();
+        try(Connection con = dbc.getConnection()){
+            String sql = "SELECT id AND name FROM Projects WHERE associatedClient = '" + clientID + "'";
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()) //While you have something in the results
+            {
+                int projectID =  rs.getInt("id");
+                String projectName = rs.getString("name");
+                allProjectIDsAndNamesOfAClient.add(new Project(projectID, projectName, 0, 0, 0, 0, null, false)); 
+            }    
+        }
+        return allProjectIDsAndNamesOfAClient;
+    }
+*/
+
+
+
 }

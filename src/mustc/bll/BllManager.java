@@ -119,8 +119,8 @@ public class BllManager implements IBLL {
 // TaskDBDAO methods   
     
     @Override
-    public Task addNewTaskToDB(String taskName, String description, int associatedProjectID) {
-        return dalManager.addNewTaskToDB(taskName, description, associatedProjectID);
+    public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable) {
+        return dalManager.addNewTaskToDB(taskName, associatedProjectID, isBillable);
     }
 
     

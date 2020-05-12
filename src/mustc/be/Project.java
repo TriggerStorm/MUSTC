@@ -19,8 +19,9 @@ public class Project {
     private int phoneNr;  // for User & Admin
     private float projectRate;  // for Admin
     private int allocatedHours;  // for Admin
-    private double myProjectHours;  // for User
-    private double totalHours;  // for Admin
+    private int usersProjectMinutes;  // for User
+    private int totalBillableMinutes;  // for Admin
+    private int totalUnbillableMinutes;  // for Admin
     private int totalPrice;  // for Admin
     private List<Task> taskList;  // for User & Admin
     private int noOfTasks;
@@ -28,7 +29,7 @@ public class Project {
   
     
 //  Full constructor      
-    public Project(int projectID, String projectName, int associatedClientID, String clientName, int phoneNr, float projectRate, int allocatedHours, double myProjectHours, double totalHours, int totalPrice, List<Task> taskList, int noOfTasks, boolean isClosed) {
+    public Project(int projectID, String projectName, int associatedClientID, String clientName, int phoneNr, float projectRate, int allocatedHours, int usersProjectMinutes, int totalBillableMinutes, int totalUnbillableMinutes, int totalPrice, List<Task> taskList, int noOfTasks, boolean isClosed) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.associatedClientID = associatedClientID;
@@ -36,8 +37,9 @@ public class Project {
         this.phoneNr = phoneNr;
         this.projectRate = projectRate;
         this.allocatedHours = allocatedHours;
-        this.myProjectHours = myProjectHours;
-        this.totalHours = totalHours;
+        this.usersProjectMinutes = usersProjectMinutes;
+        this.totalBillableMinutes = totalBillableMinutes;
+        this.totalUnbillableMinutes = totalUnbillableMinutes;
         this.totalPrice = totalPrice;
         this.taskList = taskList;
         this.noOfTasks = noOfTasks;
@@ -46,43 +48,44 @@ public class Project {
     
     
 //  User constructor1  
-    public Project(int projectID, String projectName, int associatedClientID,  String clientName, int phoneNr, double myProjectHours, List<Task> taskList) {
+    public Project(int projectID, String projectName, int associatedClientID,  String clientName, int phoneNr, int usersProjectMinutes, List<Task> taskList) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.associatedClientID = associatedClientID;
         this.clientName = clientName;
         this.phoneNr = phoneNr;
-        this.myProjectHours = myProjectHours;
+        this.usersProjectMinutes = usersProjectMinutes;
         this.taskList = taskList;
     }
 
     
     //  User constructor2  
-    public Project(int projectID, String projectName, String clientName, int phoneNr, double myProjectHours, int noOfTasks) {
+    public Project(int projectID, String projectName, String clientName, int phoneNr, int usersProjectMinutes, int noOfTasks) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.clientName = clientName;
         this.phoneNr = phoneNr;
-        this.myProjectHours = myProjectHours;
+        this.usersProjectMinutes = usersProjectMinutes;
         this.noOfTasks = noOfTasks;
     }
 
     
 //  Admin constructor1      
-    public Project(int projectID, String projectName, String clientName, int phoneNr, float projectRate, double totalHours, int totalPrice, int noOfTasks) {
+    public Project(int projectID, String projectName, String clientName, int phoneNr, float projectRate, int totalBillableMinutes, int totalUnbillableMinutes, int totalPrice, int noOfTasks) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.clientName = clientName;
         this.phoneNr = phoneNr;
         this.projectRate = projectRate;
-        this.totalHours = totalHours;
+        this.totalBillableMinutes = totalBillableMinutes;
+        this.totalUnbillableMinutes = totalUnbillableMinutes;
         this.totalPrice = totalPrice;
         this.noOfTasks = noOfTasks;
 
        }
     
 //  Admin constructor2      
-    public Project(int projectID, String projectName, int associatedClientID, String clientName, int phoneNr, float projectRate, int allocatedHours, double totalHours, int totalPrice, List<Task> taskList, boolean isClosed) {
+    public Project(int projectID, String projectName, int associatedClientID, String clientName, int phoneNr, float projectRate, int allocatedHours, int totalBillableMinutes, int totalUnbillableMinutes, int totalPrice, List<Task> taskList, boolean isClosed) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.associatedClientID = associatedClientID;
@@ -90,7 +93,8 @@ public class Project {
         this.phoneNr = phoneNr;
         this.projectRate = projectRate;
         this.allocatedHours = allocatedHours;
-        this.totalHours = totalHours;
+        this.totalBillableMinutes = totalBillableMinutes;
+        this.totalUnbillableMinutes = totalUnbillableMinutes;
         this.totalPrice = totalPrice;
         this.taskList = taskList;
         this.isClosed = isClosed;
@@ -164,20 +168,28 @@ public class Project {
         this.allocatedHours = allocatedHours;
     }
 
-    public double getMyProjectHours() {
-        return myProjectHours;
+    public int getUsersProjectMinutes() {
+        return usersProjectMinutes;
     }
 
-    public void setMyProjectHours(double myProjectHours) {
-        this.myProjectHours = myProjectHours;
+    public void setUsersProjectMinutes(int usersProjectMinutes) {
+        this.usersProjectMinutes = usersProjectMinutes;
     }
     
-    public double getTotalHours() {
-        return totalHours;
+    public double getUotalBillableMinutes() {
+        return totalBillableMinutes;
     }
 
-    public void setTotalHours(double totalHours) {
-        this.totalHours = totalHours;
+    public void setTotalBillableMinutes(int totalBillableMinutes) {
+        this.totalBillableMinutes = totalBillableMinutes;
+    }
+    
+    public double getTotalUnbillableMinutes() {
+        return totalUnbillableMinutes;
+    }
+
+    public void setTotalUnbillableMinutes(int totalUnbillableMinutes) {
+        this.totalUnbillableMinutes = totalUnbillableMinutes;
     }
     
     public int getTotalPrice() {
