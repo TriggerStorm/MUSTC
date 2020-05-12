@@ -18,71 +18,73 @@ public class Task {
     private int associatedProjectID;  // the project that the task is assigned to.
     private String projectName;
     private float projectRate;
-    private double myTaskHours;
-    private double totalTaskHours;  //  total time used on a task in minutes
+    private int usersTaskMinutes;
+    private int totalTaskMinutes;  //  total time used on a task in minutes
     String developers; 
     private List<Session> sessions;  //time??
-
+    private boolean isBillable;
 
 
 // Full constructor    
-    public Task(int taskID, String taskName , int associatedProjectID, String projectName, float projectRate, double myTaskHours, double totalTaskHours, String developers, List<Session> sessions/*, int[] totalTaskHours*/) {
+    public Task(int taskID, String taskName, int associatedProjectID, String projectName, float projectRate, int usersTaskMinutes, int totalTaskMinutes, String developers, List<Session> sessions, boolean isBillable) {
         this.taskID = taskID;
         this.taskName = taskName;
         this.associatedProjectID = associatedProjectID;
         this.projectName = projectName;
         this.projectRate = projectRate;        
-        this.myTaskHours = myTaskHours;
-        this.totalTaskHours = totalTaskHours;
+        this.usersTaskMinutes = usersTaskMinutes;
+        this.totalTaskMinutes = totalTaskMinutes;
         this.developers = developers; 
         this.sessions = sessions;
-    }
-    public Task(String taskName,double totalTaskHours ){
-        this.taskName = taskName;
-        this.totalTaskHours = totalTaskHours;
-        
+        this.isBillable = isBillable;
     }
 
-   /* @Override
-    public String toString() {
-        return "Task{" + "taskID=" + taskID + ", taskName=" + taskName + ", associatedProjectID=" + associatedProjectID + ", projectName=" + projectName + ", projectRate=" + projectRate + ", myTaskHours=" + myTaskHours + ", totalTaskHours=" + totalTaskHours + ", developers=" + developers + ", sessions=" + sessions + '}';
-    }*/
-    
-
-    
-
-    @Override
-    public String toString() {
-        return  taskName;// + taskDuration ;
-    }
-
-    
 
 // Admin constructor for GUI
-    public Task(int taskID, String taskName , int associatedProjectID, String projectName, float projectRate, double totalTaskHours, String developers/* List<Session> sessions/*, int[] totalTaskHours*/) {
+    public Task(int taskID, String taskName , int associatedProjectID, String projectName, float projectRate, int totalTaskMinutes, String developers/* List<Session> sessions*/, boolean isBillable) {
         this.taskID = taskID;
         this.taskName = taskName;
         this.associatedProjectID = associatedProjectID;
         this.projectName = projectName;
         this.projectRate = projectRate;                
-        this.totalTaskHours = totalTaskHours;
+        this.totalTaskMinutes = totalTaskMinutes;
         this.developers = developers; 
  //       this.sessions = sessions;
+        this.isBillable = isBillable;
     }
     
     
 // User constructor for GUI
-    public Task(int taskID, String taskName, int associatedProjectID, String projectName, double myTaskHours, String developers) {
+    public Task(int taskID, String taskName, int associatedProjectID, String projectName, int usersTaskMinutes, String developers) {
         this.taskID = taskID;
         this.taskName = taskName;
         this.associatedProjectID = associatedProjectID;
         this.projectName = projectName;
-        this.myTaskHours = myTaskHours;
+        this.usersTaskMinutes = usersTaskMinutes;
         this.developers = developers; 
-//        this.totalTaskHours = totalTaskHours;
+//        this.totalTaskMinutes = totalTaskMinutes;
     }
 
     
+    public Task(String taskName, int totalTaskMinutes ){
+        this.taskName = taskName;
+        this.totalTaskMinutes = totalTaskMinutes;
+        
+    }
+    
+    @Override
+    public String toString() {
+        return  taskName;// + taskDuration ;
+    }
+    
+   /* @Override
+    public String toString() {
+        return "Task{" + "taskID=" + taskID + ", taskName=" + taskName + ", associatedProjectID=" + associatedProjectID + ", projectName=" + projectName + ", projectRate=" + projectRate + ", usersTaskMinutes=" + usersTaskMinutes + ", totalTaskMinutes=" + totalTaskMinutes + ", developers=" + developers + ", sessions=" + sessions + '}';
+    }*/
+    
+
+    
+
     public int getTaskID() {
 
         return taskID;
@@ -124,20 +126,20 @@ public class Task {
         this.projectRate = projectRate;
     }
      
-    public double getMyTaskHours() {
-        return myTaskHours;
+    public int setUsersTaskMinutes() {
+        return usersTaskMinutes;
     }
 
-    public void setMyTaskHours(double myTaskHours) {
-        this.myTaskHours = myTaskHours;
+    public void setUsersTaskMinutes(int usersTaskMinutes) {
+        this.usersTaskMinutes = usersTaskMinutes;
     }
      
-    public double getTotalTaskHours() {
-        return totalTaskHours;
+    public int getTotalTaskMinutes() {
+        return totalTaskMinutes;
     }
 
-    public void setTotalTaskHours(double totalTaskHours) {
-        this.totalTaskHours = totalTaskHours;
+    public void setTotalTaskMinutes(int totalTaskMinutes) {
+        this.totalTaskMinutes = totalTaskMinutes;
     }
     
     public String getDevelopers() {
@@ -156,5 +158,12 @@ public class Task {
         this.sessions = sessions;
     }
    
- 
+    public boolean getIsBillable() {
+        return isBillable;
+    }
+
+    public void setIsBillable(boolean isBillable) {
+        this.isBillable = isBillable;
+    }
+    
 }

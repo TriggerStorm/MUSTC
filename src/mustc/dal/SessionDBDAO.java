@@ -134,7 +134,7 @@ public class SessionDBDAO {
                 allSessions.add(session); 
             }    
         }
-        calculateTotalDurationOfATask(3);  //  TEST
+        calculateTotalMinutesOfATask(3);  //  TEST
         return allSessions ;
     }
  
@@ -317,8 +317,8 @@ System.out.println("Session ID: " + sessionID /*+ "    Duration: " + duration*/)
     }
  
     
-    public int calculateTotalDurationOfATask(int taskID /*Task task*/) throws SQLException {
-//System.out.println("calculateTotalDurationOfATask");
+    public int calculateTotalMinutesOfATask(int taskID /*Task task*/) throws SQLException {
+//System.out.println("calculateTotalMinutesOfATask");
         int taskDuration = 0;
     //    int taskID = 6;  //task.getTaskID();  //MOCK DATA
         List<Session> allSessionsInATask = getAllSessionsOfATask(taskID);  //new ArrayList<>();

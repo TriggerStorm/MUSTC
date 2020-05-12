@@ -66,9 +66,9 @@ public class AdminModel {
         return clientList;
     }
     
-    public Task addNewTaskToDB(String taskName, String description, int associatedProjectID){
+    public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable){
        
-       return bllManager.addNewTaskToDB(taskName, description, associatedProjectID);
+       return bllManager.addNewTaskToDB(taskName, associatedProjectID, isBillable);
        
    }
     public ObservableList<Task> getAllTask() {

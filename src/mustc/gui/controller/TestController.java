@@ -68,15 +68,18 @@ public class TestController implements Initializable {
         System.out.println("test start");
      float aHours = 350;
   
-  //   int duration = sessionDBDao.calculateTotalDurationOfATask(3);  //  TEST
+  //   int duration = sessionDBDao.calculateTotalMinutesOfATask(3);  //  TEST
    //      System.out.println("test duration" + duration);
   
- double totalProjectHours = taskDBDao.getTotalMinutesOfAProject(2);
-              System.out.println("test totalProjectHours" + totalProjectHours);
+// double totalProjectHours = taskDBDao.getTotalMinutesOfAProject(2);
+//              System.out.println("test totalProjectHours" + totalProjectHours);
 
  //       Project test = projectDBDao.addNewProjectToDB("testy", 9, 66661234, aHours, 999);
- //       Project test = projectDBDao.getProjectForUser(5);
- //       Project testp = projectDBDao.getProjectForAdmin(7);
+ //       Project test = projectDBDao.getProjectForUser(2);
+     int[] results = taskDBDao.getTotalMinutesOfAProject(2);
+System.out.println("PROJECT2: Unbillable" + results[0] + "   Billable: " + results[1]);               
+
+//       Project testp = projectDBDao.getProjectForAdmin(7);
  //       Project test = projectDBDao.editProject(testp, "bob's job", 55555555, aHours, 1200, true);
  //        bllManager.removeProjectFromDB(testp);
 /*        List<Project> allProjects = projectDBDao.getAllProjectsIDsAndNames();

@@ -39,7 +39,7 @@ public interface DalFaçade {
 
     
 // TaskDBDAO methods        
-    public Task addNewTaskToDB(String taskName, String description, int associatedProjectID);
+    public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable);
     public Task getTaskForUser(int taskID);
     public List<Task> getAllTasksForUser();
 //    public List<Task> getAllUsersTasks(); // not working yet    

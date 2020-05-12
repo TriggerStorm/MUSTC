@@ -73,7 +73,7 @@ public class Session implements Comparable<Session>{
     }
     
     
-    // Ordering by DateTime constructor        
+// Ordering by DateTime constructor        
     public Session(int sessionID, int associatedTaskID, String associatedTaskName, LocalDateTime startLDT, LocalDateTime finishLDT) {
         this.sessionID = sessionID;
 //        this.description = description;

@@ -68,9 +68,9 @@ public class UserViewModel {
     }
    
     
-    public Task addNewTaskToDB(String taskName, String description, int associatedProjectID){
+    public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable){
        
-       return bllManager.addNewTaskToDB(taskName, description, associatedProjectID);
+       return bllManager.addNewTaskToDB(taskName, associatedProjectID, isBillable);
    }
     // Session
     public ObservableList<Session> getAllSession(){
