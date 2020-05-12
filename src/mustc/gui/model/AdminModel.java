@@ -27,7 +27,6 @@ public class AdminModel {
     private ObservableList<Project> pjList;
     private ObservableList<Task> taskList;
     private ObservableList<Session> sessionList; 
-    private ObservableList<String> sString; 
     private Task task;
     private ObservableList<Client> clientList;
     private ObservableList<User> userList;
@@ -66,15 +65,8 @@ public class AdminModel {
         return clientList;
     }
     
-    public Task addNewTaskToDB(String taskName, String description, int associatedProjectID){
-       
-       return bllManager.addNewTaskToDB(taskName, description, associatedProjectID);
-       
-   }
+    
     public ObservableList<Task> getAllTask() {
-       // List<Task> allTask =  new ArrayList<>();
-      //  allTask.add(task);
-        
           List<Task> allTask = bllManager.getAllTasksForAdmin();
          taskList = FXCollections.observableArrayList(allTask);
          return taskList;
@@ -93,29 +85,27 @@ public class AdminModel {
          return userList;
     }
     
-    public ObservableList<String> someStrings(){
-        List<String> Strings = Arrays.asList("hey","you","test","done");
-        sString = FXCollections.observableArrayList(Strings);
-        return sString;
-    }
+    
     //pj
-    public void addNewProjectToDB(String trim, Object selectedItem, String trim0, String trim1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int allocatedHours) {
+        return bllManager.addNewProjectToDB(projectName, associatedClientID, phoneNr, projectRate, allocatedHours);
     }
 
-    public void editProject(Project editedProject, String trim, Object selectedItem, String trim0, String trim1) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Project editProject(Project editedProject, String projectName, int associatedClientID, float projectRate, int allocatedHours, boolean isClosed) {
+        return bllManager.editProject(editedProject, projectName, associatedClientID, projectRate, allocatedHours, isClosed);
     }
 
-    public void removeProjectFromDB(ObservableList<Project> selectedItems) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void removeProjectFromDB(Project projectToDelete) {
+        bllManager.removeProjectFromDB(projectToDelete);
     }
     
     //task
 
-    public void addNewTaskToDB(String trim, Object selectedItem, String trim0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public Task addNewTaskToDB(String taskName, String description, int associatedProjectID){
+       
+       return bllManager.addNewTaskToDB(taskName, description, associatedProjectID);
+       
+   }
 
     public void editTask(String trim, Object selectedItem, String trim0) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -164,7 +154,7 @@ public class AdminModel {
        return bllManager.getProjectForUser(projectID);
     }
     
-    public ObservableList<Task> getAllTaskFromProjectId(){
+    /*public ObservableList<Task> getAllTaskFromProjectId(){
         List<Task> allTask =  new ArrayList<>();
         Task t1 = new Task("t1" + 0,0);
         Task t2 = new Task("t2" + 5,5);
@@ -176,7 +166,7 @@ public class AdminModel {
         task3 = FXCollections.observableArrayList(allTask);
         
         return task3;
-    }
+    }*/
     
     public Task getTaskForUser(int taskID) {
         return bllManager.getTaskForUser(taskID);

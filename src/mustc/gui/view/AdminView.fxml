@@ -98,7 +98,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="Tbv_pj" prefHeight="390.0" prefWidth="740.0">
+                        <TableView fx:id="Tbv_pj" onMouseClicked="#handel_pick_project" prefHeight="390.0" prefWidth="740.0">
                           <columns>
                             <TableColumn fx:id="Col_pj_name" prefWidth="105.0" text="Name" />
                             <TableColumn fx:id="Col_pj_clint" prefWidth="105.0" text="Client" />
@@ -117,7 +117,7 @@
                         <JFXTextField fx:id="tf_pj_name" layoutX="49.0" layoutY="393.0" prefHeight="25.0" prefWidth="68.0" promptText="Name" />
                         <JFXTextField fx:id="tf_pj_nr" layoutX="194.0" layoutY="393.0" prefHeight="25.0" prefWidth="68.0" promptText="Nr" />
                         <JFXTextField fx:id="tf_pj_$perhour" layoutX="263.0" layoutY="393.0" prefHeight="25.0" prefWidth="68.0" promptText="\$ per hour" />
-                        <JFXComboBox fx:id="cb_pj_clint" layoutX="119.0" layoutY="393.0" promptText="Client" />
+                        <JFXComboBox fx:id="cb_pj_clint" layoutX="119.0" layoutY="393.0" maxWidth="75.0" promptText="Client" />
                         <JFXButton fx:id="bn_pj_add" layoutX="336.0" layoutY="395.0" onAction="#handel_project_add" style="-fx-background-color: lightgrey;" text="Add" />
                         <JFXButton fx:id="bn_pj_eddit" layoutX="372.0" layoutY="395.0" onAction="#handel_project_eddit" style="-fx-background-color: lightgrey;" text="edit" />
                         <JFXButton fx:id="bn_pj_delete" layoutX="405.0" layoutY="395.0" onAction="#handel_project_delete" style="-fx-background-color: lightgrey;" text="Delete" />

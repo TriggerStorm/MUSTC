@@ -9,11 +9,13 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -25,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -109,7 +112,7 @@ public class AdminViewController implements Initializable {
     @FXML
     private JFXTextField task_name;
     @FXML
-    private JFXComboBox<?> cb_task_project;
+    private JFXComboBox<Project> cb_task_project;
     @FXML
     private JFXButton bn_task_add;
     @FXML
@@ -177,7 +180,7 @@ public class AdminViewController implements Initializable {
     @FXML
     private JFXTextField tf_pj_$perhour;
     @FXML
-    private JFXComboBox<?> cb_pj_clint;
+    private JFXComboBox<Client> cb_pj_clint;
     @FXML
     private JFXButton bn_pj_add;
     @FXML
@@ -251,6 +254,11 @@ public class AdminViewController implements Initializable {
     String startTime;
     Task selectTask;
     
+    Task taskToedit;
+    Project projectToedit;
+    Client clientToedit;
+    Session SessionToedit;
+    
     
     @FXML
     private Button bn_filepath;
@@ -317,6 +325,9 @@ public class AdminViewController implements Initializable {
         img_task1.setImage(image1);
         img_task2.setImage(image2);
         img_task3.setImage(image3);*/
+        
+        cb_pj_clint.setItems(adminModel.getAllClient());
+        cb_task_project.setItems(adminModel.getAllProjectsIDsAndNames());
     }    
 
     public AdminViewController() {
@@ -454,6 +465,7 @@ public class AdminViewController implements Initializable {
     private void handel_view(ActionEvent event) {
         sizeExpantion();
     }
+
     
 
     @FXML
@@ -576,43 +588,64 @@ public class AdminViewController implements Initializable {
 
     @FXML
     private void handel_project_add(ActionEvent event) {
-       /* adminModel.addNewProjectToDB(
+       int allocatedHours = 10;
+               double Nr = Double.parseDouble(tf_pj_nr.getText());
+               int iNr = (int)Nr;
+               String Rate = tf_pj_$perhour.getText().trim();
+               float fRate = Float.parseFloat(Rate);
+        
+                adminModel.addNewProjectToDB(
                 tf_pj_name.getText().trim(),
-                cb_pj_clint.getSelectionModel().getSelectedItem(),
-                tf_pj_nr.getText().trim(),
-                tf_pj_$perhour.getText().trim());*/
+                cb_pj_clint.getSelectionModel().getSelectedItem().getClientId(),
+                iNr,
+                fRate,
+                allocatedHours);
+                
+                tf_pj_name.clear();
+                tf_pj_nr.clear();
+                tf_pj_$perhour.clear();
                 
     }
 
     @FXML
     private void handel_project_eddit(ActionEvent event) {
-       /* adminModel.editProject(
-                editedProject,
+        int allocatedHours = 10;
+        String Rate = tf_pj_$perhour.getText().trim();
+               float fRate = Float.parseFloat(Rate);
+        adminModel.editProject(
+                projectToedit,
                 tf_pj_name.getText().trim(),
-                cb_pj_clint.getSelectionModel().getSelectedItem(),
-                tf_pj_nr.getText().trim(),
-                tf_pj_$perhour.getText().trim());*/
+                cb_pj_clint.getSelectionModel().getSelectedItem().getClientId(),  
+                fRate,
+                allocatedHours,
+                projectToedit.isClosed()
+                );
+        
     }
 
     @FXML
     private void handel_project_delete(ActionEvent event) {
-        /*adminModel.removeProjectFromDB(Tbv_pj.getSelectionModel().getSelectedItems());*/
+        adminModel.removeProjectFromDB(projectToedit);
+        /*ObservableList<TablePosition> remove = Tbv_pj.getSelectionModel().getSelectedCells();
+        Tbv_pj.getSelectionModel().getSelectedCells().remove(remove);*/
     }
 
     @FXML
     private void handel_task_add(ActionEvent event) {
-        /*adminModel.addNewTaskToDB(
+        adminModel.addNewTaskToDB(
                 task_name.getText().trim(),
-                cb_task_project.getSelectionModel().getSelectedItem(),
-                task_$perhour.getText().trim());*/
+                "test",
+                cb_task_project.getSelectionModel().getSelectedItem().getProjectID());
+                
     }
 
     @FXML
     private void handel_task_eddit(ActionEvent event) {
-        /*adminModel.editTask(editedTask,
+        adminModel.editTask(taskToedit,
                 task_name.getText().trim(),
-                cb_task_project.getSelectionModel().getSelectedItem(),
-                task_$perhour.getText().trim());*/
+                "test",
+                taskToedit.getAssociatedProjectID());
+                
     }
 
     @FXML
@@ -683,5 +716,20 @@ public class AdminViewController implements Initializable {
     @FXML
     private void handel_addTaskminview(ActionEvent event) {
         addTask();
+    }
+
+    @FXML
+    private void handel_pick_project(javafx.scene.input.MouseEvent event) {
+        projectToedit = Tbv_pj.getSelectionModel().getSelectedItem();
+        tf_pj_name.setText(projectToedit.getProjectName());
+        cb_pj_clint.setPromptText(projectToedit.getClientName());
+        Integer i = projectToedit.getPhoneNr();
+        String String = i.toString();
+        tf_pj_nr.setText(String);
+        
+        float n = projectToedit.getProjectRate();
+        String Rate = String.valueOf(n);
+        tf_pj_$perhour.setText(Rate);
+        
     }
 }
