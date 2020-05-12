@@ -158,7 +158,7 @@ public class TaskDBDAO {
     public List<Task> getAllTasksForAdmin() throws SQLException {
         List<Task> allTasksForAdmin = new ArrayList<>();
         try(Connection con = dbc.getConnection()){
-            String sql = "SELECT id, name, associatedProject FROM Tasks";
+            String sql = "SELECT id, name, description, associatedProject FROM Tasks";
             PreparedStatement pstmt = con.prepareStatement(sql);   
             pstmt.execute();    
             ResultSet rs = pstmt.executeQuery();
@@ -172,7 +172,8 @@ public class TaskDBDAO {
                 float projectRate = projectDBDao.getProjectRate(associatedProjectID);
                 int totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID);
                 String developers = "Bob, Sue";
-                int billable = rs.getInt("description");  // String description needs to be replaced in DB with int billable 
+                String billableSTR = rs.getString("Description");
+                int billable = Integer.parseInt(billableSTR);    /*rs.getInt("description");*/  // String description needs to be replaced in DB with int billable 
                 boolean isBillable = convertIntToBoolean(billable);
                 Task taskForAdmin = new Task(taskID, taskName, associatedProjectID, projectName, projectRate, totalTaskMinutes, developers, isBillable);
                 allTasksForAdmin.add(taskForAdmin);

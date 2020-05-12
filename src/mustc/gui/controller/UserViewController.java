@@ -468,9 +468,9 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private void handel_add_task(ActionEvent event) {
         userModel.addNewTaskToDB(
-                task_name.getText().trim(),
-                "test",
-                cb_task_project.getSelectionModel().getSelectedItem().getProjectID());
+                task_name.getText().trim(),             
+                cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
+                true);
     }
 
     @FXML

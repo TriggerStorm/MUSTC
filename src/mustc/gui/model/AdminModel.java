@@ -70,7 +70,7 @@ public class AdminModel {
     
 
     public ObservableList<Task> getAllTask() {
-          List<Task> allTask = bllManager.getAllTasksForAdmin();
+         List<Task> allTask = bllManager.getAllTasksForAdmin();
          taskList = FXCollections.observableArrayList(allTask);
          return taskList;
     }

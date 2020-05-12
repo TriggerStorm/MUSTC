@@ -425,7 +425,7 @@ public class AdminViewController implements Initializable {
         Col_pj_clint.setCellValueFactory(new PropertyValueFactory<Project, String>("clientName"));
         Col_pj_contact.setCellValueFactory(new PropertyValueFactory<Project, String>("phoneNr"));
         Col_pj_nroftask.setCellValueFactory(new PropertyValueFactory<Project, String>("noOfTasks"));
-        Col_pj_totalhours.setCellValueFactory(new PropertyValueFactory<Project, String>("totalHours"));
+        Col_pj_totalhours.setCellValueFactory(new PropertyValueFactory<Project, String>("totalBillableMinutes"));
        // Col_pj_totalprice.setCellValueFactory(new PropertyValueFactory<Project, String>("totalPrice"));
         Col_pj_projectrate.setCellValueFactory(new PropertyValueFactory<Project, String>("projectRate")); // ad this
                 Tbv_pj.setItems(adminModel.getAllProject());
@@ -436,7 +436,7 @@ public class AdminViewController implements Initializable {
         Col_task_project.setCellValueFactory(new PropertyValueFactory<Task, String>("projectName"));
         Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("developers"));
         Col_task_$perhour.setCellValueFactory(new PropertyValueFactory<Task, String>("projectRate"));
-        Col_task_totalhours.setCellValueFactory(new PropertyValueFactory<Task, String>("totalTaskHours"));
+        Col_task_totalhours.setCellValueFactory(new PropertyValueFactory<Task, String>("totalTaskMinutes"));
        // Col_task_bill.setCellValueFactory(new PropertyValueFactory<Task, String>("mins"));
        // Col_task_unbill.setCellValueFactory(new PropertyValueFactory<Task, String>("mins"));
                  tbv_task.setItems(adminModel.getAllTask());
@@ -647,9 +647,10 @@ public class AdminViewController implements Initializable {
     @FXML
     private void handel_task_add(ActionEvent event) {
         adminModel.addNewTaskToDB(
-                task_name.getText().trim(),
-                "test",
-                cb_task_project.getSelectionModel().getSelectedItem().getProjectID());
+                task_name.getText().trim(),              
+                cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
+                true);
+                
                 
     }
 
