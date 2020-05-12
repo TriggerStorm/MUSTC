@@ -152,7 +152,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tbv_task" prefHeight="391.0" prefWidth="740.0">
+                        <TableView fx:id="tbv_task" onMouseClicked="#handel_pick_task" prefHeight="391.0" prefWidth="740.0">
                           <columns>
                             <TableColumn fx:id="Col_task_taskname" prefWidth="185.0" text="Task name" />
                             <TableColumn fx:id="Col_task_project" prefWidth="185.0" text="Project" />
@@ -167,9 +167,9 @@
                         </Label>
                         <JFXTextField fx:id="task_name" layoutX="43.0" layoutY="392.0" prefHeight="25.0" prefWidth="81.0" text="Name " />
                         <JFXComboBox fx:id="cb_task_project" layoutX="142.0" layoutY="392.0" prefHeight="25.0" prefWidth="81.0" promptText="Project" />
-                        <JFXButton fx:id="bn_task_add" layoutX="239.0" layoutY="395.0" style="-fx-background-color: lightgrey;" text="Add" />
-                        <JFXButton fx:id="bn_task_eddit" layoutX="274.0" layoutY="395.0" style="-fx-background-color: lightgrey;" text="edit" />
-                        <JFXButton fx:id="bn_task_delete" layoutX="308.0" layoutY="395.0" style="-fx-background-color: lightgrey;" text="Delete" />
+                        <JFXButton fx:id="bn_task_add" layoutX="239.0" layoutY="395.0" onAction="#handel_add_task" style="-fx-background-color: lightgrey;" text="Add" />
+                        <JFXButton fx:id="bn_task_eddit" layoutX="274.0" layoutY="395.0" onAction="#handel_edit_task" style="-fx-background-color: lightgrey;" text="edit" />
+                        <JFXButton fx:id="bn_task_delete" layoutX="308.0" layoutY="395.0" onAction="#handel_delete_task" style="-fx-background-color: lightgrey;" text="Delete" />
                         <JFXDatePicker fx:id="dp_task_from" layoutX="548.0" layoutY="391.0" prefHeight="28.0" prefWidth="95.0" />
                         <JFXDatePicker fx:id="dp_task_to" layoutX="643.0" layoutY="391.0" prefHeight="28.0" prefWidth="95.0" />
                      </children>
@@ -202,13 +202,24 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="TBV_Session" prefHeight="422.0" prefWidth="740.0">
+                        <TableView fx:id="TBV_Session" onMouseClicked="#handel_pick_session" prefHeight="391.0" prefWidth="740.0">
                            <columns>
                               <TableColumn fx:id="col_sesion_taskname" prefWidth="246.0" text="Task name" />
                               <TableColumn fx:id="col_sesion_start" prefWidth="246.0" text="Start" />
                               <TableColumn fx:id="col_sesion_stop" prefWidth="246.0" text="Stop" />
                            </columns>
                         </TableView>
+                        <JFXTextField fx:id="tf_session_name" layoutX="56.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Name" />
+                        <JFXTextField fx:id="tf_session_dev" layoutX="305.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Developers" />
+                        <JFXTextField fx:id="tf_session_start" layoutX="139.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Start" />
+                        <JFXTextField fx:id="tf_session_stop" layoutX="222.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Stop" />
+                        <Label layoutX="3.0" layoutY="397.0" text="Session">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <JFXButton fx:id="bn_session_edit" layoutX="393.0" layoutY="393.0" onAction="#handel_session_edit" style="-fx-background-color: lightgrey;" text="Edit" />
+                        <JFXButton fx:id="bn_session_delete" layoutX="428.0" layoutY="393.0" onAction="#handel_session_delete" style="-fx-background-color: lightgrey;" text="Delete" />
                      </children>
                   </AnchorPane>
                </content>

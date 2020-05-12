@@ -35,7 +35,8 @@ public class AdminModel {
     private ObservableList<Task> g1;
     private ObservableList<Task> g2;
     private ObservableList<Task> g3;
-     private ObservableList<Project> pj;
+    private ObservableList<Project> pj;
+    private ObservableList<String> admin;
     
     public AdminModel() {
         bllManager = new BllManager();
@@ -44,19 +45,19 @@ public class AdminModel {
  
     }
     
-    
-
-    public ObservableList<Project> getAllProject() {
+    public ObservableList<String> getAdmin(){
+          List<String> admins = new ArrayList<>();
+        String s1 = new String("Admin");
+        String s2 = new String ("dev");
+        admins.add(s1);
+        admins.add(s2);
         
-       List<Project> allProjcets = bllManager.getAllProjectsForAdmin();
-       pjList = FXCollections.observableArrayList(allProjcets);
-       return pjList;
+        admin = FXCollections.observableArrayList(admins);
+        
+        return admin;
     }
-    public ObservableList<Project> getAllProjectsIDsAndNames() {
-        List<Project> allProjcets =bllManager.getAllProjectsIDsAndNames();
-        pj = FXCollections.observableArrayList(allProjcets);
-        return pj;
-    }
+
+    
     
     public ObservableList<Client> getAllClient() {
         
@@ -85,8 +86,33 @@ public class AdminModel {
          return userList;
     }
     
+    //Client
+    
+    public Client addNewClientToDB(String clientName, String logoImgLocation, String email, float standardRate) {
+        return bllManager.addNewClientToDB(clientName, logoImgLocation, email, standardRate);
+    }
+    
+    public Client editClient(Client editedClient, String clientName, float standardRate, String logoImgLocation, String email) {
+        return bllManager.editClient(editedClient, clientName, standardRate, logoImgLocation, email);
+    }
+    
+    public void removeClientFromDB(Client clientToDelete) {
+        bllManager.removeClientFromDB(clientToDelete);
+    }
     
     //pj
+    
+    public ObservableList<Project> getAllProject() {
+        
+       List<Project> allProjcets = bllManager.getAllProjectsForAdmin();
+       pjList = FXCollections.observableArrayList(allProjcets);
+       return pjList;
+    }
+    public ObservableList<Project> getAllProjectsIDsAndNames() {
+        List<Project> allProjcets =bllManager.getAllProjectsIDsAndNames();
+        pj = FXCollections.observableArrayList(allProjcets);
+        return pj;
+    }
     public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int allocatedHours) {
         return bllManager.addNewProjectToDB(projectName, associatedClientID, phoneNr, projectRate, allocatedHours);
     }
@@ -107,16 +133,35 @@ public class AdminModel {
        
    }
 
-    public void editTask(String trim, Object selectedItem, String trim0) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Task editTask(Task editedTask, String taskName, String description, int associatedProjectID) {
+        return bllManager.editTask(editedTask, taskName, description, associatedProjectID);
     }
     
-    public void removeTaskFromDB(){}
+    public void removeTaskFromDB(Task taskToDelete) {
+        bllManager.removeTaskFromDB(taskToDelete);
+    }
     
     
     // user
     public void addNewUserToDB(String userName, String email, String password, float salary, String status) {
-        bllManager.addNewUserToDB(userName, email, password, 0, status);
+        bllManager.addNewUserToDB(userName, email, password, salary, status);
+    }
+    
+    public User editUser(User userToEdit, String userName, String email, String password, Float salary, String status) {
+        return bllManager.editUser(userToEdit, userName, email, password, salary, status);
+    }
+    
+    public void removeUserFromDB(User userToDelete) {
+        bllManager.removeUserFromDB(userToDelete);
+    }
+    
+    // Session
+    public Session editSession(Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
+        return bllManager.getSession(associatedTaskID);
+    }
+    
+    public void removeSessionFromDB(Session sessionToDelete) {
+        bllManager.removeSessionFromDB(sessionToDelete);
     }
     
     //3 task

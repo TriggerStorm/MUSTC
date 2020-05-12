@@ -61,7 +61,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="Tbv_Clint" prefHeight="392.0" prefWidth="740.0">
+                        <TableView fx:id="Tbv_Clint" onMouseClicked="#handel_pick_client" prefHeight="392.0" prefWidth="740.0">
                            <columns>
                               <TableColumn fx:id="Col_clint_name" prefWidth="148.0" text="Name" />
                               <TableColumn fx:id="Col_clint_email" prefWidth="148.0" text="Email" />
@@ -131,7 +131,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tbv_task" prefHeight="390.0" prefWidth="740.0">
+                        <TableView fx:id="tbv_task" onMouseClicked="#handel_pick_task" prefHeight="390.0" prefWidth="740.0">
                           <columns>
                             <TableColumn fx:id="Col_task_taskname" prefWidth="123.0" text="Task name" />
                             <TableColumn fx:id="Col_task_project" prefWidth="123.0" text="Project" />
@@ -185,7 +185,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tbv_session" prefHeight="390.0" prefWidth="740.0">
+                        <TableView fx:id="tbv_session" onMouseClicked="#handel_pick_session" prefHeight="390.0" prefWidth="740.0">
                            <columns>
                               <TableColumn fx:id="col_sesion_taskname" prefWidth="185.0" text="Task name" />
                               <TableColumn fx:id="col_sesion_start" prefWidth="185.0" text="Start" />
@@ -212,7 +212,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tbv_user" prefHeight="390.0" prefWidth="740.0">
+                        <TableView fx:id="tbv_user" onMouseClicked="#handel_pick_user" prefHeight="390.0" prefWidth="740.0">
                            <columns>
                               <TableColumn fx:id="col_user_name" prefWidth="185.0" text="Name" />
                               <TableColumn fx:id="col_user_email" prefWidth="185.0" text="Email" />
@@ -226,7 +226,7 @@
                            </font>
                         </Label>
                         <JFXTextField fx:id="tf_user_name" layoutX="38.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Name" />
-                        <JFXTextField fx:id="tf_user_$perhour" layoutX="287.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Name" text="\$ per hour" />
+                        <JFXTextField fx:id="tf_user_$perhour" layoutX="287.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="\$ per hour" />
                         <JFXComboBox fx:id="cb_user_admin" layoutX="370.0" layoutY="394.0" promptText="Admin" />
                         <JFXButton fx:id="bn_user_add" layoutX="452.0" layoutY="395.0" onAction="#handel_user_add" style="-fx-background-color: lightgrey;" text="Add" />
                         <JFXButton fx:id="bn_user_eddit" layoutX="487.0" layoutY="395.0" onAction="#handel_user_eddit" style="-fx-background-color: lightgrey;" text="edit" />

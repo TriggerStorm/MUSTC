@@ -52,11 +52,12 @@ public class UserViewModel {
         
     }
     
-    public ObservableList<Project> getAllProjectList(){
-      List<Project> allProjcets = bllManager.getAllProjectsForAdmin();
-      pj = FXCollections.observableArrayList(allProjcets);
-      
-      return pj;
+   
+    
+     public ObservableList<Project> getAllProjectsIDsAndNames() {
+        List<Project> allProjcets =bllManager.getAllProjectsIDsAndNames();
+        pj = FXCollections.observableArrayList(allProjcets);
+        return pj;
     }
     
     // Task
@@ -67,11 +68,21 @@ public class UserViewModel {
          return taskList;
     }
    
-    
+    //task
     public Task addNewTaskToDB(String taskName, String description, int associatedProjectID){
        
        return bllManager.addNewTaskToDB(taskName, description, associatedProjectID);
    }
+    
+    public Task editTask(Task editedTask, String taskName, String description, int associatedProjectID) {
+        return bllManager.editTask(editedTask, taskName, description, associatedProjectID);
+    }
+    
+    public void removeTaskFromDB(Task taskToDelete) {
+        bllManager.removeTaskFromDB(taskToDelete);
+    }
+    
+    
     // Session
     public ObservableList<Session> getAllSession(){
           User t = bllManager.getUser(1);
@@ -103,9 +114,22 @@ public class UserViewModel {
         return g3;
         
     }
+    
+    // Session
+    public Session editSession(Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
+        return bllManager.getSession(associatedTaskID);
+    }
+    
+    public void removeSessionFromDB(Session sessionToDelete) {
+        bllManager.removeSessionFromDB(sessionToDelete);
+    }
+    
     public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
        return bllManager.addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime);
     }
+    
+    
+    
     public String localDateTimeToString(LocalDateTime LDT) {
         return bllManager.localDateTimeToString(LDT);
     }

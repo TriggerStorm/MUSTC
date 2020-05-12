@@ -13,8 +13,10 @@ import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -216,7 +218,7 @@ public class AdminViewController implements Initializable {
     @FXML
     private JFXTextField tf_user_$perhour;
     @FXML
-    private JFXComboBox<?> cb_user_admin;
+    private JFXComboBox<String> cb_user_admin;
     @FXML
     private JFXButton bn_user_add;
     @FXML
@@ -258,7 +260,7 @@ public class AdminViewController implements Initializable {
     Project projectToedit;
     Client clientToedit;
     Session SessionToedit;
-    
+    User userToedit;
     
     @FXML
     private Button bn_filepath;
@@ -286,11 +288,13 @@ public class AdminViewController implements Initializable {
     
     
    
-
+    
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        
         
         adminModel = new AdminModel();
         setClint();
@@ -326,8 +330,10 @@ public class AdminViewController implements Initializable {
         img_task2.setImage(image2);
         img_task3.setImage(image3);*/
         
+        
         cb_pj_clint.setItems(adminModel.getAllClient());
         cb_task_project.setItems(adminModel.getAllProjectsIDsAndNames());
+        cb_user_admin.setItems(adminModel.getAdmin());
     }    
 
     public AdminViewController() {
@@ -431,7 +437,8 @@ public class AdminViewController implements Initializable {
         Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("developers"));
         Col_task_$perhour.setCellValueFactory(new PropertyValueFactory<Task, String>("projectRate"));
         Col_task_totalhours.setCellValueFactory(new PropertyValueFactory<Task, String>("totalTaskHours"));
-       // Col_task_totalprice.setCellValueFactory(new PropertyValueFactory<Task, String>("totalPrice"));
+       // Col_task_bill.setCellValueFactory(new PropertyValueFactory<Task, String>("mins"));
+       // Col_task_unbill.setCellValueFactory(new PropertyValueFactory<Task, String>("mins"));
                  tbv_task.setItems(adminModel.getAllTask());
     }
     
@@ -566,23 +573,30 @@ public class AdminViewController implements Initializable {
 
     @FXML
     private void handel_client_add(ActionEvent event) {
-        /*adminModel.addNewClientToDB(
+               String Rate = tf_clint_$perhour.getText().trim();
+               float fRate = Float.parseFloat(Rate);
+        adminModel.addNewClientToDB(
                 tf_clint_name.getText().trim(),
+                "string path",
                 tf_clint_email.getText().trim(),
-                tf_clint_$perhour.getText().trim());*/
+                fRate);
     }
 
     @FXML
     private void handel_client_eddit(ActionEvent event) {
-        /*adminModel.editClient(clientToEdit,
+        String Rate = tf_clint_$perhour.getText().trim();
+               float fRate = Float.parseFloat(Rate);
+        adminModel.editClient(clientToedit,
                 tf_clint_name.getText().trim(),
-                tf_clint_email.getText().trim(),
-                tf_clint_$perhour.getText().trim());*/
+                fRate,
+                "string path",
+                tf_clint_email.getText().trim()
+                );
     }
 
     @FXML
     private void handel_client_delete(ActionEvent event) {
-        //adminModel.removeClientFromDB(clientToDelete)
+        adminModel.removeClientFromDB(clientToedit);
                 
     }
 
@@ -644,36 +658,42 @@ public class AdminViewController implements Initializable {
         adminModel.editTask(taskToedit,
                 task_name.getText().trim(),
                 "test",
-                taskToedit.getAssociatedProjectID());
-                
+                taskToedit.getAssociatedProjectID());      
     }
 
     @FXML
     private void handel_task_delete(ActionEvent event) {
-        /*adminModel.removeTaskFromDB(taskToDelete);*/
+        adminModel.removeTaskFromDB(taskToedit);
     }
 
     @FXML
     private void handel_user_add(ActionEvent event) {
-        /*adminModel.addNewUserToDB(
+        String Rate = tf_user_$perhour.getText().trim();
+               float fSal = Float.parseFloat(Rate);
+            adminModel.addNewUserToDB(
                 tf_user_name.getText().trim(),
                 tf_user_email.getText().trim(),
                 tf_user_password.getText().trim(),
-                tf_user_$perhour.getText().trim(),// add convter to flote
-                cb_user_admin.getSelectionModel().getSelectedItem());*/
+                fSal,// add convter to flote
+                cb_user_admin.getSelectionModel().getSelectedItem().toString());
     }
 
     @FXML
     private void handel_user_eddit(ActionEvent event) {
-        /*adminModel.editUser(userToEdit,
+        String Rate = tf_user_$perhour.getText().trim();
+               float fSal = Float.parseFloat(Rate);    
+        adminModel.editUser(userToedit,
                 tf_user_name.getText().trim(),
-                cb_user_admin.getSelectionModel().getSelectedItem(),
-                tf_user_$perhour.getText().trim());*/
+                tf_user_email.getText().trim(),
+                userToedit.getPassword(),
+                fSal,
+                cb_user_admin.getSelectionModel().getSelectedItem().toString()
+                );
     }
 
     @FXML
     private void handel_user_delete(ActionEvent event) {
-       /*adminModel.removeUserFromDB(userToDelete);*/
+       adminModel.removeUserFromDB(userToedit);
     }
 
     @FXML
@@ -682,10 +702,16 @@ public class AdminViewController implements Initializable {
 
     @FXML
     private void handel_session_edit(ActionEvent event) {
+        adminModel.editSession(SessionToedit,
+                SessionToedit.getAssociatedUserID(),
+                SessionToedit.getAssociatedTaskID(),
+                tf_session_start.getText(),
+                tf_session_stop.getText());
     }
 
     @FXML
     private void handel_session_delete(ActionEvent event) {
+        adminModel.removeSessionFromDB(SessionToedit);
     }
 
     @FXML
@@ -730,6 +756,48 @@ public class AdminViewController implements Initializable {
         float n = projectToedit.getProjectRate();
         String Rate = String.valueOf(n);
         tf_pj_$perhour.setText(Rate);
+        
+    }
+
+    @FXML
+    private void handel_pick_client(javafx.scene.input.MouseEvent event) {
+        clientToedit = Tbv_Clint.getSelectionModel().getSelectedItem();
+        tf_clint_name.setText(clientToedit.getClientName());
+        tf_clint_email.setText(clientToedit.getEmail());
+        float n = clientToedit.getStandardRate();
+        String Rate = String.valueOf(n);
+        tf_clint_$perhour.setText(Rate);
+        
+    }
+
+    @FXML
+    private void handel_pick_task(javafx.scene.input.MouseEvent event) {
+        taskToedit = tbv_task.getSelectionModel().getSelectedItem();
+        task_name.setText(taskToedit.getTaskName());
+        cb_task_project.setPromptText(taskToedit.getProjectName());
+    }
+
+    @FXML
+    private void handel_pick_session(javafx.scene.input.MouseEvent event) {
+        SessionToedit = tbv_session.getSelectionModel().getSelectedItem();
+        tf_session_name.setText(SessionToedit.getAssociatedTaskName());
+        tf_session_start.setText(SessionToedit.getStartTime());
+        tf_session_stop.setText(SessionToedit.getFinishTime());
+        tf_session_dev.setText(SessionToedit.getAssociatedUserName());
+       
+    }
+
+    @FXML
+    private void handel_pick_user(javafx.scene.input.MouseEvent event) {
+        userToedit = tbv_user.getSelectionModel().getSelectedItem();
+        tf_user_name.setText(userToedit.getUserName());
+        tf_user_email.setText(userToedit.getEmail());
+        tf_user_password.setText(userToedit.getPassword());
+        float n = userToedit.getSalary();
+        String Rate = String.valueOf(n);
+        tf_user_$perhour.setText(Rate);
+        cb_user_admin.setPromptText(userToedit.getStatus());
+        
         
     }
 }
