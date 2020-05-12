@@ -121,8 +121,8 @@ public class TestController implements Initializable {
       List<Task> recentTask = taskDBDao.getUsersThreeRecentTasks(testUser);
  */     
  //    Task test = taskDBDao.addNewTaskToDB("testname", "stuff", 4);
- //    Task test = taskDBDao.getTaskForUser(2);
- //       Task test = taskDBDao.editTask(testt, "ed", "it", 2);
+     Task testt = taskDBDao.getTaskForUser(14);
+        Task test = taskDBDao.editTask(testt, "newTaskTest", 5, true);
  //       taskDBDao.removeTaskFromDB(test);
  
  /*       System.out.println("");
@@ -153,7 +153,7 @@ public class TestController implements Initializable {
         System.out.println("");
         } 
  *)           
- */    List<Task> allTasks = taskDBDao.getAllTasksForAdmin();
+     List<Task> allTasks = taskDBDao.getAllTasksForAdmin();
         for (int i = 0; i < allTasks.size(); i++) {
             Task test = allTasks.get(i);  
            
@@ -166,7 +166,7 @@ public class TestController implements Initializable {
         System.out.println(test.getDevelopers());
         System.out.println("");
         }
-      
+ */     
      
  
    //     Session test = sessionDBDao.addNewSessionToDB(15, 10, "2020-04-20 13:30:00", "2020-04-20 13:40:00");
@@ -235,17 +235,7 @@ public class TestController implements Initializable {
  // CONVERTERS
  
  
- //       dt = SqlDateTime.MinValue.Value;
-//var date = (DateTime)theSqlDate; // via explicit conversion
-/*LocalDateTime date;
-if (theSqlDate.Equals(SqlDateTime.Null))
-    date = null
-else 
-    date = theSqlDate.Value; // or (DateTime)theSqlDate;
- */
- //   String timestampSTR  = makeCurrentTimestamp();   
- //   System.out.println("currentTimestamp = " + timestampSTR);
- 
+
   //   LocalDateTime LDTnow = LocalDateTime.now();
   //   String LDTnowSTR = convertLDTtoSqlSTR(LDTnow);
 

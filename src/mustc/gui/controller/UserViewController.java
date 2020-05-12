@@ -477,8 +477,8 @@ public class UserViewController extends JFrame implements Initializable {
     private void handel_edit_task(ActionEvent event) {
         userModel.editTask(taskToedit,
                 task_name.getText().trim(),
-                "test",
-                taskToedit.getAssociatedProjectID());      
+                taskToedit.getAssociatedProjectID(),
+                true);//  MOCK DATA  // maybe    taskToedit.getIsBillable(); 
     }
 
     @FXML
