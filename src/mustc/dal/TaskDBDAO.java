@@ -158,7 +158,7 @@ public class TaskDBDAO {
     public List<Task> getAllTasksForAdmin() throws SQLException {
         List<Task> allTasksForAdmin = new ArrayList<>();
         try(Connection con = dbc.getConnection()){
-            String sql = "SELECT id, name, associatedProject FROM Tasks";
+            String sql = "SELECT id, name, description, associatedProject FROM Tasks";
             PreparedStatement pstmt = con.prepareStatement(sql);   
             pstmt.execute();    
             ResultSet rs = pstmt.executeQuery();
@@ -242,7 +242,7 @@ System.out.println("totalUnbillableProjectHours: " + totalUnbillableProjectHours
     }
     
     
-    public Task editTask (Task editedTask, String taskName , int associatedProjectID) { 
+    public Task editTask (Task editedTask, String taskName , int associatedProjectID, boolean isBillable) { 
     //  Edits a Task in the Task table of the database given the Projects new details.  
         String sql = "UPDATE Tasks SET name = ?, associatedProject = ? WHERE id = '" + editedTask.getTaskID() + "'";
         try ( Connection con = dbc.getConnection()) {

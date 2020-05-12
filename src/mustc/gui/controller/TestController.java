@@ -76,8 +76,10 @@ public class TestController implements Initializable {
 
  //       Project test = projectDBDao.addNewProjectToDB("testy", 9, 66661234, aHours, 999);
  //       Project test = projectDBDao.getProjectForUser(2);
-     int[] results = taskDBDao.getTotalMinutesOfAProject(2);
-System.out.println("PROJECT2: Unbillable" + results[0] + "   Billable: " + results[1]);               
+ 
+ 
+ //int[] results = taskDBDao.getTotalMinutesOfAProject(2);
+//System.out.println("PROJECT2: Unbillable" + results[0] + "   Billable: " + results[1]);               
 
 //       Project testp = projectDBDao.getProjectForAdmin(7);
  //       Project test = projectDBDao.editProject(testp, "bob's job", 55555555, aHours, 1200, true);
@@ -151,7 +153,7 @@ System.out.println("PROJECT2: Unbillable" + results[0] + "   Billable: " + resul
         System.out.println("");
         } 
  *)           
- /*    List<Task> allTasks = taskDBDao.getAllTasksForAdmin();
+ */    List<Task> allTasks = taskDBDao.getAllTasksForAdmin();
         for (int i = 0; i < allTasks.size(); i++) {
             Task test = allTasks.get(i);  
            
@@ -160,11 +162,11 @@ System.out.println("PROJECT2: Unbillable" + results[0] + "   Billable: " + resul
         System.out.println(test.getTaskName());
         System.out.println(test.getProjectName());
         System.out.println(test.getProjectRate());
-        System.out.println(test.getTaskDuration());
+        System.out.println(test.getTotalTaskMinutes());
         System.out.println(test.getDevelopers());
         System.out.println("");
         }
- */     
+      
      
  
    //     Session test = sessionDBDao.addNewSessionToDB(15, 10, "2020-04-20 13:30:00", "2020-04-20 13:40:00");

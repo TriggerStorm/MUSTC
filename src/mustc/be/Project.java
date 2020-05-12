@@ -176,7 +176,7 @@ public class Project {
         this.usersProjectMinutes = usersProjectMinutes;
     }
     
-    public double getUotalBillableMinutes() {
+    public double getTotalBillableMinutes() {
         return totalBillableMinutes;
     }
 
