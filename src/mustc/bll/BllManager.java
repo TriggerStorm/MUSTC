@@ -239,6 +239,10 @@ public class BllManager implements IBLL {
     public void removeUserFromDB(User userToDelete) {
         dalManager.removeUserFromDB(userToDelete);
     }
+    
+    public int checkUserLogin(String loggedInUserEmail, String password){
+        return dalManager.checkUserLogin(loggedInUserEmail, password);
+    }
 
    
     

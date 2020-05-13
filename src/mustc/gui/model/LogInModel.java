@@ -5,10 +5,21 @@
  */
 package mustc.gui.model;
 
+import mustc.bll.BllManager;
+
 /**
  *
  * @author Trigger
  */
 public class LogInModel {
     
+    private BllManager bllManager;
+
+    public LogInModel() {
+        bllManager = new BllManager();
+    }
+    
+    public int checkUserLogin(String loggedInUserEmail, String password){
+        return bllManager.checkUserLogin(loggedInUserEmail, password);
+    }
 }

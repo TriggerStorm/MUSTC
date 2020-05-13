@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mustc.be.LoggedInUser;
+import mustc.be.Task;
 import mustc.be.User;
 
 /**
@@ -174,4 +176,50 @@ public class UserDBDAO {
         }
         return userName;
     }
+   
+    public int checkUserLogin(String loggedInUserEmail, String password) throws SQLException { 
+    //  Confirms the validity of a user given their email and password. Returns a int value denoting their user type: 0 = invalid user, 1 = admin, 2 = dev
+        LoggedInUser tempLogin = null;
+        try(Connection con = dbc.getConnection()){
+            String SQLStmt = "SELECT id, Name, Email, Password, Admin, Salary  FROM USERS WHERE email = '"+ loggedInUserEmail + "' AND password ='" + password + "'";
+            Statement statement = con.createStatement();
+            ResultSet rs = statement.executeQuery(SQLStmt);
+            if(rs != null) //If there is an entry
+            {
+                while(rs.next())
+                {
+                    int loggedInUser = rs.getInt("id");
+                    String loggedInUserName = rs.getString("Name");
+                    int salary = rs.getInt("Salary");
+                    int admin = rs.getInt("admin");
+                    boolean Admin = false;
+                    if(admin == 1)
+                        Admin = true;
+                    Task t1 = new Task("test",1);
+                    
+                    tempLogin = new LoggedInUser(loggedInUser, loggedInUserName, loggedInUserEmail, password, salary, Admin, t1);
+                    
+                    
+                    LoggedInUser lUser = LoggedInUser.getInstance();
+                    lUser.setId(tempLogin.getId());
+                    lUser.setName(tempLogin.getName());
+                    lUser.setEmail(loggedInUserEmail);
+                    lUser.setPassword(password);
+                    lUser.setSalary(tempLogin.getSalary());
+                    lUser.setAdmin(tempLogin.isAdmin());
+                    lUser.setCurrentTask(tempLogin.getCurrentTask());
+                    if(tempLogin.isAdmin() == true) {
+                        return 1; //user and password match = true
+                    }
+                    else if(tempLogin.isAdmin() == false) {
+                        return 2;
+                    }
+                }
+            } else {
+                return 0;
+            }
+        }
+        return 4; //this should never happen.
+    }
+    
 }

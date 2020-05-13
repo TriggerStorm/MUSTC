@@ -6,6 +6,7 @@
 package mustc.gui.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,6 +17,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import mustc.be.LoggedInUser;
+import mustc.gui.model.LogInModel;
+
 
 /**
  * FXML Controller class
@@ -24,47 +28,56 @@ import javafx.stage.Stage;
  */
 public class LogInController implements Initializable {
 
+    
     @FXML
-    private JFXButton bn_admin;
+    private JFXTextField tf_email;
     @FXML
-    private JFXButton bn_user;
-
+    private JFXTextField tf_pass;
+    @FXML
+    private JFXButton bn_login;
+    
+    private LogInModel loginmodel;
+    private LoggedInUser loginuser;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        loginuser = LoggedInUser.getInstance();
     }    
 
-    @FXML
-    private void handle_adminlogin(ActionEvent event) throws IOException {
-        adminlogin();
-    }
     
+    
+   
 
-    @FXML
-    private void handle_userlogin(ActionEvent event) throws IOException {
-        userlogin();
-    }
+    private void adminlogin(String mail, String password) throws IOException {
+       /*Parent root1;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mustc/gui/view/AdminView.fxml"));
+        root1 = (Parent) fxmlLoader.load();
+        
+        fxmlLoader.<AdminViewController>getController();
 
-    private void adminlogin() throws IOException {
-        Parent root1;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui/view/AdminView.fxml"));
+        Stage addStage = new Stage();
+        Scene addScene = new Scene(root1);
+
+        
+        addStage.setScene(addScene);
+        addStage.show();*/
+          Parent root1;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mustc/gui/view/AdminView.fxml"));
         root1 = (Parent) fxmlLoader.load();
         fxmlLoader.<AdminViewController>getController();
         Stage addStage = new Stage();
         Scene addScene = new Scene(root1);
         addStage.setScene(addScene);
         addStage.show();
-
-        Stage stage = (Stage) bn_admin.getScene().getWindow();
+        Stage stage = (Stage) bn_login.getScene().getWindow();
         stage.close();
     }
 
-    private void userlogin() throws IOException {
+    private void userlogin(String mail, String password) throws IOException {
         Parent root1;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("gui/view/UserView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mustc/gui/view/UserView.fxml"));
         root1 = (Parent) fxmlLoader.load();
         fxmlLoader.<UserViewController>getController();
         Stage addStage = new Stage();
@@ -72,8 +85,28 @@ public class LogInController implements Initializable {
         addStage.setScene(addScene);
         addStage.show();
 
-        Stage stage = (Stage) bn_user.getScene().getWindow();
-        stage.close();   
+        Stage stage = (Stage) bn_login.getScene().getWindow();
+        stage.setMaxHeight(488);
+        stage.setMaxWidth(260);
+        stage.setMinHeight(488);
+        stage.setMinWidth(260);
+        stage.close(); 
     }
+
+    @FXML
+    private void handel_login(ActionEvent event) throws IOException {
+         loginmodel = new LogInModel();
+       String loginmail = tf_email.getText().trim();
+       String passw = tf_pass.getText().trim();
+       int loginstate = loginmodel.checkUserLogin(loginmail, passw);//returns an int, as it also checks if it is a teacher or a student.
+        switch (loginstate) {
+            case 1:  adminlogin(loginmail, passw); //teacher login needs creation and then place make something like teacherLogin method in stead.
+                    break;
+            case 2:  userlogin(loginmail, passw); //student login 
+                    break;
+            default: System.out.println("Sorry wrong authentication"); //Might want to make a popup here in stead....
+    }
+    }
+    
     
 }
