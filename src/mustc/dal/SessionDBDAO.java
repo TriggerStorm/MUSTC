@@ -129,7 +129,7 @@ public class SessionDBDAO {
                 Session session = new Session(sessionID, associatedUserID, associatedUserName, associatedTaskID, associatedTaskName, startTime, finishTime);
 // Need next bit... but here?
                 setSessionsLDTs(session);
-                calculateDurationOfASession(session);
+                calculateDurationOfASession(startTime, finishTime);
                 setSessionsDuration(session);
                 allSessions.add(session); 
             }    
@@ -196,40 +196,7 @@ System.out.println("Session ID: " + sessionID /*+ "    Duration: " + duration*/)
         }
         return allSessionsOfATask ;
     }
-    
-    public List<Session> getAllLoggedInUsersSessionsStartTimseAndTaskIDs(User loggedInUser) throws SQLException {
-    // Returns a list of Sessions where the associatedUser = loggedInUser
-        List<Session> allLoggedInUserSessions = new ArrayList<>();
- //       int loggedInUserID = loggedInUser.getUserID();
-         int loggedInUserID = 1;  // MOCK
-
- String sql = "SELECT associatedTask, StartTime FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'"; 
-        try(Connection con = dbc.getConnection()) {
-            PreparedStatement pstmt = con.prepareStatement(sql);   
-            pstmt.execute();    
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()) // While you have something in the results
-            {
-                int associatedTaskID =  rs.getInt("associatedTask");
-                String startTime = rs.getString("startTime");
-                LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
-                Session loggedInUserSession = new Session(associatedTaskID, startLDT);
-                allLoggedInUserSessions.add(loggedInUserSession); 
-            }    
-        }
-        System.out.println(" Sorting");
-         Collections.sort(allLoggedInUserSessions, Collections.reverseOrder());  // https://beginnersbook.com/2013/12/sort-arraylist-in-descending-order-in-java/
-//       Collections.sort(allLoggedInUserSessions);//new Comparator<Session>()) {
-          for (int i = 0; i < allLoggedInUserSessions.size(); i++) {
-            Session session = allLoggedInUserSessions.get(i);
-              System.out.println("");
-               System.out.println(session.getStartTime());
-              
-        }
-  
-        return allLoggedInUserSessions ;
-    }
-    
+   
     
     public Session editSession (Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime) { 
     //  Edits a Session in the Session table of the database given the Sessions new details.  
@@ -295,21 +262,23 @@ System.out.println("Session ID: " + sessionID /*+ "    Duration: " + duration*/)
     
     private void setSessionsDuration(Session session) {  // Maybe not need
  System.out.println("setSessionsDuration");
-     int duration = calculateDurationOfASession(session);
+    String startTime = session.getStartTime();
+    String finishTime = session.getFinishTime();
+    int duration = calculateDurationOfASession(startTime, finishTime);
       session.setDuration(duration);
  //System.out.println("Session id = " + session.getSessionID() + "   Session Duration = " + session.getDuration());
     }
     
     
-    private int calculateDurationOfASession(Session session/*String startTime, String finishTime*/) {
+    private int calculateDurationOfASession(String startTime, String finishTime) {
 //System.out.println("calculateDurationOfASession");
     // Return the number of minutes in a given session
-        String startTime = session.getStartTime();
-        String finishTime = session.getFinishTime();
+        //String startTime = session.getStartTime();
+        //String finishTime = session.getFinishTime();
 //System.out.println("startTime: " + startTime);
 //System.out.println("finishTime: " + finishTime);
-       LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(session.getStartTime());
-        LocalDateTime finishLDT = timeUtilities.stringToLocalDateTime(session.getFinishTime());
+       LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
+        LocalDateTime finishLDT = timeUtilities.stringToLocalDateTime(finishTime);
         int duration = (int) ChronoUnit.MINUTES.between(startLDT, finishLDT);  //  https://stackoverflow.com/questions/25747499/java-8-difference-between-two-localdatetime-in-multiple-units#26954864
 
 //System.out.println("Start: " + startTime + "    Finish: " + finishTime + "    Duration: " + duration);
@@ -318,13 +287,16 @@ System.out.println("Session ID: " + sessionID /*+ "    Duration: " + duration*/)
  
     
     public int calculateTotalMinutesOfATask(int taskID /*Task task*/) throws SQLException {
+    // Returns the total minutes of a given Task 
 //System.out.println("calculateTotalMinutesOfATask");
         int taskDuration = 0;
     //    int taskID = 6;  //task.getTaskID();  //MOCK DATA
         List<Session> allSessionsInATask = getAllSessionsOfATask(taskID);  //new ArrayList<>();
         for (int i = 0; i < allSessionsInATask.size(); i++) {
             Session session = allSessionsInATask.get(i);
-            int sessionDuration = calculateDurationOfASession(session);
+            String startTime = session.getStartTime();
+            String finishTime = session.getFinishTime();
+            int sessionDuration = calculateDurationOfASession(startTime, finishTime);
             int updatedDuration = taskDuration + sessionDuration;
             taskDuration = updatedDuration;
 //System.out.println("Task: " + taskID + "    Session: " + session.getSessionID() + "   Duration = " + sessionDuration);
@@ -334,7 +306,31 @@ System.out.println("Session ID: " + sessionID /*+ "    Duration: " + duration*/)
     }    
  
     
-    
+    public int calculateUsersTaskMinutes(int userID, int taskID) throws SQLException{
+    // Returns the total minutes a given User has spent dong a Task  
+        int usersTaskMinutes = 0;
+        
+ String sql = "SELECT startTime, finishTime FROM Sessions WHERE associatedUser = '" + userID + "'AND associatedTask = '" + taskID + "'";
+        try(Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) // While you have something in the results
+            {
+                String startTime = rs.getString("startTime");
+                String finishTime = rs.getString("finishTime");
+                int sessionDuration = calculateDurationOfASession(startTime, finishTime);
+                usersTaskMinutes += sessionDuration; 
+            }    
+        }
+        
+System.out.println("TaskID = " + taskID + "   USERs TASK MINUTES = " + usersTaskMinutes);
+        return usersTaskMinutes;
+    }
+  
+          
+          
+          
     
     
     
@@ -343,6 +339,44 @@ System.out.println("Session ID: " + sessionID /*+ "    Duration: " + duration*/)
     
  //   UNUSED CODE SO FAR
             
+    /**
+     *
+     * @param loggedInUser
+     * @return
+     * @throws SQLException
+     */
+    public List<Session> getAllLoggedInUsersSessionsStartTimseAndTaskIDs(User loggedInUser) throws SQLException {  // UNUSED??
+    // Returns a list of Sessions where the associatedUser = loggedInUser
+        List<Session> allLoggedInUserSessions = new ArrayList<>();
+ //       int loggedInUserID = loggedInUser.getUserID();
+         int loggedInUserID = 1;  // MOCK
+
+ String sql = "SELECT associatedTask, StartTime FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'"; 
+        try(Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) // While you have something in the results
+            {
+                int associatedTaskID =  rs.getInt("associatedTask");
+                String startTime = rs.getString("startTime");
+                LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
+                Session loggedInUserSession = new Session(associatedTaskID, startLDT);
+                allLoggedInUserSessions.add(loggedInUserSession); 
+            }    
+        }
+        System.out.println(" Sorting");
+         Collections.sort(allLoggedInUserSessions, Collections.reverseOrder());  // https://beginnersbook.com/2013/12/sort-arraylist-in-descending-order-in-java/
+//       Collections.sort(allLoggedInUserSessions);//new Comparator<Session>()) {
+          for (int i = 0; i < allLoggedInUserSessions.size(); i++) {
+            Session session = allLoggedInUserSessions.get(i);
+              System.out.println("");
+               System.out.println(session.getStartTime());
+              
+        }
+  
+        return allLoggedInUserSessions ;
+    }
     
     
             

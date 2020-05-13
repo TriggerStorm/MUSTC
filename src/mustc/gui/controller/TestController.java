@@ -71,15 +71,19 @@ public class TestController implements Initializable {
   //   int duration = sessionDBDao.calculateTotalMinutesOfATask(3);  //  TEST
    //      System.out.println("test duration" + duration);
   
-// double totalProjectHours = taskDBDao.getTotalMinutesOfAProject(2);
-//              System.out.println("test totalProjectHours" + totalProjectHours);
 
  //       Project test = projectDBDao.addNewProjectToDB("testy", 9, 66661234, aHours, 999);
  //       Project test = projectDBDao.getProjectForUser(2);
  
  
+ 
+ 
  //int[] results = taskDBDao.getTotalMinutesOfAProject(2);
 //System.out.println("PROJECT2: Unbillable" + results[0] + "   Billable: " + results[1]);               
+
+
+
+
 
 //       Project testp = projectDBDao.getProjectForAdmin(7);
  //       Project test = projectDBDao.editProject(testp, "bob's job", 55555555, aHours, 1200, true);
@@ -117,12 +121,20 @@ public class TestController implements Initializable {
         }
   */      
  
+ 
+ 
+ 
+ 
+ 
+ // USER
+ 
+ 
  /*   User testUser = userDBDao.getUser(14);
       List<Task> recentTask = taskDBDao.getUsersThreeRecentTasks(testUser);
  */     
  //    Task test = taskDBDao.addNewTaskToDB("testname", "stuff", 4);
-     Task testt = taskDBDao.getTaskForUser(14);
-        Task test = taskDBDao.editTask(testt, "newTaskTest", 5, true);
+     Task test = taskDBDao.getTaskForUser(8);
+ //       Task test = taskDBDao.editTask(testt, "newTaskTest", 5, true);
  //       taskDBDao.removeTaskFromDB(test);
  
  /*       System.out.println("");
@@ -139,21 +151,21 @@ public class TestController implements Initializable {
         }  
         System.out.println("");
  */
- /*       List<Task> allTasks = taskDBDao.getAllTasksForUser();
+ /*      List<Task> allTasks = taskDBDao.getAllTasksForUser();
         for (int i = 0; i < allTasks.size(); i++) {
             Task test = allTasks.get(i);
-   
+ */  
             System.out.println("");
         System.out.println("ID = " + test.getTaskID());
         System.out.println(test.getTaskName());
         System.out.println(test.getAssociatedProjectID());
         System.out.println(test.getProjectName());
-        System.out.println(test.getMyTaskHours());
+        System.out.println(test.getUsersTaskMinutes());
         System.out.println(test.getDevelopers());
         System.out.println("");
-        } 
- *)           
-     List<Task> allTasks = taskDBDao.getAllTasksForAdmin();
+  //      } 
+            
+ /*    List<Task> allTasks = taskDBDao.getAllTasksForAdmin();
         for (int i = 0; i < allTasks.size(); i++) {
             Task test = allTasks.get(i);  
            
@@ -169,7 +181,17 @@ public class TestController implements Initializable {
  */     
      
  
-   //     Session test = sessionDBDao.addNewSessionToDB(15, 10, "2020-04-20 13:30:00", "2020-04-20 13:40:00");
+ 
+ 
+ 
+ 
+ //SESSION
+   
+ //     int usersTaskMinutes = sessionDBDao.calculateUsersTaskMinutes(1, 6);
+//System.out.println(" USERs TASK MINUTES 2 = " + usersTaskMinutes);
+      
+
+//     Session test = sessionDBDao.addNewSessionToDB(15, 10, "2020-04-20 13:30:00", "2020-04-20 13:40:00");
   //      Session test = sessionDBDao.getSession(19);
  //       Session test = sessionDBDao.editSession(tests, 16, 10, "2020-04-20 16:36:00.0", "2020-04-20 17:58:00.0");
  //       sessionDBDao.removeSessionFromDB(test);
