@@ -87,9 +87,9 @@ public class TaskDBDAO {
             {
                 String taskName =  rs.getString("name");
                 int associatedProjectID = rs.getInt("associatedProject");
-//  { To BE REPLACED BY DB MAYBE
-                ProjectDBDAO projectDBDao = new ProjectDBDAO();
-                String projectName = projectDBDao.getProjectName(associatedProjectID);
+                Project associatedProjectNameAndRate = getProjectNameAndProjectRate(associatedProjectID);
+                String projectName = associatedProjectNameAndRate.getProjectName();
+ //               float projectRate = associatedProjectNameAndRate.getProjectRate();
                 int usersTaskMinutes = sessionDBDao.calculateUsersTaskMinutes(LoggedInUserID, taskID);
                 String developers = "";  // TO BE DONE
                 taskInProject = new Task(taskID, taskName, associatedProjectID, projectName, usersTaskMinutes, developers);       
@@ -112,9 +112,9 @@ public class TaskDBDAO {
                 int taskID = rs.getInt("id");
                 String taskName = rs.getString("name");
                 int associatedProjectID = rs.getInt("associatedProject");
-                ProjectDBDAO projectDBDao = new ProjectDBDAO();  // TEMP
-                String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP
-     //           float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMP
+                Project associatedProjectNameAndRate = getProjectNameAndProjectRate(associatedProjectID);
+                String projectName = associatedProjectNameAndRate.getProjectName();
+ //               float projectRate = associatedProjectNameAndRate.getProjectRate();
                 int usersTaskMinutes = sessionDBDao.calculateUsersTaskMinutes(LoggedInUserID, taskID);
                 String developers = "Bob, Sue";  // MOCK DATA
                 Task taskForAdmin = new Task(taskID, taskName, associatedProjectID, projectName, usersTaskMinutes, developers);
@@ -138,7 +138,7 @@ public class TaskDBDAO {
             {
                 String taskName =  rs.getString("name");
                 int associatedProjectID = rs.getInt("associatedProject");
-                                Project associatedProjectNameAndRate = getProjectNameAndProjectRate(associatedProjectID);
+                Project associatedProjectNameAndRate = getProjectNameAndProjectRate(associatedProjectID);
                 String projectName = associatedProjectNameAndRate.getProjectName();
                 float projectRate = associatedProjectNameAndRate.getProjectRate();
                 //List<Session> allSessionsOfATask = sessionDBDao.getAllSessionsOfATask(taskID);

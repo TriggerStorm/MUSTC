@@ -88,7 +88,7 @@ public class TestController implements Initializable {
  //        bllManager.removeProjectFromDB(testp);
 //        List<Project> allProjects = projectDBDao.getAllProjectsIDsAndNames();
  
- 
+ /*
 List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
         for (int i = 0; i < allProjects.size(); i++) {
             Project test = allProjects.get(i);
@@ -144,10 +144,10 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
       List<Task> recentTask = taskDBDao.getUsersThreeRecentTasks(testUser);
  */     
  //    Task test = taskDBDao.addNewTaskToDB("testname", "stuff", 4);
-  //   Task test = taskDBDao.getTaskForUser(8);
+     Task test = taskDBDao.getTaskForUser(8);
  //       Task test = taskDBDao.editTask(testt, "newTaskTest", 5, true);
  //       taskDBDao.removeTaskFromDB(test);
- /*
+ 
         System.out.println("");
         System.out.println("ID = " + test.getTaskID());
         System.out.println(test.getTaskName());
@@ -155,8 +155,8 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
         System.out.println(test.getProjectName());
         System.out.println(test.getUsersTaskMinutes());
         System.out.println(test.getDevelopers());
-        }
-  */      
+  //      }
+       
         /*if (test.getSessions() == null) {
         System.out.println("null");
         } else {
