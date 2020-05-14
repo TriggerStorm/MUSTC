@@ -38,17 +38,14 @@ public class TaskDBDAO {
             
     public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable) throws SQLException { 
     //  Adds a new Task to the DB, and returns the updated Project to the GUI
-    ProjectDBDAO projectDBDao = new ProjectDBDAO();
-    String projectName = projectDBDao.getProjectName(associatedProjectID);  // ADD TO DB
-    float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMO
+        Project associatedProjectNameAndRate = getProjectNameAndProjectRate(associatedProjectID);
+        String projectName = associatedProjectNameAndRate.getProjectName();
+        float projectRate = associatedProjectNameAndRate.getProjectRate();
         int usersTaskMinutes = 0;
-        int totalTaskMinutes = 0;    // ADD TO DB?
+        int totalTaskMinutes = 0; 
         String developers = "";    // ADD TO DB?
         List<Session> emptySessionList = new ArrayList<>();
         emptySessionList = null;
- //       int[] taskDuration = new int[2];
- //       taskDuration[0] = 0;  // set taskDuration hours to 0
- //       taskDuration[1] = 0;  // set taskDuration minutes to 0
         Task newTask = new Task(0, taskName, associatedProjectID, projectName, projectRate, usersTaskMinutes, totalTaskMinutes, developers, emptySessionList, isBillable);
         try (Connection con = dbc.getConnection()) {
             String sql = "INSERT INTO Tasks(name ,associatedProject, description) VALUES (?,?,?)";  // String description needs to be replaced in DB with int billable
@@ -141,9 +138,10 @@ public class TaskDBDAO {
             {
                 String taskName =  rs.getString("name");
                 int associatedProjectID = rs.getInt("associatedProject");
-                ProjectDBDAO projectDBDao= new ProjectDBDAO();  // TEMP
-                String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP
-                float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMP               List<Session> allSessionsOfATask = sessionDBDao.getAllSessionsOfATask(taskID);
+                                Project associatedProjectNameAndRate = getProjectNameAndProjectRate(associatedProjectID);
+                String projectName = associatedProjectNameAndRate.getProjectName();
+                float projectRate = associatedProjectNameAndRate.getProjectRate();
+                //List<Session> allSessionsOfATask = sessionDBDao.getAllSessionsOfATask(taskID);
                 int totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID);  //  REPLACE WITH MODEL LATER
                 String developers = "Gus, John, BumbleWeed";  // MOCK DATA
                 int billable = rs.getInt("description");  // String description needs to be replaced in DB with int billable 
@@ -168,9 +166,9 @@ public class TaskDBDAO {
                 int taskID = rs.getInt("id");
                 String taskName = rs.getString("name");
                 int associatedProjectID = rs.getInt("associatedProject");
-                ProjectDBDAO projectDBDao = new ProjectDBDAO();  // MAYBE this and next 3 lines
-                String projectName = projectDBDao.getProjectName(associatedProjectID);
-                float projectRate = projectDBDao.getProjectRate(associatedProjectID);
+                Project associatedProjectNameAndRate = getProjectNameAndProjectRate(associatedProjectID);
+                String projectName = associatedProjectNameAndRate.getProjectName();
+                float projectRate = associatedProjectNameAndRate.getProjectRate();
                 int totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID);
                 String developers = "Bob, Sue";
                 String billableSTR = rs.getString("Description");
@@ -197,9 +195,9 @@ public class TaskDBDAO {
                 int taskID = rs.getInt("id");
                 String taskName = rs.getString("name");
                 int associatedProjectID = rs.getInt("associatedProject");
-                ProjectDBDAO projectDBDao = new ProjectDBDAO();  // TEMP
-                String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP
-                float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMP
+                Project associatedProjectNameAndRate = getProjectNameAndProjectRate(associatedProjectID);
+                String projectName = associatedProjectNameAndRate.getProjectName();
+                float projectRate = associatedProjectNameAndRate.getProjectRate();
                 int totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID); 
         //        totalBillableProjectMinutes += totalTaskHours;
                 String developers = "Bob, Sue";
@@ -304,7 +302,26 @@ System.out.println("recentTask3ID = " + recentTask3ID);
         return taskName;
     }
     
-      
+        
+    public Project getProjectNameAndProjectRate(int associatedProjectID) throws SQLException {  // AdminModel 113 and 
+    //  Return a projectName and projectRate for a Task
+        Project projectNameAndRate = null;
+        try(Connection con = dbc.getConnection()){
+            String sql = "SELECT  name, projectRate FROM Projects WHERE id = '" + associatedProjectID + "'";
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                String projectName = rs.getString("name");
+                float projectRate = rs.getFloat("projectRate");
+                projectNameAndRate = new Project(projectName, projectRate);
+            }    
+        }
+        return projectNameAndRate; 
+    }
+    
+        
     public Task editTask (Task editedTask, String taskName, int associatedProjectID, boolean isBillable) { 
     //  Edits a Task in the Task table of the database given the Projects new details.  
         String sql = "UPDATE Tasks SET name = ?, associatedProject = ?, description = ? WHERE id = '" + editedTask.getTaskID() + "'";

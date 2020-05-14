@@ -84,8 +84,9 @@ public class Project {
 
        }
     
+    
 //  Admin constructor2      
-    public Project(int projectID, String projectName, int associatedClientID, String clientName, int phoneNr, float projectRate, int allocatedHours, int totalBillableMinutes, int totalUnbillableMinutes, int totalPrice, List<Task> taskList, boolean isClosed) {
+/*    public Project(int projectID, String projectName, int associatedClientID, String clientName, int phoneNr, float projectRate, int allocatedHours, int totalBillableMinutes, int totalUnbillableMinutes, int totalPrice, List<Task> taskList, boolean isClosed) {
         this.projectID = projectID;
         this.projectName = projectName;
         this.associatedClientID = associatedClientID;
@@ -99,12 +100,21 @@ public class Project {
         this.taskList = taskList;
         this.isClosed = isClosed;
        }    
+ */   
     
-    //  etName constructor      
+    
+//  getAllProjectsIDsAndNames constructor for ProjectDBDAO
     public Project(int projectID, String projectName) {
         this.projectID = projectID;
         this.projectName = projectName;
-       }    
+    }
+    
+        
+//  getProjectNameAndProjectRate constructor for TaskDBDAO
+    public Project(String projectName, float projectRate) {
+        this.projectName = projectName;
+        this.projectRate = projectRate;
+      }    
 
     @Override
     public String toString() {
