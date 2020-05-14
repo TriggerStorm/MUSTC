@@ -130,7 +130,7 @@ public class Task {
         this.projectRate = projectRate;
     }
      
-    public int setUsersTaskMinutes() {
+    public int getUsersTaskMinutes() {
         return usersTaskMinutes;
     }
 

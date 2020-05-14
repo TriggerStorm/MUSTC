@@ -658,8 +658,8 @@ public class AdminViewController implements Initializable {
     private void handel_task_eddit(ActionEvent event) {
         adminModel.editTask(taskToedit,
                 task_name.getText().trim(),
-                "test",
-                taskToedit.getAssociatedProjectID());      
+                taskToedit.getAssociatedProjectID(),
+                true);    // MOCK DATA  
     }
 
     @FXML

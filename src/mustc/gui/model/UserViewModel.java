@@ -78,8 +78,8 @@ public class UserViewModel {
        return bllManager.addNewTaskToDB(taskName, associatedProjectID, isBillable);
    }
     
-    public Task editTask(Task editedTask, String taskName, String description, int associatedProjectID) {
-        return bllManager.editTask(editedTask, taskName, description, associatedProjectID);
+    public Task editTask(Task editedTask, String taskName, int associatedProjectID, boolean isBillable) {
+        return bllManager.editTask(editedTask, taskName, associatedProjectID, isBillable);
     }
     
     public void removeTaskFromDB(Task taskToDelete) {

@@ -46,7 +46,7 @@ public interface IBLL {
 //    public List<Task> getAllUsersTasks(); // not working yet    
     public Task getTaskForAdmin(int taskID);
     public List<Task> getAllTasksForAdmin();
-    public Task editTask (Task editedTask, String taskName, String description, int associatedProjectID);
+    public Task editTask (Task editedTask, String taskName , int associatedProjectID, boolean isBillable);
     public void removeTaskFromDB(Task taskToDelete);
     public List<Task> getUsersThreeRecentTasks(User loggedInUser);
   

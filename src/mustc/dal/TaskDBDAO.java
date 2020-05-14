@@ -80,7 +80,7 @@ public class TaskDBDAO {
     public Task getTaskForUser(int taskID) throws SQLException {
     //  Returns a Task from the DB where ID = taskID
         Task taskInProject = null;
-//        int [] taskDuration = new int[2];
+        int LoggedInUserID = 1;  //  MOCK DATA
         String sql = "SELECT * FROM Tasks WHERE id = '" + taskID + "'"; 
         try(Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql);   
@@ -90,12 +90,10 @@ public class TaskDBDAO {
             {
                 String taskName =  rs.getString("name");
                 int associatedProjectID = rs.getInt("associatedProject");
-//                taskDuration[0] = rs.getInt("durationHours");
-//                taskDuration[1] = rs.getInt("durationMinutes");
-//  { To BE REPLACED BY DB
+//  { To BE REPLACED BY DB MAYBE
                 ProjectDBDAO projectDBDao = new ProjectDBDAO();
                 String projectName = projectDBDao.getProjectName(associatedProjectID);
- /* } */            int usersTaskMinutes = 127;  // MOCK DATA 
+                int usersTaskMinutes = sessionDBDao.calculateUsersTaskMinutes(LoggedInUserID, taskID);
                 String developers = "";  // TO BE DONE
                 taskInProject = new Task(taskID, taskName, associatedProjectID, projectName, usersTaskMinutes, developers);       
             }    
@@ -104,7 +102,9 @@ public class TaskDBDAO {
     }
     
     public List<Task> getAllTasksForUser() throws SQLException {
-        List<Task> allTasksForAdmin = new ArrayList<>();
+    //  Returns a list of Tasks from the DB for a User
+    List<Task> allTasksForAdmin = new ArrayList<>();
+        int LoggedInUserID = 1;  //  MOCK DATA
         try(Connection con = dbc.getConnection()){
             String sql = "SELECT id, name, associatedProject FROM Tasks";
             PreparedStatement pstmt = con.prepareStatement(sql);   
@@ -118,7 +118,7 @@ public class TaskDBDAO {
                 ProjectDBDAO projectDBDao = new ProjectDBDAO();  // TEMP
                 String projectName = projectDBDao.getProjectName(associatedProjectID) ;  // TEMP
      //           float projectRate = projectDBDao.getProjectRate(associatedProjectID);  // TEMP
-                int usersTaskMinutes = 267;  // MOCK DATA
+                int usersTaskMinutes = sessionDBDao.calculateUsersTaskMinutes(LoggedInUserID, taskID);
                 String developers = "Bob, Sue";  // MOCK DATA
                 Task taskForAdmin = new Task(taskID, taskName, associatedProjectID, projectName, usersTaskMinutes, developers);
                 allTasksForAdmin.add(taskForAdmin);
@@ -156,6 +156,7 @@ public class TaskDBDAO {
       
     
     public List<Task> getAllTasksForAdmin() throws SQLException {
+    //  Returns a list of Tasks from the DB for an Admin
         List<Task> allTasksForAdmin = new ArrayList<>();
         try(Connection con = dbc.getConnection()){
             String sql = "SELECT id, name, description, associatedProject FROM Tasks";
@@ -242,52 +243,7 @@ System.out.println("totalUnbillableProjectHours: " + totalUnbillableProjectHours
         return totalProjectMinutes;
     }
     
-    
-    public Task editTask (Task editedTask, String taskName , int associatedProjectID) { 
-    //  Edits a Task in the Task table of the database given the Projects new details.  
-        String sql = "UPDATE Tasks SET name = ?, associatedProject = ? WHERE id = '" + editedTask.getTaskID() + "'";
-        try ( Connection con = dbc.getConnection()) {
-            //Create a prepared statement.
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            //Set parameter values.
-            pstmt.setString(1, taskName);
-            pstmt.setInt(2, associatedProjectID);
-            pstmt.executeUpdate();  //Execute SQL query.
-            editedTask.setTaskName(taskName);
-            editedTask.setAssociatedProjectID(associatedProjectID);
-            return editedTask;
-        } catch (SQLServerException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-      
-        
-    public void removeTaskFromDB(Task taskToDelete) {
-    //  Removes a user from the User table of the database given a User data object
-        try (Connection con = dbc.getConnection()) {
-        //  Delete all Sessions of taskToDelete
-            String sql = "DELETE FROM Sessions WHERE associatedTask = ?";//+ taskToDelete.getTaskID() + "'";
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1,taskToDelete.getTaskID());
-            pstmt.execute();
-        } catch (SQLException ex) {
-            System.out.println("Exception " + ex);
-        }      
-        try (Connection con = dbc.getConnection()) {
-        //  Delete taskToDelete
-            String sql = "DELETE FROM Tasks WHERE id = ?" ;//+ taskToDelete.getTaskID() + "'";
-            PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1,taskToDelete.getTaskID());
-            pstmt.execute();
-        } catch (SQLException ex) {
-            System.out.println("Exception " + ex);
-        }
-    }
-      
-    
+  
     public List<Task> getUsersThreeRecentTasks(User loggedInUser) throws SQLException {
     //  Returns a list of maximum size 3 of the three most recent distinct Tasks of the loggedInUser
         List<Task> recentTasks = new ArrayList<>();
@@ -348,6 +304,53 @@ System.out.println("recentTask3ID = " + recentTask3ID);
         return taskName;
     }
     
+      
+    public Task editTask (Task editedTask, String taskName, int associatedProjectID, boolean isBillable) { 
+    //  Edits a Task in the Task table of the database given the Projects new details.  
+        String sql = "UPDATE Tasks SET name = ?, associatedProject = ?, description = ? WHERE id = '" + editedTask.getTaskID() + "'";
+        try ( Connection con = dbc.getConnection()) {
+            //Create a prepared statement.
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            //Set parameter values.
+            pstmt.setString(1, taskName);
+            pstmt.setInt(2, associatedProjectID);
+            int billable = convertBooleanToInt(isBillable);
+            pstmt.setInt(3, billable);
+            pstmt.executeUpdate();  //Execute SQL query.
+            editedTask.setTaskName(taskName);
+            editedTask.setAssociatedProjectID(associatedProjectID);
+            return editedTask;
+        } catch (SQLServerException ex) {
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TaskDBDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+      
+        
+    public void removeTaskFromDB(Task taskToDelete) {
+    //  Removes a user from the User table of the database given a User data object
+        try (Connection con = dbc.getConnection()) {
+        //  Delete all Sessions of taskToDelete
+            String sql = "DELETE FROM Sessions WHERE associatedTask = ?";//+ taskToDelete.getTaskID() + "'";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1,taskToDelete.getTaskID());
+            pstmt.execute();
+        } catch (SQLException ex) {
+            System.out.println("Exception " + ex);
+        }      
+        try (Connection con = dbc.getConnection()) {
+        //  Delete taskToDelete
+            String sql = "DELETE FROM Tasks WHERE id = ?" ;//+ taskToDelete.getTaskID() + "'";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1,taskToDelete.getTaskID());
+            pstmt.execute();
+        } catch (SQLException ex) {
+            System.out.println("Exception " + ex);
+        }
+    }
+      
      
 
      
