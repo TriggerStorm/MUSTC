@@ -67,6 +67,7 @@ public interface IBLL {
     public List<User> getAllUsers();
     public User editUser (User userToEdit, String userName, String email, String password, Float salary, String status); 
     public void removeUserFromDB(User userToDelete);
+    public int checkUserLogin(String loggedInUserEmail, String password);
     
  // TimeUtilites (BLL)
     public String localDateTimeToString(LocalDateTime LDT);

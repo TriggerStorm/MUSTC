@@ -377,7 +377,15 @@ public class DalManager implements DalFaçade {
     public void removeUserFromDB(User userToDelete) {
         userDBDao.removeUserFromDB(userToDelete);
     }
-
+    
+    public int checkUserLogin(String loggedInUserEmail, String password){
+        try {
+            return userDBDao.checkUserLogin(loggedInUserEmail, password);
+        } catch (SQLException ex) {
+            Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
     
    
 }

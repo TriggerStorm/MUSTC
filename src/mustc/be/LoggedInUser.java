@@ -18,26 +18,38 @@ public class LoggedInUser {
     private int salary;  // do we really need this?
     private boolean admin;  // or 0 = developer, 1 = admin, 2 = project owner.
     private Task currentTask;
+    private LoggedInUser(){
+       Task currentTask = new Task("",1);
+    }
 
     
     public LoggedInUser(int LoggedInUserID, String LoggedInUserName, String LoggedInUserEmail, String password, int salary, boolean admin, Task currentTask) {
         this.loggedInUserID = LoggedInUserID;
         this.loggedInUserName = LoggedInUserName;
-        this.loggedInUserEmail = loggedInUserEmail;
+        this.loggedInUserEmail = LoggedInUserEmail;
         this.password = password;
         this.salary = salary;
         this.admin = admin;
         this.currentTask = currentTask;
     }
-
     
-    public static LoggedInUser getInstance() {
+    public static LoggedInUser getInstance()
+    {
+        if(instance == null)
+        {
+            instance = new LoggedInUser();
+        }
+        
+        return instance;
+    }
+    
+   /* public static LoggedInUser getInstance() {
         return instance;
     }
 
     public static void setInstance(LoggedInUser instance) {
         LoggedInUser.instance = instance;
-    }
+    }*/
 
     public int getId() {
         return loggedInUserID;

@@ -69,7 +69,7 @@ public class UserViewModel {
     }
    
 
-    //task
+    //Task
 
     
     public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable){
