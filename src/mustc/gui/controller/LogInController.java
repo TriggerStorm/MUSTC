@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import mustc.be.LoggedInUser;
 import mustc.gui.model.LogInModel;
@@ -38,6 +39,8 @@ public class LogInController implements Initializable {
     
     private LogInModel loginmodel;
     private LoggedInUser loginuser;
+    @FXML
+    private Button bv_Test;
     /**
      * Initializes the controller class.
      */
@@ -72,6 +75,10 @@ public class LogInController implements Initializable {
         addStage.setScene(addScene);
         addStage.show();
         Stage stage = (Stage) bn_login.getScene().getWindow();
+        stage.setMaxHeight(488);
+        stage.setMaxWidth(260);
+        stage.setMinHeight(488);
+        stage.setMinWidth(260);
         stage.close();
     }
 
@@ -106,6 +113,20 @@ public class LogInController implements Initializable {
                     break;
             default: System.out.println("Sorry wrong authentication"); //Might want to make a popup here in stead....
     }
+    }
+
+    @FXML
+    private void test(ActionEvent event) throws IOException {
+         Parent root1;
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mustc/gui/view/Test.fxml"));
+        root1 = (Parent) fxmlLoader.load();
+        fxmlLoader.<AdminViewController>getController();
+        Stage addStage = new Stage();
+        Scene addScene = new Scene(root1);
+        addStage.setScene(addScene);
+        addStage.show();
+        Stage stage = (Stage) bn_login.getScene().getWindow();
+        stage.close();
     }
     
     
