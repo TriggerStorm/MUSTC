@@ -143,18 +143,7 @@ System.out.println(" client Name = " + clientName);
     
     public Project getProjectForAdmin(int projectID) throws SQLException {
     //  Returns a Project for an Admin, given the Project id
-        Project projectForAdmin = null; //new Project();
-   //     String projectName = "Error";
-  //      int associatedClientID = -1;
-//        String clientName;
-  //      int phoneNr = 00000000;
- //       Float projectRate = 0f;
- //       int allocatedHours = 0;
-  //      int totalBillableMinutes = 111;  // mock data
-  //      int totalUnbillableMinutes = 222;  // mock data
-  //      int totalPrice = 77777;  // mock data
- //       List<Task> taskList = new ArrayList<>(); //  Tasks here only contain id, name and projectID
- //       boolean isClosed = false;
+        Project projectForAdmin = null;
         try(Connection con = dbc.getConnection()) {
         String sql = "SELECT id, name, associatedClient, phoneNr, projectRate FROM Projects WHERE id = '" + projectID + "'";  // HAD "*allocatedHours, closed"
             PreparedStatement pstmt = con.prepareStatement(sql);   

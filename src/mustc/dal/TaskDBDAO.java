@@ -201,11 +201,9 @@ public class TaskDBDAO {
                 int totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID); 
         //        totalBillableProjectMinutes += totalTaskHours;
                 String developers = "Bob, Sue";
-                int billable = rs.getInt("description");  // String description needs to be replaced in DB with int billable 
-System.out.println("taskID: " + taskID + "   Billable: " + billable);               
-  
+                int billable = rs.getInt("description");  // String description needs to be replaced in DB with int billable   
                 boolean isBillable = convertIntToBoolean(billable);
- System.out.println("taskID: " + taskID + "   totalTaskHours:  " + totalTaskMinutes + "   isBillable" + isBillable);               
+ System.out.println("taskID: " + taskID + "   totalTaskHours:  " + totalTaskMinutes + "   isBillable: " + isBillable);               
                Task taskOfAProject = new Task(taskID, taskName, associatedProjectID, projectName, projectRate, totalTaskMinutes, developers, isBillable);
                 allTasksOfAProject.add(taskOfAProject);
             }    
