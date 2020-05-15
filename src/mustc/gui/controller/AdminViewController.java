@@ -9,12 +9,14 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeView;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,6 +35,7 @@ import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -284,6 +287,8 @@ public class AdminViewController implements Initializable {
     private JFXButton bn_session_edit;
     @FXML
     private JFXButton bn_session_delete;
+    @FXML
+    private JFXTreeView<String> tv_project_task;
     
     
     
@@ -302,7 +307,7 @@ public class AdminViewController implements Initializable {
         setTask();
         setUser();
         setSession();
-        
+        setTreeView();
         //adminModel.getUsersThreeRecentTasks(adminModel.getUser(1));
         //cb_task1.setSelectionModel(Task);
         // cb_task1.setItems(adminModel.getAllTask());
@@ -408,6 +413,14 @@ public class AdminViewController implements Initializable {
         }
     }
  
+    public void setTreeView(){
+        TreeItem<String> root = new TreeItem<>("Root");
+        
+        TreeItem<String> p1 = new TreeItem<>(adminModel.getAllProject().get(1).getProjectName());
+        root.getChildren().add(p1);
+        
+        tv_project_task.setRoot(root);
+    }
     
     
     public void setClint(){
@@ -429,6 +442,7 @@ public class AdminViewController implements Initializable {
        // Col_pj_totalprice.setCellValueFactory(new PropertyValueFactory<Project, String>("totalPrice"));
         Col_pj_projectrate.setCellValueFactory(new PropertyValueFactory<Project, String>("projectRate")); // ad this
                 Tbv_pj.setItems(adminModel.getAllProject());
+      
     }
     
     public void setTask(){
