@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.JFXTreeView;
 import java.awt.event.MouseEvent;
 import java.net.URL;
@@ -36,6 +37,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
@@ -92,8 +94,11 @@ public class AdminViewController implements Initializable {
     private TableColumn<Project, String> Col_pj_contact;
     @FXML
     private TableColumn<Project, String> Col_pj_nroftask;
+    //private TableColumn<Project, String> Col_pj_totalhours;
     @FXML
-    private TableColumn<Project, String> Col_pj_totalhours;
+    private TableColumn<Project, String> Col_pj_Billable;
+    @FXML
+    private TableColumn<Project, String> Col_pj_UnBillable;
     @FXML
     private TableColumn<Project, String> Col_pj_totalprice;
     @FXML
@@ -112,8 +117,6 @@ public class AdminViewController implements Initializable {
     private TableColumn<Task, String> Col_task_$perhour;
     @FXML
     private TableColumn<Task, String> Col_task_totalhours;
-    @FXML
-    private TableColumn<Task, String> Col_task_totalprice;
     @FXML
     private JFXTextField task_name;
     @FXML
@@ -264,6 +267,7 @@ public class AdminViewController implements Initializable {
     Client clientToedit;
     Session SessionToedit;
     User userToedit;
+    TreeItem TreeviewItem;
     
     @FXML
     private Button bn_filepath;
@@ -290,8 +294,12 @@ public class AdminViewController implements Initializable {
     @FXML
     private JFXTreeView<String> tv_project_task;
     
+    @FXML
+    private TableColumn<?, ?> Col_task_Billable;
     
     
+    
+   
    
     
     
@@ -307,11 +315,11 @@ public class AdminViewController implements Initializable {
         setTask();
         setUser();
         setSession();
-        setTreeView();
+        //setTreeView();
         //adminModel.getUsersThreeRecentTasks(adminModel.getUser(1));
         //cb_task1.setSelectionModel(Task);
         // cb_task1.setItems(adminModel.getAllTask());
-       
+        tv_project_task.setVisible(false);
         //recent task 1
         cb_task1.setItems(adminModel.get1());// dont work
         cb_task1.setPromptText(cb_task1.getItems().get(0).getTaskName());
@@ -413,15 +421,27 @@ public class AdminViewController implements Initializable {
         }
     }
  
-    public void setTreeView(){
-        TreeItem<String> root = new TreeItem<>("Root");
+   
+    
+   /* public void setTreeView(){
+        TreeItem<String> root = new TreeItem<>(adminModel.getAllTask().get(1).toString());
         
-        TreeItem<String> p1 = new TreeItem<>(adminModel.getAllProject().get(1).getProjectName());
+        TreeItem<String> p1 = new TreeItem<>(adminModel.getAllTask().get(1).getProjectName());
         root.getChildren().add(p1);
         
+        TreeItem<String> p2 = new TreeItem<>(adminModel.getAllTask().get(1).getTaskName());
+        p1.getChildren().add(p2);
+        
+        
+        
         tv_project_task.setRoot(root);
-    }
+    }*/
     
+    @FXML
+    private void handel_pick_treeview(javafx.scene.input.MouseEvent event) {
+       TreeviewItem = tv_project_task.getSelectionModel().getSelectedItem();
+        System.out.println(TreeviewItem);    
+    }
     
     public void setClint(){
     Col_clint_name.setCellValueFactory(new PropertyValueFactory<Client, String>("clientName"));
@@ -438,7 +458,7 @@ public class AdminViewController implements Initializable {
         Col_pj_clint.setCellValueFactory(new PropertyValueFactory<Project, String>("clientName"));
         Col_pj_contact.setCellValueFactory(new PropertyValueFactory<Project, String>("phoneNr"));
         Col_pj_nroftask.setCellValueFactory(new PropertyValueFactory<Project, String>("noOfTasks"));
-        Col_pj_totalhours.setCellValueFactory(new PropertyValueFactory<Project, String>("totalBillableMinutes"));
+       // Col_pj_totalhours.setCellValueFactory(new PropertyValueFactory<Project, String>("totalBillableMinutes"));
        // Col_pj_totalprice.setCellValueFactory(new PropertyValueFactory<Project, String>("totalPrice"));
         Col_pj_projectrate.setCellValueFactory(new PropertyValueFactory<Project, String>("projectRate")); // ad this
                 Tbv_pj.setItems(adminModel.getAllProject());
@@ -815,4 +835,6 @@ public class AdminViewController implements Initializable {
         
         
     }
+
+    
 }
