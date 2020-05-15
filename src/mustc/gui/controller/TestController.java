@@ -71,10 +71,7 @@ public class TestController implements Initializable {
   //   int duration = sessionDBDao.calculateTotalMinutesOfATask(3);  //  TEST
    //      System.out.println("test duration" + duration);
   
-
- //       Project test = projectDBDao.addNewProjectToDB("testy", 9, 66661234, aHours, 999);
- //       Project test = projectDBDao.getProjectForUser(2);
- 
+    
  
  
  
@@ -85,28 +82,14 @@ public class TestController implements Initializable {
 
 
 
-//       Project testp = projectDBDao.getProjectForAdmin(7);
- //       Project test = projectDBDao.editProject(testp, "bob's job", 55555555, aHours, 1200, true);
+  //     Project test = projectDBDao.getProjectForAdmin(2);
+ 
+//       Project test = projectDBDao.editProject(testp, "bob's job", 55555555, aHours, 1200, true);
  //        bllManager.removeProjectFromDB(testp);
-/*        List<Project> allProjects = projectDBDao.getAllProjectsIDsAndNames();
-//        List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
-        for (int i = 0; i < allProjects.size(); i++) {
-            Project test = allProjects.get(i);
-            
- System.out.println("");
-        System.out.println("ID = " + test.getProjectID());
-        System.out.println(test.getProjectName());
- /*       System.out.println(test.getClientName());
-        System.out.println(test.getPhoneNr());
-        System.out.println(test.getProjectRate());
-        System.out.println(test.getTotalHours());
-        System.out.println(test.getTotalPrice());
-        System.out.println(test.getNoOfTasks());
-        System.out.println("");
- */  //     }
-        
+//        List<Project> allProjects = projectDBDao.getAllProjectsIDsAndNames();
+ 
  /*
- List<Project> allProjects = projectDBDao.getAllProjectsForUser();
+List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
         for (int i = 0; i < allProjects.size(); i++) {
             Project test = allProjects.get(i);
             
@@ -115,20 +98,48 @@ public class TestController implements Initializable {
         System.out.println(test.getProjectName());
         System.out.println(test.getClientName());
         System.out.println(test.getPhoneNr());
-        System.out.println(test.getMyProjectHours());
+        System.out.println(test.getProjectRate());
+        System.out.println(test.getTotalBillableMinutes());
+        System.out.println(test.getTotalUnbillableMinutes());
+
+        System.out.println(test.getTotalPrice());
         System.out.println(test.getNoOfTasks());
         System.out.println("");
         }
-  */      
+ /*
+    Project test = projectDBDao.addNewProjectToDB("testy", 9, 66661234, aHours, 999);
+        Project test = projectDBDao.getProjectForUser(2);
+ */
+ /*
+ List<Project> allProjects = projectDBDao.getAllProjectsForUser();
+        for (int i = 0; i < allProjects.size(); i++) {
+            Project test = allProjects.get(i);
+ */ 
+ //Project test = projectDBDao.getProjectForUser(2);
+ /*         
+ System.out.println("");
+        System.out.println("ID = " + test.getProjectID());
+        System.out.println(test.getProjectName());
+        System.out.println(test.getClientName());
+        System.out.println(test.getPhoneNr());
+        System.out.println(test.getUsersProjectMinutes());
+ //       System.out.println(test.getUsersProjectMinutes());
+ //       System.out.println(test.getNoOfTasks());
+        System.out.println("");
+        }
+ */       
  
  
  
  
  
  
- // USER
+ // TASK
  
- 
+ /*     List<Task> allTasks = taskDBDao.getAllTasksForUser();
+        for (int i = 0; i < allTasks.size(); i++) {
+            Task test = allTasks.get(i);
+ */   
  /*   User testUser = userDBDao.getUser(14);
       List<Task> recentTask = taskDBDao.getUsersThreeRecentTasks(testUser);
  */     
@@ -137,32 +148,24 @@ public class TestController implements Initializable {
  //       Task test = taskDBDao.editTask(testt, "newTaskTest", 5, true);
  //       taskDBDao.removeTaskFromDB(test);
  
- /*       System.out.println("");
-        System.out.println("ID = " + test.getTaskID());
-        System.out.println(test.getTaskName());
-        System.out.println(test.getAssociatedProjectID());
-        System.out.println(test.getProjectName());
-        System.out.println(test.getMyTaskHours());
-        System.out.println(test.getDevelopers());
-/*if (test.getSessions() == null) {
-        System.out.println("null");
-        } else {
-        System.out.println(test.getSessions().size()); 
-        }  
         System.out.println("");
- */
- /*      List<Task> allTasks = taskDBDao.getAllTasksForUser();
-        for (int i = 0; i < allTasks.size(); i++) {
-            Task test = allTasks.get(i);
- */  
-            System.out.println("");
         System.out.println("ID = " + test.getTaskID());
         System.out.println(test.getTaskName());
         System.out.println(test.getAssociatedProjectID());
         System.out.println(test.getProjectName());
         System.out.println(test.getUsersTaskMinutes());
         System.out.println(test.getDevelopers());
+  //      }
+       
+        /*if (test.getSessions() == null) {
+        System.out.println("null");
+        } else {
+        System.out.println(test.getSessions().size()); 
+        }  
         System.out.println("");
+ */
+ 
+ 
   //      } 
             
  /*    List<Task> allTasks = taskDBDao.getAllTasksForAdmin();

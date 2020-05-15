@@ -62,7 +62,6 @@ public class Task {
         this.projectName = projectName;
         this.usersTaskMinutes = usersTaskMinutes;
         this.developers = developers; 
-//        this.totalTaskMinutes = totalTaskMinutes;
     }
 
     

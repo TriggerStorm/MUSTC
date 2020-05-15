@@ -97,8 +97,6 @@ public class SessionDBDAO {
                 int associatedTaskID = rs.getInt("AssociatedTask");
                 String startTime = rs.getString("StartTime");
                 String finishTime = rs.getString("FinishTime");
-    //            LocalDateTime startTime = sqlStartTime.toLocalDate();  Need to work out time
-    //            LocalDateTime startTime = sqlStartTime.toLocalDate();
     //            java.sql.Date startTime = rs.getDate("StartTime");
     //            java.sql.Date finishTime = rs.getDate("FinishTime");
                 String associatedUserName = getSessionsUserName(associatedUserID); 
@@ -323,7 +321,6 @@ System.out.println("Session ID: " + sessionID /*+ "    Duration: " + duration*/)
                 usersTaskMinutes += sessionDuration; 
             }    
         }
-        
 System.out.println("TaskID = " + taskID + "   USERs TASK MINUTES = " + usersTaskMinutes);
         return usersTaskMinutes;
     }
