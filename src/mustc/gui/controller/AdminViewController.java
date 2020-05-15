@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.JFXTreeView;
+
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.sql.SQLException;
@@ -43,7 +44,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 import mustc.be.Client;
+import mustc.be.LoggedInUser;
 import mustc.be.Project;
 import mustc.be.Session;
 import mustc.be.Task;
@@ -254,13 +257,18 @@ public class AdminViewController implements Initializable {
     @FXML
     private ImageView img_task3;
     
-    
+    private LoggedInUser liu;
     private AdminModel adminModel;
     int MaxWidth;
     boolean min;
     boolean isStarted;
     String startTime;
     Task selectTask;
+    
+    
+    
+    boolean bb = true;
+    boolean bbm = true;
     
     Task taskToedit;
     Project projectToedit;
@@ -295,14 +303,27 @@ public class AdminViewController implements Initializable {
     private JFXTreeView<String> tv_project_task;
     
     @FXML
-    private TableColumn<?, ?> Col_task_Billable;
+    private TableColumn<Task, String> Col_task_Billable;
+    @FXML
+    private ToggleButton tb_task_billable;
+    @FXML
+    private ToggleButton tb_smallview_billable;
+    @FXML
+    private Label lb_session_name;
+    @FXML
+    private Label lb_session_dev;
     
     
     
    
    
     
-    
+    public AdminViewController() {
+        MaxWidth = 260;
+        min = true;
+        isStarted = false;
+        liu = LoggedInUser.getInstance();
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -344,16 +365,15 @@ public class AdminViewController implements Initializable {
         img_task3.setImage(image3);*/
         
         
+        
         cb_pj_clint.setItems(adminModel.getAllClient());
         cb_task_project.setItems(adminModel.getAllProjectsIDsAndNames());
         cb_user_admin.setItems(adminModel.getAdmin());
+        
+        lb_loginuser.setText(liu.getName());
     }    
 
-    public AdminViewController() {
-        MaxWidth = 260;
-        min = true;
-        isStarted = false;
-    }
+    
     
     public void sizeExpantion(){
         
@@ -420,7 +440,8 @@ public class AdminViewController implements Initializable {
             stage.setMinWidth(255);
         }
     }
- 
+    
+    
    
     
    /* public void setTreeView(){
@@ -458,8 +479,9 @@ public class AdminViewController implements Initializable {
         Col_pj_clint.setCellValueFactory(new PropertyValueFactory<Project, String>("clientName"));
         Col_pj_contact.setCellValueFactory(new PropertyValueFactory<Project, String>("phoneNr"));
         Col_pj_nroftask.setCellValueFactory(new PropertyValueFactory<Project, String>("noOfTasks"));
-       // Col_pj_totalhours.setCellValueFactory(new PropertyValueFactory<Project, String>("totalBillableMinutes"));
-       // Col_pj_totalprice.setCellValueFactory(new PropertyValueFactory<Project, String>("totalPrice"));
+        Col_pj_Billable.setCellValueFactory(new PropertyValueFactory<Project, String>("totalBillableMinutes"));
+        Col_pj_UnBillable.setCellValueFactory(new PropertyValueFactory<Project, String>("totalUnbillableMinutes"));
+        Col_pj_totalprice.setCellValueFactory(new PropertyValueFactory<Project, String>("totalPrice"));
         Col_pj_projectrate.setCellValueFactory(new PropertyValueFactory<Project, String>("projectRate")); // ad this
                 Tbv_pj.setItems(adminModel.getAllProject());
       
@@ -471,8 +493,7 @@ public class AdminViewController implements Initializable {
         Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("developers"));
         Col_task_$perhour.setCellValueFactory(new PropertyValueFactory<Task, String>("projectRate"));
         Col_task_totalhours.setCellValueFactory(new PropertyValueFactory<Task, String>("totalTaskMinutes"));
-       // Col_task_bill.setCellValueFactory(new PropertyValueFactory<Task, String>("mins"));
-       // Col_task_unbill.setCellValueFactory(new PropertyValueFactory<Task, String>("mins"));
+        Col_task_Billable.setCellValueFactory(new PropertyValueFactory<Task, String>("isBillable"));
                  tbv_task.setItems(adminModel.getAllTask());
     }
     
@@ -495,7 +516,7 @@ public class AdminViewController implements Initializable {
     }
     
     public void addTask(){  //  COMMENTED OUT FOR NOW
-       adminModel.addNewTaskToDB(tf_newtask.getText(),cb_project.getSelectionModel().getSelectedItem().getProjectID(), true);
+       adminModel.addNewTaskToDB(tf_newtask.getText(),cb_project.getSelectionModel().getSelectedItem().getProjectID(), bbm);
     }
     
     @FXML
@@ -649,6 +670,7 @@ public class AdminViewController implements Initializable {
                 fRate,
                 allocatedHours);
                 
+                
                 tf_pj_name.clear();
                 tf_pj_nr.clear();
                 tf_pj_$perhour.clear();
@@ -683,7 +705,7 @@ public class AdminViewController implements Initializable {
         adminModel.addNewTaskToDB(
                 task_name.getText().trim(),              
                 cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
-                true);
+                bb);
                 
                 
     }
@@ -693,7 +715,7 @@ public class AdminViewController implements Initializable {
         adminModel.editTask(taskToedit,
                 task_name.getText().trim(),
                 taskToedit.getAssociatedProjectID(),
-                true);    // MOCK DATA  
+                bb);    // MOCK DATA  
     }
 
     @FXML
@@ -720,7 +742,7 @@ public class AdminViewController implements Initializable {
         adminModel.editUser(userToedit,
                 tf_user_name.getText().trim(),
                 tf_user_email.getText().trim(),
-                userToedit.getPassword(),
+                tf_user_password.getText().trim(),
                 fSal,
                 cb_user_admin.getSelectionModel().getSelectedItem().toString()
                 );
@@ -833,6 +855,40 @@ public class AdminViewController implements Initializable {
         tf_user_$perhour.setText(Rate);
         cb_user_admin.setPromptText(userToedit.getStatus());
         
+        
+    }
+
+    @FXML
+    private void handel_billable(ActionEvent event) {
+        
+        if(bb == true){
+            bb = false;  
+            
+            
+        }
+        else{
+        bb = true;
+        }
+        
+    }
+
+    @FXML
+    private void handle_small_billable(ActionEvent event) {
+        
+        if(bbm == true){
+            bbm = false;     
+        }
+        else{
+        bbm = true;
+        }
+        
+    }
+
+    @FXML
+    private void handel_onTop(ActionEvent event) {
+        Stage stage = (Stage) bn_settings.getScene().getWindow();
+        stage.setAlwaysOnTop(true);
+        //System.out.println((liu.getName()));
         
     }
 
