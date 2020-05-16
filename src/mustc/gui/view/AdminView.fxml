@@ -3,8 +3,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -29,15 +29,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" maxHeight="550.0" maxWidth="1044.0" prefHeight="450.0" prefWidth="1026.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mustc.gui.controller.AdminViewController">
+<AnchorPane id="AnchorPane" maxHeight="801.0" maxWidth="1044.0" prefHeight="451.0" prefWidth="1026.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mustc.gui.controller.AdminViewController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIGHTGRAY" height="450.0" layoutX="-2.0" stroke="BLACK" strokeType="INSIDE" width="245.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f4f4f4" height="445.0" stroke="WHITE" strokeType="INSIDE" width="240.0" />
-      <TextField fx:id="tf_newtask" layoutX="102.0" layoutY="35.0" prefHeight="25.0" prefWidth="75.0" promptText="New Task" AnchorPane.leftAnchor="102.0" AnchorPane.topAnchor="35.0" />
-      <ComboBox fx:id="cb_project" layoutX="16.0" layoutY="35.0" prefHeight="25.0" prefWidth="81.0" promptText="Project" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="35.0" />
+      <TextField fx:id="tf_newtask" layoutX="100.0" layoutY="35.0" prefHeight="25.0" prefWidth="75.0" promptText="New Task" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="35.0" />
+      <ComboBox fx:id="cb_project" layoutX="14.0" layoutY="35.0" prefHeight="25.0" prefWidth="81.0" promptText="Project" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="35.0" />
       <Button fx:id="bn_add" layoutX="201.0" layoutY="35.0" mnemonicParsing="false" onAction="#handel_addTaskminview" prefHeight="25.0" prefWidth="37.0" text="add" AnchorPane.leftAnchor="201.0" AnchorPane.topAnchor="35.0" />
       <TextField fx:id="search" layoutX="16.0" layoutY="70.0" prefHeight="25.0" prefWidth="162.0" promptText="Search" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="70.0" />
-      <ToggleButton fx:id="tb_toggle" layoutX="216.0" layoutY="70.0" mnemonicParsing="false" onAction="#toggel_size" prefHeight="25.0" prefWidth="23.0" />
+      <ToggleButton fx:id="tb_toggle" layoutX="213.0" layoutY="70.0" mnemonicParsing="false" onAction="#toggel_size" prefHeight="25.0" prefWidth="23.0" AnchorPane.leftAnchor="213.0" AnchorPane.topAnchor="70.0" />
       <Button fx:id="bn_start_stop" layoutX="19.0" layoutY="355.0" mnemonicParsing="false" onAction="#handle_start_stop" prefHeight="40.0" prefWidth="52.0" text="Start" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="19.0" />
       <Label fx:id="lb_tasktime" layoutX="163.0" layoutY="365.0" text="01:25:54" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="163.0">
          <font>
@@ -91,6 +91,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
+                        <JFXTreeView fx:id="tv_project_task" layoutX="477.0" layoutY="392.0" onMouseClicked="#handel_pick_treeview" prefHeight="25.0" prefWidth="200.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -101,13 +102,14 @@
                      <children>
                         <TableView fx:id="Tbv_pj" onMouseClicked="#handel_pick_project" prefHeight="390.0" prefWidth="740.0">
                           <columns>
-                            <TableColumn fx:id="Col_pj_name" prefWidth="105.0" text="Name" />
-                            <TableColumn fx:id="Col_pj_clint" prefWidth="105.0" text="Client" />
-                              <TableColumn fx:id="Col_pj_contact" prefWidth="105.0" text="Contact info" />
-                              <TableColumn fx:id="Col_pj_nroftask" prefWidth="105.0" text="Nr of task" />
-                              <TableColumn fx:id="Col_pj_projectrate" prefWidth="105.0" text="ProjectRate" />
-                              <TableColumn fx:id="Col_pj_totalhours" prefWidth="105.0" text="Total hours" />
-                              <TableColumn fx:id="Col_pj_totalprice" prefWidth="105.0" text="Total price" />
+                            <TableColumn fx:id="Col_pj_name" prefWidth="92.0" text="Name" />
+                            <TableColumn fx:id="Col_pj_clint" prefWidth="92.0" text="Client" />
+                              <TableColumn fx:id="Col_pj_contact" prefWidth="92.0" text="Contact info" />
+                              <TableColumn fx:id="Col_pj_nroftask" prefWidth="92.0" text="Nr of task" />
+                              <TableColumn fx:id="Col_pj_projectrate" prefWidth="92.0" text="ProjectRate" />
+                              <TableColumn fx:id="Col_pj_Billable" prefWidth="92.0" text="Billable" />
+                              <TableColumn fx:id="Col_pj_UnBillable" prefWidth="92.0" text="UnBillable" />
+                              <TableColumn fx:id="Col_pj_totalprice" prefWidth="92.0" text="Total price" />
                           </columns>
                         </TableView>
                         <Label layoutX="1.0" layoutY="394.0" prefHeight="25.0" prefWidth="40.0" text="Project">
@@ -138,7 +140,7 @@
                             <TableColumn fx:id="Col_task_project" prefWidth="123.0" text="Project" />
                               <TableColumn fx:id="Col_task_$perhour" prefWidth="123.0" text="\$ per hour" />
                               <TableColumn fx:id="Col_task_totalhours" prefWidth="123.0" text="Total hours" />
-                              <TableColumn fx:id="Col_task_totalprice" prefWidth="123.0" text="Total price" />
+                              <TableColumn fx:id="Col_task_Billable" prefWidth="123.0" text="Billable" />
                               <TableColumn fx:id="Col_task_devs" prefWidth="123.0" text="Devs" />
                           </columns>
                         </TableView>
@@ -154,6 +156,11 @@
                         <JFXButton fx:id="bn_task_delete" layoutX="372.0" layoutY="395.0" onAction="#handel_task_delete" style="-fx-background-color: lightgrey;" text="Delete" />
                         <JFXDatePicker fx:id="dp_task_from" layoutX="548.0" layoutY="391.0" prefHeight="28.0" prefWidth="95.0" />
                         <JFXDatePicker fx:id="dp_task_to" layoutX="643.0" layoutY="391.0" prefHeight="28.0" prefWidth="95.0" />
+                        <ToggleButton layoutX="214.0" layoutY="393.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="24.0" text="\$" textFill="#1cbf48">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </ToggleButton>
                      </children>
                   </AnchorPane>
             </content>
@@ -240,7 +247,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <ScrollPane fx:id="Sp_last3" layoutX="20.0" layoutY="108.0" prefHeight="235.0" prefWidth="200.0">
+      <ScrollPane fx:id="Sp_last3" layoutX="20.0" layoutY="108.0" prefHeight="241.0" prefWidth="200.0">
          <content>
             <FlowPane fx:id="fp_last3task" prefHeight="194.0" prefWidth="200.0">
                <children>
@@ -248,17 +255,17 @@
                      <children>
                         <JFXButton fx:id="bn_task1" onAction="#handel_task1" prefHeight="76.0" prefWidth="200.0" style="-fx-background-color: lightgrey;" text="Time Controll: Call">
                            <padding>
-                              <Insets bottom="40.0" left="75.0" />
+                              <Insets bottom="40.0" left="40.0" />
                            </padding>
                         </JFXButton>
-                        <JFXComboBox fx:id="cb_task1" minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0">
+                        <JFXComboBox fx:id="cb_task1" minWidth="-Infinity" prefHeight="25.0" prefWidth="123.0">
                            <StackPane.margin>
-                              <Insets left="80.0" top="40.0" />
+                              <Insets left="50.0" top="40.0" />
                            </StackPane.margin>
                         </JFXComboBox>
-                        <ImageView fx:id="img_task1" fitHeight="76.0" fitWidth="81.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="img_task1" fitHeight="60.0" fitWidth="60.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                            <StackPane.margin>
-                              <Insets right="110.0" />
+                              <Insets right="128.0" />
                            </StackPane.margin>
                            <image>
                               <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
@@ -270,17 +277,17 @@
                      <children>
                         <JFXButton fx:id="bn_task2" onAction="#handle_task2" prefHeight="76.0" prefWidth="200.0" style="-fx-background-color: lightgrey;" text="Time Controll: Call">
                            <padding>
-                              <Insets bottom="40.0" left="75.0" />
+                              <Insets bottom="40.0" left="40.0" />
                            </padding>
                         </JFXButton>
-                        <JFXComboBox fx:id="cb_task2" minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0">
+                        <JFXComboBox fx:id="cb_task2" minWidth="-Infinity" prefHeight="25.0" prefWidth="123.0">
                            <StackPane.margin>
-                              <Insets left="80.0" top="40.0" />
+                              <Insets left="50.0" top="40.0" />
                            </StackPane.margin>
                         </JFXComboBox>
-                        <ImageView fx:id="img_task2" fitHeight="76.0" fitWidth="81.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="img_task2" fitHeight="60.0" fitWidth="60.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                            <StackPane.margin>
-                              <Insets right="110.0" />
+                              <Insets right="128.0" />
                            </StackPane.margin>
                            <image>
                               <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
@@ -292,17 +299,17 @@
                      <children>
                         <JFXButton fx:id="bn_task3" onAction="#handle_task3" prefHeight="76.0" prefWidth="200.0" style="-fx-background-color: lightgrey;" text="Time Controll: Call">
                            <padding>
-                              <Insets bottom="40.0" left="75.0" />
+                              <Insets bottom="40.0" left="40.0" />
                            </padding>
                         </JFXButton>
-                        <JFXComboBox fx:id="cb_task3" minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0">
+                        <JFXComboBox fx:id="cb_task3" minWidth="-Infinity" prefHeight="25.0" prefWidth="123.0">
                            <StackPane.margin>
-                              <Insets left="80.0" top="40.0" />
+                              <Insets left="50.0" top="40.0" />
                            </StackPane.margin>
                         </JFXComboBox>
-                        <ImageView fx:id="img_task3" fitHeight="76.0" fitWidth="81.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="img_task3" fitHeight="60.0" fitWidth="60.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
                            <StackPane.margin>
-                              <Insets right="110.0" />
+                              <Insets right="128.0" />
                            </StackPane.margin>
                            <image>
                               <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
@@ -314,8 +321,7 @@
             </FlowPane>
          </content>
       </ScrollPane>
-      <JFXListView layoutX="17.0" layoutY="103.0" prefHeight="242.0" prefWidth="207.0" />
-      <JFXButton layoutX="185.0" layoutY="70.0" prefHeight="17.0" prefWidth="20.0" style="-fx-background-color: grey;" text=" " />
-      <ToggleButton layoutX="179.0" layoutY="35.0" mnemonicParsing="false" text=" " />
+      <JFXButton layoutX="183.0" layoutY="70.0" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: lightGrey;" text="&lt;" AnchorPane.leftAnchor="183.0" AnchorPane.topAnchor="70.0" />
+      <ToggleButton layoutX="177.0" layoutY="35.0" mnemonicParsing="false" text="\$" textFill="#1dbf28" AnchorPane.bottomAnchor="391.0" AnchorPane.leftAnchor="177.0" />
    </children>
 </AnchorPane>
