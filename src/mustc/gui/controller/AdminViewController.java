@@ -469,7 +469,7 @@ public class AdminViewController implements Initializable {
         Col_clint_email.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
         Col_clint_nrofpj.setCellValueFactory(new PropertyValueFactory<Client, String>("noOfProjects"));
         Col_clint_$perhour.setCellValueFactory(new PropertyValueFactory<Client, String>("standardRate"));
-        Col_clint_totalhours.setCellValueFactory(new PropertyValueFactory<Client, String>("totalHours"));
+        //Col_clint_totalhours.setCellValueFactory(new PropertyValueFactory<Client, String>("totalHours"));
        // Col_clint_totalprice.setCellValueFactory(new PropertyValueFactory<Client, String>("totalPrice"));
         Tbv_Clint.setItems(adminModel.getAllClient());
     }
