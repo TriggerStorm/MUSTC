@@ -82,25 +82,7 @@ public class Project {
         this.totalPrice = totalPrice;
         this.noOfTasks = noOfTasks;
 
-       }
-    
-    
-//  Admin constructor2      
-/*    public Project(int projectID, String projectName, int associatedClientID, String clientName, int phoneNr, float projectRate, int allocatedHours, int totalBillableMinutes, int totalUnbillableMinutes, int totalPrice, List<Task> taskList, boolean isClosed) {
-        this.projectID = projectID;
-        this.projectName = projectName;
-        this.associatedClientID = associatedClientID;
-        this.clientName = clientName;
-        this.phoneNr = phoneNr;
-        this.projectRate = projectRate;
-        this.allocatedHours = allocatedHours;
-        this.totalBillableMinutes = totalBillableMinutes;
-        this.totalUnbillableMinutes = totalUnbillableMinutes;
-        this.totalPrice = totalPrice;
-        this.taskList = taskList;
-        this.isClosed = isClosed;
-       }    
- */   
+    }
     
     
 //  getAllProjectsIDsAndNames constructor for ProjectDBDAO
@@ -114,14 +96,14 @@ public class Project {
     public Project(String projectName, float projectRate) {
         this.projectName = projectName;
         this.projectRate = projectRate;
-      }    
-
+    }    
+    
+    
     @Override
     public String toString() {
         return  projectName;
     }
 
-        
     public int getProjectID() {
         return projectID;
     }

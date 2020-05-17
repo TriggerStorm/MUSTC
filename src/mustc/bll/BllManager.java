@@ -103,8 +103,8 @@ public class BllManager implements IBLL {
     
     
     @Override
-    public Project editProject(Project editedProject, String projectName, int associatedClientID, float projectRate, int allocatedHours, boolean isClosed) {
-        return dalManager.editProject(editedProject, projectName, associatedClientID, projectRate, allocatedHours, isClosed);
+    public Project editProject(Project editedProject, String projectName, /*int associatedClientID,*/ int phoneNr, float projectRate, int allocatedHours, boolean isClosed) {
+        return dalManager.editProject(editedProject, projectName, /*associatedClientID,*/ phoneNr, projectRate, allocatedHours, isClosed);
     }
 
     
