@@ -64,11 +64,10 @@
                      <children>
                         <TableView fx:id="Tbv_Clint" onMouseClicked="#handel_pick_client" prefHeight="392.0" prefWidth="740.0">
                            <columns>
-                              <TableColumn fx:id="Col_clint_name" prefWidth="148.0" text="Name" />
-                              <TableColumn fx:id="Col_clint_email" prefWidth="148.0" text="Email" />
-                              <TableColumn fx:id="Col_clint_nrofpj" prefWidth="148.0" text="Nr of projects" />
-                              <TableColumn fx:id="Col_clint_$perhour" prefWidth="148.0" text="\$ per hour" />
-                              <TableColumn fx:id="Col_clint_totalhours" prefWidth="148.0" text="Total hours" />
+                              <TableColumn fx:id="Col_clint_name" prefWidth="185.0" text="Name" />
+                              <TableColumn fx:id="Col_clint_email" prefWidth="185.0" text="Email" />
+                              <TableColumn fx:id="Col_clint_nrofpj" prefWidth="185.0" text="Nr of projects" />
+                              <TableColumn fx:id="Col_clint_$perhour" prefWidth="185.0" text="\$ per hour" />
                            </columns>
                         </TableView>
                         <Label layoutX="6.0" layoutY="394.0" prefHeight="25.0" prefWidth="44.0" text="Client">
@@ -201,8 +200,6 @@
                               <TableColumn fx:id="col_sesion_Developers" prefWidth="185.0" text="Developers" />
                            </columns>
                         </TableView>
-                        <JFXTextField fx:id="tf_session_name" layoutX="56.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Name" />
-                        <JFXTextField fx:id="tf_session_dev" layoutX="305.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Developers" />
                         <JFXTextField fx:id="tf_session_start" layoutX="139.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Start" />
                         <JFXTextField fx:id="tf_session_stop" layoutX="222.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Stop" />
                         <Label layoutX="3.0" layoutY="397.0" text="Session">
@@ -212,8 +209,8 @@
                         </Label>
                         <JFXButton fx:id="bn_session_edit" layoutX="393.0" layoutY="393.0" onAction="#handel_session_edit" style="-fx-background-color: lightgrey;" text="Edit" />
                         <JFXButton fx:id="bn_session_delete" layoutX="428.0" layoutY="393.0" onAction="#handel_session_delete" style="-fx-background-color: lightgrey;" text="Delete" />
-                        <Label fx:id="lb_session_name" layoutX="498.0" layoutY="397.0" text="Label" />
-                        <Label fx:id="lb_session_dev" layoutX="544.0" layoutY="396.0" text="Label" />
+                        <Label fx:id="lb_session_name" layoutX="62.0" layoutY="395.0" prefHeight="25.0" prefWidth="75.0" text="Name" />
+                        <Label fx:id="lb_session_dev" layoutX="307.0" layoutY="399.0" prefHeight="17.0" prefWidth="75.0" text="Developers" />
                      </children>
                   </AnchorPane>
                </content>

@@ -171,8 +171,6 @@ public class AdminViewController implements Initializable {
     @FXML
     private TableColumn<Client, String> Col_clint_$perhour;
     @FXML
-    private TableColumn<Client, String> Col_clint_totalhours;
-    @FXML
     private JFXTextField tf_clint_name;
     @FXML
     private JFXButton bn_clint_add;
@@ -287,10 +285,8 @@ public class AdminViewController implements Initializable {
     private Text lb_task;
     @FXML
     private Text tb_project;
-    @FXML
-    private JFXTextField tf_session_name;
-    @FXML
-    private JFXTextField tf_session_dev;
+    //private JFXTextField tf_session_name;
+   // private JFXTextField tf_session_dev;
     @FXML
     private JFXTextField tf_session_start;
     @FXML
@@ -813,7 +809,7 @@ public class AdminViewController implements Initializable {
         float n = projectToedit.getProjectRate();
         String Rate = String.valueOf(n);
         tf_pj_$perhour.setText(Rate);
-        
+    
     }
 
     @FXML
@@ -837,11 +833,13 @@ public class AdminViewController implements Initializable {
     @FXML
     private void handel_pick_session(javafx.scene.input.MouseEvent event) {
         SessionToedit = tbv_session.getSelectionModel().getSelectedItem();
-        tf_session_name.setText(SessionToedit.getAssociatedTaskName());
+        lb_session_name.setText(SessionToedit.getAssociatedTaskName());
         tf_session_start.setText(SessionToedit.getStartTime());
         tf_session_stop.setText(SessionToedit.getFinishTime());
-        tf_session_dev.setText(SessionToedit.getAssociatedUserName());
+        lb_session_dev.setText(SessionToedit.getAssociatedUserName());
        
+            
+   
     }
 
     @FXML
