@@ -68,7 +68,7 @@ public class TestController implements Initializable {
         System.out.println("test start");
      float aHours = 350;
   
-  //   int duration = sessionDBDao.calculateTotalMinutesOfATask(3);  //  TEST
+  //   int duration = sessionDBDao.returnTotalTaskMinutesAndDevelopers(3);  //  TEST
    //      System.out.println("test duration" + duration);
   
     

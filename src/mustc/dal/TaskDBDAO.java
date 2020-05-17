@@ -142,7 +142,8 @@ public class TaskDBDAO {
                 String projectName = associatedProjectNameAndRate.getProjectName();
                 float projectRate = associatedProjectNameAndRate.getProjectRate();
                 //List<Session> allSessionsOfATask = sessionDBDao.getAllSessionsOfATask(taskID);
-                int totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID);  //  REPLACE WITH MODEL LATER
+                Task task =  sessionDBDao.returnTotalTaskMinutesAndDevelopers(taskID);  //  REPLACE WITH MODEL LATER
+                int totalTaskMinutes = task.getTotalTaskMinutes();
                 String developers = "Gus, John, BumbleWeed";  // MOCK DATA
                 int billable = rs.getInt("description");  // String description needs to be replaced in DB with int billable 
                 boolean isBillable = convertIntToBoolean(billable);
@@ -169,8 +170,9 @@ public class TaskDBDAO {
                 Project associatedProjectNameAndRate = getProjectNameAndProjectRate(associatedProjectID);
                 String projectName = associatedProjectNameAndRate.getProjectName();
                 float projectRate = associatedProjectNameAndRate.getProjectRate();
-                int totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID);
-                String developers = "Bob, Sue";
+                Task task =  sessionDBDao.returnTotalTaskMinutesAndDevelopers(taskID);  //  REPLACE WITH MODEL LATER
+                int totalTaskMinutes = task.getTotalTaskMinutes();
+                String developers = task.getDevelopers();  //"Bob, Sue";
                 String billableSTR = rs.getString("Description");
                 int billable = Integer.parseInt(billableSTR);    /*rs.getInt("description");*/  // String description needs to be replaced in DB with int billable 
                 boolean isBillable = convertIntToBoolean(billable);
@@ -198,9 +200,10 @@ public class TaskDBDAO {
                 Project associatedProjectNameAndRate = getProjectNameAndProjectRate(associatedProjectID);
                 String projectName = associatedProjectNameAndRate.getProjectName();
                 float projectRate = associatedProjectNameAndRate.getProjectRate();
-                int totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID); 
-        //        totalBillableProjectMinutes += totalTaskHours;
-                String developers = "Bob, Sue";
+                Task task = sessionDBDao.returnTotalTaskMinutesAndDevelopers(taskID);  //  REPLACE WITH MODEL LATER
+                int totalTaskMinutes = task.getTotalTaskMinutes();
+                //        totalBillableProjectMinutes += totalTaskHours;
+                String developers = task.getDevelopers();  //"Bob, Sue";
                 int billable = rs.getInt("description");  // String description needs to be replaced in DB with int billable   
                 boolean isBillable = convertIntToBoolean(billable);
  System.out.println("taskID: " + taskID + "   totalTaskHours:  " + totalTaskMinutes + "   isBillable: " + isBillable);               
@@ -223,8 +226,10 @@ public class TaskDBDAO {
         for (int i = 0; i < allTasksOfAProject.size(); i++) {
             Task task = allTasksOfAProject.get(i);
             int taskID = task.getTaskID();
+   //NEW 2 lines         
+            Task taskMinutesAndDevs =  sessionDBDao.returnTotalTaskMinutesAndDevelopers(taskID);  //  REPLACE WITH MODEL LATER
+            totalTaskMinutes = taskMinutesAndDevs.getTotalTaskMinutes();
             
-            totalTaskMinutes = sessionDBDao.calculateTotalMinutesOfATask(taskID);// task.getTotalTaskHours();
 System.out.println("Task: " + taskID + "   TotalTaskHours: " + totalTaskMinutes);    
             if (task.getIsBillable() == true) {
                 totalBillableProjectMinutes += totalTaskMinutes;

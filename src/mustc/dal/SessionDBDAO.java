@@ -132,7 +132,7 @@ public class SessionDBDAO {
                 allSessions.add(session); 
             }    
         }
-        calculateTotalMinutesOfATask(3);  //  TEST
+  //      returnTotalTaskMinutesAndDevelopers(3);  //  TEST
         return allSessions ;
     }
  
@@ -173,23 +173,17 @@ public class SessionDBDAO {
             while(rs.next()) // While you have something in the results
             {
                 int sessionID = rs.getInt("id");
-                int AssociatedUserID =  rs.getInt("associatedUser");
+                int associatedUserID =  rs.getInt("associatedUser");
  //               int associatedTaskID =  rs.getInt("associatedTask");
                 String startTime = rs.getString("startTime");
                 String finishTime = rs.getString("finishTime");
-                String associatedUserName = getSessionsUserName(AssociatedUserID);
- /*System.out.println("");
- System.out.println("ID = " + sessionID);               
- System.out.println("AssociatedUserID = " + AssociatedUserID);               
- System.out.println("associatedTaskID = " + associatedTaskID);               
- System.out.println("startTime = " + startTime);               
- System.out.println("finishTime = " + finishTime); 
-  */
-            //   Session test = getSession(sessionID);  //  TEST DIDN*T WORK
-System.out.println("Session ID: " + sessionID /*+ "    Duration: " + duration*/);
-                Session sessionInTask = new Session(sessionID, AssociatedUserID, associatedUserName, startTime, finishTime);
-   //             int duration = calculateDurationOfASession(sessionInTask);
-    allSessionsOfATask.add(sessionInTask); 
+                
+                String associatedUserName = getSessionsUserName(associatedUserID);
+                
+                Session sessionInTask = new Session(sessionID, associatedUserID, associatedUserName, 0, "", startTime, finishTime);
+                sessionInTask.setAssociatedUserName(associatedUserName);
+                System.out.println("Task: " + taskID + "    Session: " + sessionID + "   AssociatedUserID = " + associatedUserID + "   AssociatedUserName = " + sessionInTask.getAssociatedUserName());            
+               allSessionsOfATask.add(sessionInTask); 
             }    
         }
         return allSessionsOfATask ;
@@ -284,11 +278,11 @@ System.out.println("Session ID: " + sessionID /*+ "    Duration: " + duration*/)
     }
  
     
-    public int calculateTotalMinutesOfATask(int taskID /*Task task*/) throws SQLException {
-    // Returns the total minutes of a given Task 
-//System.out.println("calculateTotalMinutesOfATask");
+    public Task returnTotalTaskMinutesAndDevelopers(int taskID /*Task task*/) throws SQLException {
+    // Returns the total minutes of a given Task and it's Developers
+//System.out.println("returnTotalTaskMinutesAndDevelopers");
+        String developers = "";
         int taskDuration = 0;
-    //    int taskID = 6;  //task.getTaskID();  //MOCK DATA
         List<Session> allSessionsInATask = getAllSessionsOfATask(taskID);  //new ArrayList<>();
         for (int i = 0; i < allSessionsInATask.size(); i++) {
             Session session = allSessionsInATask.get(i);
@@ -297,12 +291,28 @@ System.out.println("Session ID: " + sessionID /*+ "    Duration: " + duration*/)
             int sessionDuration = calculateDurationOfASession(startTime, finishTime);
             int updatedDuration = taskDuration + sessionDuration;
             taskDuration = updatedDuration;
+            int AssociatedUserID = session.getAssociatedUserID();
+            String associatedUserName = getSessionsUserName(AssociatedUserID);
+System.out.println("Task: " + taskID + "    Session: " + session.getSessionID() + "   associatedUserName = " + associatedUserName);            
+            developers = compileDevelopersList(associatedUserName, developers);
+
 //System.out.println("Task: " + taskID + "    Session: " + session.getSessionID() + "   Duration = " + sessionDuration);
         }
-//System.out.println("Task Duration: " + taskDuration);
-        return taskDuration;
+        Task task = new Task(taskDuration, developers);
+        return task;
     }    
  
+    
+    private String compileDevelopersList(String associatedUserName, String developers) {
+//System.out.println("developers: " + developers + "   associatedUserName: " + associatedUserName);
+        if (!(developers.contains(associatedUserName))) {   //  https://www.javatpoint.com/java-string-contains
+            developers +=  associatedUserName + ", " ;
+System.out.println(developers);
+        }
+        
+        return developers;
+    }
+
     
     public int calculateUsersTaskMinutes(int userID, int taskID) throws SQLException{
     // Returns the total minutes a given User has spent dong a Task  

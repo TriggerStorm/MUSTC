@@ -71,10 +71,17 @@ public class Task {
         
     }
 
+    public Task(int totalTaskMinutes, String developers ){
+        this.totalTaskMinutes = totalTaskMinutes;
+        this.developers = developers; 
+
+    }
+    
+ /*   
     Task() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+*/    
     @Override
     public String toString() {
         return  taskName;// + taskDuration ;
