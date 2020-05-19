@@ -218,6 +218,26 @@ System.out.println(" client Name = " + clientName);
     }
     
     
+    public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID) throws SQLException {  
+//  Returns a list of Project Id's and Names for GUI Report - Project selection
+        List<Project> allProjectIDsAndNamesOfAClient = new ArrayList<>();
+        try(Connection con = dbc.getConnection()){
+            String sql = "SELECT id, name FROM Projects WHERE associatedClient = '" + clientID + "'"; 
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                int projectID =  rs.getInt("id");
+                String projectName = rs.getString("name");
+                Project projectIDandName = new Project(projectID, projectName);
+                allProjectIDsAndNamesOfAClient.add(projectIDandName);
+            }    
+        }
+        return allProjectIDsAndNamesOfAClient;
+    }
+            
+            
     private List<Integer> getTaskIDListForAProject(int projectID) throws SQLException {
     // Returns an array of TaskIds in a Project
         List<Integer> taskIDlistOfProject = new ArrayList<>();

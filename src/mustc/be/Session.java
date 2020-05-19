@@ -13,22 +13,20 @@ import java.time.LocalDateTime;
  */
 public class Session implements Comparable<Session>{
     private int sessionID;
-//      private String description;
-    private int associatedUserID;  // the person whom the Session is assigned to.
-    private String associatedUserName;  // the person whom the Session is assigned to.    
-    private int associatedTaskID;  // the Task whom the Session is assigned to.
-    private String associatedTaskName;  // the person whom the Session is assigned to.    
+    private int associatedUserID;                           // the person whom the Session is assigned to.
+    private String associatedUserName;                       // the person whom the Session is assigned to.    
+    private int associatedTaskID;                           // the Task whom the Session is assigned to.
+    private String associatedTaskName;                       // the person whom the Session is assigned to.    
     private String startTime;
     private String finishTime;
-    private LocalDateTime startLDT;  // TEMP
-    private LocalDateTime finishLDT;  // TEMP
-    private int duration;  //  difference between start time and finish time ...maybe?
+    private LocalDateTime startLDT;
+    private LocalDateTime finishLDT;
+    private int duration;                                   //  difference between start time and finish time ...maybe?
 
     
 // Full constructor        
     public Session(int sessionID, int associatedUserID, String associatedUserName, int associatedTaskID, String associatedTaskName, String startTime, String finishTime, LocalDateTime startLDT, LocalDateTime finishLDT, int duration) {
         this.sessionID = sessionID;
-//        this.description = description;
         this.associatedUserID = associatedUserID;
         this.associatedUserName = associatedUserName;
         this.associatedTaskID = associatedTaskID;
@@ -52,7 +50,9 @@ public class Session implements Comparable<Session>{
     }
 
 // User constructor        
-    public Session(int sessionID, int associatedTaskID, String associatedTaskName, String startTime, String finishTime) {
+    public Session(int sessionID, int associatedTaskID, 
+            String associatedTaskName, String startTime, 
+            String finishTime) {
         this.sessionID = sessionID;
         this.associatedTaskID = associatedTaskID;
         this.associatedTaskName = associatedTaskName;
@@ -71,10 +71,11 @@ public class Session implements Comparable<Session>{
     }  
   */  
     
-// getDuration constructor        
-    public Session(int sessionID, int associatedTaskID, String associatedTaskName, String startTime, String finishTime, int duration) {
+    // getDuration constructor        
+    public Session(int sessionID, int associatedTaskID, 
+            String associatedTaskName, String startTime, 
+            String finishTime, int duration) {
         this.sessionID = sessionID;
-//        this.description = description;
         this.associatedTaskID = associatedTaskID;
         this.associatedTaskName = associatedTaskName;
         this.startTime = startTime;
@@ -103,8 +104,6 @@ public class Session implements Comparable<Session>{
    @Override
     public int compareTo(Session session) {   
     // Comparator used for getting recent tasks using sessionDBDao
-        System.out.println("this LDT = "+ this.startLDT);
-        System.out.println("session LDT = "+ session.startLDT);
        return this.startLDT.compareTo(session.startLDT);  //  https://stackoverflow.com/questions/5927109/sort-objects-in-arraylist-by-date#5927408
   }   
     

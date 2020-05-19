@@ -12,20 +12,20 @@ import java.util.List;
  * @author Trigger and Alan
  */
 public class Project {
-    private int projectID;  // for User & Admin
-    private String projectName;  // for User & Admin
-    private int associatedClientID;  // for User & Admin
-    private String clientName;  // for User & Admin
-    private int phoneNr;  // for User & Admin
-    private float projectRate;  // for Admin
-    private int allocatedHours;  // for Admin
-    private int usersProjectMinutes;  // for User
-    private int totalBillableMinutes;  // for Admin
+    private int projectID;              // for User & Admin
+    private String projectName;         // for User & Admin
+    private int associatedClientID;      // for User & Admin
+    private String clientName;           // for User & Admin
+    private int phoneNr;                // for User & Admin
+    private float projectRate;           // for Admin
+    private int allocatedHours;             // for Admin
+    private int usersProjectMinutes;         // for User
+    private int totalBillableMinutes;       // for Admin
     private int totalUnbillableMinutes;  // for Admin
-    private int totalPrice;  // for Admin
-    private List<Task> taskList;  // for User & Admin
+    private int totalPrice;             // for Admin
+    private List<Task> taskList;         // for User & Admin
     private int noOfTasks;
-    private boolean isClosed;  // for Admin
+    private boolean isClosed;           // for Admin
   
     
 //  Full constructor      

@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  *
- * @author admin
+ * @author Trigger and Alan
  */
 public class TimeUtilities {
     
@@ -28,7 +28,7 @@ public class TimeUtilities {
         String[] parts = dateString.split(" ");
         String time = parts[1];
         String[] parts2 = time.split(".");
-        String sqlSTR = parts[0] + "T" + parts[1].substring(0,8);  // https://stackoverflow.com/questions/17685977/cut-java-string-at-a-number-of-character
+        String sqlSTR = parts[0] + "T" + parts[1].substring(0,8);                                    // https://stackoverflow.com/questions/17685977/cut-java-string-at-a-number-of-character
         LocalDateTime LDT = LocalDateTime.parse(sqlSTR, formatter);
         return LDT;
     }

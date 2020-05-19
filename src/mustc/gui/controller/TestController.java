@@ -7,28 +7,21 @@ package mustc.gui.controller;
 
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import jdk.jfr.Timestamp;
 import mustc.be.Project;
 import mustc.be.Session;
 import mustc.be.Task;
-import mustc.be.User;
 import mustc.bll.BllManager;
 import mustc.dal.ClientDBDAO;
-import mustc.dal.DalManager;
 import mustc.dal.ProjectDBDAO;
 import mustc.dal.SessionDBDAO;
 import mustc.dal.TaskDBDAO;
@@ -79,8 +72,17 @@ public class TestController implements Initializable {
 //System.out.println("PROJECT2: Unbillable" + results[0] + "   Billable: " + results[1]);               
 
 
+//  PROJECT
 
-
+    
+    List<Project> allProjects = bllManager.getAllProjectIDsAndNamesOfAClient(9);  
+  for (int i = 0; i < allProjects.size(); i++) {
+            Project test = allProjects.get(i);
+            
+ System.out.println("");
+        System.out.println("PRojectID = " + test.getProjectID() + "   Name: " + test.getProjectName());
+        System.out.println("");
+        }
 
   //     Project test = projectDBDao.getProjectForAdmin(2);
  
@@ -329,19 +331,12 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
         Session task5 = new Session(5, 2, "E", ldt5, ldt5);
          allSessions.add(task5);  //      LocalDateTime ldt1 = stringToLocalDate(dts1) ;       
            
-                     
-        System.out.println("");
         System.out.println("TEST ! UNSORTED"); 
-
         for (int i = 0; i < allSessions.size(); i++) {
             Session test = allSessions.get(i);
             System.out.println(" Session " + test.getSessionID() + " Start = " + test.getStartLDT());
         }
-
-         Collections.sort(allSessions, Collections.reverseOrder());  // https://beginnersbook.com/2013/12/sort-arraylist-in-descending-order-in-java/
-  //      Collections.sort(allSessions);
-        
-            System.out.println("");
+        Collections.sort(allSessions, Collections.reverseOrder());  // https://beginnersbook.com/2013/12/sort-arraylist-in-descending-order-in-java/
             System.out.println("TEST ! SORTED"); 
             for (int i = 0; i < allSessions.size(); i++) {
             Session test = allSessions.get(i);
@@ -377,65 +372,5 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
     
   
 
-
-
-
-//  LocalDateTime test = LocalDateTime.now().
-    
-  /*    public String convertLDTtoSqlSTR(LocalDateTime LDT) {    
-        String LDTSTR = LDT.toString();
-  //      String[] parts = LDTSTR.split("T");
-  //      String sqlSTR = parts[0] + " " + parts[1];
-  
-  
- /* DateTimeFormatter formatter =
-    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-
-System.out.println(LocalDateTime.now().format(formatter));
-
-
-
-
-     LocalDateTime dateTime = LocalDateTime.parse(LDTSTR, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-System.out.println(" dateTime = " + dateTime);
-
-//System.out.println(parts[0] + " " + parts[1]);
- /*       String[] parts2 = sqlSTR.split(".");
-System.out.println(parts2[0]);
-
- */ /*       String sqlSTR2 = "DD";//parts[0] + " " + parts2[0];
-        return sqlSTR2;
-    
-      }
-    
-  */  
-    
-    
- /*   public String makeCurrentTimestamp() {    
-        Calendar calendar = Calendar.getInstance();
-        java.util.Date now = calendar.getTime();
-        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
-        String timestampSTR = currentTimestamp.toString();
-         System.out.println(currentTimestamp);
-        return timestampSTR; 
-    }
-        
-   */ 
-  /*  public Timestamp convertLDTtoTimeStamp() {    
-        Timestamp timestamp = null;
-        LocalDateTime LDTnow = LocalDateTime.now();
-        String LDTnowSTR = LDTnow.toString();
-        String[] parts = LDTnowSTR.split("T");
-        String sqlSTR = parts[0] + " " + parts[1];
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-            Date parsedDate = dateFormat.parse(sqlSTR);
-            timestamp = (Timestamp) new java.sql.Timestamp(parsedDate.getTime());
-       } catch(Exception e) { 
-       }     
-       return timestamp;
-    }
-
-*/
 
 }

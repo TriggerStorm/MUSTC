@@ -159,6 +159,17 @@ public class DalManager implements DalFaçade {
 
     
     @Override
+    public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID) {
+        try {
+            return projectDBDao.getAllProjectIDsAndNamesOfAClient(clientID);
+                    } catch (SQLException ex) {
+            Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+   
+    @Override
     public Project editProject(Project editedProject, String projectName, /*int associatedClientID,*/ int phoneNr, float projectRate, int allocatedHours, boolean isClosed) {
         return projectDBDao.editProject(editedProject, projectName, /*associatedClientID,*/ phoneNr, projectRate, allocatedHours, isClosed);
     }
@@ -386,6 +397,6 @@ public class DalManager implements DalFaçade {
         }
         return 0;
     }
+
     
-   
 }

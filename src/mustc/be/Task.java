@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Trigger, Filip, Cecillia and Alan
+ * @author Trigger and Alan
  */
 public class Task {
     private int taskID;
@@ -19,9 +19,9 @@ public class Task {
     private String projectName;
     private float projectRate;
     private int usersTaskMinutes;
-    private int totalTaskMinutes;  //  total time used on a task in minutes
+    private int totalTaskMinutes;       //  total time used on a task in minutes
     String developers; 
-    private List<Session> sessions;  //time??
+    private List<Session> sessions; 
     private boolean isBillable;
 
 

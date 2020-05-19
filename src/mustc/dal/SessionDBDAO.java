@@ -102,6 +102,7 @@ public class SessionDBDAO {
                 String associatedUserName = getSessionsUserName(associatedUserID); 
                 String associatedTaskName = getSessionsTaskName( associatedTaskID);
                 session = new Session(sessionID, associatedUserID, associatedUserName, associatedTaskID, associatedTaskName, startTime, finishTime);
+                setSessionsLDTs(session);
             }    
         }
         return session ;
@@ -263,18 +264,10 @@ public class SessionDBDAO {
     
     
     private int calculateDurationOfASession(String startTime, String finishTime) {
-//System.out.println("calculateDurationOfASession");
-    // Return the number of minutes in a given session
-        //String startTime = session.getStartTime();
-        //String finishTime = session.getFinishTime();
-//System.out.println("startTime: " + startTime);
-//System.out.println("finishTime: " + finishTime);
-       LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
+        LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
         LocalDateTime finishLDT = timeUtilities.stringToLocalDateTime(finishTime);
         int duration = (int) ChronoUnit.MINUTES.between(startLDT, finishLDT);  //  https://stackoverflow.com/questions/25747499/java-8-difference-between-two-localdatetime-in-multiple-units#26954864
-
-//System.out.println("Start: " + startTime + "    Finish: " + finishTime + "    Duration: " + duration);
-       return duration;
+        return duration;
     }
  
     
@@ -374,7 +367,6 @@ System.out.println("TaskID = " + taskID + "   USERs TASK MINUTES = " + usersTask
         }
         System.out.println(" Sorting");
          Collections.sort(allLoggedInUserSessions, Collections.reverseOrder());  // https://beginnersbook.com/2013/12/sort-arraylist-in-descending-order-in-java/
-//       Collections.sort(allLoggedInUserSessions);//new Comparator<Session>()) {
           for (int i = 0; i < allLoggedInUserSessions.size(); i++) {
             Session session = allLoggedInUserSessions.get(i);
               System.out.println("");
