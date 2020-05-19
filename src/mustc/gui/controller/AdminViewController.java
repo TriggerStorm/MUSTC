@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.JFXTreeView;
 
 import java.awt.event.MouseEvent;
+import static java.lang.Thread.sleep;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -52,6 +54,7 @@ import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
 import mustc.bll.BllManager;
+import mustc.bll.TimeUtilities;
 import mustc.dal.DalManager;
 import mustc.dal.ProjectDBDAO;
 import mustc.gui.model.AdminModel;
@@ -61,7 +64,7 @@ import mustc.gui.model.AdminModel;
  *
  * @author Trigger
  */
-public class AdminViewController implements Initializable {
+public class AdminViewController implements Initializable, Runnable {
 
     @FXML
     private TextField tf_newtask;
@@ -250,13 +253,19 @@ public class AdminViewController implements Initializable {
     
     private LoggedInUser liu;
     private AdminModel adminModel;
+    private TimeUtilities Tu;
     int MaxWidth;
     boolean min;
     boolean isStarted;
     String startTime;
     Task selectTask;
     
+    static int msec = 0;
+    static int sec = 0;
+    static int mins = 0;
+    static int hours = 0;
     
+    boolean timeState = true;
     
     boolean bb = true;
     boolean bbm = true;
@@ -320,6 +329,14 @@ public class AdminViewController implements Initializable {
     private TableColumn<?, ?> Col_pj_UnBillable1;
     @FXML
     private TableColumn<?, ?> Col_pj_totalprice1;
+    @FXML
+    private JFXButton bn_searchClear;
+    @FXML
+    private Label a;
+    @FXML
+    private Label b;
+    @FXML
+    private Label c;
     
     
     
@@ -337,9 +354,9 @@ public class AdminViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         
-        
+        Tu = new TimeUtilities();
         adminModel = new AdminModel();
-        setClint();
+        /*setClint();
         setProject();
         setTask();
         setUser();
@@ -371,14 +388,14 @@ public class AdminViewController implements Initializable {
         img_task1.setImage(image1);
         img_task2.setImage(image2);
         img_task3.setImage(image3);*/
-        
+        /*
         
         
         cb_pj_clint.setItems(adminModel.getAllClient());
         cb_task_project.setItems(adminModel.getAllProjectsIDsAndNames());
         cb_user_admin.setItems(adminModel.getAdmin());
         
-        lb_loginuser.setText(liu.getName());
+        lb_loginuser.setText(liu.getName());*/
         
     }    
 
@@ -921,6 +938,246 @@ public class AdminViewController implements Initializable {
 
     @FXML
     private void handel_stopDP(ActionEvent event) {
+    }
+    
+    public void clock(){
+        timeState = true;
+        
+       //lb_tasktime.setText(Tu.runningClock());
+        
+        Thread t = new Thread()
+        {
+            public void run()
+            {
+                    for(;;)
+                    {
+                        if(timeState==true)
+                        {
+                            try
+                            {
+                                sleep(10);
+                                
+                                if(msec>1000)
+                                {
+                                msec=0;
+                                sec++;
+                                }
+                                if(sec>60)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins++;
+                                }
+                                if(mins>60)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins=0;
+                                hours++;
+                                }
+                                
+                                msec++;
+                                a.setText(""+hours);
+                                b.setText(" ; "+mins);
+                                c.setText(" ; "+sec);
+                                //lb_tasktime.setText(":" + sec +mins +hours);
+                                
+                            }
+                            catch(Exception e)
+                            {
+                            
+                            }
+                            
+                        }
+                        
+                    
+                        else
+                        {
+                         break;       
+                        }
+                    }
+            }
+            
+                
+            
+        };
+        
+        t.start();
+    }
+    
+    @FXML
+    private void handel_searchClear(ActionEvent event) {
+        Platform.runLater(new Runnable(){
+        public void run()
+            {
+                    for(;;)
+                    {
+                        if(timeState==true)
+                        {
+                            try
+                            {
+                                sleep(1);
+                                
+                                if(msec>1000)
+                                {
+                                msec=0;
+                                sec++;
+                                }
+                                if(sec>60)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins++;
+                                }
+                                if(mins>60)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins=0;
+                                hours++;
+                                }
+                                
+                                msec++;
+                                a.setText(""+hours);
+                                b.setText(" ; "+mins);
+                                c.setText(" ; "+sec);
+                                //lb_tasktime.setText(":" + sec +mins +hours);
+                                
+                            }
+                            catch(Exception e)
+                            {
+                            
+                            }
+                            
+                        }
+                        
+                    
+                        else
+                        {
+                         break;       
+                        }
+                    }
+            }
+        });
+      /* Platform.runLater(()->{
+           for(;;)
+                    {
+                        if(timeState==true)
+                        {
+                            try
+                            {
+                                sleep(1);
+                                
+                                if(msec>1000)
+                                {
+                                msec=0;
+                                sec++;
+                                }
+                                if(sec>60)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins++;
+                                }
+                                if(mins>60)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins=0;
+                                hours++;
+                                }
+                                
+                                msec++;
+                                
+                                a.setText(""+hours);
+                                b.setText(" ; "+mins);
+                                c.setText(" ; "+sec);
+                                //lb_tasktime.setText(":" + sec +mins +hours);
+                                
+                            }
+                            catch(Exception e)
+                            {
+                            
+                            }
+                            
+                        }
+                        
+                    
+                        else
+                        {
+                         break;       
+                        }
+                    }
+    });*/
+        
+       /*timeState = true;
+        
+       //lb_tasktime.setText(Tu.runningClock());
+        
+        Thread t = new Thread()
+        {
+            public void run()
+            {
+                    for(;;)
+                    {
+                        if(timeState==true)
+                        {
+                            try
+                            {
+                                sleep(1);
+                                
+                                if(msec>1000)
+                                {
+                                msec=0;
+                                sec++;
+                                }
+                                if(sec>60)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins++;
+                                }
+                                if(mins>60)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins=0;
+                                hours++;
+                                }
+                                
+                                msec++;
+                                
+                                a.setText(""+hours);
+                                b.setText(" ; "+mins);
+                                c.setText(" ; "+sec);
+                                //lb_tasktime.setText(":" + sec +mins +hours);
+                                
+                            }
+                            catch(Exception e)
+                            {
+                            
+                            }
+                            
+                        }
+                        
+                    
+                        else
+                        {
+                         break;       
+                        }
+                    }
+            }
+            
+                
+            
+        };
+        
+        t.start();*/
+    }
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     

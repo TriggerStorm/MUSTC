@@ -244,7 +244,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <JFXButton layoutX="183.0" layoutY="70.0" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: lightGrey;" text="&lt;" AnchorPane.leftAnchor="183.0" AnchorPane.topAnchor="70.0" />
+      <JFXButton fx:id="bn_searchClear" layoutX="183.0" layoutY="70.0" onAction="#handel_searchClear" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: lightGrey;" text="&lt;" AnchorPane.leftAnchor="183.0" AnchorPane.topAnchor="70.0" />
       <ToggleButton fx:id="tb_smallview_billable" layoutX="177.0" layoutY="35.0" mnemonicParsing="false" onAction="#handle_small_billable" text="\$" textFill="#1dbf28" AnchorPane.leftAnchor="177.0" AnchorPane.topAnchor="35.0" />
       <FlowPane fx:id="fp_last3task" layoutX="18.0" layoutY="109.0" prefHeight="228.0" prefWidth="194.0">
          <children>
@@ -316,5 +316,8 @@
             </StackPane>
          </children>
       </FlowPane>
+      <Label fx:id="a" layoutX="149.0" layoutY="348.0" text="Label" />
+      <Label fx:id="b" layoutX="182.0" layoutY="348.0" text="Label" />
+      <Label fx:id="c" layoutX="212.0" layoutY="348.0" text="Label" />
    </children>
 </AnchorPane>

@@ -14,7 +14,13 @@ import java.time.format.DateTimeFormatter;
  */
 public class TimeUtilities {
     
- 
+ static int msec = 0;
+    static int sec = 0;
+    static int mins = 0;
+    static int hours = 0;
+    
+    boolean timeState = true;
+    
     public String localDateTimeToString(LocalDateTime LDT) {
     // Converts a formatted LocalDateTime to string of format "yyyy-MM-dd HH:mm:ss"
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -32,6 +38,71 @@ public class TimeUtilities {
         LocalDateTime LDT = LocalDateTime.parse(sqlSTR, formatter);
         return LDT;
     }
+    
+    public String runningClock(){
+    timeState = true;
+        
+        Thread t = new Thread()
+        {
+            public void run()
+            {
+                    for(;;)
+                    {
+                        if(timeState==true)
+                        {
+                            try
+                            {
+                                sleep(1);
+                                
+                                if(msec>1000)
+                                {
+                                msec=0;
+                                sec++;
+                                }
+                                if(sec>60)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins++;
+                                }
+                                if(mins>60)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins=0;
+                                hours++;
+                                }
+                                
+                                msec++;
+                                
+                                
+                                
+                            }
+                            catch(Exception e)
+                            {
+                            
+                            }
+                            
+                        }
+                        
+                    
+                        else
+                        {
+                         break;       
+                        }
+                    }
+            }
+            
+                
+            
+        };
+        
+        t.start();
+     return (" " +hours + mins + sec);
+    }
+
+    
+    
     
     
     
