@@ -137,8 +137,6 @@ public class AdminViewController implements Initializable {
     @FXML
     private Tab tab_stat;
     @FXML
-    private BarChart<?, ?> stat_graf;
-    @FXML
     private JFXComboBox<?> cb_stat_project;
     @FXML
     private JFXComboBox<?> cb_stat_task;
@@ -201,10 +199,6 @@ public class AdminViewController implements Initializable {
     @FXML
     private JFXDatePicker dp_pj_to;
     @FXML
-    private Label lb_stat_priceperhour;
-    @FXML
-    private Label lb_stat_totalprice;
-    @FXML
     private JFXComboBox<?> cb_stat_clint;
     @FXML
     private JFXComboBox<?> cb_stat_dev;
@@ -232,7 +226,6 @@ public class AdminViewController implements Initializable {
     private JFXButton bn_user_eddit;
     @FXML
     private JFXButton bn_user_delete;
-    @FXML
     private ScrollPane Sp_last3;
     
     
@@ -267,6 +260,7 @@ public class AdminViewController implements Initializable {
     
     boolean bb = true;
     boolean bbm = true;
+    boolean onTop = false;
     
     Task taskToedit;
     Project projectToedit;
@@ -308,6 +302,24 @@ public class AdminViewController implements Initializable {
     private Label lb_session_name;
     @FXML
     private Label lb_session_dev;
+    @FXML
+    private TableView<?> Tbv_pj1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_name1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_clint1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_contact1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_nroftask1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_projectrate1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_Billable1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_UnBillable1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_totalprice1;
     
     
     
@@ -367,9 +379,11 @@ public class AdminViewController implements Initializable {
         cb_user_admin.setItems(adminModel.getAdmin());
         
         lb_loginuser.setText(liu.getName());
+        
     }    
 
-    
+   
+       
     
     public void sizeExpantion(){
         
@@ -382,7 +396,7 @@ public class AdminViewController implements Initializable {
         stage.setMinHeight(488);
         stage.setMinWidth(1044);
         MaxWidth = 1044;
-        Sp_last3.setVisible(true);
+        fp_last3task.setVisible(true);
             min = true;
         
         }
@@ -394,7 +408,7 @@ public class AdminViewController implements Initializable {
                 stage.setMinHeight(488);
                 stage.setMinWidth(1044);
                 MaxWidth = 1044;
-                Sp_last3.setVisible(true);
+                fp_last3task.setVisible(true);
                 min = true;
             }
             else{
@@ -404,7 +418,7 @@ public class AdminViewController implements Initializable {
                 stage.setMinHeight(488);
                 stage.setMinWidth(260);
                 MaxWidth = 260;
-                Sp_last3.setVisible(true);
+                fp_last3task.setVisible(true);
                 min = true;
             }
         }
@@ -413,7 +427,7 @@ public class AdminViewController implements Initializable {
     public void ToggelSize(){
         
         if(min == false){    
-            Sp_last3.setVisible(true);
+            fp_last3task.setVisible(true);
             min = true;
            
                 System.out.println("true");
@@ -425,7 +439,7 @@ public class AdminViewController implements Initializable {
                 MaxWidth = 260;
             }
         else{
-            Sp_last3.setVisible(false);
+            fp_last3task.setVisible(false);
             min = false;
             
             System.out.println("false");
@@ -513,6 +527,10 @@ public class AdminViewController implements Initializable {
     
     public void addTask(){  //  COMMENTED OUT FOR NOW
        adminModel.addNewTaskToDB(tf_newtask.getText(),cb_project.getSelectionModel().getSelectedItem().getProjectID(), bbm);
+       /*selectTask.setTaskName(tf_newtask.getText());
+       selectTask.setProjectName(cb_project.getSelectionModel().toString());*/
+       tb_project.setText(cb_project.getSelectionModel().getSelectedItem().toString());
+       lb_task.setText(tf_newtask.getText().toString());
     }
     
     @FXML
@@ -884,10 +902,25 @@ public class AdminViewController implements Initializable {
 
     @FXML
     private void handel_onTop(ActionEvent event) {
+        
+        if(onTop == false){
         Stage stage = (Stage) bn_settings.getScene().getWindow();
         stage.setAlwaysOnTop(true);
-        //System.out.println((liu.getName()));
+        onTop = true;}
+        else{
+        Stage stage = (Stage) bn_settings.getScene().getWindow();
+        stage.setAlwaysOnTop(false);
+        onTop = false;        
+        }
         
+    }
+
+    @FXML
+    private void handel_startDP(ActionEvent event) {
+    }
+
+    @FXML
+    private void handel_stopDP(ActionEvent event) {
     }
 
     
