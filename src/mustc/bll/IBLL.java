@@ -24,6 +24,7 @@ public interface IBLL {
     public Client addNewClientToDB(String clientName, String logoImgLocation, String email, float standardRate);
     public Client getClient(int clientID);
     public List<Client> getAllClients();
+    public List<Client> getAllClientsIDsAndNames();  //  For Report selector
     public Client editClient (Client editedClient,String clientName,float standardRate,String logoImgLocation, String email);
     public void removeClientFromDB(Client clientToDelete);
      
@@ -47,6 +48,7 @@ public interface IBLL {
 //    public List<Task> getAllUsersTasks(); // not working yet    
     public Task getTaskForAdmin(int taskID);
     public List<Task> getAllTasksForAdmin();
+    public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID);    //  For Report selector
     public Task editTask (Task editedTask, String taskName, int associatedProjectID, boolean isBillable);
     public void removeTaskFromDB(Task taskToDelete);
     public List<Task> getUsersThreeRecentTasks(User loggedInUser);
@@ -66,9 +68,11 @@ public interface IBLL {
     public User addNewUserToDB(String userName, String email, String password, float salary, String status); 
     public User getUser(int userID);
     public List<User> getAllUsers();
+    public List<User> getAllUsersIDsAndName();    //  For Report selector
     public User editUser (User userToEdit, String userName, String email, String password, Float salary, String status); 
     public void removeUserFromDB(User userToDelete);
     public int checkUserLogin(String loggedInUserEmail, String password);
+    
     
  // TimeUtilites (BLL)
     public String localDateTimeToString(LocalDateTime LDT);

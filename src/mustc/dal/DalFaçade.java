@@ -23,6 +23,7 @@ public interface DalFaçade {
     public Client addNewClientToDB(String clientName, String logoImgLocation, String email, float standardRate);
     public Client getClient(int clientID);
     public List<Client> getAllClients();
+    public List<Client> getAllClientsIDsAndNames();  //  For Report selector
     public Client editClient (Client editedClient,String clientName,float standardRate,String logoImgLocation, String email);
     public void removeClientFromDB(Client clientToDelete);
      
@@ -33,8 +34,8 @@ public interface DalFaçade {
     public List<Project> getAllProjectsForUser();
     public Project getProjectForAdmin(int projectID);
     public List<Project> getAllProjectsForAdmin();
-    public List<Project> getAllProjectsIDsAndNames();
-    public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID);
+    public List<Project> getAllProjectsIDsAndNames();  //  For GUI
+    public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID);  //  For Report selector
     public Project editProject (Project editedProject, String projectName, /*int associatedClientID,*/ int phoneNr, float projectRate, int allocatedHours, boolean isClosed);
     public void removeProjectFromDB(Project projectToDelete);
 
@@ -46,6 +47,7 @@ public interface DalFaçade {
 //    public List<Task> getAllUsersTasks(); // not working yet    
     public Task getTaskForAdmin(int taskID);
     public List<Task> getAllTasksForAdmin();
+    public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID);    //  For Report selector
     public Task editTask (Task editedTask, String taskName , int associatedProjectID, boolean isBillable);
     public void removeTaskFromDB(Task taskToDelete);
     public List<Task> getUsersThreeRecentTasks(User loggedInUser);
@@ -65,6 +67,7 @@ public interface DalFaçade {
     public User addNewUserToDB(String userName, String email, String password, float salary, String status); 
     public User getUser(int userID);
     public List<User> getAllUsers();
+    public List<User> getAllUsersIDsAndName();    //  For Report selector
     public User editUser (User userToEdit, String userName, String email, String password, Float salary, String status); 
     public void removeUserFromDB(User userToDelete);
     public int checkUserLogin(String loggedInUserEmail, String password);

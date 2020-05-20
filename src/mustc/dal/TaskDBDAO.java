@@ -186,7 +186,6 @@ public class TaskDBDAO {
     
     public List<Task> getAllTasksOfAProject(int projectID) throws SQLException {
         List<Task> allTasksOfAProject = new ArrayList<>();
-    //    double totalBillableProjectMinutes = 0;
         try(Connection con = dbc.getConnection()){
             String sql = "SELECT * FROM Tasks WHERE associatedProject = '" + projectID + "'";
             PreparedStatement pstmt = con.prepareStatement(sql);   
@@ -214,7 +213,33 @@ public class TaskDBDAO {
         return allTasksOfAProject;
     }
     
-     
+    
+    public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID) throws SQLException {
+        List<Task> allTaskIDsAndNamesOfAProject = new ArrayList<>();
+        String sql;
+        if(projectID == -1) { 
+            sql = "SELECT id, name FROM Tasks";
+                    allTaskIDsAndNamesOfAProject.add(new Task(-1, "All Tasks", -1));// -1 used to determine the use of the Report constructor
+        } else {
+            sql = "SELECT id, name FROM Tasks WHERE associatedProject = '" + projectID + "'";
+                    allTaskIDsAndNamesOfAProject.add(new Task(-2, "All Project Tasks", -1));// -1 used to determine the use of the Report constructor
+        }
+        try(Connection con = dbc.getConnection()){
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                int taskID = rs.getInt("id");
+                String taskName = rs.getString("name");
+               Task taskOfAProject = new Task(taskID, taskName, -1); // -1 used to determine the use of the Report constructor
+                allTaskIDsAndNamesOfAProject.add(taskOfAProject);
+            }    
+        }
+        return allTaskIDsAndNamesOfAProject;
+    } 
+    
+    
     public int[] getTotalMinutesOfAProject(int projectID) throws SQLException {
         int[] totalProjectMinutes = new int[2];
         totalProjectMinutes[0] = 0;

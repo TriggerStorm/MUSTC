@@ -107,7 +107,27 @@ public class ClientDBDAO {
         return allClients;
     }
     
-     
+        
+    public List<Client> getAllClientsIDsAndNames() throws SQLException {
+    //  Returns all Clients Id's and Names for Reoprt Selection 
+        List<Client> allClients = new ArrayList<>();
+        allClients.add(new Client(-1, "All Clients"));
+        try(Connection con = dbc.getConnection()){
+            String sql = "SELECT id, name FROM Clients";
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                int clientID =  rs.getInt("id");
+                String clientName = rs.getString("name");
+                allClients.add(new Client(clientID, clientName));
+            }    
+        }
+        return allClients;
+    }
+    
+        
     private int getNoOfProjectsOfAClient(int clientID) throws SQLException {
         int noOfProjectsOfAClient = 0;
         try(Connection con = dbc.getConnection()){

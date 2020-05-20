@@ -116,6 +116,44 @@ public class UserDBDAO {
         return allUsers;
     }   
  
+     
+    public List<User> getAllUsersIDsAndName() throws SQLException {
+        //  Returns a User data object given a User id
+        List<User> allUsersIDsAndName = new ArrayList<>();
+        allUsersIDsAndName.add(new User(-1, "All Users"));
+        String userName = "mock";  //  Never used
+        String sql = "SELECT id, name FROM Users ";
+        try(Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                int userID = rs.getInt("id");
+                userName = rs.getString("name");
+                allUsersIDsAndName.add(new User(userID, userName));
+            }    
+        }
+        return allUsersIDsAndName;
+    }
+    
+    
+    public String getUserName(int userID) throws SQLException {
+        //  Returns a User data object given a User id
+        String userName = "mock";
+        String sql = "SELECT name FROM Users WHERE id = '" + userID + "'";  //  userName, email, password, salary, isAdmin 
+        try(Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                userName = rs.getString("name");
+            }    
+        }
+        return userName;
+    }
+    
     
     public User editUser (User editedUser, String userName, String email, String password, Float salary, String status) { 
     //  Edits a user in the User table of the database given the users new details.  
@@ -161,22 +199,7 @@ public class UserDBDAO {
         }
     }
     
-    public String getUserName(int userID) throws SQLException {
-        //  Returns a User data object given a User id
-        String userName = "mock";
-        String sql = "SELECT name FROM Users WHERE id = '" + userID + "'";  //  userName, email, password, salary, isAdmin 
-        try(Connection con = dbc.getConnection()) {
-            PreparedStatement pstmt = con.prepareStatement(sql);   
-            pstmt.execute();    
-            ResultSet rs = pstmt.executeQuery();
-            while(rs.next()) //While you have something in the results
-            {
-                userName = rs.getString("name");
-            }    
-        }
-        return userName;
-    }
-   
+    
     public int checkUserLogin(String loggedInUserEmail, String password) throws SQLException { 
     //  Confirms the validity of a user given their email and password. Returns a int value denoting their user type: 0 = invalid user, 1 = admin, 2 = dev
         LoggedInUser tempLogin = null;

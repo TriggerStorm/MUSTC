@@ -43,6 +43,11 @@ public class User {
     }
 
     
+// Report selection constructor 
+    public User(int userID, String userName) {
+        this.userID = userID;
+        this.userName = userName;
+    }
 
     
     public int getUserID() {

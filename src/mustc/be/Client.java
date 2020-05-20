@@ -31,7 +31,7 @@ public class Client {
         this.noOfProjects = noOfProjects;
     }
 
-    // GUI constructor1  
+// GUI constructor1  
     public Client(int clientID, String clientName, String email, float standardRate, int totalHours, int noOfProjects) {
         this.clientID = clientID;
         this.clientName = clientName;
@@ -41,6 +41,13 @@ public class Client {
         this.noOfProjects = noOfProjects;
     }
 
+// Report selection constructor  
+    public Client(int clientID, String clientName) {
+        this.clientID = clientID;
+        this.clientName = clientName;
+    }
+    
+    
     @Override
     public String toString() {
         return clientName;

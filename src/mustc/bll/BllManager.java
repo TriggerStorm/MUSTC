@@ -51,6 +51,12 @@ public class BllManager implements IBLL {
 
     
     @Override
+    public List<Client> getAllClientsIDsAndNames() {
+        return dalManager.getAllClientsIDsAndNames();
+    }
+
+    
+    @Override
     public Client editClient(Client editedClient, String clientName, float standardRate, String logoImgLocation, String email) {
         return dalManager.editClient(editedClient, clientName, standardRate, logoImgLocation, email);
     }
@@ -161,6 +167,12 @@ public class BllManager implements IBLL {
        
 
     @Override
+    public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID) {
+        return dalManager.getAllTaskIDsAndNamesOfAProject(projectID);
+    }
+
+    
+    @Override
     public Task editTask(Task editedTask, String taskName, int associatedProjectID, boolean isBillable) {
         return dalManager.editTask(editedTask, taskName, associatedProjectID, isBillable);
     }
@@ -235,7 +247,12 @@ public class BllManager implements IBLL {
     public List<User> getAllUsers() {
         return dalManager.getAllUsers();
     }
-
+    
+    @Override
+    public List<User> getAllUsersIDsAndName() {
+        return dalManager.getAllUsersIDsAndName();
+    }
+    
     @Override
     public User editUser(User userToEdit, String userName, String email, String password, Float salary, String status) {
         return dalManager.editUser(userToEdit, userName, email, password, salary, status);

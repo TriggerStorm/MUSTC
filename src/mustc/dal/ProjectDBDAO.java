@@ -221,8 +221,14 @@ System.out.println(" client Name = " + clientName);
     public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID) throws SQLException {  
 //  Returns a list of Project Id's and Names for GUI Report - Project selection
         List<Project> allProjectIDsAndNamesOfAClient = new ArrayList<>();
-        try(Connection con = dbc.getConnection()){
-            String sql = "SELECT id, name FROM Projects WHERE associatedClient = '" + clientID + "'"; 
+        String sql;
+        if(clientID == -1) { 
+            sql = "SELECT id, name FROM Projects";
+            allProjectIDsAndNamesOfAClient.add(new Project(-1, "All Projects"));
+        } else {
+            sql = "SELECT id, name FROM Projects WHERE associatedClient = '" + clientID + "'"; 
+        }
+try(Connection con = dbc.getConnection()){
             PreparedStatement pstmt = con.prepareStatement(sql);   
             pstmt.execute();
             ResultSet rs = pstmt.executeQuery();

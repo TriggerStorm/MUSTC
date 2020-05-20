@@ -85,7 +85,7 @@ public class Project {
     }
     
     
-//  getAllProjectsIDsAndNames constructor for ProjectDBDAO
+//  getAllProjectsIDsAndNames constructor for ProjectDBDAO and Report selection
     public Project(int projectID, String projectName) {
         this.projectID = projectID;
         this.projectName = projectName;

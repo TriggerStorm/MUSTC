@@ -64,6 +64,12 @@ public class Task {
         this.developers = developers; 
     }
 
+// Report selection constructor (NB associatedProjectID only used as constructor with (int, String) used below. 
+    public Task(int taskID, String taskName, int associatedProjectID) {
+        this.taskID = taskID;
+        this.taskName = taskName;
+        this.associatedProjectID = associatedProjectID;
+    }
     
     public Task(String taskName, int totalTaskMinutes ){
         this.taskName = taskName;
@@ -71,17 +77,14 @@ public class Task {
         
     }
 
-    public Task(int totalTaskMinutes, String developers ){
+//  Constructor used to return totalTaskMinutes and developers from getAllSessions method
+    public Task(int totalTaskMinutes, String developers ){  
         this.totalTaskMinutes = totalTaskMinutes;
         this.developers = developers; 
 
     }
     
- /*   
-    Task() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-*/    
+  
     @Override
     public String toString() {
         return  taskName;// + taskDuration ;

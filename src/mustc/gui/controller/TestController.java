@@ -17,9 +17,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import mustc.be.Client;
 import mustc.be.Project;
 import mustc.be.Session;
 import mustc.be.Task;
+import mustc.be.User;
 import mustc.bll.BllManager;
 import mustc.dal.ClientDBDAO;
 import mustc.dal.ProjectDBDAO;
@@ -59,31 +61,61 @@ public class TestController implements Initializable {
      
      System.out.println("");
         System.out.println("test start");
-     float aHours = 350;
-  
-  //   int duration = sessionDBDao.returnTotalTaskMinutesAndDevelopers(3);  //  TEST
-   //      System.out.println("test duration" + duration);
-  
-    
- 
- 
- 
- //int[] results = taskDBDao.getTotalMinutesOfAProject(2);
-//System.out.println("PROJECT2: Unbillable" + results[0] + "   Billable: " + results[1]);               
+    float aHours = 350;
+    float standardRate = 799;
 
+  
+ 
+
+//  CLIENT
+
+      
+ //       Client ctest = clientDBDao.addNewClientToDB("smurf co", "imageplace", "a@dfs.cc", standardRate);
+ //      Client ctest = clientDBDao.getClient(9);
+ //      clientDBDao.deleteClient( clientToDelete);
+  //     Client ctest = clientDBDao.addNewClientToDB("test", 666, "imageloc", "tset@test.com");
+ 
+ //   List<Client> allClients = clientDBDao.getAllClientsIDsAndNames();
+ /*       for (int i = 0; i < allClients.size(); i++) {
+            Client test = allClients.get(i);
+            
+  System.out.println("");
+       System.out.println("ClientID: " +test.getClientId() + "   Name: " + test.getClientName());
+        }
+  /*  List<Client> allClients = clientDBDao.getAllClients();
+        for (int i = 0; i < allClients.size(); i++) {
+            Client test = allClients.get(i);
+            
+  System.out.println("");
+       System.out.println(test.getClientId());
+        System.out.println(test.getClientName());
+        System.out.println(test.getImgLocation());
+       System.out.println(test.getEmail());
+        System.out.println(test.getStandardRate());
+        System.out.println(test.getTotalHours());        
+        System.out.println(test.getNoOfProjects());
+        System.out.println("");
+        }
+*/
+ 
+ 
+ 
+ 
+ 
+ 
 
 //  PROJECT
 
     
-    List<Project> allProjects = bllManager.getAllProjectIDsAndNamesOfAClient(9);  
+ /*   List<Project> allProjects = bllManager.getAllProjectIDsAndNamesOfAClient(-1);  
   for (int i = 0; i < allProjects.size(); i++) {
             Project test = allProjects.get(i);
             
  System.out.println("");
-        System.out.println("PRojectID = " + test.getProjectID() + "   Name: " + test.getProjectName());
+        System.out.println("ProjectID = " + test.getProjectID() + "   Name: " + test.getProjectName());
         System.out.println("");
         }
-
+*/
   //     Project test = projectDBDao.getProjectForAdmin(2);
  
 //       Project test = projectDBDao.editProject(testp, "bob's job", 55555555, aHours, 1200, true);
@@ -138,19 +170,29 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
  
  // TASK
  
- /*     List<Task> allTasks = taskDBDao.getAllTasksForUser();
-        for (int i = 0; i < allTasks.size(); i++) {
+ 
+ 
+ //int[] results = taskDBDao.getTotalMinutesOfAProject(2);
+//System.out.println("PROJECT2: Unbillable" + results[0] + "   Billable: " + results[1]);               
+
+ //     List<Task> allTasks = taskDBDao.getAllTasksForUser();
+ /*      List<Task> allTasks = bllManager.getAllTaskIDsAndNamesOfAProject(2);
+       for (int i = 0; i < allTasks.size(); i++) {
             Task test = allTasks.get(i);
- */   
+    
+        System.out.println("");
+        System.out.println("ID = " + test.getTaskID() + "   Name: " + test.getTaskName());
+       }
+       
  /*   User testUser = userDBDao.getUser(14);
       List<Task> recentTask = taskDBDao.getUsersThreeRecentTasks(testUser);
  */     
  //    Task test = taskDBDao.addNewTaskToDB("testname", "stuff", 4);
-     Task test = taskDBDao.getTaskForUser(8);
+ //    Task test = taskDBDao.getTaskForUser(8);
  //       Task test = taskDBDao.editTask(testt, "newTaskTest", 5, true);
  //       taskDBDao.removeTaskFromDB(test);
  
-        System.out.println("");
+ /*       System.out.println("");
         System.out.println("ID = " + test.getTaskID());
         System.out.println(test.getTaskName());
         System.out.println(test.getAssociatedProjectID());
@@ -195,7 +237,10 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
  //     int usersTaskMinutes = sessionDBDao.calculateUsersTaskMinutes(1, 6);
 //System.out.println(" USERs TASK MINUTES 2 = " + usersTaskMinutes);
       
-
+//   int duration = sessionDBDao.returnTotalTaskMinutesAndDevelopers(3);  //  TEST
+   //      System.out.println("test duration" + duration);
+  
+   
 //     Session test = sessionDBDao.addNewSessionToDB(15, 10, "2020-04-20 13:30:00", "2020-04-20 13:40:00");
   //      Session test = sessionDBDao.getSession(19);
  //       Session test = sessionDBDao.editSession(tests, 16, 10, "2020-04-20 16:36:00.0", "2020-04-20 17:58:00.0");
@@ -218,6 +263,19 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
          } 
  */      
        
+ 
+ 
+ 
+ 
+ //  USER
+ 
+         List<User> allUsers = userDBDao.getAllUsersIDsAndName();
+        for (int i = 0; i < allUsers.size(); i++) {
+            User test = allUsers.get(i); 
+        
+       System.out.println("");
+       System.out.println("User ID = " + test.getUserID() + "   Name: " + test.getUserName());
+        }
  //      User test = userDBDao.addNewUserToDB("Test", "test@test.com", "test", 666, true);
  //      User test = userDBDao.getUser(13);
  //    User test = userDBDao.editUser( testu,  "edited",  "editeda",  "editedb",  1035f,  false);
@@ -237,27 +295,8 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
         }
  *)       
         
-        
-        float standardRate = 799;
- //       Client ctest = clientDBDao.addNewClientToDB("smurf co", "imageplace", "a@dfs.cc", standardRate);
- //      Client ctest = clientDBDao.getClient(9);
- //      clientDBDao.deleteClient( clientToDelete);
-  //     Client ctest = clientDBDao.addNewClientToDB("test", 666, "imageloc", "tset@test.com");
- /*  List<Client> allClients = clientDBDao.getAllClients();
-        for (int i = 0; i < allClients.size(); i++) {
-            Client test = allClients.get(i);
-            
-  System.out.println("");
-       System.out.println(test.getClientId());
-        System.out.println(test.getClientName());
-        System.out.println(test.getImgLocation());
-       System.out.println(test.getEmail());
-        System.out.println(test.getStandardRate());
-        System.out.println(test.getTotalHours());        
-        System.out.println(test.getNoOfProjects());
-        System.out.println("");
-        }
-*/
+  
+ 
  
  // CONVERTERS
  
@@ -299,7 +338,6 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
   
   
           System.out.println("test finish");
-    }
     
     
     
@@ -349,7 +387,7 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
   
   */  
     
-    
+    }
     
     
     

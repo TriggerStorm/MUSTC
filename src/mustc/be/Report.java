@@ -13,8 +13,8 @@ public class Report {
     private String clientName;
     private String projectName;
     private String taskName;
-    private String startTime;
-    private String finishTime;
+    private String startTime;   // LDT?
+    private String finishTime;  // LDT?
     private String developers;  // the person whom the Session is assigned to.    
     private int totalBillableMinutes;       // for Admin
     private int totalPrice;             // for Admin
