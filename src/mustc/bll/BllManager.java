@@ -7,6 +7,7 @@ package mustc.bll;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import javafx.collections.ObservableList;
 import mustc.be.Client;
 import mustc.be.Project;
 import mustc.be.Session;
@@ -21,10 +22,12 @@ import mustc.bll.TimeUtilities;
 public class BllManager implements IBLL {
     private DalManager dalManager;
     private TimeUtilities timeUtilities;
+    private SearchUtilities searchUtil;
     
     public BllManager() {
         dalManager = new DalManager();
         timeUtilities = new TimeUtilities();
+        searchUtil = new SearchUtilities();
     }
     
     
@@ -257,7 +260,30 @@ public class BllManager implements IBLL {
     public LocalDateTime stringToLocalDateTime(String dateString) {
         return timeUtilities.stringToLocalDateTime(dateString);
     }
-
-   
+    
+   //search utilites (BLL)
+    @Override
+    public ObservableList<Task> searchTask(ObservableList<Task> allTask, String text) {
+        return searchUtil.searchTask(allTask, text);
+    }
+    
+    @Override
+    public ObservableList<Client> searchClient(ObservableList<Client> allClient, String text){
+        return searchUtil.searchClient(allClient, text);
+    }
+    public ObservableList<Task> searchTaskpj(ObservableList<Task> allTask, String text){
+        return searchUtil.searchTask(allTask, text);
+    }
+    public ObservableList<Project> searchProject(ObservableList<Project> allProject, String text){
+        return searchUtil.searchProject(allProject, text);
+    }
+    
+     public ObservableList<Session> searchSession(ObservableList<Session> allSession, String text){
+        return searchUtil.searchSession(allSession, text);
+    }
+     
+     public ObservableList<User> searchUser(ObservableList<User> allUser, String text){
+        return searchUtil.searchUser(allUser, text);
+    }
     
 }

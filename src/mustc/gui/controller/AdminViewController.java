@@ -23,7 +23,9 @@ import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import static javafx.collections.FXCollections.observableList;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -43,6 +45,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -58,6 +61,7 @@ import mustc.bll.TimeUtilities;
 import mustc.dal.DalManager;
 import mustc.dal.ProjectDBDAO;
 import mustc.gui.model.AdminModel;
+import mustc.be.Task;
 
 /**
  * FXML Controller class
@@ -254,11 +258,13 @@ public class AdminViewController implements Initializable, Runnable {
     private LoggedInUser liu;
     private AdminModel adminModel;
     private TimeUtilities Tu;
+    private Task T;
     int MaxWidth;
     boolean min;
     boolean isStarted;
     String startTime;
     Task selectTask;
+    String currentTab = "client";
     
     static int msec = 0;
     static int sec = 0;
@@ -337,6 +343,8 @@ public class AdminViewController implements Initializable, Runnable {
     private Label b;
     @FXML
     private Label c;
+    @FXML
+    private JFXTextField tap_search;
     
     
     
@@ -355,8 +363,10 @@ public class AdminViewController implements Initializable, Runnable {
         
         
         Tu = new TimeUtilities();
-        adminModel = new AdminModel();
-        /*setClint();
+        adminModel = AdminModel.getInstance();
+        
+        currentTab = "client";
+        setClint();
         setProject();
         setTask();
         setUser();
@@ -388,18 +398,35 @@ public class AdminViewController implements Initializable, Runnable {
         img_task1.setImage(image1);
         img_task2.setImage(image2);
         img_task3.setImage(image3);*/
-        /*
+        
         
         
         cb_pj_clint.setItems(adminModel.getAllClient());
         cb_task_project.setItems(adminModel.getAllProjectsIDsAndNames());
         cb_user_admin.setItems(adminModel.getAdmin());
         
-        lb_loginuser.setText(liu.getName());*/
+        lb_loginuser.setText(liu.getName());
         
     }    
 
-   
+   /* public void FT(){
+        FilteredList<Task> FT = new FilteredList<>(adminModel.oListTask(), b -> true);
+        tap_search.textProperty().addListener(observable, oldValue, newValue)-> {
+        tap_search.setPredicate(Task ->{
+            
+            if (newValue == null || newValue.isEmpty()){
+                return true;
+            }
+            
+            String lowerCaseFilter = newValue.toLowerCase();
+            
+            if ()
+        }
+    }
+    }*/
+        
+    
+    
        
     
     public void sizeExpantion(){
@@ -563,65 +590,45 @@ public class AdminViewController implements Initializable, Runnable {
 
     @FXML
     private void handle_tap_clint(Event event) {
-        /*Col_clint_name.setCellValueFactory(new PropertyValueFactory<Client, String>("clientName"));
-        Col_clint_email.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
-        Col_clint_nrofpj.setCellValueFactory(new PropertyValueFactory<Client, String>("noOfProjects"));
-        Col_clint_$perhour.setCellValueFactory(new PropertyValueFactory<Client, String>("standardRate"));
-        Col_clint_totalhours.setCellValueFactory(new PropertyValueFactory<Client, String>("totalHours"));
-        // Col_clint_totalprice.setCellValueFactory(new PropertyValueFactory<Client, String>("totalPrice"));
-        Tbv_Clint.setItems(adminModel.getAllClient());*/
+        
+        tap_search.clear();
+        if(currentTab != "client" ){
+        Tbv_Clint.setItems(adminModel.oListClient());}
+        currentTab ="client";
     }
 
     @FXML
     private void handle_tap_project(Event event) {
-        /*
-        Col_pj_name.setCellValueFactory(new PropertyValueFactory<Project, String>("projectName"));
-        Col_pj_clint.setCellValueFactory(new PropertyValueFactory<Project, String>("clientName"));
-        Col_pj_contact.setCellValueFactory(new PropertyValueFactory<Project, String>("phoneNr"));
-        Col_pj_nroftask.setCellValueFactory(new PropertyValueFactory<Project, String>("noOfTasks"));
-        Col_pj_totalhours.setCellValueFactory(new PropertyValueFactory<Project, String>("totalHours"));
-       // Col_pj_totalprice.setCellValueFactory(new PropertyValueFactory<Project, String>("totalPrice"));
-        //.setCellValueFactory(new PropertyValueFactory<Project, String>("projectRate")); // ad this
-                Tbv_pj.setItems(adminModel.getAllProject());*/
-                
+       currentTab ="project";    
+       tap_search.clear();
+       Tbv_pj.setItems(adminModel.oListProject());
     }
 
     @FXML
     private void handle_tap_task(Event event) {
-       /*
-        Col_task_taskname.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
-        Col_task_project.setCellValueFactory(new PropertyValueFactory<Task, String>("projectName"));
-        Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("developers"));
-        Col_task_$perhour.setCellValueFactory(new PropertyValueFactory<Task, String>("projectRate"));
-        Col_task_totalhours.setCellValueFactory(new PropertyValueFactory<Task, String>("totalTaskHours"));
-        // Col_task_totalprice.setCellValueFactory(new PropertyValueFactory<Task, String>("totalPrice"));
-                 tbv_task.setItems(adminModel.getAllTask());*/
+       currentTab ="task";
+       tap_search.clear();
+       tbv_task.setItems(adminModel.oListTask());
     }
 
     @FXML
     private void handle_tap_stats(Event event) {
+        currentTab ="stats";
+        tap_search.clear();
     }
 
     @FXML
     private void handle_tap_sessions(Event event) {
-        /*
-        col_sesion_taskname.setCellValueFactory(new PropertyValueFactory<Session, String>("taskName"));
-        col_sesion_date.setCellValueFactory(new PropertyValueFactory<Session, String>("date"));
-        col_sesion_start.setCellValueFactory(new PropertyValueFactory<Session, String>("start"));
-        col_sesion_stop.setCellValueFactory(new PropertyValueFactory<Session, String>("stop"));
-        col_sesion_myhours.setCellValueFactory(new PropertyValueFactory<Session, String>("myHours"));
-            tbv_session.setItems(adminModel.getAllSessions());*/
+        currentTab ="sessions";
+        tap_search.clear();
+        tbv_session.setItems(adminModel.oListSession());
     }
 
     @FXML
     private void handle_tap_user(Event event) {
-        /*
-        col_user_name.setCellValueFactory(new PropertyValueFactory<User, String>("userName"));
-        col_user_$perhour.setCellValueFactory(new PropertyValueFactory<User, String>("salary"));
-        col_user_email.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
-        col_user_status.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
-        
-            tbv_user.setItems(adminModel.getAllUser());*/
+        currentTab ="user";
+        tap_search.clear();
+        tbv_user.setItems(adminModel.oListUser());
     }
 
     
@@ -863,6 +870,9 @@ public class AdminViewController implements Initializable, Runnable {
         taskToedit = tbv_task.getSelectionModel().getSelectedItem();
         task_name.setText(taskToedit.getTaskName());
         cb_task_project.setPromptText(taskToedit.getProjectName());
+        selectTask = tbv_task.getSelectionModel().getSelectedItem();
+        lb_task.setText(tbv_task.getSelectionModel().getSelectedItem().getTaskName());
+        tb_project.setText(tbv_task.getSelectionModel().getSelectedItem().getProjectName());
     }
 
     @FXML
@@ -934,6 +944,7 @@ public class AdminViewController implements Initializable, Runnable {
 
     @FXML
     private void handel_startDP(ActionEvent event) {
+        
     }
 
     @FXML
@@ -955,20 +966,21 @@ public class AdminViewController implements Initializable, Runnable {
                         {
                             try
                             {
-                                sleep(10);
-                                
-                                if(msec>1000)
+                                //System.nanoTime(); /// look hire !!!!!!!! 
+                                sleep(1);
+                                //System.currentTimeMillis();
+                                if(msec>500)
                                 {
                                 msec=0;
                                 sec++;
                                 }
-                                if(sec>60)
+                                if(sec>59)
                                 {
                                 msec=0;
                                 sec=0;
                                 mins++;
                                 }
-                                if(mins>60)
+                                if(mins>59)
                                 {
                                 msec=0;
                                 sec=0;
@@ -977,9 +989,13 @@ public class AdminViewController implements Initializable, Runnable {
                                 }
                                 
                                 msec++;
+                                
+                                Platform.runLater(()->{
                                 a.setText(""+hours);
                                 b.setText(" ; "+mins);
                                 c.setText(" ; "+sec);
+                                });
+                                
                                 //lb_tasktime.setText(":" + sec +mins +hours);
                                 
                             }
@@ -1004,180 +1020,55 @@ public class AdminViewController implements Initializable, Runnable {
         
         t.start();
     }
-    
+  
     @FXML
     private void handel_searchClear(ActionEvent event) {
-        Platform.runLater(new Runnable(){
-        public void run()
-            {
-                    for(;;)
-                    {
-                        if(timeState==true)
-                        {
-                            try
-                            {
-                                sleep(1);
-                                
-                                if(msec>1000)
-                                {
-                                msec=0;
-                                sec++;
-                                }
-                                if(sec>60)
-                                {
-                                msec=0;
-                                sec=0;
-                                mins++;
-                                }
-                                if(mins>60)
-                                {
-                                msec=0;
-                                sec=0;
-                                mins=0;
-                                hours++;
-                                }
-                                
-                                msec++;
-                                a.setText(""+hours);
-                                b.setText(" ; "+mins);
-                                c.setText(" ; "+sec);
-                                //lb_tasktime.setText(":" + sec +mins +hours);
-                                
-                            }
-                            catch(Exception e)
-                            {
-                            
-                            }
-                            
-                        }
-                        
-                    
-                        else
-                        {
-                         break;       
-                        }
-                    }
-            }
-        });
-      /* Platform.runLater(()->{
-           for(;;)
-                    {
-                        if(timeState==true)
-                        {
-                            try
-                            {
-                                sleep(1);
-                                
-                                if(msec>1000)
-                                {
-                                msec=0;
-                                sec++;
-                                }
-                                if(sec>60)
-                                {
-                                msec=0;
-                                sec=0;
-                                mins++;
-                                }
-                                if(mins>60)
-                                {
-                                msec=0;
-                                sec=0;
-                                mins=0;
-                                hours++;
-                                }
-                                
-                                msec++;
-                                
-                                a.setText(""+hours);
-                                b.setText(" ; "+mins);
-                                c.setText(" ; "+sec);
-                                //lb_tasktime.setText(":" + sec +mins +hours);
-                                
-                            }
-                            catch(Exception e)
-                            {
-                            
-                            }
-                            
-                        }
-                        
-                    
-                        else
-                        {
-                         break;       
-                        }
-                    }
-    });*/
-        
-       /*timeState = true;
-        
-       //lb_tasktime.setText(Tu.runningClock());
-        
-        Thread t = new Thread()
-        {
-            public void run()
-            {
-                    for(;;)
-                    {
-                        if(timeState==true)
-                        {
-                            try
-                            {
-                                sleep(1);
-                                
-                                if(msec>1000)
-                                {
-                                msec=0;
-                                sec++;
-                                }
-                                if(sec>60)
-                                {
-                                msec=0;
-                                sec=0;
-                                mins++;
-                                }
-                                if(mins>60)
-                                {
-                                msec=0;
-                                sec=0;
-                                mins=0;
-                                hours++;
-                                }
-                                
-                                msec++;
-                                
-                                a.setText(""+hours);
-                                b.setText(" ; "+mins);
-                                c.setText(" ; "+sec);
-                                //lb_tasktime.setText(":" + sec +mins +hours);
-                                
-                            }
-                            catch(Exception e)
-                            {
-                            
-                            }
-                            
-                        }
-                        
-                    
-                        else
-                        {
-                         break;       
-                        }
-                    }
-            }
-            
-                
-            
-        };
-        
-        t.start();*/
+        clock();
+ 
     }
-
+    
     @Override
     public void run() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @FXML
+    private void Search(KeyEvent event) {
+      if(currentTab == "task"){ 
+       ObservableList<Task> taskInSearch;
+       taskInSearch = adminModel.searchTask(adminModel.oListTask(), tap_search.getText());
+       tbv_task.setItems(taskInSearch);}
+       else if(currentTab =="client"){
+       ObservableList<Client> clientInSearch;
+       clientInSearch = adminModel.searchClient(adminModel.oListClient(), tap_search.getText());
+       Tbv_Clint.setItems(clientInSearch);
+       }
+       else if(currentTab =="project"){
+           ObservableList<Project> projectInSearch;
+            projectInSearch = adminModel.searchProject(adminModel.oListProject(), tap_search.getText());
+            Tbv_pj.setItems(projectInSearch);
+       }
+       else if (currentTab =="sessions"){
+       ObservableList<Session> sessionInSearch;
+            sessionInSearch = adminModel.searchSession(adminModel.oListSession(), tap_search.getText());
+            tbv_session.setItems(sessionInSearch);
+       }
+       else if (currentTab =="stats"){
+       
+       }
+       else if (currentTab == "user"){
+         ObservableList<User> userInSearch;
+            userInSearch = adminModel.searchUser(adminModel.oListUser(), tap_search.getText());
+            tbv_user.setItems(userInSearch);
+       }
+  
+       
+    }
+    
+    public void Refresh (){
+        ObservableList<Task> observableList = adminModel.oListTask();
+       tbv_task.setItems(observableList);
+       
     }
 
     

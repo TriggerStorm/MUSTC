@@ -49,6 +49,7 @@
             <Label fx:id="lb_loginuser" text="Martin" />
             <Label prefHeight="17.0" prefWidth="24.0" />
             <JFXButton fx:id="bn_settings" onAction="#handel_onTop" prefHeight="0.0" prefWidth="26.0" text="S" />
+            <JFXTextField fx:id="tap_search" onKeyPressed="#Search" prefHeight="0.0" prefWidth="98.0" promptText="Search" />
          </items>
       </ToolBar>
       <Button fx:id="bn_expandview" layoutX="53.0" layoutY="412.0" mnemonicParsing="false" onAction="#handel_view" prefHeight="25.0" prefWidth="135.0" text="Expand view" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="53.0" />

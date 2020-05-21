@@ -39,7 +39,8 @@ public class TimeUtilities {
         return LDT;
     }
     
-    public String runningClock(){
+    
+   /* public String runningClock(){
     timeState = true;
         
         Thread t = new Thread()
@@ -99,7 +100,7 @@ public class TimeUtilities {
         
         t.start();
      return (" " +hours + mins + sec);
-    }
+    }*/
 
     
     
