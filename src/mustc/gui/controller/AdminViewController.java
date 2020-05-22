@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import static java.lang.Thread.sleep;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -819,6 +820,8 @@ public class AdminViewController implements Initializable, Runnable {
             LocalDateTime LDTnow = LocalDateTime.now();
             
             startTime = adminModel.localDateTimeToString(LDTnow);
+            timeState = true;
+            clock();
             }
                 else{
              isStarted = false;
@@ -829,6 +832,8 @@ public class AdminViewController implements Initializable, Runnable {
              LocalDateTime LDTnow = LocalDateTime.now();
              String StopTime = adminModel.localDateTimeToString(LDTnow);
              adminModel.addNewSessionToDB(lu, selectTask.getTaskID(), startTime, StopTime);
+             timeState = false;
+             
             ;
         }
         
@@ -952,9 +957,7 @@ public class AdminViewController implements Initializable, Runnable {
     }
     
     public void clock(){
-        timeState = true;
         
-       //lb_tasktime.setText(Tu.runningClock());
         
         Thread t = new Thread()
         {
@@ -989,15 +992,15 @@ public class AdminViewController implements Initializable, Runnable {
                                 }
                                 
                                 msec++;
+                                DecimalFormat df = new DecimalFormat("00");
                                 
+                                String fsec = df.format(sec);
+                                String fmin = df.format(mins);
+                                String fhour = df.format(hours);
                                 Platform.runLater(()->{
-                                a.setText(""+hours);
-                                b.setText(" ; "+mins);
-                                c.setText(" ; "+sec);
+               
+                                lb_tasktime.setText(""+ fhour+":" +fmin+":" +fsec);
                                 });
-                                
-                                //lb_tasktime.setText(":" + sec +mins +hours);
-                                
                             }
                             catch(Exception e)
                             {
@@ -1019,11 +1022,14 @@ public class AdminViewController implements Initializable, Runnable {
         };
         
         t.start();
+        
+        
+        
     }
   
     @FXML
     private void handel_searchClear(ActionEvent event) {
-        clock();
+       // clock();
  
     }
     

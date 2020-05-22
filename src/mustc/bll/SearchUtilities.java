@@ -18,6 +18,7 @@ import mustc.be.User;
  */
 public class SearchUtilities {
     
+    // method ida form prior project movecolltion ida for tuder "nedas" https://github.com/Metallist1/MovieAssigment/blob/master/src/mymoviesassigment/bll/util/searchMovie.java
     public ObservableList<Task> searchTask(ObservableList<Task> allTask, String text){
         return allTask.filtered((f) -> f.getTaskName().toLowerCase().startsWith(text.toLowerCase()));   
     }
