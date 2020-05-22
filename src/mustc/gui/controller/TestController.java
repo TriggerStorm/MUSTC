@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import mustc.be.Client;
 import mustc.be.Project;
+import mustc.be.Report;
 import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
@@ -253,19 +254,20 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
  //        List<Session> allUserSessions = bllManager.getAllSessionsOfAUser(loggedInUser);
 //         List<Session> allUserSessions = sessionDBDao.getAllSessions();
 
-LocalDate searchFrom = LocalDate.now().plusYears(1);
+LocalDate searchFrom = LocalDate.now().minusMonths(3);
         System.out.println("searchFrom = " + searchFrom);// timeUtilities.stringToLocalDate("2019-04-20 13:30:00");// 2020-04-18 13:26:59
 LocalDate searchTo = LocalDate.now().minusWeeks(3);//= stringToLocalDate("2021-04-20 13:30:00");
         System.out.println("searchTo = " + searchTo);// timeUtilities.stringToLocalDate("2019-04-20 13:30:00");// 2020-04-18 13:26:59
 
    
-   List<Session> filteredSessions = reportDBDao.compileSessionsForReport(-1, -1, -1, 2, searchFrom, searchTo);//int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo)
+ //  List<Session> filteredSessions = reportDBDao.compileSessionsForReport(-1, -1, -1, 2, searchFrom, searchTo);//int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo)
+ 
     
 
 //List<Session> filteredSessions = reportDBDao.getAllSessionsOfAProject(2);
   //    List<Session> filteredSessions = reportDBDao.getAllSessionsOfAClient(7);
 
-        for (int i = 0; i < filteredSessions.size(); i++) {
+ /*       for (int i = 0; i < filteredSessions.size(); i++) {
             Session test = filteredSessions.get(i);
             
       System.out.println("");
@@ -280,7 +282,7 @@ LocalDate searchTo = LocalDate.now().minusWeeks(3);//= stringToLocalDate("2021-0
         System.out.println("");
          } 
        
-       
+       */
  
  
  
@@ -405,6 +407,27 @@ LocalDate searchTo = LocalDate.now().minusWeeks(3);//= stringToLocalDate("2021-0
   
   */  
     
+ 
+ 
+ 
+ 
+// REPORT
+
+  List<Report> reportList = reportDBDao.generateReport(-1, -1, -1, 2, searchFrom, searchTo);//int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo)
+        for (int i = 0; i < reportList.size(); i++) {
+            Report test = reportList.get(i);
+                 System.out.println("");
+        System.out.println("ClientName:  " + test.getClientName());
+        System.out.println(test.getProjectName());
+         System.out.println(test.getTaskName());
+        System.out.println("LoggedInUser: " + test.getLoggedInUser());
+    //     System.out.println("TaskName = " + test.getStartTime());
+    //    System.out.println("UserName = " + test.getAssociatedUserName());
+      System.out.println(test.getStartTime());
+        System.out.println(test.getFinishTime());
+        System.out.println("");
+         } 
+       
     }
     
     

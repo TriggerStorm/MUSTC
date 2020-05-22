@@ -13,21 +13,23 @@ public class Report {
     private String clientName;
     private String projectName;
     private String taskName;
+    private String loggedInUser;  // the person whom the Session is assigned to.    
     private String startTime;   // LDT?
     private String finishTime;  // LDT?
-    private String developers;  // the person whom the Session is assigned to.    
     private int totalBillableMinutes;       // for Admin
     private int totalPrice;             // for Admin
 
-public Report(String clientName, String projectName, String taskName, String startTime, String finishTime, String developers, int totalBillableMinutes, int totalPrice) {
-    this.clientName = clientName;
-    this.projectName = projectName;
-    this.taskName = taskName;
-    this.startTime = startTime;
-    this.finishTime = finishTime;
-    this.developers = developers;
-    this.startTime = startTime;
-    this.finishTime = finishTime;
+    
+// Full constructor            
+    public Report(String clientName, String projectName, String taskName, String loggedInUser, String startTime, String finishTime, int totalBillableMinutes, int totalPrice) {
+        this.clientName = clientName;
+        this.projectName = projectName;
+        this.taskName = taskName;
+        this.loggedInUser = loggedInUser;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
+        this.totalBillableMinutes = totalBillableMinutes;
+        this.totalPrice = totalPrice;
 }
 
     public String getClientName() {
@@ -53,6 +55,14 @@ public Report(String clientName, String projectName, String taskName, String sta
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
+ 
+    public String getLoggedInUser() {
+        return loggedInUser;
+    }
+
+    public void setLoggedInUser(String loggedInUser) {
+        this.loggedInUser = loggedInUser;
+    }
 
     public String getStartTime() {
         return startTime;
@@ -68,14 +78,6 @@ public Report(String clientName, String projectName, String taskName, String sta
 
     public void setFinishTime(String finishTime) {
         this.finishTime = finishTime;
-    }
-
-    public String getDevelopers() {
-        return developers;
-    }
-
-    public void setDevelopers(String developers) {
-        this.developers = developers;
     }
 
     public int getTotalBillableMinutes() {

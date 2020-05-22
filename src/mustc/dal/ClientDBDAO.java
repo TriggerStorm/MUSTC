@@ -75,7 +75,7 @@ public class ClientDBDAO {
                 String logoImgLocation = rs.getString("logoImgLocation");
                 float standardRate = rs.getFloat("standardRate");
                 String email = rs.getString("email");
-                int totalHours = 232;  // MOCK DATA
+                int totalHours = 232;  // UNNECESSARY??
                 int noOfProjects = getNoOfProjectsOfAClient(clientID);
                 return new Client(clientID,clientName,logoImgLocation,email, standardRate, totalHours, noOfProjects); 
             }    
@@ -109,7 +109,7 @@ public class ClientDBDAO {
     
         
     public List<Client> getAllClientsIDsAndNames() throws SQLException {
-    //  Returns all Clients Id's and Names for Reoprt Selection 
+    //  Returns all Clients Id's and Names for Report Selection 
         List<Client> allClients = new ArrayList<>();
         allClients.add(new Client(-1, "All Clients"));
         try(Connection con = dbc.getConnection()){
@@ -127,7 +127,24 @@ public class ClientDBDAO {
         return allClients;
     }
     
-        
+    
+    public String getClientName(int clientID) throws SQLException {
+    //  Returns a Client Name for a Report 
+        String clientName = "";
+        try(Connection con = dbc.getConnection()){
+            String sql = "SELECT name FROM Clients WHERE id ='" + clientID + "'"; 
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                clientName = rs.getString("name");
+            }    
+        }
+        return clientName;
+    }
+      
+    
     private int getNoOfProjectsOfAClient(int clientID) throws SQLException {
         int noOfProjectsOfAClient = 0;
         try(Connection con = dbc.getConnection()){
@@ -139,8 +156,7 @@ public class ClientDBDAO {
                 noOfProjectsOfAClient ++; 
             }    
         }
-System.out.println("");        
-System.out.println("noOfProjectsOfAClient" );        
+System.out.println("reading Client Information" );        
         return noOfProjectsOfAClient;
     }
      
