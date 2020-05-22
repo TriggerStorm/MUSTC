@@ -25,6 +25,8 @@ import mustc.bll.TimeUtilities;
 public class ReportDBDAO {
     private DBConnection dbc;
     private TimeUtilities timeUtilities;
+    private ClientDBDAO clientDBDao;
+    private ProjectDBDAO projectDBDao;
     private TaskDBDAO taskDBDao;
     private SessionDBDAO sessionDBDao;
 
@@ -32,18 +34,26 @@ public class ReportDBDAO {
     public ReportDBDAO() {
         dbc = new DBConnection();
         timeUtilities = new TimeUtilities();
-        sessionDBDao = new SessionDBDAO();
+        clientDBDao = new ClientDBDAO();
+        projectDBDao = new ProjectDBDAO();
         taskDBDao = new TaskDBDAO();
+        sessionDBDao = new SessionDBDAO();
     }
     
     
-      public List<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) throws SQLException {
+    public List<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) throws SQLException {
         List<Report> reportList = new ArrayList<>();
         List<Session> allReportSessions = compileSessionsForReport(clientID, projectID, taskID, userID, searchFrom, searchTo);
-                Report report = new Report("", "", "", "", "", "", 0, 0);  //String clientName, String projectName, String taskName, String startTime, String finishTime, String developers, int totalBillableMinutes, int totalPrice)();
+            for (int i = 0; i < allReportSessions.size(); i++) {
+                Session session = allReportSessions.get(i);
+                   String clientName = clientDBDao.getClientName(clientID);
+                   String taskName = session.getAssociatedTaskName();
+                   Project project = projectDBDao.getProjectForAdmin(projectID);
+                            
+System.out.println("clientName: " + clientName);
+                Report report = new Report(clientName, "mockPJ", taskName, "mockLIU", "mockSTART", "mockSTOP", 0, 0);  //String clientName, String projectName, String taskName, String startTime, String finishTime, String developers, int totalBillableMinutes, int totalPrice)();
         
-           // TO DO     
-                
+            }                
                 return reportList;
     }
     
@@ -67,7 +77,7 @@ public class ReportDBDAO {
         }
         
         if (!(userID == -1)) {  // if a user has be selected for filtering
-            allValidSessions =  filterSessionListForDeveloper(allValidSessions, userID);
+            allValidSessions =  filterSessionListForUser(allValidSessions, userID);
         }
                     
         allValidSessions = filterSessionListForDatePeriod(allValidSessions, searchFrom, searchTo);
@@ -103,9 +113,8 @@ public class ReportDBDAO {
         }   
         return allSessionsOfAProject;
     }
-         
-        
-        
+            
+    
     public List<Session> getAllSessionsOfAClient(int clientID) throws SQLException {
         List<Session> allSessionsOfAProject = new ArrayList<>();
         List<Session> allSessions = new ArrayList<>();
@@ -133,8 +142,8 @@ public class ReportDBDAO {
         return allSessionsOfAProject;
     }
          
-      
-    private List<Session> filterSessionListForDeveloper(List<Session> allValidSessions, int userID) {
+    
+    private List<Session> filterSessionListForUser(List<Session> allValidSessions, int userID) {
         List<Session> developerFilteredSessionList = new ArrayList<>();
        // developerFilteredSessionList = null;
 System.out.println("UserID = " + userID);            
@@ -166,37 +175,5 @@ System.out.println("currentSession.UserID = " + currentSession.getAssociatedUser
     }
     
     
-    
-    
-  
-    
-   
-//  CONVERTERS
-
-  
-    
-    
-    //EXPERIMENTAL    
-    public String compileSQLstatement(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) throws SQLException {
-        List<Session> allValidSessions;
-        String sql = "";
-        if (taskID == -2) {
-            sql = "SELECT * FROM Sessions INNER JOIN Tasks ON Sessions.AssociatedTask = tasks.id "// WHERE tasks.id "= '" + taskID + "'" 
-          +"INNER JOIN Projects ON Tasks.AssociatedProject = Projects.id WHERE Projects.id = '" + projectID + "'"; //Tasks.id)";// "; 
-        if (taskID == -1) {  // NOT SELECTABLE??
-            allValidSessions = getAllSessionsOfAClient(clientID);  //sessionDBDao.getAllSessions();
-        if  (taskID > -1) {  //  does this if a Task is selected
-            allValidSessions =  sessionDBDao.getAllSessionsOfATask(taskID);
-            } else {
-                if (projectID == -1) {
-                }
-                }
-            }
-        }
-        
-        return sql;
-    }  
-        
-        
-        
+         
 }
