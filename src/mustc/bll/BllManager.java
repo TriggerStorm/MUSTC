@@ -5,10 +5,12 @@
  */
 package mustc.bll;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import mustc.be.Client;
 import mustc.be.Project;
+import mustc.be.Report;
 import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
@@ -267,10 +269,17 @@ public class BllManager implements IBLL {
         return dalManager.checkUserLogin(loggedInUserEmail, password);
     }
 
+  
+    
+// ReportDBDAO methods    
+   @Override
+    public List<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) {
+        return dalManager.generateReport(clientID, projectID, taskID, userID, searchFrom, searchTo);
+    }
+
    
     
-    
- // TimeUtilites (BLL)
+// TimeUtilites (BLL)
     @Override
     public String localDateTimeToString(LocalDateTime LDT) {
         return timeUtilities.localDateTimeToString(LDT);
@@ -281,5 +290,6 @@ public class BllManager implements IBLL {
         return timeUtilities.stringToLocalDateTime(dateString);
     }
 
+  
     
 }

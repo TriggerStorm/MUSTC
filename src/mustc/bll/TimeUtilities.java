@@ -5,6 +5,7 @@
  */
 package mustc.bll;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -23,9 +24,9 @@ public class TimeUtilities {
     } 
     
       
-    public LocalDateTime stringToLocalDateTime(String dateString) {
+    public LocalDateTime stringToLocalDateTime(String dateTimeSTR) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd['T'HH:mm:ss[Z]]");
-        String[] parts = dateString.split(" ");
+        String[] parts = dateTimeSTR.split(" ");
         String time = parts[1];
         String[] parts2 = time.split(".");
         String sqlSTR = parts[0] + "T" + parts[1].substring(0,8);                                    // https://stackoverflow.com/questions/17685977/cut-java-string-at-a-number-of-character
@@ -33,6 +34,12 @@ public class TimeUtilities {
         return LDT;
     }
     
-    
-    
+        
+    public LocalDate stringToLocalDate(String dateTimeSTR) {
+        LocalDateTime localDateTime = stringToLocalDateTime(dateTimeSTR);
+        LocalDate localDate = localDateTime.toLocalDate();
+        return localDate;
+    }
+
+
 }

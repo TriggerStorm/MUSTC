@@ -190,7 +190,41 @@ public class SessionDBDAO {
         return allSessionsOfATask ;
     }
    
-    
+          
+    public List<Session> getAllSessionsOfAProject(int projectID) throws SQLException {
+            List<Session> allSessionsOfAProject = new ArrayList<>();
+    //        List<Task> allTaskIDsAndNamesOfAProject = TaskDBDAOgetAllTaskIDsAndNamesOfAProject(int projectID);
+
+        List<Session> allSessions = new ArrayList<>();
+ //WORKS       String sql = "SELECT * FROM Sessions INNER JOIN Tasks ON Sessions.AssociatedTask = tasks.id WHERE tasks.id = '" + taskID + "'"; //Tasks.id)";// INNER JOIN Projects ON Tasks.AssociatedProject = Projects.id"; 
+          String sql = "SELECT * FROM Sessions INNER JOIN Tasks ON Sessions.AssociatedTask = tasks.id"
+                  + "INNER JOIN Projects ON Tasks.AssociatedProject = Projects.id WHERE Projects.id '" + projectID + "'"; //Tasks.id)";// "; 
+  
+        try(Connection con = dbc.getConnection()) 
+        {
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+      /*      Statement stmtUpdate = con.createStatement();
+            ResultSet rs = stmtUpdate.executeQuery(sql);
+*/
+            while(rs.next()) // While you have something in the results
+            {
+                int sessionID = rs.getInt("id");
+                int associatedUserID = rs.getInt("AssociatedUser");
+                String associatedUserName = getSessionsUserName(associatedUserID);
+                int associatedTaskID =  rs.getInt("associatedTask");
+                String associatedTaskName = getSessionsTaskName(associatedTaskID);
+                String startTime = rs.getString("startTime");                
+                String finishTime = rs.getString("FinishTime");
+                Session session = new Session(sessionID, associatedUserID, associatedUserName, associatedTaskID, associatedTaskName, startTime, finishTime);
+                allSessionsOfAProject.add(session);
+            }  
+        }   
+        return allSessionsOfAProject;
+    }
+        
+       
     public Session editSession (Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime) { 
     //  Edits a Session in the Session table of the database given the Sessions new details.  
         String sql = "UPDATE Sessions SET associatedUser = ?, associatedTask = ?, startTime = ?, finishTime = ? WHERE id = '" + editedSession.getSessionID()+ "'";
@@ -231,14 +265,14 @@ public class SessionDBDAO {
     }
      
     
-    private String getSessionsUserName(int associatedUserID) throws SQLException {
+    public String getSessionsUserName(int associatedUserID) throws SQLException {
         UserDBDAO userDBDao = new UserDBDAO();
         String associatedUserName = userDBDao.getUserName(associatedUserID);
         return associatedUserName;
     }
     
     
-    private String getSessionsTaskName(int associatedTaskID) throws SQLException {
+    public String getSessionsTaskName(int associatedTaskID) throws SQLException {
         TaskDBDAO taskDBDao = new TaskDBDAO();
         String associatedTaskName = taskDBDao.getTaskName(associatedTaskID);
         return associatedTaskName;

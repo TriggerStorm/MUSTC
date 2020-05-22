@@ -7,6 +7,7 @@ package mustc.gui.controller;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,8 +24,10 @@ import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
 import mustc.bll.BllManager;
+import mustc.bll.TimeUtilities;
 import mustc.dal.ClientDBDAO;
 import mustc.dal.ProjectDBDAO;
+import mustc.dal.ReportDBDAO;
 import mustc.dal.SessionDBDAO;
 import mustc.dal.TaskDBDAO;
 import mustc.dal.UserDBDAO;
@@ -36,7 +39,7 @@ import mustc.dal.UserDBDAO;
  */
 public class TestController implements Initializable {
     private BllManager bllManager;
-    
+    private TimeUtilities timeUtilities;
     
     @FXML
     private Button bn_test;
@@ -52,12 +55,13 @@ public class TestController implements Initializable {
     @FXML
     private void handel_button(ActionEvent event) throws SQLException{
        bllManager = new BllManager();
-       ClientDBDAO clientDBDao = new ClientDBDAO();
+       timeUtilities = new TimeUtilities();
+      ClientDBDAO clientDBDao = new ClientDBDAO();
        ProjectDBDAO projectDBDao = new ProjectDBDAO();
        TaskDBDAO taskDBDao = new TaskDBDAO();
        SessionDBDAO sessionDBDao = new SessionDBDAO();
        UserDBDAO userDBDao = new UserDBDAO(); 
-
+       ReportDBDAO reportDBDao = new ReportDBDAO();
      
      System.out.println("");
         System.out.println("test start");
@@ -248,20 +252,34 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
  //        User loggedInUser = userDBDao.getUser(1);
  //        List<Session> allUserSessions = bllManager.getAllSessionsOfAUser(loggedInUser);
 //         List<Session> allUserSessions = sessionDBDao.getAllSessions();
- /*        for (int i = 0; i < allUserSessions.size(); i++) {
-            Session test = allUserSessions.get(i);
+
+LocalDate searchFrom = LocalDate.now().plusYears(1);
+        System.out.println("searchFrom = " + searchFrom);// timeUtilities.stringToLocalDate("2019-04-20 13:30:00");// 2020-04-18 13:26:59
+LocalDate searchTo = LocalDate.now().minusWeeks(3);//= stringToLocalDate("2021-04-20 13:30:00");
+        System.out.println("searchTo = " + searchTo);// timeUtilities.stringToLocalDate("2019-04-20 13:30:00");// 2020-04-18 13:26:59
+
+   
+   List<Session> filteredSessions = reportDBDao.compileSessionsForReport(-1, -1, -1, 2, searchFrom, searchTo);//int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo)
+    
+
+//List<Session> filteredSessions = reportDBDao.getAllSessionsOfAProject(2);
+  //    List<Session> filteredSessions = reportDBDao.getAllSessionsOfAClient(7);
+
+        for (int i = 0; i < filteredSessions.size(); i++) {
+            Session test = filteredSessions.get(i);
             
       System.out.println("");
-        System.out.println("ID = " + test.getSessionID());
+        System.out.println("SessionID = " + test.getSessionID());
  //       System.out.println(test.getAssociatedUserID());
  //        System.out.println(test.getAssociatedUserName());
-        System.out.println(test.getAssociatedTaskID());
-         System.out.println(test.getAssociatedTaskName());
-       System.out.println(test.getStartTime());
+        System.out.println("TaskID = " + test.getAssociatedTaskID());
+         System.out.println("TaskName = " + test.getAssociatedTaskName());
+        System.out.println("UserName = " + test.getAssociatedUserName());
+      System.out.println(test.getStartTime());
         System.out.println(test.getFinishTime());
         System.out.println("");
          } 
- */      
+       
        
  
  
@@ -269,7 +287,7 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
  
  //  USER
  
-         List<User> allUsers = userDBDao.getAllUsersIDsAndName();
+ /*        List<User> allUsers = userDBDao.getAllUsersIDsAndName();
         for (int i = 0; i < allUsers.size(); i++) {
             User test = allUsers.get(i); 
         
@@ -408,7 +426,10 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
         return LDT;
     }
     
-  
-
+  public LocalDate stringToLocalDate(String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate LD = LocalDate.parse(dateString, formatter);
+        return LD;
+  }
 
 }

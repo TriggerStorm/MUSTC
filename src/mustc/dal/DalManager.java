@@ -6,11 +6,13 @@
 package mustc.dal;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mustc.be.Client;
 import mustc.be.Project;
+import mustc.be.Report;
 import mustc.be.Task;
 import mustc.be.Session;
 import mustc.be.User;
@@ -437,7 +439,16 @@ public class DalManager implements DalFaçade {
     
  // ReportDBDAO methods 
 
-    
+    @Override
+    public List<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) {
+        try {
+            return reportDBDao.generateReport(clientID, projectID, taskID, userID, searchFrom, searchTo);
+        } catch (SQLException ex) {
+            Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     
     
 }

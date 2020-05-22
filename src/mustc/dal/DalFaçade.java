@@ -6,9 +6,11 @@
 package mustc.dal;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import mustc.be.Client;
 import mustc.be.Project;
+import mustc.be.Report;
 import mustc.be.Task;
 import mustc.be.Session;
 import mustc.be.User;
@@ -72,5 +74,9 @@ public interface DalFaçade {
     public void removeUserFromDB(User userToDelete);
     public int checkUserLogin(String loggedInUserEmail, String password);
     
- 
+    
+// ReportDBDAO methods
+    public List<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo);
+
+    
 }

@@ -286,7 +286,6 @@ try(Connection con = dbc.getConnection()){
             PreparedStatement pstmt = con.prepareStatement(sql);
             //Set parameter values.
             pstmt.setString(1, projectName);
- //           pstmt.setInt(2, associatedClientID);  // may edit client later
             pstmt.setInt(2, phoneNr);
             pstmt.setFloat(3, projectRate);
             pstmt.setInt(4, allocatedHours);
@@ -296,7 +295,6 @@ try(Connection con = dbc.getConnection()){
             pstmt.setInt(5, closed);
             pstmt.executeUpdate();  //Execute SQL query.
             editedProject.setProjectName(projectName);
-//            editedProject.setAssociatedClientID(associatedClientID); 
             editedProject.setPhoneNr(phoneNr);
             editedProject.setProjectRate(projectRate);
             editedProject.setAllocatedHours(allocatedHours);

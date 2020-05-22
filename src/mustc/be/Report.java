@@ -9,7 +9,7 @@ package mustc.be;
  *
  * @author Trigger and Alan
  */
-public class ReportOutput {
+public class Report {
     private String clientName;
     private String projectName;
     private String taskName;
@@ -19,7 +19,7 @@ public class ReportOutput {
     private int totalBillableMinutes;       // for Admin
     private int totalPrice;             // for Admin
 
-public ReportOutput(String clientName, String projectName, String taskName, String startTime, String finishTime, String developers, int totalBillableMinutes, int totalPrice) {
+public Report(String clientName, String projectName, String taskName, String startTime, String finishTime, String developers, int totalBillableMinutes, int totalPrice) {
     this.clientName = clientName;
     this.projectName = projectName;
     this.taskName = taskName;
