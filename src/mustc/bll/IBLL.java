@@ -8,6 +8,7 @@ package mustc.bll;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import javafx.collections.ObservableList;
 import mustc.be.Client;
 import mustc.be.Project;
 import mustc.be.Report;
@@ -29,7 +30,7 @@ public interface IBLL {
     public List<Client> getAllClientsIDsAndNames();  //  For Report selector
     public Client editClient (Client editedClient,String clientName,float standardRate,String logoImgLocation, String email);
     public void removeClientFromDB(Client clientToDelete);
-     
+    
 
 // ProjectDBDAO methods    
     public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int allocatedHours);
@@ -54,7 +55,8 @@ public interface IBLL {
     public Task editTask (Task editedTask, String taskName, int associatedProjectID, boolean isBillable);
     public void removeTaskFromDB(Task taskToDelete);
     public List<Task> getUsersThreeRecentTasks(User loggedInUser);
-  
+    
+    
 
 // SessionDBDAO methods            
     public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime);
@@ -83,8 +85,15 @@ public interface IBLL {
 // TimeUtilites (BLL)
     public String localDateTimeToString(LocalDateTime LDT);
     public LocalDateTime stringToLocalDateTime(String dateString);
-    
-    
 
+
+
+ // serchUtil
+    public ObservableList<Client> searchClient(ObservableList<Client> allClient, String text);
+    public ObservableList<Task> searchTask (ObservableList<Task> allTask, String text);
+    public ObservableList<Task> searchTaskpj(ObservableList<Task> allTask, String text);
+    public ObservableList<Project> searchProject(ObservableList<Project> allProject, String text);
+    public ObservableList<Session> searchSession(ObservableList<Session> allSession, String text);
+    public ObservableList<User> searchUser(ObservableList<User> allUser, String text);
     
 }

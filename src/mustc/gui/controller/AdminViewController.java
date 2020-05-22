@@ -13,15 +13,20 @@ import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.JFXTreeView;
 
 import java.awt.event.MouseEvent;
+import static java.lang.Thread.sleep;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import static javafx.collections.FXCollections.observableList;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -41,6 +46,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -52,16 +58,18 @@ import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
 import mustc.bll.BllManager;
+import mustc.bll.TimeUtilities;
 import mustc.dal.DalManager;
 import mustc.dal.ProjectDBDAO;
 import mustc.gui.model.AdminModel;
+import mustc.be.Task;
 
 /**
  * FXML Controller class
  *
  * @author Trigger
  */
-public class AdminViewController implements Initializable {
+public class AdminViewController implements Initializable, Runnable {
 
     @FXML
     private TextField tf_newtask;
@@ -137,8 +145,6 @@ public class AdminViewController implements Initializable {
     @FXML
     private Tab tab_stat;
     @FXML
-    private BarChart<?, ?> stat_graf;
-    @FXML
     private JFXComboBox<?> cb_stat_project;
     @FXML
     private JFXComboBox<?> cb_stat_task;
@@ -171,8 +177,6 @@ public class AdminViewController implements Initializable {
     @FXML
     private TableColumn<Client, String> Col_clint_$perhour;
     @FXML
-    private TableColumn<Client, String> Col_clint_totalhours;
-    @FXML
     private JFXTextField tf_clint_name;
     @FXML
     private JFXButton bn_clint_add;
@@ -203,10 +207,6 @@ public class AdminViewController implements Initializable {
     @FXML
     private JFXDatePicker dp_pj_to;
     @FXML
-    private Label lb_stat_priceperhour;
-    @FXML
-    private Label lb_stat_totalprice;
-    @FXML
     private JFXComboBox<?> cb_stat_clint;
     @FXML
     private JFXComboBox<?> cb_stat_dev;
@@ -234,7 +234,6 @@ public class AdminViewController implements Initializable {
     private JFXButton bn_user_eddit;
     @FXML
     private JFXButton bn_user_delete;
-    @FXML
     private ScrollPane Sp_last3;
     
     
@@ -259,16 +258,25 @@ public class AdminViewController implements Initializable {
     
     private LoggedInUser liu;
     private AdminModel adminModel;
+    private TimeUtilities Tu;
+    private Task T;
     int MaxWidth;
     boolean min;
     boolean isStarted;
     String startTime;
     Task selectTask;
+    String currentTab = "client";
     
+    static int msec = 0;
+    static int sec = 0;
+    static int mins = 0;
+    static int hours = 0;
     
+    boolean timeState = true;
     
     boolean bb = true;
     boolean bbm = true;
+    boolean onTop = false;
     
     Task taskToedit;
     Project projectToedit;
@@ -287,10 +295,8 @@ public class AdminViewController implements Initializable {
     private Text lb_task;
     @FXML
     private Text tb_project;
-    @FXML
-    private JFXTextField tf_session_name;
-    @FXML
-    private JFXTextField tf_session_dev;
+    //private JFXTextField tf_session_name;
+   // private JFXTextField tf_session_dev;
     @FXML
     private JFXTextField tf_session_start;
     @FXML
@@ -312,6 +318,34 @@ public class AdminViewController implements Initializable {
     private Label lb_session_name;
     @FXML
     private Label lb_session_dev;
+    @FXML
+    private TableView<?> Tbv_pj1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_name1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_clint1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_contact1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_nroftask1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_projectrate1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_Billable1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_UnBillable1;
+    @FXML
+    private TableColumn<?, ?> Col_pj_totalprice1;
+    @FXML
+    private JFXButton bn_searchClear;
+    @FXML
+    private Label a;
+    @FXML
+    private Label b;
+    @FXML
+    private Label c;
+    @FXML
+    private JFXTextField tap_search;
     
     
     
@@ -329,8 +363,10 @@ public class AdminViewController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         
+        Tu = new TimeUtilities();
+        adminModel = AdminModel.getInstance();
         
-        adminModel = new AdminModel();
+        currentTab = "client";
         setClint();
         setProject();
         setTask();
@@ -371,9 +407,28 @@ public class AdminViewController implements Initializable {
         cb_user_admin.setItems(adminModel.getAdmin());
         
         lb_loginuser.setText(liu.getName());
+        
     }    
 
+   /* public void FT(){
+        FilteredList<Task> FT = new FilteredList<>(adminModel.oListTask(), b -> true);
+        tap_search.textProperty().addListener(observable, oldValue, newValue)-> {
+        tap_search.setPredicate(Task ->{
+            
+            if (newValue == null || newValue.isEmpty()){
+                return true;
+            }
+            
+            String lowerCaseFilter = newValue.toLowerCase();
+            
+            if ()
+        }
+    }
+    }*/
+        
     
+    
+       
     
     public void sizeExpantion(){
         
@@ -386,7 +441,7 @@ public class AdminViewController implements Initializable {
         stage.setMinHeight(488);
         stage.setMinWidth(1044);
         MaxWidth = 1044;
-        Sp_last3.setVisible(true);
+        fp_last3task.setVisible(true);
             min = true;
         
         }
@@ -398,7 +453,7 @@ public class AdminViewController implements Initializable {
                 stage.setMinHeight(488);
                 stage.setMinWidth(1044);
                 MaxWidth = 1044;
-                Sp_last3.setVisible(true);
+                fp_last3task.setVisible(true);
                 min = true;
             }
             else{
@@ -408,7 +463,7 @@ public class AdminViewController implements Initializable {
                 stage.setMinHeight(488);
                 stage.setMinWidth(260);
                 MaxWidth = 260;
-                Sp_last3.setVisible(true);
+                fp_last3task.setVisible(true);
                 min = true;
             }
         }
@@ -417,7 +472,7 @@ public class AdminViewController implements Initializable {
     public void ToggelSize(){
         
         if(min == false){    
-            Sp_last3.setVisible(true);
+            fp_last3task.setVisible(true);
             min = true;
            
                 System.out.println("true");
@@ -429,7 +484,7 @@ public class AdminViewController implements Initializable {
                 MaxWidth = 260;
             }
         else{
-            Sp_last3.setVisible(false);
+            fp_last3task.setVisible(false);
             min = false;
             
             System.out.println("false");
@@ -469,7 +524,7 @@ public class AdminViewController implements Initializable {
         Col_clint_email.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
         Col_clint_nrofpj.setCellValueFactory(new PropertyValueFactory<Client, String>("noOfProjects"));
         Col_clint_$perhour.setCellValueFactory(new PropertyValueFactory<Client, String>("standardRate"));
-        Col_clint_totalhours.setCellValueFactory(new PropertyValueFactory<Client, String>("totalHours"));
+        //Col_clint_totalhours.setCellValueFactory(new PropertyValueFactory<Client, String>("totalHours"));
        // Col_clint_totalprice.setCellValueFactory(new PropertyValueFactory<Client, String>("totalPrice"));
         Tbv_Clint.setItems(adminModel.getAllClient());
     }
@@ -517,6 +572,10 @@ public class AdminViewController implements Initializable {
     
     public void addTask(){  //  COMMENTED OUT FOR NOW
        adminModel.addNewTaskToDB(tf_newtask.getText(),cb_project.getSelectionModel().getSelectedItem().getProjectID(), bbm);
+       /*selectTask.setTaskName(tf_newtask.getText());
+       selectTask.setProjectName(cb_project.getSelectionModel().toString());*/
+       tb_project.setText(cb_project.getSelectionModel().getSelectedItem().toString());
+       lb_task.setText(tf_newtask.getText().toString());
     }
     
     @FXML
@@ -532,65 +591,45 @@ public class AdminViewController implements Initializable {
 
     @FXML
     private void handle_tap_clint(Event event) {
-        /*Col_clint_name.setCellValueFactory(new PropertyValueFactory<Client, String>("clientName"));
-        Col_clint_email.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
-        Col_clint_nrofpj.setCellValueFactory(new PropertyValueFactory<Client, String>("noOfProjects"));
-        Col_clint_$perhour.setCellValueFactory(new PropertyValueFactory<Client, String>("standardRate"));
-        Col_clint_totalhours.setCellValueFactory(new PropertyValueFactory<Client, String>("totalHours"));
-        // Col_clint_totalprice.setCellValueFactory(new PropertyValueFactory<Client, String>("totalPrice"));
-        Tbv_Clint.setItems(adminModel.getAllClient());*/
+        
+        tap_search.clear();
+        if(currentTab != "client" ){
+        Tbv_Clint.setItems(adminModel.oListClient());}
+        currentTab ="client";
     }
 
     @FXML
     private void handle_tap_project(Event event) {
-        /*
-        Col_pj_name.setCellValueFactory(new PropertyValueFactory<Project, String>("projectName"));
-        Col_pj_clint.setCellValueFactory(new PropertyValueFactory<Project, String>("clientName"));
-        Col_pj_contact.setCellValueFactory(new PropertyValueFactory<Project, String>("phoneNr"));
-        Col_pj_nroftask.setCellValueFactory(new PropertyValueFactory<Project, String>("noOfTasks"));
-        Col_pj_totalhours.setCellValueFactory(new PropertyValueFactory<Project, String>("totalHours"));
-       // Col_pj_totalprice.setCellValueFactory(new PropertyValueFactory<Project, String>("totalPrice"));
-        //.setCellValueFactory(new PropertyValueFactory<Project, String>("projectRate")); // ad this
-                Tbv_pj.setItems(adminModel.getAllProject());*/
-                
+       currentTab ="project";    
+       tap_search.clear();
+       Tbv_pj.setItems(adminModel.oListProject());
     }
 
     @FXML
     private void handle_tap_task(Event event) {
-       /*
-        Col_task_taskname.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
-        Col_task_project.setCellValueFactory(new PropertyValueFactory<Task, String>("projectName"));
-        Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("developers"));
-        Col_task_$perhour.setCellValueFactory(new PropertyValueFactory<Task, String>("projectRate"));
-        Col_task_totalhours.setCellValueFactory(new PropertyValueFactory<Task, String>("totalTaskHours"));
-        // Col_task_totalprice.setCellValueFactory(new PropertyValueFactory<Task, String>("totalPrice"));
-                 tbv_task.setItems(adminModel.getAllTask());*/
+       currentTab ="task";
+       tap_search.clear();
+       tbv_task.setItems(adminModel.oListTask());
     }
 
     @FXML
     private void handle_tap_stats(Event event) {
+        currentTab ="stats";
+        tap_search.clear();
     }
 
     @FXML
     private void handle_tap_sessions(Event event) {
-        /*
-        col_sesion_taskname.setCellValueFactory(new PropertyValueFactory<Session, String>("taskName"));
-        col_sesion_date.setCellValueFactory(new PropertyValueFactory<Session, String>("date"));
-        col_sesion_start.setCellValueFactory(new PropertyValueFactory<Session, String>("start"));
-        col_sesion_stop.setCellValueFactory(new PropertyValueFactory<Session, String>("stop"));
-        col_sesion_myhours.setCellValueFactory(new PropertyValueFactory<Session, String>("myHours"));
-            tbv_session.setItems(adminModel.getAllSessions());*/
+        currentTab ="sessions";
+        tap_search.clear();
+        tbv_session.setItems(adminModel.oListSession());
     }
 
     @FXML
     private void handle_tap_user(Event event) {
-        /*
-        col_user_name.setCellValueFactory(new PropertyValueFactory<User, String>("userName"));
-        col_user_$perhour.setCellValueFactory(new PropertyValueFactory<User, String>("salary"));
-        col_user_email.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
-        col_user_status.setCellValueFactory(new PropertyValueFactory<User, String>("status"));
-        
-            tbv_user.setItems(adminModel.getAllUser());*/
+        currentTab ="user";
+        tap_search.clear();
+        tbv_user.setItems(adminModel.oListUser());
     }
 
     
@@ -781,6 +820,8 @@ public class AdminViewController implements Initializable {
             LocalDateTime LDTnow = LocalDateTime.now();
             
             startTime = adminModel.localDateTimeToString(LDTnow);
+            timeState = true;
+            clock();
             }
                 else{
              isStarted = false;
@@ -791,6 +832,8 @@ public class AdminViewController implements Initializable {
              LocalDateTime LDTnow = LocalDateTime.now();
              String StopTime = adminModel.localDateTimeToString(LDTnow);
              adminModel.addNewSessionToDB(lu, selectTask.getTaskID(), startTime, StopTime);
+             timeState = false;
+             
             ;
         }
         
@@ -813,7 +856,7 @@ public class AdminViewController implements Initializable {
         float n = projectToedit.getProjectRate();
         String Rate = String.valueOf(n);
         tf_pj_$perhour.setText(Rate);
-        
+    
     }
 
     @FXML
@@ -832,16 +875,21 @@ public class AdminViewController implements Initializable {
         taskToedit = tbv_task.getSelectionModel().getSelectedItem();
         task_name.setText(taskToedit.getTaskName());
         cb_task_project.setPromptText(taskToedit.getProjectName());
+        selectTask = tbv_task.getSelectionModel().getSelectedItem();
+        lb_task.setText(tbv_task.getSelectionModel().getSelectedItem().getTaskName());
+        tb_project.setText(tbv_task.getSelectionModel().getSelectedItem().getProjectName());
     }
 
     @FXML
     private void handel_pick_session(javafx.scene.input.MouseEvent event) {
         SessionToedit = tbv_session.getSelectionModel().getSelectedItem();
-        tf_session_name.setText(SessionToedit.getAssociatedTaskName());
+        lb_session_name.setText(SessionToedit.getAssociatedTaskName());
         tf_session_start.setText(SessionToedit.getStartTime());
         tf_session_stop.setText(SessionToedit.getFinishTime());
-        tf_session_dev.setText(SessionToedit.getAssociatedUserName());
+        lb_session_dev.setText(SessionToedit.getAssociatedUserName());
        
+            
+   
     }
 
     @FXML
@@ -886,10 +934,147 @@ public class AdminViewController implements Initializable {
 
     @FXML
     private void handel_onTop(ActionEvent event) {
+        
+        if(onTop == false){
         Stage stage = (Stage) bn_settings.getScene().getWindow();
         stage.setAlwaysOnTop(true);
-        //System.out.println((liu.getName()));
+        onTop = true;}
+        else{
+        Stage stage = (Stage) bn_settings.getScene().getWindow();
+        stage.setAlwaysOnTop(false);
+        onTop = false;        
+        }
         
+    }
+
+    @FXML
+    private void handel_startDP(ActionEvent event) {
+        
+    }
+
+    @FXML
+    private void handel_stopDP(ActionEvent event) {
+    }
+    
+    public void clock(){
+        
+        
+        Thread t = new Thread()
+        {
+            public void run()
+            {
+                    for(;;)
+                    {
+                        if(timeState==true)
+                        {
+                            try
+                            {
+                                //System.nanoTime(); /// look hire !!!!!!!! 
+                                sleep(1);
+                                //System.currentTimeMillis();
+                                if(msec>500)
+                                {
+                                msec=0;
+                                sec++;
+                                }
+                                if(sec>59)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins++;
+                                }
+                                if(mins>59)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins=0;
+                                hours++;
+                                }
+                                
+                                msec++;
+                                DecimalFormat df = new DecimalFormat("00");
+                                
+                                String fsec = df.format(sec);
+                                String fmin = df.format(mins);
+                                String fhour = df.format(hours);
+                                Platform.runLater(()->{
+               
+                                lb_tasktime.setText(""+ fhour+":" +fmin+":" +fsec);
+                                });
+                            }
+                            catch(Exception e)
+                            {
+                            
+                            }
+                            
+                        }
+                        
+                    
+                        else
+                        {
+                         break;       
+                        }
+                    }
+            }
+            
+                
+            
+        };
+        
+        t.start();
+        
+        
+        
+    }
+  
+    @FXML
+    private void handel_searchClear(ActionEvent event) {
+       // clock();
+ 
+    }
+    
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @FXML
+    private void Search(KeyEvent event) {
+      if(currentTab == "task"){ 
+       ObservableList<Task> taskInSearch;
+       taskInSearch = adminModel.searchTask(adminModel.oListTask(), tap_search.getText());
+       tbv_task.setItems(taskInSearch);}
+       else if(currentTab =="client"){
+       ObservableList<Client> clientInSearch;
+       clientInSearch = adminModel.searchClient(adminModel.oListClient(), tap_search.getText());
+       Tbv_Clint.setItems(clientInSearch);
+       }
+       else if(currentTab =="project"){
+           ObservableList<Project> projectInSearch;
+            projectInSearch = adminModel.searchProject(adminModel.oListProject(), tap_search.getText());
+            Tbv_pj.setItems(projectInSearch);
+       }
+       else if (currentTab =="sessions"){
+       ObservableList<Session> sessionInSearch;
+            sessionInSearch = adminModel.searchSession(adminModel.oListSession(), tap_search.getText());
+            tbv_session.setItems(sessionInSearch);
+       }
+       else if (currentTab =="stats"){
+       
+       }
+       else if (currentTab == "user"){
+         ObservableList<User> userInSearch;
+            userInSearch = adminModel.searchUser(adminModel.oListUser(), tap_search.getText());
+            tbv_user.setItems(userInSearch);
+       }
+  
+       
+    }
+    
+    public void Refresh (){
+        ObservableList<Task> observableList = adminModel.oListTask();
+       tbv_task.setItems(observableList);
+       
     }
 
     

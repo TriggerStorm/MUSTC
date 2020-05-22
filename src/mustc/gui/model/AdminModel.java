@@ -23,6 +23,7 @@ import mustc.bll.BllManager;
  * @author Trigger
  */
 public class AdminModel {
+    private static final AdminModel AMSingelton = new AdminModel();
     private BllManager bllManager;
     private ObservableList<Project> pjList;
     private ObservableList<Task> taskList;
@@ -43,6 +44,27 @@ public class AdminModel {
         
        
  
+    }
+    
+    public static AdminModel getInstance(){
+        return AMSingelton;
+    }
+    
+    public ObservableList<Task> oListTask(){
+    return taskList;
+    }
+    
+    public ObservableList<Client> oListClient(){
+    return clientList;
+    }
+    public ObservableList<Project> oListProject(){
+    return pjList;
+    }
+    public ObservableList<Session> oListSession(){
+    return sessionList;
+    }
+    public ObservableList<User> oListUser(){
+    return userList;
     }
     
     public ObservableList<String> getAdmin(){
@@ -128,7 +150,9 @@ public class AdminModel {
     }
     
     //task
-
+    
+    
+    
     public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable){
        
        return bllManager.addNewTaskToDB(taskName, associatedProjectID, isBillable);
@@ -223,5 +247,28 @@ public class AdminModel {
     }
     public String localDateTimeToString(LocalDateTime LDT) {
         return bllManager.localDateTimeToString(LDT);
+    }
+  // sertch
+    public ObservableList<Client> searchClient(ObservableList<Client> allClient, String text){
+        return bllManager.searchClient(allClient, text);
+    }
+    
+    public ObservableList<Task> searchTask(ObservableList<Task> allTask, String filterTask){
+        return bllManager.searchTask(allTask, filterTask);
+    }
+    
+    public ObservableList<Task> searchTaskpj(ObservableList<Task> allTask, String text){
+        return bllManager.searchTask(allTask, text);
+    }
+    public ObservableList<Project> searchProject(ObservableList<Project> allProject, String text){
+        return bllManager.searchProject(allProject, text);
+    }
+    
+     public ObservableList<Session> searchSession(ObservableList<Session> allSession, String text){
+        return bllManager.searchSession(allSession, text);
+    }
+     
+     public ObservableList<User> searchUser(ObservableList<User> allUser, String text){
+        return bllManager.searchUser(allUser, text);
     }
 }
