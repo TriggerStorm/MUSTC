@@ -17,6 +17,7 @@ import static java.lang.Thread.sleep;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,7 @@ import javafx.stage.Stage;
 import mustc.be.Client;
 import mustc.be.LoggedInUser;
 import mustc.be.Project;
+import mustc.be.Report;
 import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
@@ -143,11 +145,9 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private JFXDatePicker dp_task_to;
     @FXML
-    private Tab tab_stat;
+    private JFXComboBox<Project> cb_stat_project;
     @FXML
-    private JFXComboBox<?> cb_stat_project;
-    @FXML
-    private JFXComboBox<?> cb_stat_task;
+    private JFXComboBox<Task> cb_stat_task;
     @FXML
     private JFXDatePicker dp_stat_from;
     @FXML
@@ -207,9 +207,9 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private JFXDatePicker dp_pj_to;
     @FXML
-    private JFXComboBox<?> cb_stat_clint;
+    private JFXComboBox<Client> cb_stat_clint;
     @FXML
-    private JFXComboBox<?> cb_stat_dev;
+    private JFXComboBox<User> cb_stat_dev;
     @FXML
     private Tab tab_user;
     @FXML
@@ -319,33 +319,31 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private Label lb_session_dev;
     @FXML
-    private TableView<?> Tbv_pj1;
-    @FXML
-    private TableColumn<?, ?> Col_pj_name1;
-    @FXML
-    private TableColumn<?, ?> Col_pj_clint1;
-    @FXML
-    private TableColumn<?, ?> Col_pj_contact1;
-    @FXML
-    private TableColumn<?, ?> Col_pj_nroftask1;
-    @FXML
-    private TableColumn<?, ?> Col_pj_projectrate1;
-    @FXML
-    private TableColumn<?, ?> Col_pj_Billable1;
-    @FXML
-    private TableColumn<?, ?> Col_pj_UnBillable1;
-    @FXML
-    private TableColumn<?, ?> Col_pj_totalprice1;
-    @FXML
     private JFXButton bn_searchClear;
     @FXML
-    private Label a;
-    @FXML
-    private Label b;
-    @FXML
-    private Label c;
-    @FXML
     private JFXTextField tap_search;
+    @FXML
+    private JFXButton bn_report;
+    @FXML
+    private Tab tab_Report;
+    @FXML
+    private TableColumn<Report, String> Report_client;
+    @FXML
+    private TableColumn<Report, String> Report_project;
+    @FXML
+    private TableColumn<Report, String> Report_task;
+    @FXML
+    private TableColumn<Report, String> Report_user;
+    @FXML
+    private TableColumn<Report, String> Report_startTime;
+    @FXML
+    private TableColumn<Report, String> Report_finishTime;
+    @FXML
+    private TableColumn<Report, String> Report_billableMin;
+    @FXML
+    private TableColumn<Report, String> Report_totalPrice;
+    @FXML
+    private TableView<Report> Tbv_Report;
     
     
     
@@ -372,11 +370,14 @@ public class AdminViewController implements Initializable, Runnable {
         setTask();
         setUser();
         setSession();
+        cb_stat_clint.setItems(adminModel.getAllClientNameAndId());
+        cb_stat_project.setItems(adminModel.getAllProjectsIDsAndNames());
+        cb_stat_dev.setItems(adminModel.getAllUserNameAndId());
         //setTreeView();
         //adminModel.getUsersThreeRecentTasks(adminModel.getUser(1));
         //cb_task1.setSelectionModel(Task);
         // cb_task1.setItems(adminModel.getAllTask());
-        tv_project_task.setVisible(false);
+       // tv_project_task.setVisible(false);
         //recent task 1
         cb_task1.setItems(adminModel.get1());// dont work
         cb_task1.setPromptText(cb_task1.getItems().get(0).getTaskName());
@@ -519,6 +520,8 @@ public class AdminViewController implements Initializable, Runnable {
         System.out.println(TreeviewItem);    
     }
     
+    
+    
     public void setClint(){
     Col_clint_name.setCellValueFactory(new PropertyValueFactory<Client, String>("clientName"));
         Col_clint_email.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
@@ -570,6 +573,23 @@ public class AdminViewController implements Initializable, Runnable {
             tbv_session.setItems(adminModel.getAllSessions());
     }
     
+    public void setReport(){
+        
+        Report_client.setCellValueFactory(new PropertyValueFactory<Report, String>("clientName"));
+        Report_project.setCellValueFactory(new PropertyValueFactory<Report, String>("projectName"));
+        Report_task.setCellValueFactory(new PropertyValueFactory<Report, String>("taskName"));
+        Report_user.setCellValueFactory(new PropertyValueFactory<Report, String>("developers"));
+        Report_startTime.setCellValueFactory(new PropertyValueFactory<Report, String>("startTime"));
+        Report_finishTime.setCellValueFactory(new PropertyValueFactory<Report, String>("finishTime"));
+        Report_billableMin.setCellValueFactory(new PropertyValueFactory<Report, String>("totalBillableMinutes"));
+        Report_totalPrice.setCellValueFactory(new PropertyValueFactory<Report, String>("totalPrice"));
+        
+        Tbv_Report.setItems(adminModel.oReport());
+        System.out.println(""+adminModel.oReport());
+    }
+    
+    
+    
     public void addTask(){  //  COMMENTED OUT FOR NOW
        adminModel.addNewTaskToDB(tf_newtask.getText(),cb_project.getSelectionModel().getSelectedItem().getProjectID(), bbm);
        /*selectTask.setTaskName(tf_newtask.getText());
@@ -612,7 +632,6 @@ public class AdminViewController implements Initializable, Runnable {
        tbv_task.setItems(adminModel.oListTask());
     }
 
-    @FXML
     private void handle_tap_stats(Event event) {
         currentTab ="stats";
         tap_search.clear();
@@ -1075,6 +1094,57 @@ public class AdminViewController implements Initializable, Runnable {
         ObservableList<Task> observableList = adminModel.oListTask();
        tbv_task.setItems(observableList);
        
+    }
+
+    @FXML
+    private void handel_selectClient(ActionEvent event) {
+        ObservableList<Project> cp = adminModel.getAllProjectIDsAndNamesOfAClient(cb_stat_clint.getSelectionModel().getSelectedItem().getClientId());
+        cb_stat_project.setItems(cp);
+    }
+
+    @FXML
+    private void handel_report(ActionEvent event) {
+        // button
+        LocalDate from;
+        LocalDate to;
+        if(dp_stat_from.getValue() == null){
+            from = LocalDate.now().minusYears(100);
+        }
+            else{
+               from= dp_stat_from.getValue();    
+            }
+        
+        if(dp_stat_to.getValue() == null){
+                   to = LocalDate.now().plusDays(1);
+                }
+                else{
+                to = dp_stat_to.getValue();
+                };
+        
+        adminModel.generateReport(
+                cb_stat_clint.getSelectionModel().getSelectedItem().getClientId(),
+                cb_stat_project.getSelectionModel().getSelectedItem().getProjectID(),
+                cb_stat_task.getSelectionModel().getSelectedItem().getTaskID(),
+                cb_stat_dev.getSelectionModel().getSelectedItem().getUserID(),
+                from,
+                to
+                );
+        setReport();
+        
+    }
+
+    @FXML
+    private void handle_tap_report(Event event) {
+        
+        
+    }
+
+    @FXML
+    private void Handel_project(ActionEvent event) {
+        
+        ObservableList<Task> cp = adminModel.getAllTaskIDsAndNamesOfAProject(cb_stat_project.getSelectionModel().getSelectedItem().getProjectID());
+        cb_stat_task.setItems(cp);
+                
     }
 
     

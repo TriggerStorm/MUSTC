@@ -26,8 +26,8 @@ public Report(String clientName, String projectName, String taskName, String sta
     this.startTime = startTime;
     this.finishTime = finishTime;
     this.developers = developers;
-    this.startTime = startTime;
-    this.finishTime = finishTime;
+    this.totalBillableMinutes = totalBillableMinutes;
+    this.totalPrice = totalPrice;
 }
 
     public String getClientName() {

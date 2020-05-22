@@ -5,6 +5,7 @@
  */
 package mustc.gui.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import mustc.be.Client;
 import mustc.be.Project;
+import mustc.be.Report;
 import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
@@ -38,6 +40,11 @@ public class AdminModel {
     private ObservableList<Task> g3;
     private ObservableList<Project> pj;
     private ObservableList<String> admin;
+    private ObservableList<Client> client;
+    private ObservableList<User> user;
+    private ObservableList<Project> clientpj;
+    private ObservableList<Task> projectTask;
+    private ObservableList<Report> Report;
     
     public AdminModel() {
         bllManager = new BllManager();
@@ -48,6 +55,10 @@ public class AdminModel {
     
     public static AdminModel getInstance(){
         return AMSingelton;
+    }
+    
+    public ObservableList<Report> oReport(){
+    return Report;
     }
     
     public ObservableList<Task> oListTask(){
@@ -88,9 +99,6 @@ public class AdminModel {
         return clientList;
     }
     
-
-    
-
     public ObservableList<Task> getAllTask() {
          List<Task> allTask = bllManager.getAllTasksForAdmin();
          taskList = FXCollections.observableArrayList(allTask);
@@ -111,6 +119,12 @@ public class AdminModel {
     }
     
     //Client
+     public ObservableList<Client> getAllClientNameAndId() {
+        
+        List<Client> Clients = bllManager.getAllClientsIDsAndNames();
+        client = FXCollections.observableArrayList(Clients);
+        return client;
+    }
     
     public Client addNewClientToDB(String clientName, String logoImgLocation, String email, float standardRate) {
         return bllManager.addNewClientToDB(clientName, logoImgLocation, email, standardRate);
@@ -169,6 +183,13 @@ public class AdminModel {
     
     
     // user
+    
+     public ObservableList<User> getAllUserNameAndId() {
+        
+         List<User> User = bllManager.getAllUsersIDsAndName();
+         user = FXCollections.observableArrayList(User);
+         return user;
+    }
     public void addNewUserToDB(String userName, String email, String password, float salary, String status) {
         bllManager.addNewUserToDB(userName, email, password, salary, status);
     }
@@ -270,5 +291,24 @@ public class AdminModel {
      
      public ObservableList<User> searchUser(ObservableList<User> allUser, String text){
         return bllManager.searchUser(allUser, text);
+    }
+    // Report 
+     public ObservableList<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) {
+                List<Report> Reportlist = bllManager.generateReport(clientID, projectID, taskID, userID, searchFrom, searchTo);
+                Report = FXCollections.observableArrayList(Reportlist);
+                
+                return Report;
+    }
+     public ObservableList<Project> getAllProjectIDsAndNamesOfAClient(int clientID) {
+         
+        List<Project> clintProjcets = bllManager.getAllProjectIDsAndNamesOfAClient(clientID);
+       clientpj = FXCollections.observableArrayList(clintProjcets);
+       return clientpj;
+    }
+      public ObservableList<Task> getAllTaskIDsAndNamesOfAProject(int projectID) {
+         
+         List<Task> pjTask = bllManager.getAllTaskIDsAndNamesOfAProject(projectID);
+       projectTask = FXCollections.observableArrayList(pjTask);
+       return projectTask;
     }
 }
