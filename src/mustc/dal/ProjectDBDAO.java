@@ -218,6 +218,15 @@ System.out.println(" client Name = " + clientName);
     }
     
     
+    public List<Project> getAllProjectsIDsAndNamesForReport() throws SQLException {  
+        List<Project> allProjectsIDsAndNamesForReport = new ArrayList<>();
+        allProjectsIDsAndNamesForReport.add(new Project(-1, "All Clients Projects"));
+        List<Project> allProjectsIDsAndNames = getAllProjectsIDsAndNames();  // new ArrayList<>();
+        allProjectsIDsAndNamesForReport.addAll(allProjectsIDsAndNames);
+        return allProjectsIDsAndNamesForReport;
+    }
+
+    
     public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID) throws SQLException {  
 //  Returns a list of Project Id's and Names for GUI Report - Project selection
         List<Project> allProjectIDsAndNamesOfAClient = new ArrayList<>();

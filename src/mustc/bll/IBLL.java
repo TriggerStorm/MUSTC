@@ -39,6 +39,7 @@ public interface IBLL {
     public Project getProjectForAdmin(int projectID);
     public List<Project> getAllProjectsForAdmin();
     public List<Project> getAllProjectsIDsAndNames();
+    public List<Project> getAllProjectsIDsAndNamesForReport();  //  For Report selector // NEW
     public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID);
     public Project editProject (Project editedProject, String projectName, /*int associatedClientID,*/ int phoneNr, float projectRate, int allocatedHours, boolean isClosed);
     public void removeProjectFromDB(Project projectToDelete);

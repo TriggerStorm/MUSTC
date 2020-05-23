@@ -114,6 +114,12 @@ public class BllManager implements IBLL {
     
     
     @Override
+    public List<Project> getAllProjectsIDsAndNamesForReport() {
+        return dalManager.getAllProjectsIDsAndNamesForReport();
+    }
+    
+    
+    @Override
     public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID) {
         return dalManager.getAllProjectIDsAndNamesOfAClient(clientID);
     }
@@ -319,5 +325,6 @@ public class BllManager implements IBLL {
      public ObservableList<User> searchUser(ObservableList<User> allUser, String text){
         return searchUtil.searchUser(allUser, text);
     }
+
     
 }

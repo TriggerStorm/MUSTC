@@ -171,7 +171,18 @@ public class DalManager implements DalFaçade {
         return null;
     }
   
-     
+    
+    @Override
+    public List<Project> getAllProjectsIDsAndNamesForReport() {
+        try {
+            return projectDBDao.getAllProjectsIDsAndNamesForReport();
+        } catch (SQLException ex) {
+            Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    
     @Override
     public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID) {
         try {
