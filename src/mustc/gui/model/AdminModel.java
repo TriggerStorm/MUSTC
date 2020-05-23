@@ -45,6 +45,7 @@ public class AdminModel {
     private ObservableList<Project> clientpj;
     private ObservableList<Task> projectTask;
     private ObservableList<Report> Report;
+    private ObservableList<Project> pjreport;
     
     public AdminModel() {
         bllManager = new BllManager();
@@ -311,5 +312,13 @@ public class AdminModel {
          List<Task> pjTask = bllManager.getAllTaskIDsAndNamesOfAProject(projectID);
        projectTask = FXCollections.observableArrayList(pjTask);
        return projectTask;
+    }
+      public ObservableList<Project> getAllProjectsIDsAndNamesForReport() {
+        
+       List<Project> pj = bllManager.getAllProjectsIDsAndNamesForReport();
+       pjreport = FXCollections.observableArrayList(pj);
+       return pjreport;
+        
+        
     }
 }

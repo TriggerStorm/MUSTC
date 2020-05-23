@@ -371,7 +371,7 @@ public class AdminViewController implements Initializable, Runnable {
         setUser();
         setSession();
         cb_stat_clint.setItems(adminModel.getAllClientNameAndId());
-        cb_stat_project.setItems(adminModel.getAllProjectsIDsAndNames());
+        cb_stat_project.setItems(adminModel.getAllProjectsIDsAndNamesForReport());
         cb_stat_dev.setItems(adminModel.getAllUserNameAndId());
         //setTreeView();
         //adminModel.getUsersThreeRecentTasks(adminModel.getUser(1));
