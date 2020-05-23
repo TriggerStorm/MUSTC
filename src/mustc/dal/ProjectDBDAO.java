@@ -220,7 +220,7 @@ System.out.println(" client Name = " + clientName);
     
     public List<Project> getAllProjectsIDsAndNamesForReport() throws SQLException {  
         List<Project> allProjectsIDsAndNamesForReport = new ArrayList<>();
-        allProjectsIDsAndNamesForReport.add(new Project(-1, "All Clients Projects"));
+        allProjectsIDsAndNamesForReport.add(new Project(-1, "All Projects"));
         List<Project> allProjectsIDsAndNames = getAllProjectsIDsAndNames();  // new ArrayList<>();
         allProjectsIDsAndNamesForReport.addAll(allProjectsIDsAndNames);
         return allProjectsIDsAndNamesForReport;
