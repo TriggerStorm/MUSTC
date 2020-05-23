@@ -295,6 +295,7 @@ public class AdminModel {
     // Report 
      public ObservableList<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) {
                 List<Report> Reportlist = bllManager.generateReport(clientID, projectID, taskID, userID, searchFrom, searchTo);
+                System.out.println(""+Reportlist.size());
                 Report = FXCollections.observableArrayList(Reportlist);
                 
                 return Report;

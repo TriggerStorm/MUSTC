@@ -578,14 +578,14 @@ public class AdminViewController implements Initializable, Runnable {
         Report_client.setCellValueFactory(new PropertyValueFactory<Report, String>("clientName"));
         Report_project.setCellValueFactory(new PropertyValueFactory<Report, String>("projectName"));
         Report_task.setCellValueFactory(new PropertyValueFactory<Report, String>("taskName"));
-        Report_user.setCellValueFactory(new PropertyValueFactory<Report, String>("developers"));
+        Report_user.setCellValueFactory(new PropertyValueFactory<Report, String>("loggedInUser"));
         Report_startTime.setCellValueFactory(new PropertyValueFactory<Report, String>("startTime"));
         Report_finishTime.setCellValueFactory(new PropertyValueFactory<Report, String>("finishTime"));
         Report_billableMin.setCellValueFactory(new PropertyValueFactory<Report, String>("totalBillableMinutes"));
         Report_totalPrice.setCellValueFactory(new PropertyValueFactory<Report, String>("totalPrice"));
         
         Tbv_Report.setItems(adminModel.oReport());
-        System.out.println(""+adminModel.oReport());
+        System.out.println(""+adminModel.oReport().size());
     }
     
     

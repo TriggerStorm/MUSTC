@@ -52,7 +52,7 @@ public class ReportDBDAO {
                             
 System.out.println("clientName: " + clientName);
                 Report report = new Report(clientName, "mockPJ", taskName, "mockLIU", "mockSTART", "mockSTOP", 0, 0);  //String clientName, String projectName, String taskName, String startTime, String finishTime, String developers, int totalBillableMinutes, int totalPrice)();
-        
+                reportList.add(report);
             }                
                 return reportList;
     }
