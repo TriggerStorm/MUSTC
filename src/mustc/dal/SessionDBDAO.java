@@ -297,7 +297,7 @@ public class SessionDBDAO {
     }
     
     
-    private int calculateDurationOfASession(String startTime, String finishTime) {
+    public int calculateDurationOfASession(String startTime, String finishTime) {
         LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
         LocalDateTime finishLDT = timeUtilities.stringToLocalDateTime(finishTime);
         int duration = (int) ChronoUnit.MINUTES.between(startLDT, finishLDT);  //  https://stackoverflow.com/questions/25747499/java-8-difference-between-two-localdatetime-in-multiple-units#26954864
@@ -305,12 +305,11 @@ public class SessionDBDAO {
     }
  
     
-    public Task returnTotalTaskMinutesAndDevelopers(int taskID /*Task task*/) throws SQLException {
+    public Task returnTotalTaskMinutesAndDevelopers(int taskID) throws SQLException {
     // Returns the total minutes of a given Task and it's Developers
-//System.out.println("returnTotalTaskMinutesAndDevelopers");
         String developers = "";
         int taskDuration = 0;
-        List<Session> allSessionsInATask = getAllSessionsOfATask(taskID);  //new ArrayList<>();
+        List<Session> allSessionsInATask = getAllSessionsOfATask(taskID);
         for (int i = 0; i < allSessionsInATask.size(); i++) {
             Session session = allSessionsInATask.get(i);
             String startTime = session.getStartTime();
@@ -320,10 +319,7 @@ public class SessionDBDAO {
             taskDuration = updatedDuration;
             int AssociatedUserID = session.getAssociatedUserID();
             String associatedUserName = getSessionsUserName(AssociatedUserID);
-System.out.println("Task: " + taskID + "    Session: " + session.getSessionID() + "   associatedUserName = " + associatedUserName);            
             developers = compileDevelopersList(associatedUserName, developers);
-
-//System.out.println("Task: " + taskID + "    Session: " + session.getSessionID() + "   Duration = " + sessionDuration);
         }
         Task task = new Task(taskDuration, developers);
         return task;
@@ -331,12 +327,10 @@ System.out.println("Task: " + taskID + "    Session: " + session.getSessionID() 
  
     
     private String compileDevelopersList(String associatedUserName, String developers) {
-//System.out.println("developers: " + developers + "   associatedUserName: " + associatedUserName);
-        if (!(developers.contains(associatedUserName))) {   //  https://www.javatpoint.com/java-string-contains
+    //  Returns the String value of all of the developers that worked on a Task
+        if (!(developers.contains(associatedUserName))) {                                       //  https://www.javatpoint.com/java-string-contains
             developers +=  associatedUserName + ", " ;
-System.out.println(developers);
         }
-        
         return developers;
     }
 

@@ -84,6 +84,15 @@ public class Project {
 
     }
     
+
+ //  Report constructor      
+ public Project(String projectName, String clientName, float projectRate, int allocatedHours) {
+        this.projectName = projectName;
+        this.clientName = clientName;
+        this.projectRate = projectRate;
+        this.allocatedHours = allocatedHours;
+       }
+    
     
 //  getAllProjectsIDsAndNames constructor for ProjectDBDAO and Report selection
     public Project(int projectID, String projectName) {

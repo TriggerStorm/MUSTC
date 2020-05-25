@@ -153,7 +153,7 @@ System.out.println(" client Name = " + clientName);
             {
                 String projectName = rs.getString("name");
                 int associatedClientID = rs.getInt("associatedClient");
-                String clientName = clientDBDao.getClient(associatedClientID).getClientName() ;
+                String clientName = clientDBDao.getClientName(projectID); //  NEW getClient(associatedClientID).getClientName() ;
                 int phoneNr = rs.getInt("phoneNr");
                 float projectRate = rs.getFloat("projectRate");
                 int[] totalMinutesOfAProject = taskDBDao.getTotalMinutesOfAProject(projectID);
@@ -199,6 +199,29 @@ System.out.println(" client Name = " + clientName);
         return allProjectsForAdmin; 
     }
     
+   
+    public Project getProjectForReport(int projectID) throws SQLException {
+    //  Returns a Project for an Admin, given the Project id
+        Project projectForReport = null;
+        try(Connection con = dbc.getConnection()) {
+        String sql = "SELECT name, associatedClient, projectRate, allocatedHours FROM Projects WHERE id = '" + projectID + "'";  // HAD "*allocatedHours, closed"
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                String projectName = rs.getString("name");
+                int associatedClientID = rs.getInt("associatedClient");
+                String clientName = clientDBDao.getClientName(associatedClientID);
+                float projectRate = rs.getFloat("projectRate");
+                int allocatedHours = rs.getInt("allocatedHours");
+        projectForReport = new Project(projectName, clientName, projectRate, allocatedHours);
+            }    
+        }
+        return projectForReport;
+    }   
+    
+
     public List<Project> getAllProjectsIDsAndNames() throws SQLException {  // AdminModel 113 and 
         List<Project> allProjectsIDsAndNames = new ArrayList<>();
         try(Connection con = dbc.getConnection()){
