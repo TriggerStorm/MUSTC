@@ -42,4 +42,11 @@ public class SearchUtilities {
      public ObservableList<User> searchUser(ObservableList<User> allUser, String text){
         return allUser.filtered((f) -> f.getUserName().toLowerCase().startsWith(text.toLowerCase()));   
     }
+     
+   // treeview. // might not need
+     public ObservableList<Client> searchClientTv(ObservableList<Client> allClient, String text){
+        return allClient.filtered((f) -> f.getClientName().toLowerCase().startsWith(text.toLowerCase()));
+    }
+     
 }
+

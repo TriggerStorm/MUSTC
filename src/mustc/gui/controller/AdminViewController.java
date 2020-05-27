@@ -51,6 +51,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javax.swing.tree.TreeNode;
 
 import mustc.be.Client;
 import mustc.be.LoggedInUser;
@@ -107,7 +108,6 @@ public class AdminViewController implements Initializable, Runnable {
     private TableColumn<Project, String> Col_pj_contact;
     @FXML
     private TableColumn<Project, String> Col_pj_nroftask;
-    //private TableColumn<Project, String> Col_pj_totalhours;
     @FXML
     private TableColumn<Project, String> Col_pj_Billable;
     @FXML
@@ -239,52 +239,19 @@ public class AdminViewController implements Initializable, Runnable {
     
     @FXML
     private JFXButton bn_task1;
-    @FXML
     private JFXComboBox<Task> cb_task1;
     @FXML
     private ImageView img_task1;
     @FXML
     private JFXButton bn_task2;
-    @FXML
     private JFXComboBox<Task> cb_task2;
     @FXML
     private ImageView img_task2;
     @FXML
     private JFXButton bn_task3;
-    @FXML
     private JFXComboBox<Task> cb_task3;
     @FXML
     private ImageView img_task3;
-    
-    private LoggedInUser liu;
-    private AdminModel adminModel;
-    private TimeUtilities Tu;
-    private Task T;
-    int MaxWidth;
-    boolean min;
-    boolean isStarted;
-    String startTime;
-    Task selectTask;
-    String currentTab = "client";
-    
-    static int msec = 0;
-    static int sec = 0;
-    static int mins = 0;
-    static int hours = 0;
-    
-    boolean timeState = true;
-    
-    boolean bb = true;
-    boolean bbm = true;
-    boolean onTop = false;
-    
-    Task taskToedit;
-    Project projectToedit;
-    Client clientToedit;
-    Session SessionToedit;
-    User userToedit;
-    TreeItem TreeviewItem;
-    
     @FXML
     private Button bn_filepath;
     @FXML
@@ -295,8 +262,6 @@ public class AdminViewController implements Initializable, Runnable {
     private Text lb_task;
     @FXML
     private Text tb_project;
-    //private JFXTextField tf_session_name;
-   // private JFXTextField tf_session_dev;
     @FXML
     private JFXTextField tf_session_start;
     @FXML
@@ -307,7 +272,6 @@ public class AdminViewController implements Initializable, Runnable {
     private JFXButton bn_session_delete;
     @FXML
     private JFXTreeView<String> tv_project_task;
-    
     @FXML
     private TableColumn<Task, String> Col_task_Billable;
     @FXML
@@ -345,7 +309,48 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private TableView<Report> Tbv_Report;
     
+    private LoggedInUser liu;
+    private AdminModel adminModel;
+    private TimeUtilities Tu;
+    private Task T;
+    int MaxWidth;
+    boolean min;
+    boolean isStarted;
+    String startTime;
+    Task selectTask;
+    String currentTab = "client";
     
+    static int msec = 0;
+    static int sec = 0;
+    static int mins = 0;
+    static int hours = 0;
+    
+    boolean timeState = true;
+    
+    boolean bb = true;
+    boolean bbm = true;
+    boolean onTop = false;
+    
+    Task taskToedit;
+    Project projectToedit;
+    Client clientToedit;
+    Session SessionToedit;
+    User userToedit;
+    TreeItem TreeviewItem;
+    @FXML
+    private JFXButton bn_export;
+    @FXML
+    private Label lb_t1task;
+    @FXML
+    private Label lb_t1project;
+    @FXML
+    private Label lb_t2task;
+    @FXML
+    private Label lb_t2project;
+    @FXML
+    private Label lb_t3task;
+    @FXML
+    private Label lb_t3project;
     
    
    
@@ -379,17 +384,14 @@ public class AdminViewController implements Initializable, Runnable {
         // cb_task1.setItems(adminModel.getAllTask());
        // tv_project_task.setVisible(false);
         //recent task 1
-        cb_task1.setItems(adminModel.get1());// dont work
-        cb_task1.setPromptText(cb_task1.getItems().get(0).getTaskName());
-        bn_task1.setText(cb_task1.getItems().get(0).getProjectName());
+        lb_t1task.setText(adminModel.get1().get(0).getTaskName());
+        lb_t1project.setText(adminModel.get1().get(0).getProjectName());
         //resent task 2
-        cb_task2.setItems(adminModel.get2());
-        cb_task2.setPromptText(cb_task2.getItems().get(0).getTaskName());
-        bn_task2.setText(cb_task2.getItems().get(0).getProjectName());
+        lb_t2task.setText(adminModel.get2().get(0).getTaskName());
+        lb_t2project.setText(adminModel.get2().get(0).getProjectName());
         //recent task 3
-        cb_task3.setItems(adminModel.get3());
-        cb_task3.setPromptText(cb_task3.getItems().get(0).getTaskName());
-        bn_task3.setText(cb_task3.getItems().get(0).getProjectName());
+        lb_t3task.setText(adminModel.get3().get(0).getTaskName());
+        lb_t3project.setText(adminModel.get3().get(0).getProjectName());
         
         cb_project.setItems(adminModel.getAllProjectsIDsAndNames());
         
@@ -408,29 +410,12 @@ public class AdminViewController implements Initializable, Runnable {
         cb_user_admin.setItems(adminModel.getAdmin());
         
         lb_loginuser.setText(liu.getName());
+        tv_project_task.setVisible(false);
         
+       
+         
     }    
 
-   /* public void FT(){
-        FilteredList<Task> FT = new FilteredList<>(adminModel.oListTask(), b -> true);
-        tap_search.textProperty().addListener(observable, oldValue, newValue)-> {
-        tap_search.setPredicate(Task ->{
-            
-            if (newValue == null || newValue.isEmpty()){
-                return true;
-            }
-            
-            String lowerCaseFilter = newValue.toLowerCase();
-            
-            if ()
-        }
-    }
-    }*/
-        
-    
-    
-       
-    
     public void sizeExpantion(){
         
         
@@ -500,26 +485,64 @@ public class AdminViewController implements Initializable, Runnable {
     
    
     
-   /* public void setTreeView(){
-        TreeItem<String> root = new TreeItem<>(adminModel.getAllTask().get(1).toString());
+    public void setTreeView(){
         
-        TreeItem<String> p1 = new TreeItem<>(adminModel.getAllTask().get(1).getProjectName());
-        root.getChildren().add(p1);
-        
-        TreeItem<String> p2 = new TreeItem<>(adminModel.getAllTask().get(1).getTaskName());
-        p1.getChildren().add(p2);
-        
-        
-        
+       
+       String clientInSearch = search.getText();
+       
+       
+        TreeItem<String> root = new TreeItem<>(clientInSearch);
+        root.expandedProperty();
+        int x =  adminModel.oListProject().size();
+        int y =  adminModel.oListTask().size();
+        String cid = clientInSearch.toLowerCase();
+        for (int i = 0; i < x ; i++) {
+                
+                String pname = adminModel.oListProject().get(i).getClientName().toLowerCase();
+                if(cid.equals(pname)){
+                
+                TreeItem<String> item = new TreeItem<String>();
+                item.setValue(new String(adminModel.oListProject().get(i).toString()));
+                root.getChildren().add(item);
+                
+                int id = adminModel.oListProject().get(i).getProjectID();
+                 
+                for (int c = 0; c < y ; c++) {
+                    int tid = adminModel.oListTask().get(c).getAssociatedProjectID();
+                if(id == tid ){
+                TreeItem<String> it = new TreeItem<String>();
+                it.setValue(new String(adminModel.oListTask().get(c).toString()));
+                item.getChildren().add(it);
+                };
+            }
+                }
+            }
+     
         tv_project_task.setRoot(root);
-    }*/
+    }
     
     @FXML
     private void handel_pick_treeview(javafx.scene.input.MouseEvent event) {
-       TreeviewItem = tv_project_task.getSelectionModel().getSelectedItem();
-        System.out.println(TreeviewItem);    
+        String T = tv_project_task.getSelectionModel().getSelectedItem().getValue();
+       
+       int y =  adminModel.oListTask().size();
+       
+        String tpj = tv_project_task.getSelectionModel().getSelectedItem().getParent().getValue();
+       
+       for (int c = 0; c < y ; c++) {
+                    String tn = adminModel.oListTask().get(c).getTaskName();
+                    //String tn = "TreeItem [ value: "+adminModel.oListTask().get(c).getTaskName()+" ]";
+                    String tp = adminModel.oListTask().get(c).getProjectName();
+                    
+          if(       T.equals(tn)){
+              if(tpj.equals(tp)){
+            selectTask = adminModel.oListTask().get(c);
+            tb_project.setText(selectTask.getProjectName());
+            lb_task.setText(selectTask.getTaskName());
+          }
+          }
     }
-    
+    }
     
     
     public void setClint(){
@@ -655,33 +678,24 @@ public class AdminViewController implements Initializable, Runnable {
 
     @FXML
     private void handel_task1(ActionEvent event) throws SQLException {
-        //cb_task1.getSelectionModel().getSelectedItem();
-       // System.out.println("t1" + bn_task1.getText());
-       System.out.println("cb1"+ cb_task1.getSelectionModel().getSelectedItem().getAssociatedProjectID());
-       // System.out.println("cb1"+ cb_task1.getSelectionModel().getSelectedItem().getTaskID());
-        //if
-            selectTask = cb_task1.getSelectionModel().getSelectedItem();
-            lb_task.setText(cb_task1.getSelectionModel().getSelectedItem().getTaskName());
-            tb_project.setText(cb_task1.getSelectionModel().getSelectedItem().getProjectName());
-        //else
-            //lb_task.setText(cb_task1.getItems().get(0).getTaskName());
-            //tb_project.setText(cb_task1.getItems().get(0).getProjectName());
-        
-        
+       
+            selectTask = adminModel.get1().get(0);
+            lb_task.setText(adminModel.get1().get(0).getTaskName());
+            tb_project.setText(adminModel.get1().get(0).getProjectName());
     }
 
     @FXML
     private void handle_task2(ActionEvent event) {
-        selectTask = cb_task2.getSelectionModel().getSelectedItem();
-        lb_task.setText(cb_task2.getSelectionModel().getSelectedItem().getTaskName());
-            tb_project.setText(cb_task2.getSelectionModel().getSelectedItem().getProjectName());
+        selectTask = adminModel.get2().get(0);
+        lb_task.setText(adminModel.get2().get(0).getTaskName());
+            tb_project.setText(adminModel.get2().get(0).getProjectName());
     }
 
     @FXML
     private void handle_task3(ActionEvent event) {
-        selectTask = cb_task3.getSelectionModel().getSelectedItem();
-        lb_task.setText(cb_task3.getSelectionModel().getSelectedItem().getTaskName());
-            tb_project.setText(cb_task3.getSelectionModel().getSelectedItem().getProjectName());
+        selectTask = adminModel.get3().get(0);
+        lb_task.setText(adminModel.get3().get(0).getTaskName());
+            tb_project.setText(adminModel.get3().get(0).getProjectName());
     }
 
     @FXML
@@ -832,10 +846,17 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private void handle_start_stop(ActionEvent event) {
         
-        if(isStarted == false)
+       sessionStartNStop();
+        
+    }
+    
+    public void sessionStartNStop(){
+     if(isStarted == false)
             {
             isStarted = true;
-             bn_start_stop.setText("Stop");
+             Platform.runLater(()->{
+                 bn_start_stop.setText("Stop");
+             });
             LocalDateTime LDTnow = LocalDateTime.now();
             
             startTime = adminModel.localDateTimeToString(LDTnow);
@@ -844,23 +865,54 @@ public class AdminViewController implements Initializable, Runnable {
             }
                 else{
              isStarted = false;
-                bn_start_stop.setText("Start");
-            
+             Platform.runLater(()->{   
+             bn_start_stop.setText("Start");
+             });
              int lu = 1;
             
              LocalDateTime LDTnow = LocalDateTime.now();
              String StopTime = adminModel.localDateTimeToString(LDTnow);
              adminModel.addNewSessionToDB(lu, selectTask.getTaskID(), startTime, StopTime);
              timeState = false;
-             
-            ;
+             Platform.runLater(()->{
+             lb_tasktime.setText("00:00:00");
+             });
         }
-        
     }
-
+    
     @FXML
     private void handel_addTaskminview(ActionEvent event) {
+         Thread t = new Thread()
+        {
+            public void run()
+            {
         addTask();
+        adminModel.getAllTask();
+        
+        tbv_task.setItems(adminModel.oListTask());
+        
+        sessionStartNStop();
+        
+       String T = tf_newtask.getText();
+       
+       int y =  adminModel.oListTask().size();
+       
+        String tpj = cb_project.getSelectionModel().getSelectedItem().getProjectName();
+       
+       for (int c = 0; c < y ; c++) {
+                    String tn = adminModel.oListTask().get(c).getTaskName();
+                    //String tn = "TreeItem [ value: "+adminModel.oListTask().get(c).getTaskName()+" ]";
+                    String tp = adminModel.oListTask().get(c).getProjectName();
+                    
+          if(       T.equals(tn)){
+              if(tpj.equals(tp)){
+            selectTask = adminModel.oListTask().get(c);
+              }}}
+                 }
+        
+        };
+                 t.start();
+        
     }
 
     @FXML
@@ -988,9 +1040,9 @@ public class AdminViewController implements Initializable, Runnable {
                         {
                             try
                             {
-                                //System.nanoTime(); /// look hire !!!!!!!! 
+                                
                                 sleep(1);
-                                //System.currentTimeMillis();
+                                
                                 if(msec>500)
                                 {
                                 msec=0;
@@ -1048,7 +1100,8 @@ public class AdminViewController implements Initializable, Runnable {
   
     @FXML
     private void handel_searchClear(ActionEvent event) {
-       // clock();
+       search.clear();
+       tv_project_task.setVisible(false);
  
     }
     
@@ -1145,6 +1198,24 @@ public class AdminViewController implements Initializable, Runnable {
         ObservableList<Task> cp = adminModel.getAllTaskIDsAndNamesOfAProject(cb_stat_project.getSelectionModel().getSelectedItem().getProjectID());
         cb_stat_task.setItems(cp);
                 
+    }
+
+    @FXML
+    private void handel_search(KeyEvent event) {
+        setTreeView();
+        int l = search.getLength();
+        if(l <= 0){
+         tv_project_task.setVisible(false);
+        }
+        else{
+        tv_project_task.setVisible(true);
+        }
+        
+        
+    }
+
+    @FXML
+    private void handle_export(ActionEvent event) {
     }
 
     
