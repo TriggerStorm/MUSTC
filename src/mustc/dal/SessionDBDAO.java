@@ -227,7 +227,8 @@ public class SessionDBDAO {
        
     public Session editSession (Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime) { 
     //  Edits a Session in the Session table of the database given the Sessions new details.  
-        String sql = "UPDATE Sessions SET associatedUser = ?, associatedTask = ?, startTime = ?, finishTime = ? WHERE id = '" + editedSession.getSessionID()+ "'";
+        int sessionID = editedSession.getSessionID();
+        String sql = "UPDATE Sessions SET associatedUser = ?, associatedTask = ?, startTime = ?, finishTime = ? WHERE id = '" + sessionID + "'";
         try (  //Get a connection to the database.
             Connection con = dbc.getConnection()) {  
             //Create a prepared statement.

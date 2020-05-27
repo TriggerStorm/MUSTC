@@ -279,8 +279,6 @@ try(Connection con = dbc.getConnection()){
     private List<Integer> getTaskIDListForAProject(int projectID) throws SQLException {
     // Returns an array of TaskIds in a Project
         List<Integer> taskIDlistOfProject = new ArrayList<>();
-  //      taskIDlistOfProject = null;
- //       int projectTaskListCount = 0;
         try(Connection con = dbc.getConnection()){
             String sql = "SELECT id FROM Tasks WHERE associatedProject = '" + projectID + "'";
             PreparedStatement pstmt = con.prepareStatement(sql);   
@@ -290,25 +288,17 @@ try(Connection con = dbc.getConnection()){
             {
                 int taskID = rs.getInt("id");
                 taskIDlistOfProject.add(taskID);
-//                projectTaskListCount ++;
             }    
         }
         return taskIDlistOfProject; 
     }
       
     
-   
-    
     public String getProjectName(int projectID) throws SQLException {
-        return getProjectForUser(projectID).getProjectName();  // NEW BE NEEDED w- id + name
+        return getProjectForUser(projectID).getProjectName();
     } 
     
-    
- /*   public float getProjectRate(int projectID) throws SQLException {
-        return 696; //getProjectForAdmin(projectID).getProjectRate();  // NEW BE NEEDED w- id + Rate
-    } 
- */   
- 
+
     public Project editProject (Project editedProject, String projectName, /*int associatedClientID,*/ int phoneNr, float projectRate, int allocatedHours, boolean isClosed) { 
     //  Returns an Admin edited Project in the Projects table of the database, given the Projects new details.  
         int projectID = editedProject.getProjectID();

@@ -1,0 +1,12 @@
+REPORT ,GENERATED, on: ,2020-05-27, at 14:11:15, with  ,SEARCH, PARAMETERS, OF: 
+all Clients,all Projects,all Tasks,all Users,from 2020-02-27,to 2020-04-22,Duration, Billable,REVENUE
+Bapple,Project X,Phone Calls 10,Steve,2020-04-11 13:10:55.0,2020-04-11 14:10:50.0,59,$$,904
+Bapple,Project X,Accounting,Bob,2020-04-13 13:14:55.0,2020-04-13 15:12:55.0,118,$$,1809
+Logo,Windmills,DBDAO,Steve,2020-04-15 13:16:55.0,2020-04-15 18:55:55.0,339,$$,4802
+MichaelSoft,Plan B,Validators,Janet,2020-04-16 13:19:00.0,2020-04-16 14:18:00.0,59,$$,688
+MichaelSoft,Plan B,Validators,John B,2020-04-18 13:26:59.0,2020-04-18 13:34:59.0,8,$$,93
+MichaelSoft,Plan B,Meetings,Janet,2020-04-19 13:27:00.0,2020-04-19 18:23:00.0,296,--,0
+Mike,Project House,LogIn,Janet,2020-04-20 13:30:00.0,2020-04-20 13:40:00.0,10,$$,200
+Logo,SpaceCraft,GUI,Janet,2020-04-21 13:32:00.0,2020-04-21 13:59:00.0,27,$$,640
+MichaelSoft,Plan B,Interface,Janet,2020-04-22 13:40:48.0,2020-04-22 17:11:48.0,211,$$,2461
+TOTALS -> , BILLABLE (mins) = ,831,,UNBILLABLE (mins) = ,296,, REVENUE EARNED = ,11597,

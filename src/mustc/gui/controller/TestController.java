@@ -5,6 +5,7 @@
  */
 package mustc.gui.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -54,7 +55,7 @@ public class TestController implements Initializable {
     }    
 
     @FXML
-    private void handel_button(ActionEvent event) throws SQLException{
+    private void handel_button(ActionEvent event) throws SQLException, IOException{
        bllManager = new BllManager();
        timeUtilities = new TimeUtilities();
       ClientDBDAO clientDBDao = new ClientDBDAO();
@@ -247,8 +248,8 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
   
    
 //     Session test = sessionDBDao.addNewSessionToDB(15, 10, "2020-04-20 13:30:00", "2020-04-20 13:40:00");
-  //      Session test = sessionDBDao.getSession(19);
- //       Session test = sessionDBDao.editSession(tests, 16, 10, "2020-04-20 16:36:00.0", "2020-04-20 17:58:00.0");
+        Session tests = sessionDBDao.getSession(47);
+        Session test = sessionDBDao.editSession(tests, 16, 10, "2019-04-20 16:36:00.0", "2019-04-20 17:58:00.0");
  //       sessionDBDao.removeSessionFromDB(test);
  //        User loggedInUser = userDBDao.getUser(1);
  //        List<Session> allUserSessions = bllManager.getAllSessionsOfAUser(loggedInUser);
@@ -256,7 +257,7 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
 
 LocalDate searchFrom = LocalDate.now().minusMonths(3);
         System.out.println("searchFrom = " + searchFrom);// timeUtilities.stringToLocalDate("2019-04-20 13:30:00");// 2020-04-18 13:26:59
-LocalDate searchTo = LocalDate.now().minusWeeks(0);//= stringToLocalDate("2021-04-20 13:30:00");
+LocalDate searchTo = LocalDate.now().minusWeeks(5);//= stringToLocalDate("2021-04-20 13:30:00");
         System.out.println("searchTo = " + searchTo);// timeUtilities.stringToLocalDate("2019-04-20 13:30:00");// 2020-04-18 13:26:59
 
    
@@ -411,13 +412,15 @@ LocalDate searchTo = LocalDate.now().minusWeeks(0);//= stringToLocalDate("2021-0
  
  
 // REPORT
-
+/*
   List<Report> reportList = reportDBDao.generateReport(-1, -1, -1, -1, searchFrom, searchTo);//int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo)
         for (int i = 0; i < reportList.size(); i++) {
             Report test = reportList.get(i);
 System.out.println(test.getClientName() + "," + test.getProjectName() + "," + test.getTaskName() + "," + test.getLoggedInUser() + "," + test.getStartTime() 
         + "," + test.getFinishTime() + "," + test.getMinutes() + "," + test.getBillable()+ "," + test.getRevenue());
-           
+          
+        reportDBDao.addReportListToCSVFile(reportList);
+  */    
  /*                System.out.println("");
         System.out.println("ClientName:  " + test.getClientName());
         System.out.println("ProjectName:  " + test.getProjectName());
@@ -428,8 +431,8 @@ System.out.println(test.getClientName() + "," + test.getProjectName() + "," + te
         System.out.println("");
         System.out.println("BillableMinutes = " + test.getMinutes());
         System.out.println("TotalPrice = " + test.getRevenue());
-*/        } 
-        
+        } 
+  */      
         
         
 System.out.println("test finish");

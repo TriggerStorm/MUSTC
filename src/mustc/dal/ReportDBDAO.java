@@ -18,6 +18,9 @@ import mustc.be.Report;
 import mustc.be.Session;
 import mustc.be.Task;
 import mustc.bll.TimeUtilities;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  *
@@ -31,6 +34,8 @@ public class ReportDBDAO {
     private TaskDBDAO taskDBDao;
     private SessionDBDAO sessionDBDao;
     private UserDBDAO userDBDao;
+    private static final String reportCSV = "reportCSV/reportCSV.csv";
+
     
     public ReportDBDAO() {
         dbc = new DBConnection();
@@ -44,8 +49,8 @@ public class ReportDBDAO {
     
     
     public List<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) throws SQLException {
-        List<Report> reportList = getReportHeader(clientID, projectID, taskID, userID, searchFrom, searchTo);  //  new ArrayList<>();
-       
+    //  Returns a list of Reports based of the users search parameters. Imcludes a two line header, and footer of totals
+        List<Report> reportList = getReportHeader(clientID, projectID, taskID, userID, searchFrom, searchTo);
         List<Session> allReportSessions = compileSessionsForReport(clientID, projectID, taskID, userID, searchFrom, searchTo);
         int totalBillableMinutes = 0;
         int totalUnbillableMinutes = 0;
@@ -65,7 +70,7 @@ public class ReportDBDAO {
                 int associatedProjectID = task.getAssociatedProjectID();
                 boolean isBillable = task.getIsBillable();       
                 Project project = projectDBDao.getProjectForReport(associatedProjectID);     
-                String projectName = project.getProjectName();  // NULL POINTER??
+                String projectName = project.getProjectName();
                 String clientName = project.getClientName();
                  
                 float projectRate = project.getProjectRate();
@@ -88,7 +93,7 @@ public class ReportDBDAO {
         String billableSTR = Integer.toString(totalBillableMinutes);
         String unBillableSTR = Integer.toString(totalUnbillableMinutes);
         String totalRevenueSTR = Integer.toString(totalRevenue);
-        reportList.add(new Report("TOTALS -> ", " BILLABLE (mins) = ", billableSTR, ",UNBILLABLE (mins) = ", unBillableSTR, " REVENUE EARNED = ", totalRevenueSTR, "", ""));
+        reportList.add(new Report("TOTALS -> ", " BILLABLE (mins) = ", billableSTR, ",UNBILLABLE (mins) = ", unBillableSTR, "", " REVENUE EARNED = ", totalRevenueSTR, ""));
         return reportList;
     }
     
@@ -121,7 +126,7 @@ public class ReportDBDAO {
         String from = "from " + searchFrom.toString();
         String to = "to " + searchTo.toString();
 
-        reportList.add(new Report(client, project, task, user, from, to, "", " RESULTS", "BELOW:"));
+        reportList.add(new Report(client, project, task, user, from, to, "Duration", " Billable", "REVENUE"));
         return reportList;
     } 
     
@@ -155,9 +160,21 @@ public class ReportDBDAO {
     }  
            
       
+    public void addReportListToCSVFile(List<Report> reportList) throws IOException {
+    //Add reportList to File
+        File file = new File(reportCSV);
+        try (FileWriter fw = new FileWriter (file, false)) {  
+            for (int i = 0; i < reportList.size(); i++) {
+            Report report = reportList.get(i);
+            String reportSTR = (report.getClientName() + "," + report.getProjectName() + "," + report.getTaskName() + "," + report.getLoggedInUser() + "," + report.getStartTime() 
+        + "," + report.getFinishTime() + "," + report.getMinutes() + "," + report.getBillable()+ "," + report.getRevenue()) + "\n";
+            fw.write(reportSTR);
     
+            }
+            fw.close();
+        }
+    }
    
-
         
     public List<Session> getAllSessionsOfAProject(int projectID) throws SQLException {
         List<Session> allSessionsOfAProject = new ArrayList<>();
