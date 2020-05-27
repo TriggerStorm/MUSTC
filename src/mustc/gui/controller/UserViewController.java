@@ -238,19 +238,15 @@ public class UserViewController extends JFrame implements Initializable {
     }
     
     public void sizeExpantion(){
-        
-        
         if(MaxWidth == 260){
-        
-        Stage stage = (Stage) bn_expandview.getScene().getWindow();
-        stage.setMaxHeight(488);
-        stage.setMaxWidth(1044);
-        stage.setMinHeight(488);
-        stage.setMinWidth(1044);
-        MaxWidth = 1044;
-        Sp_last3.setVisible(true);
+            Stage stage = (Stage) bn_expandview.getScene().getWindow();
+            stage.setMaxHeight(488);
+            stage.setMaxWidth(1044);
+            stage.setMinHeight(488);
+            stage.setMinWidth(1044);
+            MaxWidth = 1044;
+            Sp_last3.setVisible(true);
             min = true;
-        
         }
         else{
             if(min == false){
@@ -274,32 +270,31 @@ public class UserViewController extends JFrame implements Initializable {
                 min = true;
             }
         }
-       
     }
+    
+    
     public void toggelSize(){
-        
         if(min == false){    
-                Sp_last3.setVisible(true);
-                min = true;
-           
-                System.out.println("true");
-                Stage stage = (Stage) Sp_last3.getScene().getWindow();
-                stage.setMaxHeight(488);
-                stage.setMaxWidth(260);
-                stage.setMinHeight(488);
-                stage.setMinWidth(260);
-                MaxWidth = 260;
-            }
-        else{
-                Sp_last3.setVisible(false);
-                 min = false;
-            
-                System.out.println("false");
-                Stage stage = (Stage) Sp_last3.getScene().getWindow();
-                stage.setMaxHeight(248);
-                stage.setMaxWidth(255);
-                stage.setMinHeight(248);
-                stage.setMinWidth(255);
+            Sp_last3.setVisible(true);
+            min = true;
+           System.out.println("true");
+            Stage stage = (Stage) Sp_last3
+                    .getScene().getWindow();
+            stage.setMaxHeight(488);
+            stage.setMaxWidth(260);
+            stage.setMinHeight(488);
+            stage.setMinWidth(260);
+            MaxWidth = 260;
+        } else {
+            Sp_last3.setVisible(false);
+            min = false;
+            System.out.println("false");
+            Stage stage = (Stage) Sp_last3
+                    .getScene().getWindow();
+            stage.setMaxHeight(248);
+            stage.setMaxWidth(255);
+            stage.setMinHeight(248);
+            stage.setMinWidth(255);
         }
     }
     
@@ -413,26 +408,20 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void handel_start_stop(ActionEvent event) {
-        if(isStarted == false)
-            {
+        if(isStarted == false) {
             isStarted = true;
-             bn_start_stop.setText("Stop");
+            bn_start_stop.setText("Stop");
             LocalDateTime LDTnow = LocalDateTime.now();
-            
             startTime = userModel.localDateTimeToString(LDTnow);
-            }
-                else{
-             isStarted = false;
-                bn_start_stop.setText("Start");
-            
-             int lu = 1;
-            
-             LocalDateTime LDTnow = LocalDateTime.now();
-             String StopTime = userModel.localDateTimeToString(LDTnow);
-             userModel.addNewSessionToDB(lu, selectTask.getTaskID(), startTime, StopTime);
+            } else {
+            isStarted = false;
+            bn_start_stop.setText("Start");
+            int lu = 1;
+            LocalDateTime LDTnow = LocalDateTime.now();
+            String StopTime = userModel.localDateTimeToString(LDTnow);
+            userModel.addNewSessionToDB(lu, selectTask.getTaskID(), startTime, StopTime);
             ;
-    }
-
+        }
     }
 
     @FXML

@@ -153,7 +153,7 @@ System.out.println(" client Name = " + clientName);
             {
                 String projectName = rs.getString("name");
                 int associatedClientID = rs.getInt("associatedClient");
-                String clientName = clientDBDao.getClient(associatedClientID).getClientName() ;
+                String clientName = clientDBDao.getClientName(projectID); //  NEW getClient(associatedClientID).getClientName() ;
                 int phoneNr = rs.getInt("phoneNr");
                 float projectRate = rs.getFloat("projectRate");
                 int[] totalMinutesOfAProject = taskDBDao.getTotalMinutesOfAProject(projectID);
@@ -199,6 +199,29 @@ System.out.println(" client Name = " + clientName);
         return allProjectsForAdmin; 
     }
     
+   
+    public Project getProjectForReport(int projectID) throws SQLException {
+    //  Returns a Project for an Admin, given the Project id
+        Project projectForReport = null;
+        try(Connection con = dbc.getConnection()) {
+        String sql = "SELECT name, associatedClient, projectRate, allocatedHours FROM Projects WHERE id = '" + projectID + "'";  // HAD "*allocatedHours, closed"
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                String projectName = rs.getString("name");
+                int associatedClientID = rs.getInt("associatedClient");
+                String clientName = clientDBDao.getClientName(associatedClientID);
+                float projectRate = rs.getFloat("projectRate");
+                int allocatedHours = rs.getInt("allocatedHours");
+        projectForReport = new Project(projectName, clientName, projectRate, allocatedHours);
+            }    
+        }
+        return projectForReport;
+    }   
+    
+
     public List<Project> getAllProjectsIDsAndNames() throws SQLException {  // AdminModel 113 and 
         List<Project> allProjectsIDsAndNames = new ArrayList<>();
         try(Connection con = dbc.getConnection()){
@@ -220,7 +243,7 @@ System.out.println(" client Name = " + clientName);
     
     public List<Project> getAllProjectsIDsAndNamesForReport() throws SQLException {  
         List<Project> allProjectsIDsAndNamesForReport = new ArrayList<>();
-        allProjectsIDsAndNamesForReport.add(new Project(-1, "All Clients Projects"));
+        allProjectsIDsAndNamesForReport.add(new Project(-1, "All Projects"));
         List<Project> allProjectsIDsAndNames = getAllProjectsIDsAndNames();  // new ArrayList<>();
         allProjectsIDsAndNamesForReport.addAll(allProjectsIDsAndNames);
         return allProjectsIDsAndNamesForReport;
@@ -256,8 +279,6 @@ try(Connection con = dbc.getConnection()){
     private List<Integer> getTaskIDListForAProject(int projectID) throws SQLException {
     // Returns an array of TaskIds in a Project
         List<Integer> taskIDlistOfProject = new ArrayList<>();
-  //      taskIDlistOfProject = null;
- //       int projectTaskListCount = 0;
         try(Connection con = dbc.getConnection()){
             String sql = "SELECT id FROM Tasks WHERE associatedProject = '" + projectID + "'";
             PreparedStatement pstmt = con.prepareStatement(sql);   
@@ -267,25 +288,17 @@ try(Connection con = dbc.getConnection()){
             {
                 int taskID = rs.getInt("id");
                 taskIDlistOfProject.add(taskID);
-//                projectTaskListCount ++;
             }    
         }
         return taskIDlistOfProject; 
     }
       
     
-   
-    
     public String getProjectName(int projectID) throws SQLException {
-        return getProjectForUser(projectID).getProjectName();  // NEW BE NEEDED w- id + name
+        return getProjectForUser(projectID).getProjectName();
     } 
     
-    
- /*   public float getProjectRate(int projectID) throws SQLException {
-        return 696; //getProjectForAdmin(projectID).getProjectRate();  // NEW BE NEEDED w- id + Rate
-    } 
- */   
- 
+
     public Project editProject (Project editedProject, String projectName, /*int associatedClientID,*/ int phoneNr, float projectRate, int allocatedHours, boolean isClosed) { 
     //  Returns an Admin edited Project in the Projects table of the database, given the Projects new details.  
         int projectID = editedProject.getProjectID();

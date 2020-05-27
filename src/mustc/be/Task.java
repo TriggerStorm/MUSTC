@@ -64,6 +64,15 @@ public class Task {
         this.developers = developers; 
     }
 
+    
+// Report constructor    
+    public Task(String taskName, int associatedProjectID, boolean isBillable) {
+        this.taskName = taskName;
+        this.associatedProjectID = associatedProjectID;
+        this.isBillable = isBillable;
+    }
+    
+    
 // Report selection constructor (NB associatedProjectID only used as constructor with (int, String) used below. 
     public Task(int taskID, String taskName, int associatedProjectID) {
         this.taskID = taskID;

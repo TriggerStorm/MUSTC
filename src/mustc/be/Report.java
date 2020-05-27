@@ -16,21 +16,24 @@ public class Report {
     private String loggedInUser;  // the person whom the Session is assigned to.    
     private String startTime;   // LDT?
     private String finishTime;  // LDT?
-    private int totalBillableMinutes;       // for Admin
-    private int totalPrice;             // for Admin
+    private String minutes;       // for Admin
+    private String billable;
+    private String revenue;             // for Admin
 
 
     
 // Full constructor            
-    public Report(String clientName, String projectName, String taskName, String loggedInUser, String startTime, String finishTime, int totalBillableMinutes, int totalPrice) {
+    public Report(String clientName, String projectName, String taskName, String loggedInUser, String startTime, String finishTime, String minutes, String billable, String revenue) {
         this.clientName = clientName;
         this.projectName = projectName;
         this.taskName = taskName;
         this.loggedInUser = loggedInUser;
         this.startTime = startTime;
         this.finishTime = finishTime;
-        this.totalBillableMinutes = totalBillableMinutes;
-        this.totalPrice = totalPrice;
+
+        this.minutes = minutes;
+        this.billable = billable;
+        this.revenue = revenue;
 
 }
 
@@ -82,20 +85,28 @@ public class Report {
         this.finishTime = finishTime;
     }
 
-    public int getTotalBillableMinutes() {
-        return totalBillableMinutes;
+    public String getMinutes() {
+        return minutes;
     }
 
-    public void setTotalBillableMinutes(int totalBillableMinutes) {
-        this.totalBillableMinutes = totalBillableMinutes;
+    public void setMinutes(String minutes) {
+        this.minutes = minutes;
     }
 
-    public int getTotalPrice() {
-        return totalPrice;
+    public String getBillable() {
+        return billable;
     }
 
-    public void setTotalPrice(int totalPrice) {
-        this.totalPrice = totalPrice;
+    public void setBillable(String billable) {
+        this.billable = billable;
+    }
+
+    public String getRevenue() {
+        return revenue;
+    }
+
+    public void setRevenue(String revenue) {
+        this.revenue = revenue;
     }
 
 

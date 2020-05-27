@@ -240,6 +240,27 @@ public class TaskDBDAO {
     } 
     
     
+    public Task getTaskForReport(int taskID) throws SQLException {
+    //  Returns a Task from the DB where ID = taskID
+        Task taskInProject = null;
+        String sql = "SELECT name, associatedProject, description FROM Tasks  WHERE id = '" + taskID + "'"; 
+        try(Connection con = dbc.getConnection()) {
+            PreparedStatement pstmt = con.prepareStatement(sql);   
+            pstmt.execute();    
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()) //While you have something in the results
+            {
+                String taskName =  rs.getString("name");
+                int associatedProjectID = rs.getInt("associatedProject");
+                int billable = rs.getInt("description");  // String description needs to be replaced in DB with int billable 
+                boolean isBillable = convertIntToBoolean(billable);
+                taskInProject = new Task(taskName, associatedProjectID, isBillable);       
+            }    
+        }
+        return taskInProject ;
+    }
+      
+      
     public int[] getTotalMinutesOfAProject(int projectID) throws SQLException {
         int[] totalProjectMinutes = new int[2];
         totalProjectMinutes[0] = 0;
