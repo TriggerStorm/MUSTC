@@ -24,6 +24,7 @@ import mustc.be.Project;
 import mustc.be.Report;
 import mustc.be.Session;
 import mustc.be.Task;
+import mustc.be.TreeItems;
 import mustc.be.User;
 import mustc.bll.BllManager;
 import mustc.bll.TimeUtilities;
@@ -32,6 +33,7 @@ import mustc.dal.ProjectDBDAO;
 import mustc.dal.ReportDBDAO;
 import mustc.dal.SessionDBDAO;
 import mustc.dal.TaskDBDAO;
+import mustc.dal.TreeItemDBDAO;
 import mustc.dal.UserDBDAO;
 //import sq
 /**
@@ -42,6 +44,8 @@ import mustc.dal.UserDBDAO;
 public class TestController implements Initializable {
     private BllManager bllManager;
     private TimeUtilities timeUtilities;
+    private TreeItems ti;
+    private TreeItemDBDAO tidb;
     
     @FXML
     private Button bn_test;
@@ -51,13 +55,16 @@ public class TestController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+       
+       tidb = new TreeItemDBDAO();
     }    
 
     @FXML
+
     private void handel_button(ActionEvent event) throws SQLException, IOException{
        bllManager = new BllManager();
        timeUtilities = new TimeUtilities();
+
       ClientDBDAO clientDBDao = new ClientDBDAO();
        ProjectDBDAO projectDBDao = new ProjectDBDAO();
        TaskDBDAO taskDBDao = new TaskDBDAO();
@@ -71,7 +78,7 @@ public class TestController implements Initializable {
     float standardRate = 799;
 
   
- 
+    
 
 //  CLIENT
 
@@ -254,12 +261,12 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
  //        User loggedInUser = userDBDao.getUser(1);
  //        List<Session> allUserSessions = bllManager.getAllSessionsOfAUser(loggedInUser);
 //         List<Session> allUserSessions = sessionDBDao.getAllSessions();
-
+/*
 LocalDate searchFrom = LocalDate.now().minusMonths(3);
         System.out.println("searchFrom = " + searchFrom);// timeUtilities.stringToLocalDate("2019-04-20 13:30:00");// 2020-04-18 13:26:59
 LocalDate searchTo = LocalDate.now().minusWeeks(5);//= stringToLocalDate("2021-04-20 13:30:00");
         System.out.println("searchTo = " + searchTo);// timeUtilities.stringToLocalDate("2019-04-20 13:30:00");// 2020-04-18 13:26:59
-
+*/
    
  //  List<Session> filteredSessions = reportDBDao.compileSessionsForReport(-1, -1, -1, 2, searchFrom, searchTo);//int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo)
  
@@ -413,7 +420,9 @@ LocalDate searchTo = LocalDate.now().minusWeeks(5);//= stringToLocalDate("2021-0
  
 // REPORT
 /*
+
   List<Report> reportList = reportDBDao.generateReport(-1, -1, -1, -1, searchFrom, searchTo);//int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo)
+
         for (int i = 0; i < reportList.size(); i++) {
             Report test = reportList.get(i);
 System.out.println(test.getClientName() + "," + test.getProjectName() + "," + test.getTaskName() + "," + test.getLoggedInUser() + "," + test.getStartTime() 
@@ -429,6 +438,7 @@ System.out.println(test.getClientName() + "," + test.getProjectName() + "," + te
         System.out.println("StartTime:  " + test.getStartTime());
         System.out.println("FinishTime:  " + test.getFinishTime());
         System.out.println("");
+
         System.out.println("BillableMinutes = " + test.getMinutes());
         System.out.println("TotalPrice = " + test.getRevenue());
         } 
@@ -436,6 +446,7 @@ System.out.println(test.getClientName() + "," + test.getProjectName() + "," + te
         
         
 System.out.println("test finish");
+
 
     }
     

@@ -52,6 +52,7 @@ public class ReportDBDAO {
     //  Returns a list of Reports based of the users search parameters. Imcludes a two line header, and footer of totals
         List<Report> reportList = getReportHeader(clientID, projectID, taskID, userID, searchFrom, searchTo);
         List<Session> allReportSessions = compileSessionsForReport(clientID, projectID, taskID, userID, searchFrom, searchTo);
+
         int totalBillableMinutes = 0;
         int totalUnbillableMinutes = 0;
         int totalRevenue = 0;
@@ -95,6 +96,7 @@ public class ReportDBDAO {
         String totalRevenueSTR = Integer.toString(totalRevenue);
         reportList.add(new Report("TOTALS -> ", " BILLABLE (mins) = ", billableSTR, ",UNBILLABLE (mins) = ", unBillableSTR, "", " REVENUE EARNED = ", totalRevenueSTR, ""));
         return reportList;
+
     }
     
     

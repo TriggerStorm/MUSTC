@@ -74,11 +74,13 @@ public class LogInController implements Initializable {
         Scene addScene = new Scene(root1);
         addStage.setScene(addScene);
         addStage.show();
+        addStage.show();
+        addStage.setMaxHeight(488);
+        addStage.setMaxWidth(260);
+        addStage.setMinHeight(488);
+        addStage.setMinWidth(260);
+        
         Stage stage = (Stage) bn_login.getScene().getWindow();
-        stage.setMaxHeight(488);
-        stage.setMaxWidth(260);
-        stage.setMinHeight(488);
-        stage.setMinWidth(260);
         stage.close();
     }
 
@@ -91,12 +93,12 @@ public class LogInController implements Initializable {
         Scene addScene = new Scene(root1);
         addStage.setScene(addScene);
         addStage.show();
-
+        addStage.setMaxHeight(488);
+        addStage.setMaxWidth(260);
+        addStage.setMinHeight(488);
+        addStage.setMinWidth(260);
+        
         Stage stage = (Stage) bn_login.getScene().getWindow();
-        stage.setMaxHeight(488);
-        stage.setMaxWidth(260);
-        stage.setMinHeight(488);
-        stage.setMinWidth(260);
         stage.close(); 
     }
 

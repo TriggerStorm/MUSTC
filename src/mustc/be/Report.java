@@ -20,6 +20,7 @@ public class Report {
     private String billable;
     private String revenue;             // for Admin
 
+
     
 // Full constructor            
     public Report(String clientName, String projectName, String taskName, String loggedInUser, String startTime, String finishTime, String minutes, String billable, String revenue) {
@@ -29,9 +30,11 @@ public class Report {
         this.loggedInUser = loggedInUser;
         this.startTime = startTime;
         this.finishTime = finishTime;
+
         this.minutes = minutes;
         this.billable = billable;
         this.revenue = revenue;
+
 }
 
     public String getClientName() {
