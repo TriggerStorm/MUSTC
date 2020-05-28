@@ -299,9 +299,16 @@ public class SessionDBDAO {
     
     
     public int calculateDurationOfASession(String startTime, String finishTime) {
+    //  Calculates the number od minutesi n a Session.    
         LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
         LocalDateTime finishLDT = timeUtilities.stringToLocalDateTime(finishTime);
         int duration = (int) ChronoUnit.MINUTES.between(startLDT, finishLDT);  //  https://stackoverflow.com/questions/25747499/java-8-difference-between-two-localdatetime-in-multiple-units#26954864
+        //  Round duration up to th nearest 15 mins
+        int quarters = (int)duration / 15;
+        int mins = duration % 15;
+        if (mins > 0)
+            quarters ++;
+        duration = (quarters * 15);
         return duration;
     }
  

@@ -55,14 +55,14 @@ public class ReportDBDAO {
 
         int totalBillableMinutes = 0;
         int totalUnbillableMinutes = 0;
-        int totalRevenue = 0;
+        int totalPrice = 0;
         
         for (int i = 0; i < allReportSessions.size(); i++) {
             Session session = allReportSessions.get(i);
                 int associatedTaskID = session.getAssociatedTaskID();
                 String loggedInUser = session.getAssociatedUserName();
-                String startTime = session.getStartTime();
-                String finishTime = session.getFinishTime();
+                String startTime = session.getStartTime().substring(0, 19);
+                String finishTime = session.getFinishTime().substring(0, 19);
                 int minutes = sessionDBDao.calculateDurationOfASession(startTime, finishTime);
                 String minutesSTR = Integer.toString(minutes);
                 String billable;
@@ -76,25 +76,25 @@ public class ReportDBDAO {
                  
                 float projectRate = project.getProjectRate();
                 int allocatedHours = project.getAllocatedHours();
-                int revenue;
+                int price;
                 if (isBillable) {
                      billable = "$$";
                      totalBillableMinutes += minutes;
-                    revenue = (int) (minutes * (projectRate / 60));  // minutes * 'minuteRate'
+                    price = (int) (minutes * (projectRate / 60));  // minutes * 'minuteRate'
                 } else {
                     billable = "--";                       
                     totalUnbillableMinutes += minutes;
-                    revenue = 0;
+                    price = 0;
                 }
-                totalRevenue += revenue;
-                String revenueSTR = Integer.toString(revenue);
-                Report report = new Report(clientName, projectName, taskName, loggedInUser, startTime, finishTime, minutesSTR, billable, revenueSTR);
+                totalPrice += price;
+                String priceSTR = Integer.toString(price);
+                Report report = new Report(clientName, projectName, taskName, loggedInUser, startTime, finishTime, minutesSTR, billable, priceSTR);
                 reportList.add(report);
             } 
         String billableSTR = Integer.toString(totalBillableMinutes);
         String unBillableSTR = Integer.toString(totalUnbillableMinutes);
-        String totalRevenueSTR = Integer.toString(totalRevenue);
-        reportList.add(new Report("TOTALS -> ", " BILLABLE (mins) = ", billableSTR, ",UNBILLABLE (mins) = ", unBillableSTR, "", " REVENUE EARNED = ", totalRevenueSTR, ""));
+        String totalPriceSTR = Integer.toString(totalPrice);
+        reportList.add(new Report("TOTALS -> ", " BILLABLE", " (mins) = ", billableSTR, " UNBILLABLE (mins) = ", unBillableSTR, " TOTAL ", "  = ", totalPriceSTR));
         return reportList;
 
     }
@@ -124,11 +124,11 @@ public class ReportDBDAO {
         String date = LocalDate.now().toString(); 
         String time = LocalTime.now().toString().substring(0, 8);
         
-        reportList.add(new Report("REPORT ", "GENERATED", " on: ", date, " at " + time, " with  ", "SEARCH", " PARAMETERS", " OF: "));
+        reportList.add(new Report("REPORT ", "GENERATED", date, " at " + time, " : SEARCH PARAMETERS ", " ON NEXT LINE:", "", "", ""));
         String from = "from " + searchFrom.toString();
         String to = "to " + searchTo.toString();
 
-        reportList.add(new Report(client, project, task, user, from, to, "Duration", " Billable", "REVENUE"));
+        reportList.add(new Report(client, project, task, user, from, to, "Mins", " ?$?", "PRICE"));
         return reportList;
     } 
     
