@@ -48,6 +48,7 @@ public class AdminModel {
     private ObservableList<Report> Report;
     private ObservableList<Project> pjreport;
     private LoggedInUser liu;
+    private List<Report> Reportlist;
     public AdminModel() {
         bllManager = new BllManager();
         liu = LoggedInUser.getInstance();
@@ -129,11 +130,14 @@ public class AdminModel {
     }
     
     public Client addNewClientToDB(String clientName, String logoImgLocation, String email, float standardRate) {
-        return bllManager.addNewClientToDB(clientName, logoImgLocation, email, standardRate);
+        Client cl = bllManager.addNewClientToDB(clientName, logoImgLocation, email, standardRate);
+        clientList.add(cl);
+        return null;
     }
     
     public Client editClient(Client editedClient, String clientName, float standardRate, String logoImgLocation, String email) {
-        return bllManager.editClient(editedClient, clientName, standardRate, logoImgLocation, email);
+        bllManager.editClient(editedClient, clientName, standardRate, logoImgLocation, email);
+        return null;
     }
     
     public void removeClientFromDB(Client clientToDelete) {
@@ -154,11 +158,14 @@ public class AdminModel {
         return pj;
     }
     public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int allocatedHours) {
-        return bllManager.addNewProjectToDB(projectName, associatedClientID, phoneNr, projectRate, allocatedHours);
+        Project addpj = bllManager.addNewProjectToDB(projectName, associatedClientID, phoneNr, projectRate, allocatedHours);
+        pjList.add(addpj);
+        return null;
     }
 
-    public Project editProject(Project editedProject, String projectName, int associatedClientID, float projectRate, int allocatedHours, boolean isClosed) {
-        return bllManager.editProject(editedProject, projectName, associatedClientID, projectRate, allocatedHours, isClosed);
+    public Project editProject(Project editedProject, String projectName,int phoneNr,float projectRate, int allocatedHours, boolean isClosed) {
+        bllManager.editProject(editedProject, projectName,phoneNr, projectRate, allocatedHours, isClosed);
+        return null;
     }
 
     public void removeProjectFromDB(Project projectToDelete) {
@@ -170,14 +177,16 @@ public class AdminModel {
     
     
     
-    public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable){
-       
-       return bllManager.addNewTaskToDB(taskName, associatedProjectID, isBillable);
-       
+    public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable){ // do this for add to db.
+        Task addT = bllManager.addNewTaskToDB(taskName, associatedProjectID, isBillable);
+        taskList.add(addT);
+        return null;
    }
 
     public Task editTask(Task editedTask, String taskName , int associatedProjectID, boolean isBillable) {
-        return bllManager.editTask(editedTask, taskName, associatedProjectID, isBillable);
+        bllManager.editTask(editedTask, taskName, associatedProjectID, isBillable);
+        
+        return null;
     }
     
     public void removeTaskFromDB(Task taskToDelete) {
@@ -186,6 +195,9 @@ public class AdminModel {
     
     
     // user
+    public User getUser(int userID) {
+        return bllManager.getUser(userID);
+    }
     
      public ObservableList<User> getAllUserNameAndId() {
         
@@ -194,11 +206,13 @@ public class AdminModel {
          return user;
     }
     public void addNewUserToDB(String userName, String email, String password, float salary, String status) {
-        bllManager.addNewUserToDB(userName, email, password, salary, status);
+        User u = bllManager.addNewUserToDB(userName, email, password, salary, status);
+        userList.add(u);
     }
     
     public User editUser(User userToEdit, String userName, String email, String password, Float salary, String status) {
-        return bllManager.editUser(userToEdit, userName, email, password, salary, status);
+        bllManager.editUser(userToEdit, userName, email, password, salary, status);
+        return null;
     }
     
     public void removeUserFromDB(User userToDelete) {
@@ -207,7 +221,8 @@ public class AdminModel {
     
     // Session
     public Session editSession(Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
-        return bllManager.getSession(associatedTaskID);
+        bllManager.editSession(editedSession, associatedUserID, associatedTaskID, startTime, finishTime);
+        return null;
     }
     
     public void removeSessionFromDB(Session sessionToDelete) {
@@ -220,6 +235,7 @@ public class AdminModel {
         
         List<Task> task = bllManager.getUsersThreeRecentTasks(loggedInUser);
         RecentTask = FXCollections.observableArrayList(task);
+        
         return RecentTask;
         
     }
@@ -249,26 +265,13 @@ public class AdminModel {
     public Project getProjectForUser(int projectID){
        return bllManager.getProjectForUser(projectID);
     }
-    
-    /*public ObservableList<Task> getAllTaskFromProjectId(){
-        List<Task> allTask =  new ArrayList<>();
-        Task t1 = new Task("t1" + 0,0);
-        Task t2 = new Task("t2" + 5,5);
-        Task t3 = new Task("t3" + 1,5);
-        allTask.add(t1);
-        allTask.add(t2);
-        allTask.add(t3);
-        
-        task3 = FXCollections.observableArrayList(allTask);
-        
-        return task3;
-    }*/
-    
+
     public Task getTaskForUser(int taskID) {
         return bllManager.getTaskForUser(taskID);
     }
     public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
-       return bllManager.addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime);
+       bllManager.addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime);
+       return null;
     }
     public String localDateTimeToString(LocalDateTime LDT) {
         return bllManager.localDateTimeToString(LDT);
@@ -296,9 +299,14 @@ public class AdminModel {
      public ObservableList<User> searchUser(ObservableList<User> allUser, String text){
         return bllManager.searchUser(allUser, text);
     }
-    // Report 
+    // Report --------------------------------------------------------------------------------------------------------------------------------------------
+    
+     public List<Report> Csv(){
+         return Reportlist; // if 0 dont return
+     }
+     
      public ObservableList<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) {
-                List<Report> Reportlist = bllManager.generateReport(clientID, projectID, taskID, userID, searchFrom, searchTo);
+                Reportlist = bllManager.generateReport(clientID, projectID, taskID, userID, searchFrom, searchTo);
                 System.out.println(""+Reportlist.size());
                 Report = FXCollections.observableArrayList(Reportlist);
                 

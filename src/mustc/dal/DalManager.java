@@ -428,6 +428,7 @@ public class DalManager implements DalFaçade {
     @Override
     public User editUser(User userToEdit, String userName, String email, String password, Float salary, String status) {
         return userDBDao.editUser(userToEdit, userName, email, password, salary, status);
+        
     }
     
     

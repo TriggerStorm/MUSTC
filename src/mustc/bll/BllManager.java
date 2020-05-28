@@ -231,7 +231,7 @@ public class BllManager implements IBLL {
 
     @Override
     public Session editSession(Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
-        return dalManager.getSession(associatedTaskID);
+        return dalManager.editSession(editedSession, associatedUserID, associatedTaskID, startTime, finishTime);
     }
 
     

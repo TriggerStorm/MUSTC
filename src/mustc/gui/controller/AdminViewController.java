@@ -383,16 +383,8 @@ public class AdminViewController implements Initializable, Runnable {
         //cb_task1.setSelectionModel(Task);
         // cb_task1.setItems(adminModel.getAllTask());
        // tv_project_task.setVisible(false);
-        //recent task 1
-        lb_t1task.setText(adminModel.get1().get(0).getTaskName());
-        lb_t1project.setText(adminModel.get1().get(0).getProjectName());
-        //resent task 2
-        lb_t2task.setText(adminModel.get2().get(0).getTaskName());
-        lb_t2project.setText(adminModel.get2().get(0).getProjectName());
-        //recent task 3
-        lb_t3task.setText(adminModel.get3().get(0).getTaskName());
-        lb_t3project.setText(adminModel.get3().get(0).getProjectName());
         
+        set3LatesTask();
         cb_project.setItems(adminModel.getAllProjectsIDsAndNames());
         
         //image work in progress
@@ -415,6 +407,18 @@ public class AdminViewController implements Initializable, Runnable {
        
          
     }    
+    
+    public void set3LatesTask(){
+    //recent task 1
+        lb_t1task.setText(adminModel.get1().get(0).getTaskName());
+        lb_t1project.setText(adminModel.get1().get(0).getProjectName());
+        //resent task 2
+        lb_t2task.setText(adminModel.get2().get(0).getTaskName());
+        lb_t2project.setText(adminModel.get2().get(0).getProjectName());
+        //recent task 3
+        lb_t3task.setText(adminModel.get3().get(0).getTaskName());
+        lb_t3project.setText(adminModel.get3().get(0).getProjectName());
+    }
 
     public void sizeExpantion(){
         
@@ -604,8 +608,8 @@ public class AdminViewController implements Initializable, Runnable {
         Report_user.setCellValueFactory(new PropertyValueFactory<Report, String>("loggedInUser"));
         Report_startTime.setCellValueFactory(new PropertyValueFactory<Report, String>("startTime"));
         Report_finishTime.setCellValueFactory(new PropertyValueFactory<Report, String>("finishTime"));
-        Report_billableMin.setCellValueFactory(new PropertyValueFactory<Report, String>("totalBillableMinutes"));
-        Report_totalPrice.setCellValueFactory(new PropertyValueFactory<Report, String>("totalPrice"));
+        Report_billableMin.setCellValueFactory(new PropertyValueFactory<Report, String>("billable"));
+        Report_totalPrice.setCellValueFactory(new PropertyValueFactory<Report, String>("revenue"));
         
         Tbv_Report.setItems(adminModel.oReport());
         System.out.println(""+adminModel.oReport().size());
@@ -707,6 +711,7 @@ public class AdminViewController implements Initializable, Runnable {
                 "string path",
                 tf_clint_email.getText().trim(),
                 fRate);
+        Tbv_Clint.refresh();
     }
 
     @FXML
@@ -719,11 +724,14 @@ public class AdminViewController implements Initializable, Runnable {
                 "string path",
                 tf_clint_email.getText().trim()
                 );
+                Tbv_Clint.refresh();
     }
 
     @FXML
     private void handel_client_delete(ActionEvent event) {
         adminModel.removeClientFromDB(clientToedit);
+        adminModel.oListClient().remove(clientToedit);
+        Tbv_Clint.refresh();
                 
     }
 
@@ -742,6 +750,8 @@ public class AdminViewController implements Initializable, Runnable {
                 fRate,
                 allocatedHours);
                 
+                Tbv_pj.refresh();
+                
                 
                 tf_pj_name.clear();
                 tf_pj_nr.clear();
@@ -752,24 +762,27 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private void handel_project_eddit(ActionEvent event) {
         int allocatedHours = 10;
+        int nr = Integer.parseInt(tf_pj_nr.getText());
         String Rate = tf_pj_$perhour.getText().trim();
                float fRate = Float.parseFloat(Rate);
         adminModel.editProject(
                 projectToedit,
                 tf_pj_name.getText().trim(),
-                cb_pj_clint.getSelectionModel().getSelectedItem().getClientId(),  
+                nr,  
                 fRate,
                 allocatedHours,
                 projectToedit.isClosed()
                 );
+                Tbv_pj.refresh();
         
     }
 
     @FXML
     private void handel_project_delete(ActionEvent event) {
         adminModel.removeProjectFromDB(projectToedit);
-        /*ObservableList<TablePosition> remove = Tbv_pj.getSelectionModel().getSelectedCells();
-        Tbv_pj.getSelectionModel().getSelectedCells().remove(remove);*/
+        adminModel.oListProject().remove(projectToedit);
+        Tbv_pj.refresh();
+        
     }
 
     @FXML
@@ -778,6 +791,7 @@ public class AdminViewController implements Initializable, Runnable {
                 task_name.getText().trim(),              
                 cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
                 bb);
+        tbv_task.refresh();
                 
                 
     }
@@ -787,12 +801,15 @@ public class AdminViewController implements Initializable, Runnable {
         adminModel.editTask(taskToedit,
                 task_name.getText().trim(),
                 taskToedit.getAssociatedProjectID(),
-                bb);    // MOCK DATA  
+                bb);
+                tbv_task.refresh();
     }
 
     @FXML
     private void handel_task_delete(ActionEvent event) {
         adminModel.removeTaskFromDB(taskToedit);
+        adminModel.oListTask().remove(taskToedit);
+        tbv_task.refresh();
     }
 
     @FXML
@@ -818,11 +835,14 @@ public class AdminViewController implements Initializable, Runnable {
                 fSal,
                 cb_user_admin.getSelectionModel().getSelectedItem().toString()
                 );
+                tbv_user.refresh();
     }
 
     @FXML
     private void handel_user_delete(ActionEvent event) {
        adminModel.removeUserFromDB(userToedit);
+       adminModel.oListUser().remove(userToedit);
+        tbv_user.refresh();
     }
 
     @FXML
@@ -836,11 +856,15 @@ public class AdminViewController implements Initializable, Runnable {
                 SessionToedit.getAssociatedTaskID(),
                 tf_session_start.getText(),
                 tf_session_stop.getText());
+                tbv_session.refresh();
+                
     }
 
     @FXML
     private void handel_session_delete(ActionEvent event) {
         adminModel.removeSessionFromDB(SessionToedit);
+        adminModel.oListSession().remove(SessionToedit);
+        tbv_session.refresh();
     }
 
     @FXML
@@ -851,7 +875,11 @@ public class AdminViewController implements Initializable, Runnable {
     }
     
     public void sessionStartNStop(){
-     if(isStarted == false)
+     Thread t = new Thread()
+        {
+            public void run()
+            {
+        if(isStarted == false)
             {
             isStarted = true;
              Platform.runLater(()->{
@@ -874,10 +902,25 @@ public class AdminViewController implements Initializable, Runnable {
              String StopTime = adminModel.localDateTimeToString(LDTnow);
              adminModel.addNewSessionToDB(lu, selectTask.getTaskID(), startTime, StopTime);
              timeState = false;
+             
+             
+             adminModel.getUsersThreeRecentTaskss(adminModel.getUser(liu.getId()));
+             
              Platform.runLater(()->{
-             lb_tasktime.setText("00:00:00");
+             set3LatesTask();
+             resetTime();
+             adminModel.getAllSessions();
+             tbv_session.setItems(adminModel.oListSession());
+             
              });
         }
+    }
+        }; t.start();
+        
+       }
+    
+    public void resetTime(){
+    lb_tasktime.setText("00:00:00");
     }
     
     @FXML
@@ -887,7 +930,7 @@ public class AdminViewController implements Initializable, Runnable {
             public void run()
             {
         addTask();
-        adminModel.getAllTask();
+        //adminModel.getAllTask();
         
         tbv_task.setItems(adminModel.oListTask());
         
@@ -916,7 +959,7 @@ public class AdminViewController implements Initializable, Runnable {
     }
 
     @FXML
-    private void handel_pick_project(javafx.scene.input.MouseEvent event) {
+    private void handel_pick_project(javafx.scene.input.MouseEvent event) { //add try chatch to all pickers.
         projectToedit = Tbv_pj.getSelectionModel().getSelectedItem();
         tf_pj_name.setText(projectToedit.getProjectName());
         cb_pj_clint.setPromptText(projectToedit.getClientName());

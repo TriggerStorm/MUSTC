@@ -156,7 +156,8 @@ public class UserDBDAO {
     
     
     public User editUser (User editedUser, String userName, String email, String password, Float salary, String status) { 
-    //  Edits a user in the User table of the database given the users new details.  
+    //  Edits a user in the User table of the database given the users new details.
+        
         String sql = "UPDATE Users SET name = ?, email = ?, password = ?, salary = ? , admin = ? WHERE id = '" + editedUser.getUserID() + "'";
         try (  //Get a connection to the database.
             Connection con = dbc.getConnection()) {  
