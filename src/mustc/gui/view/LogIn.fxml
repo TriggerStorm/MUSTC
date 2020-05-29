@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="158.0" prefWidth="296.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mustc.gui.controller.LogInController">
+<AnchorPane id="AnchorPane" prefHeight="186.0" prefWidth="296.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mustc.gui.controller.LogInController">
     <stylesheets>
         <URL value="@/mustc/gui/css/adminview.css" />
     </stylesheets>
@@ -20,7 +20,12 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <JFXButton fx:id="bn_login" layoutX="124.0" layoutY="123.0" onAction="#handel_login" text="LogIn" />
-      <Button fx:id="bv_Test" layoutX="48.0" layoutY="123.0" mnemonicParsing="false" onAction="#test" text="T" />
+      <JFXButton fx:id="bn_login" buttonType="RAISED" layoutX="121.0" layoutY="127.0" onAction="#handel_login" style="-fx-background-color: lightgrey;" text="LogIn" />
+      <Button fx:id="bv_Test" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" onAction="#test" text="T" />
+      <Label fx:id="lb_error" layoutX="81.0" layoutY="160.0" prefHeight="17.0" prefWidth="135.0" text="Authentication Error" textFill="#ee2b2b">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

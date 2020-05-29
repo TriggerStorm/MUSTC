@@ -10,6 +10,9 @@ import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import mustc.be.LoggedInUser;
 import mustc.gui.model.LogInModel;
@@ -41,12 +45,15 @@ public class LogInController implements Initializable {
     private LoggedInUser loginuser;
     @FXML
     private Button bv_Test;
+    @FXML
+    private Label lb_error;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         loginuser = LoggedInUser.getInstance();
+        lb_error.setVisible(false);
     }    
 
     
@@ -113,9 +120,10 @@ public class LogInController implements Initializable {
                     break;
             case 2:  userlogin(loginmail, passw); //student login 
                     break;
-            default: System.out.println("Sorry wrong authentication"); //Might want to make a popup here in stead....
-    }
-    }
+            default: lb_error.setVisible(true);
+        }}
+        
+            
 
     @FXML
     private void test(ActionEvent event) throws IOException {

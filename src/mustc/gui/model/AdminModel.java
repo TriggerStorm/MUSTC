@@ -81,6 +81,10 @@ public class AdminModel {
     return userList;
     }
     
+    public ObservableList<Task> projectTask(){
+    return projectTask;
+    }
+    
     public ObservableList<String> getAdmin(){
           List<String> admins = new ArrayList<>();
         String s1 = new String("Admin");
@@ -269,8 +273,9 @@ public class AdminModel {
     public Task getTaskForUser(int taskID) {
         return bllManager.getTaskForUser(taskID);
     }
-    public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
-       bllManager.addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime);
+    public Session addNewSessionToDB(int associatedUserID, int associatedTaskID,String associatedTaskName, String startTime, String finishTime) {
+      Session s = bllManager.addNewSessionToDB(associatedUserID, associatedTaskID,associatedTaskName, startTime, finishTime);
+       sessionList.add(s);
        return null;
     }
     public String localDateTimeToString(LocalDateTime LDT) {
@@ -331,5 +336,8 @@ public class AdminModel {
        return pjreport;
         
         
+    }
+      public void addReportListToCSVFile(List<Report> reportList) {
+        bllManager.addReportListToCSVFile(reportList);
     }
 }

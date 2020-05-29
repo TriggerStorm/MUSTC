@@ -128,8 +128,8 @@ public class UserViewModel {
         bllManager.removeSessionFromDB(sessionToDelete);
     }
     
-    public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
-       return bllManager.addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime);
+    public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String associatedTaskName ,String startTime, String finishTime) {
+       return bllManager.addNewSessionToDB(associatedUserID, associatedTaskID, associatedTaskName, startTime, finishTime);
     }
     
     

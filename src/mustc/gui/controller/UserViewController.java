@@ -419,7 +419,7 @@ public class UserViewController extends JFrame implements Initializable {
             int lu = 1;
             LocalDateTime LDTnow = LocalDateTime.now();
             String StopTime = userModel.localDateTimeToString(LDTnow);
-            userModel.addNewSessionToDB(lu, selectTask.getTaskID(), startTime, StopTime);
+            userModel.addNewSessionToDB(lu, selectTask.getTaskID(),selectTask.getTaskName(), startTime, StopTime);
             ;
         }
     }

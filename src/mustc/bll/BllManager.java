@@ -205,8 +205,8 @@ public class BllManager implements IBLL {
     
 // SessionDBDAO methods                    
     @Override
-    public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
-        return dalManager.addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime);
+    public Session addNewSessionToDB(int associatedUserID, int associatedTaskID,String associatedTaskName, String startTime, String finishTime) {
+        return dalManager.addNewSessionToDB(associatedUserID, associatedTaskID, associatedTaskName, startTime, finishTime);
     }
 
     @Override

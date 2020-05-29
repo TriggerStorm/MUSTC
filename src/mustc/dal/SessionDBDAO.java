@@ -51,9 +51,10 @@ public class SessionDBDAO {
 
     
     
-     public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) throws SQLException { 
+     public Session addNewSessionToDB(int associatedUserID, int associatedTaskID,String associatedTaskName, String startTime, String finishTime) throws SQLException { 
     //  Adds a new Session to the Sessions table of the database given the sessions details. Generates an id key    
-        Session newSession = new Session(0, associatedUserID, ""/* associatedUserName*/, associatedTaskID, ""/*associatedTaskName*/, startTime, finishTime);
+        String associatedUserName = getSessionsUserName(associatedUserID);   
+        Session newSession = new Session(0, associatedUserID,  associatedUserName, associatedTaskID, associatedTaskName, startTime, finishTime);
         String sql = "INSERT INTO Sessions(associatedUser, associatedTask, startTime, finishTime) VALUES (?,?,?,?)";
         try (Connection con = dbc.getConnection()) {
             PreparedStatement pstmt = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -77,8 +78,8 @@ public class SessionDBDAO {
         } catch (SQLException ex) {
             Logger.getLogger(SessionDBDAO.class.getName()).log(Level.SEVERE, null, ex);
         }            
-        String associatedUserName = getSessionsUserName(associatedUserID);           
-
+                   
+        
         return newSession;
     }
      

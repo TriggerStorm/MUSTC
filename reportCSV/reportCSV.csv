@@ -1,13 +1,8 @@
-REPORT ,GENERATED,2020-05-28, at 13:39:59, : SEARCH PARAMETERS , ON NEXT LINE:,,,
-all Clients,all Projects,all Tasks,all Users,from 2020-02-28,to 2020-04-23,Mins, ?$?,PRICE
-Bapple,Project X,Phone Calls 10,Steve,2020-04-11 13:10:55,2020-04-11 14:10:50,60,$$,920
-Bapple,Project X,Accounting,Bob,2020-04-13 13:14:55,2020-04-13 15:12:55,120,$$,1840
-Logo,Windmills,DBDAO,Steve,2020-04-15 13:16:55,2020-04-15 18:55:55,345,$$,4887
-MichaelSoft,Plan B,Validators,Janet,2020-04-16 13:19:00,2020-04-16 14:18:00,60,$$,700
+REPORT ,GENERATED,2020-05-29, at 12:01:45, : SEARCH PARAMETERS , ON NEXT LINE:,,,
+all Clients,all Projects,all Tasks,John B,from 1920-05-29,to 2020-05-30,Mins, ?$?,PRICE
 MichaelSoft,Plan B,Validators,John B,2020-04-18 13:26:59,2020-04-18 13:34:59,15,$$,175
-MichaelSoft,Plan B,Meetings,Janet,2020-04-19 13:27:00,2020-04-19 18:23:00,300,--,0
-Mike,Project House,LogIn,Janet,2020-04-20 13:30:00,2020-04-20 13:40:00,15,$$,300
-Logo,SpaceCraft,GUI,Janet,2020-04-21 13:32:00,2020-04-21 13:59:00,30,$$,712
-MichaelSoft,Plan B,Interface,Janet,2020-04-22 13:40:48,2020-04-22 17:11:48,225,$$,2625
-Mike,Project House,Research,Janet,2020-04-23 13:42:36,2020-04-23 15:32:36,120,--,0
-TOTALS -> , BILLABLE, (mins) = ,870, UNBILLABLE (mins) = ,420, TOTAL ,  = ,12159
+MichaelSoft,Plan B,Interface,John B,2020-04-30 12:10:04,2020-04-30 12:11:04,15,$$,175
+MichaelSoft,Plan B,Interface,John B,2020-04-30 13:50:42,2020-04-30 14:50:42,60,$$,700
+MichaelSoft,Plan B,Interface,John B,2020-04-26 13:50:42,2020-04-26 15:23:42,105,$$,1225
+MichaelSoft,Plan B,Interface,John B,2020-05-06 13:13:47,2020-05-06 13:44:47,45,$$,525
+TOTALS -> , BILLABLE, (mins) = ,240, UNBILLABLE (mins) = ,0, TOTAL ,  = ,2800

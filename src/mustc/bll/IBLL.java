@@ -60,7 +60,7 @@ public interface IBLL {
     
 
 // SessionDBDAO methods            
-    public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime);
+    public Session addNewSessionToDB(int associatedUserID, int associatedTaskID,String associatedTaskName, String startTime, String finishTime);
     public Session getSession(int sessionID);
     public List<Session> getAllSessions();  // Admin view
     public List<Session> getAllSessionsOfAUser(User loggedInUser);

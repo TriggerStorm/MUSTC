@@ -317,9 +317,9 @@ public class DalManager implements DalFaçade {
 // SessionDBDAO methods   
     
     @Override
-    public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
+    public Session addNewSessionToDB(int associatedUserID, int associatedTaskID,String associatedTaskName, String startTime, String finishTime) {
         try {
-            return sessionDBDao.addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime);
+            return sessionDBDao.addNewSessionToDB(associatedUserID, associatedTaskID,associatedTaskName, startTime, finishTime);
         } catch (SQLException ex) {
             Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
         }
