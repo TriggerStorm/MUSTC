@@ -105,7 +105,7 @@ public class UserViewModel {
         
         List<Task> task = bllManager.getUsersThreeRecentTasks(loggedInUser);
         RecentTask = FXCollections.observableArrayList(task);
-        
+        System.out.println(""+RecentTask);
         return RecentTask;
         
     }
@@ -161,7 +161,8 @@ public class UserViewModel {
     
     // Session
     public Session editSession(Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
-        return bllManager.getSession(associatedTaskID);
+        bllManager.editSession(editedSession, associatedUserID, associatedTaskID, startTime, finishTime);
+        return null;
     }
     
     public void removeSessionFromDB(Session sessionToDelete) {

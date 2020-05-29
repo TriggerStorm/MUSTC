@@ -82,6 +82,9 @@ public class AdminModel {
     public ObservableList<Task> projectTask(){
     return projectTask;
     }
+    public ObservableList<Project> oListProjectNameAndId(){
+    return pj;
+    }
     
     public ObservableList<String> getAdmin(){
           List<String> admins = new ArrayList<>();
@@ -134,6 +137,7 @@ public class AdminModel {
     public Client addNewClientToDB(String clientName, String logoImgLocation, String email, float standardRate) {
         Client cl = bllManager.addNewClientToDB(clientName, logoImgLocation, email, standardRate);
         clientList.add(cl);
+        client.add(cl);
         return null;
     }
     
@@ -162,6 +166,8 @@ public class AdminModel {
     public Project addNewProjectToDB(String projectName, int associatedClientID, int phoneNr, float projectRate, int allocatedHours) {
         Project addpj = bllManager.addNewProjectToDB(projectName, associatedClientID, phoneNr, projectRate, allocatedHours);
         pjList.add(addpj);
+        pj.add(addpj);
+        pjreport.add(addpj);
         return null;
     }
 
@@ -182,6 +188,7 @@ public class AdminModel {
     public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable){ // do this for add to db.
         Task addT = bllManager.addNewTaskToDB(taskName, associatedProjectID, isBillable);
         taskList.add(addT);
+        
         return null;
    }
 
@@ -210,6 +217,7 @@ public class AdminModel {
     public void addNewUserToDB(String userName, String email, String password, float salary, String status) {
         User u = bllManager.addNewUserToDB(userName, email, password, salary, status);
         userList.add(u);
+        user.add(u);
     }
     
     public User editUser(User userToEdit, String userName, String email, String password, Float salary, String status) {

@@ -377,7 +377,7 @@ public class AdminViewController implements Initializable, Runnable {
        // tv_project_task.setVisible(false);
         
         set3LatesTask();
-        cb_project.setItems(adminModel.getAllProjectsIDsAndNames());
+        
         
         //image work in progress
         /*Image image1 = new Image(userModel.taskImg1());
@@ -388,7 +388,7 @@ public class AdminViewController implements Initializable, Runnable {
         img_task3.setImage(image3);*/
         
         
-        
+        cb_project.setItems(adminModel.getAllProjectsIDsAndNames());
         cb_pj_clint.setItems(adminModel.getAllClient());
         cb_task_project.setItems(adminModel.getAllProjectsIDsAndNames());
         cb_user_admin.setItems(adminModel.getAdmin());
@@ -732,7 +732,7 @@ public class AdminViewController implements Initializable, Runnable {
                 allocatedHours);
                 
                 Tbv_pj.refresh();
-                
+                cb_project.setItems(adminModel.oListProjectNameAndId());
                 
                 tf_pj_name.clear();
                 tf_pj_nr.clear();
@@ -957,7 +957,7 @@ public class AdminViewController implements Initializable, Runnable {
              Platform.runLater(()->{   
              bn_start_stop.setText("Start");
              });
-             int lu = liu.getId();
+             int lu = 1;//liu.getId();
             
              LocalDateTime LDTnow = LocalDateTime.now();
              String StopTime = adminModel.localDateTimeToString(LDTnow);
@@ -981,6 +981,10 @@ public class AdminViewController implements Initializable, Runnable {
     
     public void resetTime(){
     lb_tasktime.setText("00:00:00");
+    msec = 0;
+    sec = 0;
+    mins = 0;
+    hours = 0;
     }
     
     @FXML
@@ -1293,11 +1297,7 @@ public class AdminViewController implements Initializable, Runnable {
        
     }
     
-    public void Refresh (){
-        ObservableList<Task> observableList = adminModel.oListTask();
-       tbv_task.setItems(observableList);
-       
-    }
+    
 
     @FXML
     private void handel_selectClient(ActionEvent event) {

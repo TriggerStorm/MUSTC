@@ -580,15 +580,15 @@ public class UserViewController extends JFrame implements Initializable {
             System.out.println("Field has no value"+e);
         }
     }
-
     @FXML
     private void handel_pick_session(MouseEvent event) {
         try{
         SessionToedit = TBV_Session.getSelectionModel().getSelectedItem();
-        tf_session_name.setText(SessionToedit.getAssociatedTaskName());
+        lb_session_name.setText(SessionToedit.getAssociatedTaskName());
         tf_session_start.setText(SessionToedit.getStartTime());
         tf_session_stop.setText(SessionToedit.getFinishTime());
-        tf_session_dev.setText(SessionToedit.getAssociatedUserName());}
+        lb_session_dev.setText(liu.getName());
+        }
         catch(Exception e){
             System.out.println("Field has no value"+e);
         }
@@ -692,6 +692,7 @@ public class UserViewController extends JFrame implements Initializable {
                 SessionToedit.getAssociatedTaskID(),
                 tf_session_start.getText(),
                 tf_session_stop.getText());
+                
                 TBV_Session.refresh();
                 lb_session_name.setText("Name");
                 tf_session_start.clear();
@@ -803,7 +804,7 @@ public class UserViewController extends JFrame implements Initializable {
              bn_start_stop.setText("Start");
              });
              int lu = liu.getId();
-            
+             System.out.println(""+ lu);
              LocalDateTime LDTnow = LocalDateTime.now();
              String StopTime = userModel.localDateTimeToString(LDTnow);
              userModel.addNewSessionToDB(lu, selectTask.getTaskID(),selectTask.getTaskName(), startTime, StopTime);
@@ -975,6 +976,8 @@ public class UserViewController extends JFrame implements Initializable {
         tbv_task.refresh();*/
         
     }
+
+    
 
 }
     
