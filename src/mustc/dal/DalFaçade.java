@@ -78,6 +78,7 @@ public interface DalFaçade {
     
 // ReportDBDAO methods
     public List<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo);
+    public void addReportListToCSVFile(List<Report> reportList);
 
     
 }

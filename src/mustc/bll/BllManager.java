@@ -280,13 +280,20 @@ public class BllManager implements IBLL {
 
   
     
+    
 // ReportDBDAO methods    
-   @Override
+    @Override
     public List<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) {
         return dalManager.generateReport(clientID, projectID, taskID, userID, searchFrom, searchTo);
     }
 
+ 
+    @Override
+    public void addReportListToCSVFile(List<Report> reportList) {
+        dalManager.addReportListToCSVFile(reportList);
+    }
    
+    
     
 // TimeUtilites (BLL)
     @Override
@@ -301,7 +308,7 @@ public class BllManager implements IBLL {
 
   
     
-   //search utilites (BLL)
+//search utilites (BLL)
     @Override
     public ObservableList<Task> searchTask(ObservableList<Task> allTask, String text) {
         return searchUtil.searchTask(allTask, text);
@@ -326,5 +333,6 @@ public class BllManager implements IBLL {
         return searchUtil.searchUser(allUser, text);
     }
 
+   
     
 }

@@ -738,6 +738,7 @@ public class AdminViewController implements Initializable, Runnable {
 
     @FXML
     private void handel_project_add(ActionEvent event) {
+
        int allocatedHours = 10;
                double Nr = Double.parseDouble(tf_pj_nr.getText());
                int iNr = (int)Nr;

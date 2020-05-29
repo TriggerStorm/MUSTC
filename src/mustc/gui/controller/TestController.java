@@ -255,8 +255,8 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
   
    
 //     Session test = sessionDBDao.addNewSessionToDB(15, 10, "2020-04-20 13:30:00", "2020-04-20 13:40:00");
-        Session tests = sessionDBDao.getSession(47);
-        Session test = sessionDBDao.editSession(tests, 16, 10, "2019-04-20 16:36:00.0", "2019-04-20 17:58:00.0");
+  //      Session tests = sessionDBDao.getSession(47);
+  //      Session test = sessionDBDao.editSession(tests, 16, 10, "2019-04-20 16:36:00.0", "2019-04-20 17:58:00.0");
  //       sessionDBDao.removeSessionFromDB(test);
  //        User loggedInUser = userDBDao.getUser(1);
  //        List<Session> allUserSessions = bllManager.getAllSessionsOfAUser(loggedInUser);
@@ -419,8 +419,13 @@ LocalDate searchTo = LocalDate.now().minusWeeks(5);//= stringToLocalDate("2021-0
  
  
 // REPORT
-/*
 
+LocalDate searchFrom = LocalDate.now().minusMonths(3);
+        System.out.println("searchFrom = " + searchFrom);// timeUtilities.stringToLocalDate("2019-04-20 13:30:00");// 2020-04-18 13:26:59
+LocalDate searchTo = LocalDate.now().minusWeeks(5);//= stringToLocalDate("2021-04-20 13:30:00");
+        System.out.println("searchTo = " + searchTo);// timeUtilities.stringToLocalDate("2019-04-20 13:30:00");// 2020-04-18 13:26:59
+
+        
   List<Report> reportList = reportDBDao.generateReport(-1, -1, -1, -1, searchFrom, searchTo);//int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo)
 
         for (int i = 0; i < reportList.size(); i++) {
@@ -429,7 +434,7 @@ System.out.println(test.getClientName() + "," + test.getProjectName() + "," + te
         + "," + test.getFinishTime() + "," + test.getMinutes() + "," + test.getBillable()+ "," + test.getRevenue());
           
         reportDBDao.addReportListToCSVFile(reportList);
-  */    
+      
  /*                System.out.println("");
         System.out.println("ClientName:  " + test.getClientName());
         System.out.println("ProjectName:  " + test.getProjectName());
@@ -441,8 +446,8 @@ System.out.println(test.getClientName() + "," + test.getProjectName() + "," + te
 
         System.out.println("BillableMinutes = " + test.getMinutes());
         System.out.println("TotalPrice = " + test.getRevenue());
-        } 
-  */      
+ */       } 
+        
         
         
 System.out.println("test finish");
