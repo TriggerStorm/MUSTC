@@ -466,7 +466,7 @@ public class AdminViewController implements Initializable, Runnable {
             min = true;
            
                 System.out.println("true");
-                Stage stage = (Stage) Sp_last3.getScene().getWindow();
+                Stage stage = (Stage) fp_last3task.getScene().getWindow();
                 stage.setMaxHeight(488);
                 stage.setMaxWidth(260);
                 stage.setMinHeight(488);
@@ -478,7 +478,7 @@ public class AdminViewController implements Initializable, Runnable {
             min = false;
             
             System.out.println("false");
-            Stage stage = (Stage) Sp_last3.getScene().getWindow();
+            Stage stage = (Stage) fp_last3task.getScene().getWindow();
             stage.setMaxHeight(248);
             stage.setMaxWidth(255);
             stage.setMinHeight(248);
@@ -608,6 +608,7 @@ public class AdminViewController implements Initializable, Runnable {
         Report_user.setCellValueFactory(new PropertyValueFactory<Report, String>("loggedInUser"));
         Report_startTime.setCellValueFactory(new PropertyValueFactory<Report, String>("startTime"));
         Report_finishTime.setCellValueFactory(new PropertyValueFactory<Report, String>("finishTime"));
+        //minutes
         Report_billableMin.setCellValueFactory(new PropertyValueFactory<Report, String>("billable"));
         Report_totalPrice.setCellValueFactory(new PropertyValueFactory<Report, String>("revenue"));
         
