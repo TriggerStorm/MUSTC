@@ -4,14 +4,11 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -34,9 +31,9 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f4f4f4" height="445.0" stroke="WHITE" strokeType="INSIDE" width="240.0" />
       <TextField fx:id="tf_newtask" layoutX="102.0" layoutY="35.0" prefHeight="25.0" prefWidth="75.0" promptText="New Task" AnchorPane.leftAnchor="102.0" AnchorPane.topAnchor="35.0" />
       <ComboBox fx:id="cb_project" layoutX="16.0" layoutY="35.0" prefHeight="25.0" prefWidth="81.0" promptText="Project" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="35.0" />
-      <Button fx:id="bn_add" layoutX="186.0" layoutY="33.0" mnemonicParsing="false" onAction="#handel_addTaskminview" text="add" AnchorPane.leftAnchor="186.0" AnchorPane.topAnchor="35.0" />
-      <TextField fx:id="search" layoutX="20.0" layoutY="70.0" prefHeight="25.0" prefWidth="162.0" promptText="Search" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0" />
-      <ToggleButton fx:id="tb_toggle" layoutX="197.0" layoutY="70.0" mnemonicParsing="false" onAction="#toggel_size" prefHeight="25.0" prefWidth="23.0" />
+      <Button fx:id="bn_add" layoutX="202.0" layoutY="35.0" mnemonicParsing="false" onAction="#handel_addTaskminview" text="add" AnchorPane.leftAnchor="202.0" AnchorPane.topAnchor="35.0" />
+      <TextField fx:id="search" layoutX="20.0" layoutY="70.0" onKeyReleased="#handel_search" prefHeight="25.0" prefWidth="162.0" promptText="Search" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="70.0" />
+      <ToggleButton fx:id="tb_toggle" layoutX="213.0" layoutY="70.0" mnemonicParsing="false" onAction="#toggel_size" prefHeight="25.0" prefWidth="23.0" />
       <Button fx:id="bn_start_stop" layoutX="16.0" layoutY="355.0" mnemonicParsing="false" onAction="#handel_start_stop" prefHeight="40.0" prefWidth="52.0" text="Start" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="16.0" />
       <Label fx:id="lb_tasktime" layoutX="195.0" layoutY="356.0" text="00:00:00" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="163.0">
          <font>
@@ -44,91 +41,18 @@
          </font></Label>
       <Text fx:id="lb_task" layoutX="150.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Task" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="76.0" />
       <Text fx:id="tb_project" layoutX="147.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Project" AnchorPane.bottomAnchor="78.0" AnchorPane.leftAnchor="76.0" />
-      <ToolBar layoutY="1.0" prefHeight="25.0" prefWidth="242.0" style="-fx-background-color: lightgrey;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ToolBar layoutY="1.0" prefHeight="2.0" prefWidth="1021.0" style="-fx-background-color: lightgrey;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <Label text="MUSTC" />
             <Label prefHeight="17.0" prefWidth="44.0" />
             <Label text="User:  " />
-            <Label fx:id="lb_loginuser" text="Martin" />
-            <Label prefHeight="17.0" prefWidth="24.0" />
-            <JFXButton fx:id="bn_settings" prefHeight="0.0" prefWidth="26.0" text="S" />
+            <Label fx:id="lb_loginuser" prefHeight="17.0" prefWidth="66.0" text="Martin" />
+            <JFXButton fx:id="bn_settings" onAction="#handel_onTop" prefHeight="0.0" prefWidth="26.0" text="S" />
+            <Label prefHeight="17.0" prefWidth="652.0" />
+            <JFXTextField fx:id="tap_search" onKeyReleased="#Search" prefHeight="0.0" prefWidth="111.0" promptText="Search" />
          </items>
       </ToolBar>
       <Button fx:id="bn_expandview" layoutX="53.0" layoutY="412.0" mnemonicParsing="false" onAction="#handle_view" prefHeight="25.0" prefWidth="135.0" text="Expand view" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="53.0" />
-      <ScrollPane fx:id="Sp_last3" layoutX="21.0" layoutY="111.0" prefHeight="235.0" prefWidth="200.0">
-         <content>
-            <FlowPane fx:id="fp_last3task" prefHeight="194.0" prefWidth="200.0">
-               <children>
-                  <StackPane layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="189.0">
-                     <children>
-                        <JFXButton fx:id="bn_task1" onAction="#handel_task1" prefHeight="76.0" prefWidth="200.0" style="-fx-background-color: lightgrey;" text="Time Controll: Call">
-                           <padding>
-                              <Insets bottom="40.0" left="75.0" />
-                           </padding>
-                        </JFXButton>
-                        <JFXComboBox fx:id="cb_task1" minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" promptText="Other">
-                           <StackPane.margin>
-                              <Insets left="80.0" top="40.0" />
-                           </StackPane.margin>
-                        </JFXComboBox>
-                        <ImageView fx:id="img_task1" fitHeight="76.0" fitWidth="81.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                           <StackPane.margin>
-                              <Insets right="110.0" />
-                           </StackPane.margin>
-                           <image>
-                              <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="189.0">
-                     <children>
-                        <JFXButton fx:id="bn_task2" onAction="#handle_task2" prefHeight="76.0" prefWidth="200.0" style="-fx-background-color: lightgrey;" text="Time Controll: Call">
-                           <padding>
-                              <Insets bottom="40.0" left="75.0" />
-                           </padding>
-                        </JFXButton>
-                        <JFXComboBox fx:id="cb_task2" minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" promptText="Other">
-                           <StackPane.margin>
-                              <Insets left="80.0" top="40.0" />
-                           </StackPane.margin>
-                        </JFXComboBox>
-                        <ImageView fx:id="img_task2" fitHeight="76.0" fitWidth="81.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                           <StackPane.margin>
-                              <Insets right="110.0" />
-                           </StackPane.margin>
-                           <image>
-                              <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </StackPane>
-                  <StackPane layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="189.0">
-                     <children>
-                        <JFXButton fx:id="bn_task3" onAction="#handle_task3" prefHeight="76.0" prefWidth="200.0" style="-fx-background-color: lightgrey;" text="Time Controll: Call">
-                           <padding>
-                              <Insets bottom="40.0" left="75.0" />
-                           </padding>
-                        </JFXButton>
-                        <JFXComboBox fx:id="cb_task3" minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" promptText="Other">
-                           <StackPane.margin>
-                              <Insets left="80.0" top="40.0" />
-                           </StackPane.margin>
-                        </JFXComboBox>
-                        <ImageView fx:id="img_task3" fitHeight="76.0" fitWidth="81.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
-                           <StackPane.margin>
-                              <Insets right="110.0" />
-                           </StackPane.margin>
-                           <image>
-                              <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </StackPane>
-               </children>
-            </FlowPane>
-         </content>
-      </ScrollPane>
       <TabPane layoutX="245.0" layoutY="27.0" prefHeight="423.0" prefWidth="773.0" side="LEFT" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="tab_pj" onSelectionChanged="#tap_handel_project" text="Project">
@@ -141,7 +65,7 @@
                             <TableColumn fx:id="Col_pj_clint" prefWidth="148.0" text="Client" />
                               <TableColumn fx:id="Col_pj_contact" prefWidth="148.0" text="Contact info" />
                               <TableColumn fx:id="Col_pj_nroftask" prefWidth="148.0" text="Nr of task" />
-                              <TableColumn fx:id="Col_pj_myhours" prefWidth="148.0" text="My hours" />
+                              <TableColumn fx:id="Col_pj_myhours" prefWidth="148.0" text="My Mins" />
                           </columns>
                         </TableView>
                      </children>
@@ -157,7 +81,7 @@
                             <TableColumn fx:id="Col_task_taskname" prefWidth="185.0" text="Task name" />
                             <TableColumn fx:id="Col_task_project" prefWidth="185.0" text="Project" />
                               <TableColumn fx:id="Col_task_devs" prefWidth="185.0" text="Devs" />
-                              <TableColumn fx:id="Col_task_myhours" prefWidth="185.0" text="My hours" />
+                              <TableColumn fx:id="Col_task_myhours" prefWidth="185.0" text="My Mins" />
                           </columns>
                         </TableView>
                         <Label layoutX="5.0" layoutY="392.0" text="Task">
@@ -167,37 +91,18 @@
                         </Label>
                         <JFXTextField fx:id="task_name" layoutX="43.0" layoutY="392.0" prefHeight="25.0" prefWidth="81.0" text="Name " />
                         <JFXComboBox fx:id="cb_task_project" layoutX="142.0" layoutY="392.0" prefHeight="25.0" prefWidth="81.0" promptText="Project" />
-                        <JFXButton fx:id="bn_task_add" layoutX="239.0" layoutY="395.0" onAction="#handel_add_task" style="-fx-background-color: lightgrey;" text="Add" />
-                        <JFXButton fx:id="bn_task_eddit" layoutX="274.0" layoutY="395.0" onAction="#handel_edit_task" style="-fx-background-color: lightgrey;" text="edit" />
-                        <JFXButton fx:id="bn_task_delete" layoutX="308.0" layoutY="395.0" onAction="#handel_delete_task" style="-fx-background-color: lightgrey;" text="Delete" />
-                        <JFXDatePicker fx:id="dp_task_from" layoutX="548.0" layoutY="391.0" prefHeight="28.0" prefWidth="95.0" />
-                        <JFXDatePicker fx:id="dp_task_to" layoutX="643.0" layoutY="391.0" prefHeight="28.0" prefWidth="95.0" />
+                        <JFXButton fx:id="bn_task_add" layoutX="304.0" layoutY="394.0" onAction="#handel_add_task" style="-fx-background-color: lightgrey;" text="Add" />
+                        <JFXButton fx:id="bn_task_eddit" layoutX="339.0" layoutY="394.0" onAction="#handel_edit_task" style="-fx-background-color: lightgrey;" text="edit" />
+                        <JFXButton fx:id="bn_task_delete" layoutX="373.0" layoutY="394.0" onAction="#handel_delete_task" style="-fx-background-color: lightgrey;" text="Delete" />
+                        <ToggleButton fx:id="tb_task_billable" layoutX="232.0" layoutY="395.0" mnemonicParsing="false" onAction="#handel_billable" prefHeight="25.0" prefWidth="24.0" text="\$" textFill="#1cbf48">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </ToggleButton>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="tab_stat" onSelectionChanged="#tap_handel_stats" text="Statistic">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="422.0" prefWidth="362.0">
-                     <children>
-                        <BarChart fx:id="stat_graf" prefHeight="393.0" prefWidth="739.0">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </BarChart>
-                        <JFXComboBox fx:id="cb_stat_project" layoutX="43.0" layoutY="382.0" prefHeight="25.0" prefWidth="100.0" promptText="project" />
-                        <JFXComboBox fx:id="cb_stat_task" layoutX="162.0" layoutY="382.0" prefHeight="25.0" prefWidth="103.0" promptText="Task" />
-                        <JFXDatePicker fx:id="dp_stat_from" layoutX="283.0" layoutY="379.0" prefHeight="28.0" prefWidth="95.0" />
-                        <JFXDatePicker fx:id="dp_stat_to" layoutX="378.0" layoutY="381.0" prefHeight="28.0" prefWidth="95.0" />
-                        <Label fx:id="lb_stat_taskhours" layoutX="583.0" layoutY="381.0" prefHeight="27.0" prefWidth="75.0" text="Hour on Task" />
-                        <Label fx:id="lb_stat_totalhours" layoutX="667.0" layoutY="381.0" prefHeight="27.0" prefWidth="75.0" text="Total Hours" />
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
             <Tab fx:id="tab_sesion" onSelectionChanged="#tap_handel_sesion" text="Session">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -209,8 +114,6 @@
                               <TableColumn fx:id="col_sesion_stop" prefWidth="246.0" text="Stop" />
                            </columns>
                         </TableView>
-                        <JFXTextField fx:id="tf_session_name" layoutX="56.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Name" />
-                        <JFXTextField fx:id="tf_session_dev" layoutX="305.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Developers" />
                         <JFXTextField fx:id="tf_session_start" layoutX="139.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Start" />
                         <JFXTextField fx:id="tf_session_stop" layoutX="222.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Stop" />
                         <Label layoutX="3.0" layoutY="397.0" text="Session">
@@ -220,11 +123,155 @@
                         </Label>
                         <JFXButton fx:id="bn_session_edit" layoutX="393.0" layoutY="393.0" onAction="#handel_session_edit" style="-fx-background-color: lightgrey;" text="Edit" />
                         <JFXButton fx:id="bn_session_delete" layoutX="428.0" layoutY="393.0" onAction="#handel_session_delete" style="-fx-background-color: lightgrey;" text="Delete" />
+                        <Label fx:id="lb_session_name" layoutX="64.0" layoutY="395.0" prefHeight="25.0" prefWidth="75.0" text="Name" />
+                        <Label fx:id="lb_session_dev" layoutX="307.0" layoutY="399.0" prefHeight="17.0" prefWidth="75.0" text="Developers" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="tab_stat" onSelectionChanged="#tap_handel_stats" text="Report">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="422.0" prefWidth="362.0">
+                     <children>
+                        <JFXComboBox fx:id="cb_stat_project" layoutX="118.0" layoutY="384.0" onAction="#Handel_project" prefHeight="25.0" prefWidth="123.0" promptText="project" />
+                        <JFXComboBox fx:id="cb_stat_task" layoutX="244.0" layoutY="384.0" prefHeight="25.0" prefWidth="123.0" promptText="Task" />
+                        <JFXDatePicker fx:id="dp_stat_from" layoutX="545.0" layoutY="380.0" prefHeight="28.0" prefWidth="95.0" />
+                        <JFXDatePicker fx:id="dp_stat_to" layoutX="645.0" layoutY="380.0" prefHeight="28.0" prefWidth="90.0" />
+                        <JFXComboBox fx:id="cb_stat_clint" layoutX="6.0" layoutY="384.0" onAction="#handel_selectClient" prefHeight="25.0" prefWidth="109.0" promptText="Client" />
+                        <JFXComboBox fx:id="cb_stat_dev" layoutX="371.0" layoutY="384.0" prefHeight="25.0" prefWidth="107.0" promptText="User" />
+                        <JFXButton fx:id="bn_report" layoutX="486.0" layoutY="385.0" onAction="#handel_report" text="Report" />
+                        <TableView fx:id="Tbv_Report" prefHeight="376.0" prefWidth="740.0">
+                           <columns>
+                              <TableColumn fx:id="Report_client" prefWidth="92.0" text="Client" />
+                              <TableColumn fx:id="Report_project" prefWidth="92.0" text="Project" />
+                              <TableColumn fx:id="Report_task" prefWidth="92.0" text="Task" />
+                              <TableColumn fx:id="Report_user" prefWidth="92.0" text="User" />
+                              <TableColumn fx:id="Report_startTime" prefWidth="92.0" text="Start Time" />
+                              <TableColumn fx:id="Report_finishTime" prefWidth="92.0" text="Finish Time" />
+                              <TableColumn fx:id="Report_billableMin" prefWidth="92.0" text="Billable Min" />
+                              <TableColumn fx:id="Report_totalPrice" prefWidth="92.0" text="Total price" />
+                           </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
         </tabs>
       </TabPane>
+      <ToggleButton fx:id="tb_smallview_billable" layoutX="178.0" layoutY="35.0" mnemonicParsing="false" onAction="#handle_small_billable" text="\$" textFill="#1dbf28" />
+      <JFXButton fx:id="bn_searchClear" layoutX="185.0" layoutY="70.0" onAction="#handel_searchClear" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: lightGrey;" text="&lt;" />
+      <FlowPane fx:id="fp_last3task" layoutX="26.0" layoutY="104.0" prefHeight="228.0" prefWidth="200.0">
+         <children>
+            <StackPane layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="160.0">
+               <children>
+                  <JFXButton fx:id="bn_task1" buttonType="RAISED" onAction="#handel_task1" prefHeight="76.0" prefWidth="200.0" style="-fx-background-color: lightgrey;" text=" ">
+                     <padding>
+                        <Insets bottom="40.0" left="40.0" />
+                     </padding>
+                  </JFXButton>
+                  <ImageView fx:id="img_task1" fitHeight="122.0" fitWidth="45.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                     <StackPane.margin>
+                        <Insets bottom="10.0" right="150.0" />
+                     </StackPane.margin>
+                     <image>
+                        <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lb_t1task" mouseTransparent="true" text="phone call 10" StackPane.alignment="CENTER_LEFT">
+                     <StackPane.margin>
+                        <Insets left="55.0" top="20.0" />
+                     </StackPane.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lb_t1project" mouseTransparent="true" text="hello" StackPane.alignment="CENTER_LEFT">
+                     <StackPane.margin>
+                        <Insets bottom="40.0" left="55.0" />
+                     </StackPane.margin>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="189.0">
+               <children>
+                  <JFXButton fx:id="bn_task2" buttonType="RAISED" onAction="#handle_task2" prefHeight="78.0" prefWidth="195.0" style="-fx-background-color: lightgrey;" text=" ">
+                     <padding>
+                        <Insets bottom="40.0" left="40.0" />
+                     </padding>
+                  </JFXButton>
+                  <ImageView fx:id="img_task2" fitHeight="45.0" fitWidth="50.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                     <StackPane.margin>
+                        <Insets bottom="10.0" right="150.0" />
+                     </StackPane.margin>
+                     <image>
+                        <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lb_t2task" mouseTransparent="true" text="phone call 10" StackPane.alignment="CENTER_LEFT">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <StackPane.margin>
+                        <Insets left="55.0" top="20.0" />
+                     </StackPane.margin>
+                  </Label>
+                  <Label fx:id="lb_t2project" mouseTransparent="true" text="hello how are you" StackPane.alignment="CENTER_LEFT">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <StackPane.margin>
+                        <Insets bottom="40.0" left="55.0" />
+                     </StackPane.margin>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="189.0">
+               <children>
+                  <JFXButton fx:id="bn_task3" buttonType="RAISED" onAction="#handle_task3" prefHeight="76.0" prefWidth="200.0" style="-fx-background-color: lightgrey;" text=" ">
+                     <padding>
+                        <Insets bottom="40.0" left="40.0" />
+                     </padding>
+                  </JFXButton>
+                  <ImageView fx:id="img_task3" fitHeight="45.0" fitWidth="50.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                     <StackPane.margin>
+                        <Insets bottom="10.0" right="150.0" />
+                     </StackPane.margin>
+                     <image>
+                        <Image url="@../assets/gym-exercise-healthy-dumbbell-512.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lb_t3task" mouseTransparent="true" text="phone call 10" StackPane.alignment="CENTER_LEFT">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <StackPane.margin>
+                        <Insets left="55.0" top="20.0" />
+                     </StackPane.margin>
+                  </Label>
+                  <Label fx:id="lb_t3project" mouseTransparent="true" text="hello how are you" StackPane.alignment="CENTER_LEFT">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                     <StackPane.margin>
+                        <Insets bottom="40.0" left="55.0" />
+                     </StackPane.margin>
+                  </Label>
+               </children>
+            </StackPane>
+         </children>
+      </FlowPane>
+      <JFXTreeView fx:id="tv_project_task" layoutX="23.0" layoutY="100.0" onMouseClicked="#handel_pick_treeview" prefHeight="245.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

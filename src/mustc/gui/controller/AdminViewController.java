@@ -141,10 +141,6 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private JFXButton bn_task_delete;
     @FXML
-    private JFXDatePicker dp_task_from;
-    @FXML
-    private JFXDatePicker dp_task_to;
-    @FXML
     private JFXComboBox<Project> cb_stat_project;
     @FXML
     private JFXComboBox<Task> cb_stat_task;
@@ -202,10 +198,6 @@ public class AdminViewController implements Initializable, Runnable {
     private JFXButton bn_pj_eddit;
     @FXML
     private JFXButton bn_pj_delete;
-    @FXML
-    private JFXDatePicker dp_pj_from;
-    @FXML
-    private JFXDatePicker dp_pj_to;
     @FXML
     private JFXComboBox<Client> cb_stat_clint;
     @FXML

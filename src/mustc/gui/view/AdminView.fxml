@@ -46,10 +46,9 @@
             <Label text="MUSTC" />
             <Label prefHeight="17.0" prefWidth="44.0" />
             <Label text="User:  " />
-            <Label fx:id="lb_loginuser" prefHeight="17.0" prefWidth="64.0" text="User" />
-            <Label prefHeight="17.0" prefWidth="9.0" />
+            <Label fx:id="lb_loginuser" prefHeight="17.0" prefWidth="55.0" text="User" />
             <JFXButton fx:id="bn_settings" onAction="#handel_onTop" prefHeight="0.0" prefWidth="26.0" text="S" />
-            <Label prefHeight="17.0" prefWidth="616.0" />
+            <Label prefHeight="17.0" prefWidth="661.0" />
             <JFXTextField fx:id="tap_search" onKeyReleased="#Search" prefHeight="0.0" prefWidth="98.0" promptText="Search" />
          </items>
       </ToolBar>
@@ -120,8 +119,6 @@
                         <JFXButton fx:id="bn_pj_add" layoutX="336.0" layoutY="395.0" onAction="#handel_project_add" style="-fx-background-color: lightgrey;" text="Add" />
                         <JFXButton fx:id="bn_pj_eddit" layoutX="372.0" layoutY="395.0" onAction="#handel_project_eddit" style="-fx-background-color: lightgrey;" text="edit" />
                         <JFXButton fx:id="bn_pj_delete" layoutX="405.0" layoutY="395.0" onAction="#handel_project_delete" style="-fx-background-color: lightgrey;" text="Delete" />
-                        <JFXDatePicker fx:id="dp_pj_from" layoutX="546.0" layoutY="390.0" prefHeight="28.0" prefWidth="95.0" />
-                        <JFXDatePicker fx:id="dp_pj_to" layoutX="645.0" layoutY="390.0" prefHeight="28.0" prefWidth="95.0" />
                      </children>
                   </AnchorPane>
             </content>
@@ -150,8 +147,6 @@
                         <JFXButton fx:id="bn_task_add" layoutX="303.0" layoutY="395.0" onAction="#handel_task_add" style="-fx-background-color: lightgrey;" text="Add" />
                         <JFXButton fx:id="bn_task_eddit" layoutX="338.0" layoutY="395.0" onAction="#handel_task_eddit" style="-fx-background-color: lightgrey;" text="edit" />
                         <JFXButton fx:id="bn_task_delete" layoutX="372.0" layoutY="395.0" onAction="#handel_task_delete" style="-fx-background-color: lightgrey;" text="Delete" />
-                        <JFXDatePicker fx:id="dp_task_from" layoutX="548.0" layoutY="391.0" prefHeight="28.0" prefWidth="95.0" />
-                        <JFXDatePicker fx:id="dp_task_to" layoutX="643.0" layoutY="391.0" prefHeight="28.0" prefWidth="95.0" />
                         <ToggleButton fx:id="tb_task_billable" layoutX="214.0" layoutY="393.0" mnemonicParsing="false" onAction="#handel_billable" prefHeight="25.0" prefWidth="24.0" text="\$" textFill="#1cbf48">
                            <font>
                               <Font name="System Bold" size="12.0" />

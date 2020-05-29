@@ -31,11 +31,9 @@ public class AdminModel {
     private ObservableList<Project> pjList;
     private ObservableList<Task> taskList;
     private ObservableList<Session> sessionList; 
-    private Task task;
     private ObservableList<Client> clientList;
     private ObservableList<User> userList;
     private ObservableList<Task> RecentTask;
-    private ObservableList<Task> task1;
     private ObservableList<Task> g1;
     private ObservableList<Task> g2;
     private ObservableList<Task> g3;

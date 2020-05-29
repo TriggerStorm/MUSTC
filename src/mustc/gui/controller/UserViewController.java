@@ -9,12 +9,16 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeView;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -29,19 +33,25 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javax.swing.JFrame;
+import mustc.be.Client;
+import mustc.be.LoggedInUser;
 import mustc.be.Project;
+import mustc.be.Report;
 import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
 import mustc.gui.model.UserViewModel;
+
 
 
 
@@ -112,13 +122,7 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private JFXButton bn_task_delete;
     @FXML
-    private JFXDatePicker dp_task_from;
-    @FXML
-    private JFXDatePicker dp_task_to;
-    @FXML
     private Tab tab_stat;
-    @FXML
-    private BarChart<?, ?> stat_graf;
     @FXML
     private JFXComboBox<?> cb_stat_project;
     @FXML
@@ -127,10 +131,6 @@ public class UserViewController extends JFrame implements Initializable {
     private JFXDatePicker dp_stat_from;
     @FXML
     private JFXDatePicker dp_stat_to;
-    @FXML
-    private Label lb_stat_taskhours;
-    @FXML
-    private Label lb_stat_totalhours;
     @FXML
     private Tab tab_sesion;
     @FXML
@@ -143,24 +143,20 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private TableColumn<Session, String> col_sesion_stop;
     
-    @FXML
     private ScrollPane Sp_last3;
     
     @FXML
     private JFXButton bn_task1;
-    @FXML
     private JFXComboBox<Task> cb_task1;
     @FXML
     private ImageView img_task1;
     @FXML
     private JFXButton bn_task2;
-    @FXML
     private JFXComboBox<Task> cb_task2;
     @FXML
     private ImageView img_task2;
     @FXML
     private JFXButton bn_task3;
-    @FXML
     private JFXComboBox<Task> cb_task3;
     @FXML
     private ImageView img_task3;
@@ -173,19 +169,28 @@ public class UserViewController extends JFrame implements Initializable {
     boolean isStarted;
     Task selectTask;
     String startTime;
+    String currentTab = "project";
+    private LoggedInUser liu;
     
     Session SessionToedit;
     Task taskToedit;
+    boolean timeState = true;
     
+    static int msec = 0;
+    static int sec = 0;
+    static int mins = 0;
+    static int hours = 0;
+    
+    boolean bb = true;
+    boolean bbm = true;
+    boolean onTop = false;
     
     @FXML
     private Text lb_task;
     @FXML
     private Text tb_project;
     private TableColumn<Session, String> col_sesion_tn1;
-    @FXML
     private JFXTextField tf_session_name;
-    @FXML
     private JFXTextField tf_session_dev;
     @FXML
     private JFXTextField tf_session_start;
@@ -195,6 +200,56 @@ public class UserViewController extends JFrame implements Initializable {
     private JFXButton bn_session_edit;
     @FXML
     private JFXButton bn_session_delete;
+    @FXML
+    private ToggleButton tb_task_billable;
+    @FXML
+    private JFXComboBox<?> cb_stat_clint;
+    @FXML
+    private JFXComboBox<?> cb_stat_dev;
+    @FXML
+    private JFXButton bn_report;
+    @FXML
+    private TableView<Report> Tbv_Report;
+    @FXML
+    private TableColumn<Report, String> Report_client;
+    @FXML
+    private TableColumn<Report, String> Report_project;
+    @FXML
+    private TableColumn<Report, String> Report_task;
+    @FXML
+    private TableColumn<Report, String> Report_user;
+    @FXML
+    private TableColumn<Report, String> Report_startTime;
+    @FXML
+    private TableColumn<Report, String> Report_finishTime;
+    @FXML
+    private TableColumn<Report, String> Report_billableMin;
+    @FXML
+    private TableColumn<Report, String> Report_totalPrice;
+    @FXML
+    private ToggleButton tb_smallview_billable;
+    @FXML
+    private JFXButton bn_searchClear;
+    @FXML
+    private Label lb_t1task;
+    @FXML
+    private Label lb_t1project;
+    @FXML
+    private Label lb_t2task;
+    @FXML
+    private Label lb_t2project;
+    @FXML
+    private Label lb_t3task;
+    @FXML
+    private Label lb_t3project;
+    @FXML
+    private JFXTreeView<String> tv_project_task;
+    @FXML
+    private JFXTextField tap_search;
+    @FXML
+    private Label lb_session_name;
+    @FXML
+    private Label lb_session_dev;
     
     
     
@@ -209,19 +264,10 @@ public class UserViewController extends JFrame implements Initializable {
         setTask();
         setSession();
                 
-        cb_task1.setItems(userModel.get1());// dont work
-        cb_task1.setPromptText(cb_task1.getItems().get(0).getTaskName());
-        bn_task1.setText(cb_task1.getItems().get(0).getProjectName());
-        //resent task 2
-        cb_task2.setItems(userModel.get2());
-        cb_task2.setPromptText(cb_task2.getItems().get(0).getTaskName());
-        bn_task2.setText(cb_task2.getItems().get(0).getProjectName());
-        //recent task 3
-        cb_task3.setItems(userModel.get3());
-        cb_task3.setPromptText(cb_task3.getItems().get(0).getTaskName());
-        bn_task3.setText(cb_task3.getItems().get(0).getProjectName());
+        set3LatesTask();
         
         cb_project.setItems(userModel.getAllProjectsIDsAndNames());
+        
         /*Image image1 = new Image(userModel.taskImg1());
         Image image2 = new Image(userModel.taskImg2());
         Image image3 = new Image(userModel.taskImg3());
@@ -230,23 +276,47 @@ public class UserViewController extends JFrame implements Initializable {
         img_task3.setImage(image3);*/
         
         cb_task_project.setItems(userModel.getAllProjectsIDsAndNames());
+        
+        
+        
+        
+        
+        lb_loginuser.setText(liu.getName());
+        tv_project_task.setVisible(false);
     }    
 
     public UserViewController() {
         MaxWidth = 260;
         min = true;
+        isStarted = false;
+        liu = LoggedInUser.getInstance();
+    }
+    public void set3LatesTask(){
+    //recent task 1
+        lb_t1task.setText(userModel.get1().get(0).getTaskName());
+        lb_t1project.setText(userModel.get1().get(0).getProjectName());
+        //resent task 2
+        lb_t2task.setText(userModel.get2().get(0).getTaskName());
+        lb_t2project.setText(userModel.get2().get(0).getProjectName());
+        //recent task 3
+        lb_t3task.setText(userModel.get3().get(0).getTaskName());
+        lb_t3project.setText(userModel.get3().get(0).getProjectName());
     }
     
     public void sizeExpantion(){
+        
+        
         if(MaxWidth == 260){
-            Stage stage = (Stage) bn_expandview.getScene().getWindow();
-            stage.setMaxHeight(488);
-            stage.setMaxWidth(1044);
-            stage.setMinHeight(488);
-            stage.setMinWidth(1044);
-            MaxWidth = 1044;
-            Sp_last3.setVisible(true);
+        
+        Stage stage = (Stage) bn_expandview.getScene().getWindow();
+        stage.setMaxHeight(488);
+        stage.setMaxWidth(1044);
+        stage.setMinHeight(488);
+        stage.setMinWidth(1044);
+        MaxWidth = 1044;
+        fp_last3task.setVisible(true);
             min = true;
+        
         }
         else{
             if(min == false){
@@ -256,7 +326,7 @@ public class UserViewController extends JFrame implements Initializable {
                 stage.setMinHeight(488);
                 stage.setMinWidth(1044);
                 MaxWidth = 1044;
-                Sp_last3.setVisible(true);
+                fp_last3task.setVisible(true);
                 min = true;
             }
             else{
@@ -266,31 +336,32 @@ public class UserViewController extends JFrame implements Initializable {
                 stage.setMinHeight(488);
                 stage.setMinWidth(260);
                 MaxWidth = 260;
-                Sp_last3.setVisible(true);
+                fp_last3task.setVisible(true);
                 min = true;
             }
         }
+       
     }
-    
-    
-    public void toggelSize(){
+    public void ToggelSize(){
+        
         if(min == false){    
-            Sp_last3.setVisible(true);
+            fp_last3task.setVisible(true);
             min = true;
-           System.out.println("true");
-            Stage stage = (Stage) Sp_last3
-                    .getScene().getWindow();
-            stage.setMaxHeight(488);
-            stage.setMaxWidth(260);
-            stage.setMinHeight(488);
-            stage.setMinWidth(260);
-            MaxWidth = 260;
-        } else {
-            Sp_last3.setVisible(false);
+           
+                System.out.println("true");
+                Stage stage = (Stage) fp_last3task.getScene().getWindow();
+                stage.setMaxHeight(488);
+                stage.setMaxWidth(260);
+                stage.setMinHeight(488);
+                stage.setMinWidth(260);
+                MaxWidth = 260;
+            }
+        else{
+            fp_last3task.setVisible(false);
             min = false;
+            
             System.out.println("false");
-            Stage stage = (Stage) Sp_last3
-                    .getScene().getWindow();
+            Stage stage = (Stage) fp_last3task.getScene().getWindow();
             stage.setMaxHeight(248);
             stage.setMaxWidth(255);
             stage.setMinHeight(248);
@@ -300,7 +371,9 @@ public class UserViewController extends JFrame implements Initializable {
     
     
     public void addTask(){
-        userModel.addNewTaskToDB(tf_newtask.getText(),cb_project.getSelectionModel().getSelectedItem().getProjectID(), true);
+        userModel.addNewTaskToDB(tf_newtask.getText(),cb_project.getSelectionModel().getSelectedItem().getProjectID(), bbm);
+        tb_project.setText(cb_project.getSelectionModel().getSelectedItem().toString());
+        lb_task.setText(tf_newtask.getText().toString());
     }
     
     @FXML
@@ -310,17 +383,51 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void toggel_size(ActionEvent event) {
-        toggelSize();
+        ToggelSize();
     }
 
-
+    public void setTreeView(){
+        
+       
+       String clientInSearch = search.getText();
+       
+       
+        TreeItem<String> root = new TreeItem<>(clientInSearch);
+        root.expandedProperty();
+        int x =  userModel.oListProject().size();
+        int y =  userModel.oListTask().size();
+        String cid = clientInSearch.toLowerCase();
+        for (int i = 0; i < x ; i++) {
+                
+                String pname = userModel.oListProject().get(i).getClientName().toLowerCase();
+                if(cid.equals(pname)){
+                
+                TreeItem<String> item = new TreeItem<String>();
+                item.setValue(new String(userModel.oListProject().get(i).toString()));
+                root.getChildren().add(item);
+                
+                int id = userModel.oListProject().get(i).getProjectID();
+                 
+                for (int c = 0; c < y ; c++) {
+                    int tid = userModel.oListTask().get(c).getAssociatedProjectID();
+                if(id == tid ){
+                TreeItem<String> it = new TreeItem<String>();
+                it.setValue(new String(userModel.oListTask().get(c).toString()));
+                item.getChildren().add(it);
+                };
+            }
+                }
+            }
+     
+        tv_project_task.setRoot(root);
+    }
     
     public void setProject(){
     Col_pj_name.setCellValueFactory(new PropertyValueFactory<Project, String>("projectName"));
         Col_pj_clint.setCellValueFactory(new PropertyValueFactory<Project, String>("clientName"));
         Col_pj_contact.setCellValueFactory(new PropertyValueFactory<Project, String>("phoneNr"));
         Col_pj_nroftask.setCellValueFactory(new PropertyValueFactory<Project, String>("noOfTasks"));
-        Col_pj_myhours.setCellValueFactory(new PropertyValueFactory<Project, String>("myProjectHours"));
+        Col_pj_myhours.setCellValueFactory(new PropertyValueFactory<Project, String>("usersProjectMinutes"));
        
         
                 Tbv_pj.setItems(userModel.getAllProject());
@@ -330,7 +437,7 @@ public class UserViewController extends JFrame implements Initializable {
         Col_task_taskname.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
         Col_task_project.setCellValueFactory(new PropertyValueFactory<Task, String>("projectName"));
         Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("developers"));
-        Col_task_myhours.setCellValueFactory(new PropertyValueFactory<Task, String>("myTaskHours"));
+        Col_task_myhours.setCellValueFactory(new PropertyValueFactory<Task, String>("usersTaskMinutes"));
        
                  tbv_task.setItems(userModel.getAllTask());
     }
@@ -343,138 +450,531 @@ public class UserViewController extends JFrame implements Initializable {
         TBV_Session.setItems(userModel.getAllSession());
     }
     
+    public void setReport(){
+        
+        Report_client.setCellValueFactory(new PropertyValueFactory<Report, String>("clientName"));
+        Report_project.setCellValueFactory(new PropertyValueFactory<Report, String>("projectName"));
+        Report_task.setCellValueFactory(new PropertyValueFactory<Report, String>("taskName"));
+        Report_user.setCellValueFactory(new PropertyValueFactory<Report, String>("loggedInUser"));
+        Report_startTime.setCellValueFactory(new PropertyValueFactory<Report, String>("startTime"));
+        Report_finishTime.setCellValueFactory(new PropertyValueFactory<Report, String>("finishTime"));
+        //minutes
+        Report_billableMin.setCellValueFactory(new PropertyValueFactory<Report, String>("billable"));
+        Report_totalPrice.setCellValueFactory(new PropertyValueFactory<Report, String>("revenue"));
+        
+        Tbv_Report.setItems(userModel.oReport());
+        System.out.println(""+userModel.oReport().size());
+    }
+    
+    // Taps
     @FXML
     private void tap_handel_project(Event event) {
-        /*Col_pj_name.setCellValueFactory(new PropertyValueFactory<Project, String>("name"));
-        Col_pj_clint.setCellValueFactory(new PropertyValueFactory<Project, String>("clint"));
-        Col_pj_contact.setCellValueFactory(new PropertyValueFactory<Project, String>("contact"));
-        Col_pj_nroftask.setCellValueFactory(new PropertyValueFactory<Project, String>("nroftask"));
-        Col_pj_myhours.setCellValueFactory(new PropertyValueFactory<Project, String>("myhours"));
-        Tbv_pj.setItems(userModel.getAllProject());*/
+      tap_search.clear();
+        if(currentTab != "project" ){
+            Tbv_pj.setItems(userModel.oListProject());
+        }
+        currentTab ="project";    
+      
+       
     }
 
     @FXML
     private void tap_handel_task(Event event) {
-       /* Col_task_taskname.setCellValueFactory(new PropertyValueFactory<Task, String>("name"));
-        Col_task_project.setCellValueFactory(new PropertyValueFactory<Task, String>("Project"));
-        Col_task_devs.setCellValueFactory(new PropertyValueFactory<Task, String>("devs"));
-        Col_task_myhours.setCellValueFactory(new PropertyValueFactory<Task, String>("myHours"));
-        tbv_task.setItems(userModel.getAllTask());*/
+       currentTab ="task";
+       tap_search.clear();
+       tbv_task.setItems(userModel.oListTask());
     }
 
     @FXML
     private void tap_handel_stats(Event event) {
-        
+        currentTab ="stats";
+        tap_search.clear();
     }
 
     @FXML
     private void tap_handel_sesion(Event event) {
-       /* col_sesion_taskname.setCellValueFactory(new PropertyValueFactory<Session, String>("taskName"));
-        col_sesion_date.setCellValueFactory(new PropertyValueFactory<Session, String>("date"));
-        col_sesion_start.setCellValueFactory(new PropertyValueFactory<Session, String>("start"));
-        col_sesion_stop.setCellValueFactory(new PropertyValueFactory<Session, String>("stop"));
-        col_sesion_myhours.setCellValueFactory(new PropertyValueFactory<Session, String>("myHours"));
-        TBV_Session.setItems(userModel.getAllSession());*/
+        currentTab ="sessions";
+        tap_search.clear();
+        TBV_Session.setItems(userModel.oListSession());
         
     }
 
     @FXML
-    private void handel_task1(ActionEvent event) {
-        
-        selectTask = cb_task1.getSelectionModel().getSelectedItem();
-        lb_task.setText(cb_task1.getSelectionModel().getSelectedItem().getTaskName());
-            tb_project.setText(cb_task1.getSelectionModel().getSelectedItem().getProjectName());
+    private void handel_task1(ActionEvent event) { //*
+        selectTask = userModel.get1().get(0);
+            lb_task.setText(userModel.get1().get(0).getTaskName());
+            tb_project.setText(userModel.get1().get(0).getProjectName());
                 
     }
 
     @FXML
-    private void handle_task2(ActionEvent event) {
-        selectTask = cb_task2.getSelectionModel().getSelectedItem();
-        lb_task.setText(cb_task2.getSelectionModel().getSelectedItem().getTaskName());
-            tb_project.setText(cb_task2.getSelectionModel().getSelectedItem().getProjectName());
+    private void handle_task2(ActionEvent event) {//*
+        selectTask = userModel.get2().get(0);
+            lb_task.setText(userModel.get2().get(0).getTaskName());
+            tb_project.setText(userModel.get2().get(0).getProjectName());
     }
 
     @FXML
-    private void handle_task3(ActionEvent event) {
-        selectTask = cb_task3.getSelectionModel().getSelectedItem();
-        lb_task.setText(cb_task3.getSelectionModel().getSelectedItem().getTaskName());
-            tb_project.setText(cb_task3.getSelectionModel().getSelectedItem().getProjectName());
+    private void handle_task3(ActionEvent event) {//*
+       selectTask = userModel.get3().get(0);
+            lb_task.setText(userModel.get3().get(0).getTaskName());
+            tb_project.setText(userModel.get3().get(0).getProjectName());
     }
 
     @FXML
     private void handel_addTaskminview(ActionEvent event) {
+         Thread t = new Thread()
+        {
+            public void run()
+            {
         addTask();
+        
+        
+        tbv_task.setItems(userModel.oListTask());
+        
+        sessionStartNStop();
+        
+       String T = tf_newtask.getText();
+       
+       int y =  userModel.oListTask().size();
+       
+        String tpj = cb_project.getSelectionModel().getSelectedItem().getProjectName();
+       
+       for (int c = 0; c < y ; c++) {
+                    String tn = userModel.oListTask().get(c).getTaskName();
+                    //String tn = "TreeItem [ value: "+adminModel.oListTask().get(c).getTaskName()+" ]";
+                    String tp = userModel.oListTask().get(c).getProjectName();
+                    
+          if(       T.equals(tn)){
+              if(tpj.equals(tp)){
+            selectTask = userModel.oListTask().get(c);
+              }}}
+                 }
+        
+        };
+                 t.start();
+        
     }
+        
+    
 
     @FXML
     private void handel_start_stop(ActionEvent event) {
-        if(isStarted == false) {
-            isStarted = true;
-            bn_start_stop.setText("Stop");
-            LocalDateTime LDTnow = LocalDateTime.now();
-            startTime = userModel.localDateTimeToString(LDTnow);
-            } else {
-            isStarted = false;
-            bn_start_stop.setText("Start");
-            int lu = 1;
-            LocalDateTime LDTnow = LocalDateTime.now();
-            String StopTime = userModel.localDateTimeToString(LDTnow);
-            userModel.addNewSessionToDB(lu, selectTask.getTaskID(),selectTask.getTaskName(), startTime, StopTime);
-            ;
+        sessionStartNStop();
+    }
+
+   
+
+    @FXML
+    private void handel_pick_task(MouseEvent event) { //*
+       try{
+        taskToedit = tbv_task.getSelectionModel().getSelectedItem();
+        task_name.setText(taskToedit.getTaskName());
+        cb_task_project.setPromptText(taskToedit.getProjectName());
+       
+        selectTask = tbv_task.getSelectionModel().getSelectedItem();
+        lb_task.setText(tbv_task.getSelectionModel().getSelectedItem().getTaskName());
+        tb_project.setText(tbv_task.getSelectionModel().getSelectedItem().getProjectName());
+       }
+       catch(Exception e){
+            System.out.println("Field has no value"+e);
         }
     }
 
     @FXML
-    private void handel_session_edit(ActionEvent event) {
-        userModel.editSession(SessionToedit,
-                SessionToedit.getAssociatedUserID(),
-                SessionToedit.getAssociatedTaskID(),
-                tf_session_start.getText(),
-                tf_session_stop.getText());
-    }
-
-    @FXML
-    private void handel_session_delete(ActionEvent event) {
-        userModel.removeSessionFromDB(SessionToedit);
-    }
-
-    @FXML
-    private void handel_pick_task(MouseEvent event) {
-        taskToedit = tbv_task.getSelectionModel().getSelectedItem();
-        task_name.setText(taskToedit.getTaskName());
-        cb_task_project.setPromptText(taskToedit.getProjectName());
-    }
-
-    @FXML
     private void handel_pick_session(MouseEvent event) {
+        try{
         SessionToedit = TBV_Session.getSelectionModel().getSelectedItem();
         tf_session_name.setText(SessionToedit.getAssociatedTaskName());
         tf_session_start.setText(SessionToedit.getStartTime());
         tf_session_stop.setText(SessionToedit.getFinishTime());
-        tf_session_dev.setText(SessionToedit.getAssociatedUserName());
+        tf_session_dev.setText(SessionToedit.getAssociatedUserName());}
+        catch(Exception e){
+            System.out.println("Field has no value"+e);
+        }
+    }
+    
+    @FXML
+    private void handel_pick_treeview(MouseEvent event) {
+        try{
+        String T = tv_project_task.getSelectionModel().getSelectedItem().getValue();
+       int y =  userModel.oListTask().size();
+       String tpj = tv_project_task.getSelectionModel().getSelectedItem().getParent().getValue();
+       for (int c = 0; c < y ; c++) {
+                    String tn = userModel.oListTask().get(c).getTaskName();
+                    //String tn = "TreeItem [ value: "+adminModel.oListTask().get(c).getTaskName()+" ]";
+                    String tp = userModel.oListTask().get(c).getProjectName();
+                    
+          if(       T.equals(tn)){
+              if(tpj.equals(tp)){
+            selectTask = userModel.oListTask().get(c);
+            tb_project.setText(selectTask.getProjectName());
+            lb_task.setText(selectTask.getTaskName());
+          }
+          }
+    }}catch(Exception e){
+            System.out.println("Field is not the Task"+e);
+        }
+    
+        
+    }
+
+    public void taskTapAddTask(){
+    userModel.addNewTaskToDB(
+                task_name.getText().trim(),              
+                cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
+                bb);
+    
+        
+    }
+    
+   /* private void handel_task_add(ActionEvent event) {
+        Thread t = new Thread()
+        {
+            public void run()
+            {
+        taskTapAddTask();
+        
+        
+        tbv_task.setItems(userModel.oListTask());
+        
+        sessionStartNStop();
+        
+       String T = task_name.getText();
+       
+       int y =  userModel.oListTask().size();
+       
+        String tpj = cb_task_project.getSelectionModel().getSelectedItem().getProjectName();
+       
+       for (int c = 0; c < y ; c++) {
+                    String tn = userModel.oListTask().get(c).getTaskName();
+                    //String tn = "TreeItem [ value: "+adminModel.oListTask().get(c).getTaskName()+" ]";
+                    String tp = userModel.oListTask().get(c).getProjectName();
+                    
+          if(       T.equals(tn)){
+              if(tpj.equals(tp)){
+            selectTask = userModel.oListTask().get(c);
+              }}}
+                 }
+        
+        };
+                 t.start();
+        /* adminModel.addNewTaskToDB(
+                task_name.getText().trim(),              
+                cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
+                bb);
+        tbv_task.refresh();*/
+        
+   // }
+
+    @FXML
+    private void handel_edit_task(ActionEvent event) {//*
+        userModel.editTask(taskToedit,
+                task_name.getText().trim(),
+                taskToedit.getAssociatedProjectID(),
+                bb);
+                tbv_task.refresh();
+                task_name.clear();
+    }
+
+    @FXML
+    private void handel_delete_task(ActionEvent event) {//*
+         userModel.removeTaskFromDB(taskToedit);
+        userModel.oListTask().remove(taskToedit);
+        tbv_task.refresh();
+        task_name.clear();
+    }
+    
+     @FXML
+    private void handel_session_edit(ActionEvent event) {//*
+         userModel.editSession(SessionToedit,
+                SessionToedit.getAssociatedUserID(),
+                SessionToedit.getAssociatedTaskID(),
+                tf_session_start.getText(),
+                tf_session_stop.getText());
+                TBV_Session.refresh();
+                lb_session_name.setText("Name");
+                tf_session_start.clear();
+                tf_session_stop.clear();
+                lb_session_dev.setText("Developers");
+    }
+
+    @FXML
+    private void handel_session_delete(ActionEvent event) {//*
+        userModel.removeSessionFromDB(SessionToedit);
+        userModel.oListSession().remove(SessionToedit);
+        TBV_Session.refresh();
+         lb_session_name.setText("Name");
+         tf_session_start.clear();
+         tf_session_stop.clear();
+         lb_session_dev.setText("Developers");
+    }
+    
+    public void clock(){
+        
+        
+        Thread t = new Thread()
+        {
+            public void run()
+            {
+                    for(;;)
+                    {
+                        if(timeState==true)
+                        {
+                            try
+                            {
+                                
+                                sleep(1);
+                                
+                                if(msec>500)
+                                {
+                                msec=0;
+                                sec++;
+                                }
+                                if(sec>59)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins++;
+                                }
+                                if(mins>59)
+                                {
+                                msec=0;
+                                sec=0;
+                                mins=0;
+                                hours++;
+                                }
+                                
+                                msec++;
+                                DecimalFormat df = new DecimalFormat("00");
+                                
+                                String fsec = df.format(sec);
+                                String fmin = df.format(mins);
+                                String fhour = df.format(hours);
+                                Platform.runLater(()->{
+               
+                                lb_tasktime.setText(""+ fhour+":" +fmin+":" +fsec);
+                                });
+                            }
+                            catch(Exception e)
+                            {
+                            
+                            }
+                            
+                        }
+                        
+                    
+                        else
+                        {
+                         break;       
+                        }
+                    }
+            }
+            
+                
+            
+        };
+        
+        t.start();
+        
+        
+        
+    }
+    public void sessionStartNStop(){
+     Thread t = new Thread()
+        {
+            public void run()
+            {
+        if(isStarted == false)
+            {
+            isStarted = true;
+             Platform.runLater(()->{
+                 bn_start_stop.setText("Stop");
+             });
+            LocalDateTime LDTnow = LocalDateTime.now();
+            
+            startTime = userModel.localDateTimeToString(LDTnow);
+            timeState = true;
+            clock();
+            }
+                else{
+             isStarted = false;
+             Platform.runLater(()->{   
+             bn_start_stop.setText("Start");
+             });
+             int lu = liu.getId();
+            
+             LocalDateTime LDTnow = LocalDateTime.now();
+             String StopTime = userModel.localDateTimeToString(LDTnow);
+             userModel.addNewSessionToDB(lu, selectTask.getTaskID(),selectTask.getTaskName(), startTime, StopTime);
+             timeState = false;
+             
+             
+             userModel.getUsersThreeRecentTaskss(userModel.getUser(liu.getId()));
+             
+             Platform.runLater(()->{
+             set3LatesTask();
+             resetTime();
+             TBV_Session.refresh();
+             
+             });
+        }
+    }
+        }; t.start();
+        
+       }
+    
+     public void resetTime(){
+    lb_tasktime.setText("00:00:00");
+    msec = 0;
+    sec = 0;
+    mins = 0;
+    hours = 0;
+    
+    }
+
+   
+
+    @FXML
+    private void Handel_project(ActionEvent event) {
+    }
+
+
+    @FXML
+    private void handel_selectClient(ActionEvent event) {
+        search.clear();
+       tv_project_task.setVisible(false);
+    }
+
+    @FXML
+    private void handel_report(ActionEvent event) { //bn report gen
+    }
+
+ 
+    @FXML
+    private void handel_searchClear(ActionEvent event) {
+        search.clear();
+        tv_project_task.setVisible(false);
+    }
+
+     @FXML
+    private void handel_search(KeyEvent event) {
+        setTreeView();
+        int l = search.getLength();
+        if(l <= 0){
+         tv_project_task.setVisible(false);
+        }
+        else{
+        tv_project_task.setVisible(true);
+        }
+        
+        
+    }
+
+    @FXML
+    private void Search(KeyEvent event) {
+         if(currentTab == "task"){ 
+       ObservableList<Task> taskInSearch;
+       taskInSearch = userModel.searchTask(userModel.oListTask(), tap_search.getText());
+       tbv_task.setItems(taskInSearch);} 
+       else if(currentTab =="project"){
+           ObservableList<Project> projectInSearch;
+            projectInSearch = userModel.searchProject(userModel.oListProject(), tap_search.getText());
+            Tbv_pj.setItems(projectInSearch);
+       }
+       else if (currentTab =="sessions"){
+       ObservableList<Session> sessionInSearch;
+            sessionInSearch = userModel.searchSession(userModel.oListSession(), tap_search.getText());
+            TBV_Session.setItems(sessionInSearch);
+       }
+       else if (currentTab =="stats"){
+       
+       }
+       
+    }
+    
+     @FXML
+    private void handel_billable(ActionEvent event) {
+        
+        if(bb == true){
+            bb = false;  
+            
+            
+        }
+        else{
+        bb = true;
+        }
+        
+    }
+
+    @FXML
+    private void handle_small_billable(ActionEvent event) {
+        
+        if(bbm == true){
+            bbm = false;     
+        }
+        else{
+        bbm = true;
+        }
+        
+    }
+
+    @FXML
+    private void handel_onTop(ActionEvent event) {
+        
+        if(onTop == false){
+        Stage stage = (Stage) bn_settings.getScene().getWindow();
+        stage.setAlwaysOnTop(true);
+        onTop = true;}
+        else{
+        Stage stage = (Stage) bn_settings.getScene().getWindow();
+        stage.setAlwaysOnTop(false);
+        onTop = false;        
+        }
+        
     }
 
     @FXML
     private void handel_add_task(ActionEvent event) {
-        userModel.addNewTaskToDB(
-                task_name.getText().trim(),             
+        Thread t = new Thread()
+        {
+            public void run()
+            {
+        taskTapAddTask();
+        
+        
+        tbv_task.setItems(userModel.oListTask());
+        
+        sessionStartNStop();
+        
+       String T = task_name.getText();
+       
+       int y =  userModel.oListTask().size();
+       
+        String tpj = cb_task_project.getSelectionModel().getSelectedItem().getProjectName();
+       
+       for (int c = 0; c < y ; c++) {
+                    String tn = userModel.oListTask().get(c).getTaskName();
+                    //String tn = "TreeItem [ value: "+adminModel.oListTask().get(c).getTaskName()+" ]";
+                    String tp = userModel.oListTask().get(c).getProjectName();
+                    
+          if(       T.equals(tn)){
+              if(tpj.equals(tp)){
+            selectTask = userModel.oListTask().get(c);
+            tb_project.setText(selectTask.getProjectName());
+            lb_task.setText(selectTask.getTaskName());
+              }}}
+                 }
+        
+        };
+                 t.start();
+        /* adminModel.addNewTaskToDB(
+                task_name.getText().trim(),              
                 cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
-                true);
+                bb);
+        tbv_task.refresh();*/
+        
     }
-
-    @FXML
-    private void handel_edit_task(ActionEvent event) {
-        userModel.editTask(taskToedit,
-                task_name.getText().trim(),
-                taskToedit.getAssociatedProjectID(),
-                true);//  MOCK DATA  // maybe    taskToedit.getIsBillable(); 
-    }
-
-    @FXML
-    private void handel_delete_task(ActionEvent event) {
-         userModel.removeTaskFromDB(taskToedit);
-    }
-    
 
 }
     

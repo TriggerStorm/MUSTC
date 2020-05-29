@@ -100,13 +100,14 @@ public class LogInController implements Initializable {
         Scene addScene = new Scene(root1);
         addStage.setScene(addScene);
         addStage.show();
+        addStage.show();
         addStage.setMaxHeight(488);
         addStage.setMaxWidth(260);
         addStage.setMinHeight(488);
         addStage.setMinWidth(260);
         
         Stage stage = (Stage) bn_login.getScene().getWindow();
-        stage.close(); 
+        stage.close();
     }
 
     @FXML
