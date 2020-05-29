@@ -729,24 +729,20 @@ public class AdminViewController implements Initializable, Runnable {
 
     @FXML
     private void handel_project_add(ActionEvent event) {
-       int allocatedHours = 10;
-               double Nr = Double.parseDouble(tf_pj_nr.getText());
-               int iNr = (int)Nr;
-               String Rate = tf_pj_$perhour.getText().trim();
-               float fRate = Float.parseFloat(Rate);
-        
-                adminModel.addNewProjectToDB(
-                tf_pj_name.getText().trim(),
-                cb_pj_clint.getSelectionModel().getSelectedItem().getClientId(),
-                iNr,
-                fRate,
-                allocatedHours);
-                
-                
-                tf_pj_name.clear();
-                tf_pj_nr.clear();
-                tf_pj_$perhour.clear();
-                
+        int allocatedHours = 10;
+        double Nr = Double.parseDouble(tf_pj_nr.getText());
+        int iNr = (int)Nr;
+        String Rate = tf_pj_$perhour.getText().trim();
+        float fRate = Float.parseFloat(Rate);
+        adminModel.addNewProjectToDB(
+        tf_pj_name.getText().trim(),
+        cb_pj_clint.getSelectionModel().getSelectedItem().getClientId(),
+        iNr,
+        fRate,
+        allocatedHours);
+        tf_pj_name.clear();
+        tf_pj_nr.clear();
+        tf_pj_$perhour.clear();
     }
 
     @FXML

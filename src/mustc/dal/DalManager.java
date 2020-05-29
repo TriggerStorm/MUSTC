@@ -5,6 +5,7 @@
  */
 package mustc.dal;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -458,6 +459,15 @@ public class DalManager implements DalFaçade {
             Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    @Override
+    public void addReportListToCSVFile(List<Report> reportList) {
+        try {
+            reportDBDao.addReportListToCSVFile(reportList);
+        } catch (IOException ex) {
+            Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     
