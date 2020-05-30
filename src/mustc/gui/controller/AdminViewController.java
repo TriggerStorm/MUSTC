@@ -957,7 +957,7 @@ public class AdminViewController implements Initializable, Runnable {
              Platform.runLater(()->{   
              bn_start_stop.setText("Start");
              });
-             int lu = 1;//liu.getId();
+             int lu = liu.getId();
             
              LocalDateTime LDTnow = LocalDateTime.now();
              String StopTime = adminModel.localDateTimeToString(LDTnow);
