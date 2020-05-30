@@ -80,17 +80,18 @@ public class Task {
         this.associatedProjectID = associatedProjectID;
     }
     
+
+//  Constructor to pass a Tasks Name and  it total minutes    
     public Task(String taskName, int totalTaskMinutes ){
         this.taskName = taskName;
         this.totalTaskMinutes = totalTaskMinutes;
-        
     }
 
+    
 //  Constructor used to return totalTaskMinutes and developers from getAllSessions method
     public Task(int totalTaskMinutes, String developers ){  
         this.totalTaskMinutes = totalTaskMinutes;
         this.developers = developers; 
-
     }
     
   
