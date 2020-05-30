@@ -1171,30 +1171,18 @@ public class AdminViewController implements Initializable, Runnable {
         }
         
     }
-
-    @FXML
-    private void handel_startDP(ActionEvent event) {
-        
-    }
-
-    @FXML
-    private void handel_stopDP(ActionEvent event) {
-    }
     
     public void clock(){
-        
-        
         Thread t = new Thread()
         {
             public void run()
             {
-                    for(;;)
+                for(;;)
                     {
                         if(timeState==true)
                         {
                             try
                             {
-                                
                                 sleep(1);
                                 
                                 if(msec>500)
@@ -1228,13 +1216,7 @@ public class AdminViewController implements Initializable, Runnable {
                                 });
                             }
                             catch(Exception e)
-                            {
-                            
-                            }
-                            
-                        }
-                        
-                    
+                            {}}
                         else
                         {
                          break;       

@@ -218,8 +218,8 @@
                      <children>
                         <JFXComboBox fx:id="cb_stat_project" layoutX="111.0" layoutY="384.0" onAction="#Handel_project" prefHeight="25.0" prefWidth="123.0" promptText="project" />
                         <JFXComboBox fx:id="cb_stat_task" layoutX="236.0" layoutY="384.0" prefHeight="25.0" prefWidth="123.0" promptText="Task" />
-                        <JFXDatePicker fx:id="dp_stat_from" layoutX="533.0" layoutY="380.0" onAction="#handel_startDP" prefHeight="28.0" prefWidth="95.0" />
-                        <JFXDatePicker fx:id="dp_stat_to" layoutX="633.0" layoutY="380.0" onAction="#handel_stopDP" prefHeight="28.0" prefWidth="90.0" />
+                        <JFXDatePicker fx:id="dp_stat_from" layoutX="533.0" layoutY="380.0" prefHeight="28.0" prefWidth="95.0" />
+                        <JFXDatePicker fx:id="dp_stat_to" layoutX="633.0" layoutY="380.0" prefHeight="28.0" prefWidth="90.0" />
                         <JFXComboBox fx:id="cb_stat_clint" layoutY="384.0" onAction="#handel_selectClient" prefHeight="25.0" prefWidth="109.0" promptText="Client" />
                         <JFXComboBox fx:id="cb_stat_dev" layoutX="361.0" layoutY="384.0" prefHeight="25.0" prefWidth="107.0" promptText="User" />
                         <TableView fx:id="Tbv_Report" onMouseClicked="#handel_pick_project" prefHeight="376.0" prefWidth="740.0">
