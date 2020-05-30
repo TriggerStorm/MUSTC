@@ -365,27 +365,11 @@ System.out.println("TaskID = " + taskID + "   USERs TASK MINUTES = " + usersTask
     }
   
           
-          
-          
-    
-    
-    
-    
-    
-    
- //   UNUSED CODE SO FAR
-            
-    /**
-     *
-     * @param loggedInUser
-     * @return
-     * @throws SQLException
-     */
     public List<Session> getAllLoggedInUsersSessionsStartTimseAndTaskIDs(User loggedInUser) throws SQLException {  // UNUSED??
     // Returns a list of Sessions where the associatedUser = loggedInUser
         List<Session> allLoggedInUserSessions = new ArrayList<>();
  //       int loggedInUserID = loggedInUser.getUserID();
-         int loggedInUserID = 1;  // MOCK
+         int loggedInUserID = loggedInUser.getUserID();
 
  String sql = "SELECT associatedTask, StartTime FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'"; 
         try(Connection con = dbc.getConnection()) {
@@ -414,6 +398,27 @@ System.out.println("TaskID = " + taskID + "   USERs TASK MINUTES = " + usersTask
     }
     
     
+    
+    
+    
+    
+    
+             
+          
+    
+    
+    
+    
+    
+    
+ //   UNUSED CODE SO FAR
+            
+    /**
+     *
+     * @param loggedInUser
+     * @return
+     * @throws SQLException
+     */
             
 /*    public List<User> getAllUserIDsAndNamesOfATask(int taskID) throws SQLException {
         List<Integer> allSessionsIDsOfATask = new ArrayList<>();

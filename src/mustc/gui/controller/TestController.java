@@ -188,18 +188,20 @@ List<Project> allProjects = projectDBDao.getAllProjectsForAdmin();
  //int[] results = taskDBDao.getTotalMinutesOfAProject(2);
 //System.out.println("PROJECT2: Unbillable" + results[0] + "   Billable: " + results[1]);               
 
+ User testUser = userDBDao.getUser(22);
+      List<Task> allTasks = taskDBDao.getUsersThreeRecentTasks(testUser);
+ 
+      
  //     List<Task> allTasks = taskDBDao.getAllTasksForUser();
  /*      List<Task> allTasks = bllManager.getAllTaskIDsAndNamesOfAProject(2);
-       for (int i = 0; i < allTasks.size(); i++) {
+  */     for (int i = 0; i < allTasks.size(); i++) {
             Task test = allTasks.get(i);
     
         System.out.println("");
         System.out.println("ID = " + test.getTaskID() + "   Name: " + test.getTaskName());
        }
-       
- /*   User testUser = userDBDao.getUser(14);
-      List<Task> recentTask = taskDBDao.getUsersThreeRecentTasks(testUser);
- */     
+      
+   
  //    Task test = taskDBDao.addNewTaskToDB("testname", "stuff", 4);
  //    Task test = taskDBDao.getTaskForUser(8);
  //       Task test = taskDBDao.editTask(testt, "newTaskTest", 5, true);
@@ -419,7 +421,7 @@ LocalDate searchTo = LocalDate.now().minusWeeks(5);//= stringToLocalDate("2021-0
  
  
 // REPORT
-
+/*
 LocalDate searchFrom = LocalDate.now().minusMonths(3);
         System.out.println("searchFrom = " + searchFrom);// timeUtilities.stringToLocalDate("2019-04-20 13:30:00");// 2020-04-18 13:26:59
 LocalDate searchTo = LocalDate.now().minusWeeks(5);//= stringToLocalDate("2021-04-20 13:30:00");
@@ -434,7 +436,7 @@ System.out.println(test.getClientName() + "," + test.getProjectName() + "," + te
         + "," + test.getFinishTime() + "," + test.getMinutes() + "," + test.getBillable()+ "," + test.getRevenue());
           
         reportDBDao.addReportListToCSVFile(reportList);
-      
+  */    
  /*                System.out.println("");
         System.out.println("ClientName:  " + test.getClientName());
         System.out.println("ProjectName:  " + test.getProjectName());
@@ -446,7 +448,8 @@ System.out.println(test.getClientName() + "," + test.getProjectName() + "," + te
 
         System.out.println("BillableMinutes = " + test.getMinutes());
         System.out.println("TotalPrice = " + test.getRevenue());
- */       } 
+ */  
+    //} 
         
         
         
