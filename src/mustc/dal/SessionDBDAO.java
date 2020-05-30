@@ -366,27 +366,11 @@ System.out.println("TaskID = " + taskID + "   USERs TASK MINUTES = " + usersTask
     }
   
           
-          
-          
-    
-    
-    
-    
-    
-    
- //   UNUSED CODE SO FAR
-            
-    /**
-     *
-     * @param loggedInUser
-     * @return
-     * @throws SQLException
-     */
     public List<Session> getAllLoggedInUsersSessionsStartTimseAndTaskIDs(User loggedInUser) throws SQLException {  // UNUSED??
     // Returns a list of Sessions where the associatedUser = loggedInUser
         List<Session> allLoggedInUserSessions = new ArrayList<>();
  //       int loggedInUserID = loggedInUser.getUserID();
-         int loggedInUserID = 1;  // MOCK
+         int loggedInUserID = loggedInUser.getUserID();
 
  String sql = "SELECT associatedTask, StartTime FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'"; 
         try(Connection con = dbc.getConnection()) {
@@ -415,36 +399,26 @@ System.out.println("TaskID = " + taskID + "   USERs TASK MINUTES = " + usersTask
     }
     
     
-            
-/*    public List<User> getAllUserIDsAndNamesOfATask(int taskID) throws SQLException {
-        List<Integer> allSessionsIDsOfATask = new ArrayList<>();
-        allSessionsIDsOfATask = getAllSessionIDsOfATask(taskID); 
-        if (allSessionsIDsOfATask.size() > 0) {
-            for (int i = 0; i < allSessionsIDsOfATask.size(); i++) {            
-                try(Connection con = dbc.getConnection()) {
-                    String sql = "SELECT id, name FROM Users WHERE associatedUser = '" + taskID + "'";
-                    Statement stmt = con.createStatement();
-                    ResultSet rs = stmt.executeQuery(sql);
-                    while(rs.next()) // While you have something in the results
-                    {
-                        int sessionID = rs.getInt("id");
-                        int AssociatedUserID = rs.getInt("associatedUser");
-                        int associatedTaskID = rs.getInt("associatedTask");
-                        String startTime = rs.getString("startTime");
-                        String finishTime = rs.getString("finishTime");            
-                        Session sessionInTask = new Session(sessionID, AssociatedUserID, associatedTaskID, startTime, finishTime);
-                        allUserIDsOfATask.add(sessionInTask); 
-                    }    
-        }
-        return allUserIDsOfATask ;
-    }
- */         
-     
+    
+    
+    
+    
+    
+             
+          
+    
+    
+    
+    
+    
+    
+ //   UNUSED CODE SO FAR
+   
        
-     
+     //  NEWLY OUY COMMENTED
 
        
-    private void addStartTimeToSession(Session currentSession) { 
+  /*  private void addStartTimeToSession(Session currentSession) { 
     //  Adds a strartTime to a given Session   
         LocalDateTime LDTnow = LocalDateTime.now();
         String startTime = LDTnow.toString();
@@ -480,25 +454,7 @@ System.out.println("TaskID = " + taskID + "   USERs TASK MINUTES = " + usersTask
   //      addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime) { 
 
         
-    }
-    
-     /*    public List<Integer> getAllSessionIDsOfATask(int taskID) throws SQLException {  
-// method only needed for getAllUserIDsAndNamesOfATask. May not need
-        List<Integer> allSessionIDsOfATask = new ArrayList<>();
-        try(Connection con = dbc.getConnection()) {
-            String sql = "SELECT id FROM Sessions WHERE associatedTask = '" + taskID + "'";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()) // While you have something in the results
-            {
-                int sessionID = rs.getInt("id");
-                allSessionIDsOfATask.add(sessionID); 
-            }    
-        }
-        return allSessionIDsOfATask ;
-    } 
- */       
-    
+  //  }
     
     
 }

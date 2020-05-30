@@ -307,7 +307,7 @@ System.out.println("getUsersThreeRecentTasks = ");
 System.out.println("recentTask1ID = " + recentTask1ID); 
             Task recentTask1 = getTaskForUser(recentTask1ID);  // makes recentTask1 the the first Task from recentSession list 
             recentTasks.add(recentTask1);
-        } else recentTasks = null; //  ?? MAYBE
+        }
         int counter = 1;  // counter keeps track of the session being examines for duplicate TaskIDs
         //  Get recentTask2
         while (counter < allLoggedInUserSessions.size()) {

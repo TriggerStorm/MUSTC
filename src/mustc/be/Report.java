@@ -14,8 +14,8 @@ public class Report {
     private String projectName;
     private String taskName;
     private String loggedInUser;  // the person whom the Session is assigned to.    
-    private String startTime;   // LDT?
-    private String finishTime;  // LDT?
+    private String startTime;     // LDT?
+    private String finishTime;    // LDT?
     private String minutes;       // for Admin
     private String billable;
     private String revenue;             // for Admin
