@@ -270,7 +270,7 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private ToggleButton tb_task_billable;
     @FXML
-    private ToggleButton tb_smallview_billable;
+    private JFXButton tb_smallview_billable;
     @FXML
     private Label lb_session_name;
     @FXML
@@ -1222,15 +1222,22 @@ public class AdminViewController implements Initializable, Runnable {
         
         if(bbm == true){
             bbm = false;   
-            tb_smallview_billable.setTextFill(Color.rgb(210,39,30));
+           color();
         }
         else{
         bbm = true;
-        tb_smallview_billable.setTextFill(Color.rgb(21,117,84));
+        color();
         }
         
     }
-
+    
+    private void color(){
+    if(bbm == false){
+        tb_smallview_billable.setTextFill(Color.rgb(210,39,30));
+    }else{
+    tb_smallview_billable.setTextFill(Color.rgb(21,117,84));
+    }
+    }
     @FXML
     private void handel_onTop(ActionEvent event) {
         

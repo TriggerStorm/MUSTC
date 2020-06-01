@@ -31,10 +31,6 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f4f4f4" height="445.0" layoutX="1.0" layoutY="1.0" stroke="WHITE" strokeType="INSIDE" width="240.0" />
       <TextField fx:id="tf_newtask" layoutX="100.0" layoutY="35.0" prefHeight="25.0" prefWidth="75.0" promptText="New Task" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="35.0" />
       <ComboBox fx:id="cb_project" layoutX="15.0" layoutY="35.0" prefHeight="25.0" prefWidth="81.0" promptText="Project" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
-      <Button fx:id="bn_add" layoutX="200.0" layoutY="36.0" mnemonicParsing="false" onAction="#handel_addTaskminview" prefHeight="24.0" prefWidth="40.0" text="add" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="36.0">
-         <font>
-            <Font name="System Bold Italic" size="11.0" />
-         </font></Button>
       <TextField fx:id="search" layoutX="19.0" layoutY="70.0" onKeyReleased="#handel_search" prefHeight="25.0" prefWidth="162.0" promptText="Search" AnchorPane.leftAnchor="19.0" AnchorPane.topAnchor="70.0" />
       <ToggleButton fx:id="tb_toggle" layoutX="28.0" layoutY="412.0" mnemonicParsing="false" onAction="#toggel_size" prefHeight="25.0" prefWidth="81.0" text="Toggel Size" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="412.0" />
       <Button fx:id="bn_start_stop" layoutX="19.0" layoutY="355.0" mnemonicParsing="false" onAction="#handle_start_stop" prefHeight="40.0" prefWidth="52.0" text="Start" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="19.0" />
@@ -52,7 +48,7 @@
             <Label fx:id="lb_loginuser" prefHeight="17.0" prefWidth="55.0" text="User" />
             <JFXButton fx:id="bn_settings" onAction="#handel_onTop" prefHeight="0.0" prefWidth="26.0" text="S" />
             <Label prefHeight="17.0" prefWidth="285.0" />
-            <Label fx:id="lb_progress" prefHeight="17.0" prefWidth="167.0" text="TEXT" />
+            <Label fx:id="lb_progress" prefHeight="17.0" prefWidth="167.0" styleClass="lb" text="TEXT" />
             <Label prefHeight="17.0" prefWidth="215.0" />
             <JFXTextField fx:id="tap_search" onKeyReleased="#Search" prefHeight="0.0" prefWidth="98.0" promptText="Search" />
          </items>
@@ -156,13 +152,9 @@
                         <JFXButton fx:id="bn_task_add" layoutX="303.0" layoutY="395.0" onAction="#handel_task_add" style="-fx-background-color: lightgrey;" text="Add" />
                         <JFXButton fx:id="bn_task_eddit" layoutX="338.0" layoutY="395.0" onAction="#handel_task_eddit" style="-fx-background-color: lightgrey;" text="edit" />
                         <JFXButton fx:id="bn_task_delete" layoutX="372.0" layoutY="395.0" onAction="#handel_task_delete" style="-fx-background-color: lightgrey;" text="Delete" />
-                        <ToggleButton fx:id="tb_task_billable" layoutX="214.0" layoutY="393.0" mnemonicParsing="false" onAction="#handel_billable" prefHeight="25.0" prefWidth="24.0" styleClass="bb" text="\$" textFill="#1cbf48">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </ToggleButton>
                         <JFXButton fx:id="bn_t_confirm" layoutX="438.0" layoutY="392.0" onAction="#confirm_task_delete" text="Confirm" />
                         <JFXButton fx:id="bn_t_cancel" layoutX="507.0" layoutY="393.0" onAction="#cancel_task_delete" text="Cancel" />
+                        <JFXButton fx:id="tb_task_billable" layoutX="217.0" layoutY="393.0" onAction="#handel_billable" ripplerFill="#24cd4e" styleClass="bb" text="\$" textFill="#157554" />
                      </children>
                   </AnchorPane>
             </content>
@@ -237,7 +229,7 @@
                         <JFXDatePicker fx:id="dp_stat_to" layoutX="582.0" layoutY="381.0" prefHeight="28.0" prefWidth="100.0" />
                         <JFXComboBox fx:id="cb_stat_clint" layoutY="384.0" onAction="#handel_selectClient" prefHeight="25.0" prefWidth="109.0" promptText="Client" />
                         <JFXComboBox fx:id="cb_stat_dev" layoutX="361.0" layoutY="384.0" prefHeight="25.0" prefWidth="107.0" promptText="User" />
-                        <TableView fx:id="Tbv_Report" onMouseClicked="#handel_pick_project" prefHeight="376.0" prefWidth="740.0">
+                        <TableView fx:id="Tbv_Report" onMouseClicked="#handel_pick_project" prefHeight="376.0" prefWidth="728.0">
                            <columns>
                               <TableColumn fx:id="Report_client" prefWidth="92.0" text="Client" />
                               <TableColumn fx:id="Report_project" prefWidth="92.0" text="Project" />
@@ -247,7 +239,7 @@
                               <TableColumn fx:id="Report_finishTime" prefWidth="107.0" text="Finish Time" />
                               <TableColumn fx:id="Report_billableMin" prefWidth="28.0" text="\$" />
                               <TableColumn fx:id="Report_mins" prefWidth="71.0" text="Mins" />
-                              <TableColumn fx:id="Report_totalPrice" prefWidth="98.0" text="Total price" />
+                              <TableColumn fx:id="Report_totalPrice" prefWidth="87.0" text="Total price" />
                            </columns>
                         </TableView>
                         <JFXButton fx:id="bn_report" layoutX="680.0" layoutY="376.0" onAction="#handel_report" prefHeight="25.0" prefWidth="52.0" text="Report" underline="true" />
@@ -258,8 +250,17 @@
             </Tab>
         </tabs>
       </TabPane>
-      <JFXButton fx:id="bn_searchClear" layoutX="195.0" layoutY="70.0" onAction="#handel_searchClear" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: lightGrey;" text="&lt;" AnchorPane.leftAnchor="195.0" AnchorPane.topAnchor="70.0" />
-      <ToggleButton fx:id="tb_smallview_billable" layoutX="177.0" layoutY="35.0" mnemonicParsing="false" onAction="#handle_small_billable" styleClass="bb" text="\$" textFill="#12ab24" AnchorPane.leftAnchor="177.0" AnchorPane.topAnchor="35.0" />
+      <JFXButton fx:id="bn_searchClear" layoutX="190.0" layoutY="69.0" onAction="#handel_searchClear" prefHeight="17.0" prefWidth="23.0" style="-fx-background-color: black;" text=" " AnchorPane.leftAnchor="190.0" AnchorPane.topAnchor="69.0">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Downloads/icons8-left-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <padding>
+            <Insets right="-6.0" />
+         </padding></JFXButton>
       <FlowPane fx:id="fp_last3task" layoutX="24.0" layoutY="110.0" prefHeight="228.0" prefWidth="200.0">
          <children>
             <StackPane layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="160.0">
@@ -373,5 +374,17 @@
          </children>
       </FlowPane>
       <JFXTreeView fx:id="tv_project_task" layoutX="21.0" layoutY="103.0" onMouseClicked="#handel_pick_treeview" prefHeight="245.0" prefWidth="200.0" />
+      <JFXButton fx:id="tb_smallview_billable" layoutX="176.0" layoutY="35.0" onAction="#handle_small_billable" ripplerFill="#5be842" styleClass="bb" text="\$" textFill="#157554" />
+      <JFXButton fx:id="bn_add" layoutX="200.0" layoutY="36.0" onAction="#handel_addTaskminview" prefHeight="24.0" prefWidth="23.0" style="-fx-background-color: grey;" styleClass="bb" text=" ">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Downloads/icons8-add-50.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <padding>
+            <Insets right="-8.0" top="-0.0" />
+         </padding></JFXButton>
    </children>
 </AnchorPane>
