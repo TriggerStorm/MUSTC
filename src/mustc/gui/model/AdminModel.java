@@ -78,13 +78,19 @@ public class AdminModel {
     public ObservableList<User> oListUser(){
     return userList;
     }
-    
+    public ObservableList<User> oListUserNameAndId(){
+    return user;
+    }
     public ObservableList<Task> projectTask(){
     return projectTask;
     }
     public ObservableList<Project> oListProjectNameAndId(){
     return pj;
     }
+    public ObservableList<Client> oListClientIdAndName(){
+    return client;
+    }
+    
     
     public ObservableList<String> getAdmin(){
           List<String> admins = new ArrayList<>();
@@ -346,4 +352,13 @@ public class AdminModel {
       public void addReportListToCSVFile(List<Report> reportList) {
         bllManager.addReportListToCSVFile(reportList);
     }
+    // inputValidators
+      
+      public boolean isValidEmail(String email){
+         return bllManager.isValidEmail(email);
+     }
+    public boolean isValidPhoneNumber(String phoneNumber){
+        return bllManager.isValidPhoneNumber(phoneNumber);
+    }
+    
 }

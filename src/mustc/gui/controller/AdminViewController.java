@@ -49,6 +49,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javax.swing.tree.TreeNode;
@@ -269,7 +270,7 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private ToggleButton tb_task_billable;
     @FXML
-    private ToggleButton tb_smallview_billable;
+    private JFXButton tb_smallview_billable;
     @FXML
     private Label lb_session_name;
     @FXML
@@ -310,6 +311,7 @@ public class AdminViewController implements Initializable, Runnable {
     boolean isStarted;
     String startTime;
     Task selectTask;
+    Task runningTask;
     String currentTab = "client";
     
     static int msec = 0;
@@ -343,6 +345,30 @@ public class AdminViewController implements Initializable, Runnable {
     private Label lb_t3task;
     @FXML
     private Label lb_t3project;
+    @FXML
+    private Label lb_progress;
+    @FXML
+    private JFXButton bn_c_confirm;
+    @FXML
+    private JFXButton bn_c_cancel;
+    @FXML
+    private JFXButton bn_p_confirm;
+    @FXML
+    private JFXButton bn_p_cancel;
+    @FXML
+    private JFXButton bn_t_confirm;
+    @FXML
+    private JFXButton bn_t_cancel;
+    @FXML
+    private JFXButton bn_s_confirm;
+    @FXML
+    private JFXButton bn_s_cancel;
+    @FXML
+    private JFXButton bn_u_confirm;
+    @FXML
+    private JFXButton bn_u_cancel;
+    @FXML
+    private TableColumn<?, ?> Report_mins;
     
    
    
@@ -395,7 +421,18 @@ public class AdminViewController implements Initializable, Runnable {
         
         lb_loginuser.setText(liu.getName());
         tv_project_task.setVisible(false);
+        lb_progress.setVisible(false);
         
+         bn_c_confirm.setVisible(false);
+         bn_c_cancel.setVisible(false);
+         bn_p_confirm.setVisible(false);
+         bn_p_cancel.setVisible(false);
+         bn_t_confirm.setVisible(false);
+         bn_t_cancel.setVisible(false);
+         bn_s_confirm.setVisible(false);
+         bn_s_cancel.setVisible(false);
+         bn_u_confirm.setVisible(false);
+         bn_u_cancel.setVisible(false);
        
          
     }    
@@ -677,6 +714,8 @@ public class AdminViewController implements Initializable, Runnable {
     private void handel_client_add(ActionEvent event) {
                String Rate = tf_clint_$perhour.getText().trim();
                float fRate = Float.parseFloat(Rate);
+               boolean valed = adminModel.isValidEmail(tf_clint_email.getText().trim());
+               if(valed == true){
         adminModel.addNewClientToDB(
                 tf_clint_name.getText().trim(),
                 "string path",
@@ -686,12 +725,20 @@ public class AdminViewController implements Initializable, Runnable {
         tf_clint_name.clear();
         tf_clint_email.clear();
         tf_clint_$perhour.clear();
+        lb_progress.setVisible(false);}
+                else{
+                lb_progress.setVisible(true);
+                lb_progress.setText("invaled Email");
+                }
+               
     }
 
     @FXML
     private void handel_client_eddit(ActionEvent event) {
         String Rate = tf_clint_$perhour.getText().trim();
                float fRate = Float.parseFloat(Rate);
+               boolean valed = adminModel.isValidEmail(tf_clint_email.getText().trim());
+               if(valed == true){
         adminModel.editClient(clientToedit,
                 tf_clint_name.getText().trim(),
                 fRate,
@@ -702,28 +749,35 @@ public class AdminViewController implements Initializable, Runnable {
                 tf_clint_name.clear();
                 tf_clint_email.clear();
                 tf_clint_$perhour.clear();
+               lb_progress.setVisible(false);
+               }
+               else{
+                lb_progress.setVisible(true);
+                lb_progress.setText("invaled Email");
+                }
+               
     }
 
     @FXML
     private void handel_client_delete(ActionEvent event) {
-        adminModel.removeClientFromDB(clientToedit);
-        adminModel.oListClient().remove(clientToedit);
-        Tbv_Clint.refresh();
-        tf_clint_name.clear();
-        tf_clint_email.clear();
-        tf_clint_$perhour.clear();
+        bn_c_confirm.setVisible(true);
+        bn_c_cancel.setVisible(true);
                 
     }
 
     @FXML
     private void handel_project_add(ActionEvent event) {
 
-       int allocatedHours = 10;
+       
+               
+               boolean nr = adminModel.isValidPhoneNumber(tf_pj_nr.getText());
+                if( nr == true ){
+                    int allocatedHours = 10;
                double Nr = Double.parseDouble(tf_pj_nr.getText());
                int iNr = (int)Nr;
                String Rate = tf_pj_$perhour.getText().trim();
                float fRate = Float.parseFloat(Rate);
-        
+                    
                 adminModel.addNewProjectToDB(
                 tf_pj_name.getText().trim(),
                 cb_pj_clint.getSelectionModel().getSelectedItem().getClientId(),
@@ -737,19 +791,28 @@ public class AdminViewController implements Initializable, Runnable {
                 tf_pj_name.clear();
                 tf_pj_nr.clear();
                 tf_pj_$perhour.clear();
+                lb_progress.setVisible(false);}
+                else{
+                lb_progress.setVisible(true);
+                lb_progress.setText("invaled Nr");
+                }
                 
     }
 
     @FXML
     private void handel_project_eddit(ActionEvent event) {
-        int allocatedHours = 10;
-        int nr = Integer.parseInt(tf_pj_nr.getText());
+       
+                
+               boolean nr = adminModel.isValidPhoneNumber(tf_pj_nr.getText());
+                if(nr == true ){
+                     int allocatedHours = 10;
+        int Nr = Integer.parseInt(tf_pj_nr.getText());
         String Rate = tf_pj_$perhour.getText().trim();
                float fRate = Float.parseFloat(Rate);
         adminModel.editProject(
                 projectToedit,
                 tf_pj_name.getText().trim(),
-                nr,  
+                Nr,  
                 fRate,
                 allocatedHours,
                 projectToedit.isClosed()
@@ -759,18 +822,19 @@ public class AdminViewController implements Initializable, Runnable {
                 tf_pj_name.clear();
                 tf_pj_nr.clear();
                 tf_pj_$perhour.clear();
+                lb_progress.setVisible(false);}
+                else{
+                lb_progress.setVisible(true);
+                lb_progress.setText("invaled Nr");
+                }
         
         
     }
 
     @FXML
     private void handel_project_delete(ActionEvent event) {
-        adminModel.removeProjectFromDB(projectToedit);
-        adminModel.oListProject().remove(projectToedit);
-        Tbv_pj.refresh();
-        tf_pj_name.clear();
-        tf_pj_nr.clear();
-        tf_pj_$perhour.clear();
+        bn_p_confirm.setVisible(true);
+        bn_p_cancel.setVisible(true);
         
     }
     
@@ -779,7 +843,9 @@ public class AdminViewController implements Initializable, Runnable {
                 task_name.getText().trim(),              
                 cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
                 bb);
-    task_name.clear();
+       tb_project.setText(cb_task_project.getSelectionModel().getSelectedItem().toString());
+       lb_task.setText(task_name.getText().toString());
+    
         
     }
     
@@ -841,17 +907,18 @@ public class AdminViewController implements Initializable, Runnable {
 
     @FXML
     private void handel_task_delete(ActionEvent event) {
-        adminModel.removeTaskFromDB(taskToedit);
-        adminModel.oListTask().remove(taskToedit);
-        tbv_task.refresh();
-        task_name.clear();
+        bn_t_confirm.setVisible(true);
+        bn_t_cancel.setVisible(true);
+        
     }
 
     @FXML
     private void handel_user_add(ActionEvent event) {
         String Rate = tf_user_$perhour.getText().trim();
                float fSal = Float.parseFloat(Rate);
-            adminModel.addNewUserToDB(
+           boolean valed = adminModel.isValidEmail(tf_user_email.getText().trim());
+           if(valed == true){ 
+               adminModel.addNewUserToDB(
                 tf_user_name.getText().trim(),
                 tf_user_email.getText().trim(),
                 tf_user_password.getText().trim(),
@@ -861,13 +928,20 @@ public class AdminViewController implements Initializable, Runnable {
              tf_user_email.clear();
              tf_user_password.clear();
              tf_user_$perhour.clear();
+           lb_progress.setVisible(false);}
+           else{
+           lb_progress.setVisible(true);
+           lb_progress.setText("invaled email");
+           }
              
     }
 
     @FXML
     private void handel_user_eddit(ActionEvent event) {
         String Rate = tf_user_$perhour.getText().trim();
-               float fSal = Float.parseFloat(Rate);    
+               float fSal = Float.parseFloat(Rate);  
+               boolean valed = adminModel.isValidEmail(tf_user_email.getText().trim());
+               if(valed == true){
         adminModel.editUser(userToedit,
                 tf_user_name.getText().trim(),
                 tf_user_email.getText().trim(),
@@ -880,18 +954,18 @@ public class AdminViewController implements Initializable, Runnable {
                 tf_user_email.clear();
                 tf_user_password.clear();
                 tf_user_$perhour.clear();
+               lb_progress.setVisible(false);}
+               else{
+               lb_progress.setVisible(true);
+               lb_progress.setText("invaled email");
+               }
                 
     }
 
     @FXML
     private void handel_user_delete(ActionEvent event) {
-       adminModel.removeUserFromDB(userToedit);
-       adminModel.oListUser().remove(userToedit);
-        tbv_user.refresh();
-        tf_user_name.clear();
-        tf_user_email.clear();
-        tf_user_password.clear();
-        tf_user_$perhour.clear();
+       bn_u_confirm.setVisible(true);
+        bn_u_cancel.setVisible(true);
         
     }
 
@@ -917,13 +991,8 @@ public class AdminViewController implements Initializable, Runnable {
 
     @FXML
     private void handel_session_delete(ActionEvent event) {
-        adminModel.removeSessionFromDB(SessionToedit);
-        adminModel.oListSession().remove(SessionToedit);
-        tbv_session.refresh();
-         lb_session_name.setText("Name");
-         tf_session_start.clear();
-         tf_session_stop.clear();
-         lb_session_dev.setText("Developers");
+        bn_s_confirm.setVisible(true);
+        bn_s_cancel.setVisible(true);
         
         
     }
@@ -947,7 +1016,7 @@ public class AdminViewController implements Initializable, Runnable {
                  bn_start_stop.setText("Stop");
              });
             LocalDateTime LDTnow = LocalDateTime.now();
-            
+            runningTask = selectTask;
             startTime = adminModel.localDateTimeToString(LDTnow);
             timeState = true;
             clock();
@@ -961,7 +1030,7 @@ public class AdminViewController implements Initializable, Runnable {
             
              LocalDateTime LDTnow = LocalDateTime.now();
              String StopTime = adminModel.localDateTimeToString(LDTnow);
-             adminModel.addNewSessionToDB(lu, selectTask.getTaskID(),selectTask.getTaskName(), startTime, StopTime);
+             adminModel.addNewSessionToDB(lu, runningTask.getTaskID(),runningTask.getTaskName(), startTime, StopTime);
              timeState = false;
              
              
@@ -1019,7 +1088,7 @@ public class AdminViewController implements Initializable, Runnable {
         
         };
                  t.start();
-        tf_newtask.clear();
+        
     }
 
     @FXML
@@ -1137,10 +1206,13 @@ public class AdminViewController implements Initializable, Runnable {
         if(bb == true){
             bb = false;  
             
+            tb_task_billable.setTextFill(Color.rgb(210,39,30));
             
         }
         else{
         bb = true;
+         
+         tb_task_billable.setTextFill(Color.rgb(21,117,84));
         }
         
     }
@@ -1149,14 +1221,23 @@ public class AdminViewController implements Initializable, Runnable {
     private void handle_small_billable(ActionEvent event) {
         
         if(bbm == true){
-            bbm = false;     
+            bbm = false;   
+           color();
         }
         else{
         bbm = true;
+        color();
         }
         
     }
-
+    
+    private void color(){
+    if(bbm == false){
+        tb_smallview_billable.setTextFill(Color.rgb(210,39,30));
+    }else{
+    tb_smallview_billable.setTextFill(Color.rgb(21,117,84));
+    }
+    }
     @FXML
     private void handel_onTop(ActionEvent event) {
         
@@ -1290,6 +1371,8 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private void handel_report(ActionEvent event) {
         // button
+        lb_progress.setVisible(true);
+        lb_progress.setText("Generating Report");
          Thread t = new Thread()
         {
             public void run()
@@ -1356,6 +1439,7 @@ public class AdminViewController implements Initializable, Runnable {
                 );
         Platform.runLater(()->{
                  setReport();
+                 lb_progress.setVisible(false);
              });
         
         
@@ -1370,10 +1454,13 @@ public class AdminViewController implements Initializable, Runnable {
 
     @FXML
     private void Handel_project(ActionEvent event) {
-       adminModel.getAllTaskIDsAndNamesOfAProject(cb_stat_project.getSelectionModel().getSelectedItem().getProjectID());
-        
+       try{
+        adminModel.getAllTaskIDsAndNamesOfAProject(cb_stat_project.getSelectionModel().getSelectedItem().getProjectID());
         ObservableList<Task> cp = adminModel.projectTask();
-        cb_stat_task.setItems(cp);
+        cb_stat_task.setItems(cp);}
+       catch(Exception e){
+           System.out.println(""+e);
+       }
                 
     }
 
@@ -1394,6 +1481,107 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private void handle_export(ActionEvent event) {
         adminModel.addReportListToCSVFile(adminModel.Csv());
+        lb_progress.setVisible(true);
+        lb_progress.setText("Exported Report");
+    }
+
+    @FXML
+    private void confirm_client_delete(ActionEvent event) {
+        adminModel.removeClientFromDB(clientToedit);
+        adminModel.oListClient().remove(clientToedit);
+        adminModel.oListClientIdAndName().remove(clientToedit);
+        Tbv_Clint.refresh();
+        tf_clint_name.clear();
+        tf_clint_email.clear();
+        tf_clint_$perhour.clear();
+        cb_stat_clint.setItems(adminModel.oListClientIdAndName());
+        bn_c_confirm.setVisible(false);
+        bn_c_cancel.setVisible(false);
+    }
+
+    @FXML
+    private void cancel_client_delete(ActionEvent event) {
+        bn_c_confirm.setVisible(false);
+        bn_c_cancel.setVisible(false);
+        
+    }
+
+    @FXML
+    private void confirm_project_delete(ActionEvent event) {
+        adminModel.removeProjectFromDB(projectToedit);
+        adminModel.oListProject().remove(projectToedit);
+        Tbv_pj.refresh();
+        tf_pj_name.clear();
+        tf_pj_nr.clear();
+        tf_pj_$perhour.clear();
+        cb_stat_project.setItems(adminModel.oListProjectNameAndId());
+        cb_project.setItems(adminModel.oListProjectNameAndId());
+        bn_p_confirm.setVisible(false);
+        bn_p_cancel.setVisible(false);
+        
+    }
+
+    @FXML
+    private void cancel_project_delete(ActionEvent event) {
+        bn_p_confirm.setVisible(false);
+        bn_p_cancel.setVisible(false);
+    }
+
+    @FXML
+    private void confirm_task_delete(ActionEvent event) {
+        adminModel.removeTaskFromDB(taskToedit);
+        adminModel.oListTask().remove(taskToedit);
+        tbv_task.refresh();
+        task_name.clear();
+        cb_stat_task.setItems(adminModel.projectTask());
+        bn_t_confirm.setVisible(false);
+        bn_t_cancel.setVisible(false);
+    }
+
+    @FXML
+    private void cancel_task_delete(ActionEvent event) {
+        bn_t_confirm.setVisible(false);
+        bn_t_cancel.setVisible(false);
+    }
+
+    @FXML
+    private void confirm_session_delete(ActionEvent event) {
+        adminModel.removeSessionFromDB(SessionToedit);
+        adminModel.oListSession().remove(SessionToedit);
+        tbv_session.refresh();
+         lb_session_name.setText("Name");
+         tf_session_start.clear();
+         tf_session_stop.clear();
+         lb_session_dev.setText("Developers");
+        bn_s_confirm.setVisible(false);
+        bn_s_cancel.setVisible(false);
+    }
+
+    @FXML
+    private void cancel_session_delete(ActionEvent event) {
+        bn_s_confirm.setVisible(false);
+        bn_s_cancel.setVisible(false);
+    }
+
+    @FXML
+    private void confirm_user_delete(ActionEvent event) {
+       adminModel.removeUserFromDB(userToedit);
+       adminModel.oListUser().remove(userToedit);
+       adminModel.oListUserNameAndId().remove(userToedit);
+        tbv_user.refresh();
+        tf_user_name.clear();
+        tf_user_email.clear();
+        tf_user_password.clear();
+        tf_user_$perhour.clear();
+        cb_stat_dev.setItems(adminModel.oListUserNameAndId());
+        bn_u_confirm.setVisible(false);
+        bn_u_cancel.setVisible(false);
+    }
+
+    @FXML
+    private void cancel_user_delete(ActionEvent event) {
+        bn_u_confirm.setVisible(false);
+        bn_u_cancel.setVisible(false);
     }
 
     

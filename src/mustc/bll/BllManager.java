@@ -25,11 +25,13 @@ public class BllManager implements IBLL {
     private DalManager dalManager;
     private TimeUtilities timeUtilities;
     private SearchUtilities searchUtil;
+    private InputValidators inputVdators;
     
     public BllManager() {
         dalManager = new DalManager();
         timeUtilities = new TimeUtilities();
         searchUtil = new SearchUtilities();
+        inputVdators = new InputValidators();
     }
     
     
@@ -333,6 +335,12 @@ public class BllManager implements IBLL {
         return searchUtil.searchUser(allUser, text);
     }
 
-   
+  // inputValidators
+     public boolean isValidEmail(String email){
+         return inputVdators.isValidEmail(email);
+     }
+    public boolean isValidPhoneNumber(String phoneNumber){
+        return inputVdators.isValidPhoneNumber(phoneNumber);
+    }
     
 }

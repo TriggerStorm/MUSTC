@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXTreeView;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -124,9 +125,9 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private Tab tab_stat;
     @FXML
-    private JFXComboBox<?> cb_stat_project;
+    private JFXComboBox<Project> cb_stat_project;
     @FXML
-    private JFXComboBox<?> cb_stat_task;
+    private JFXComboBox<Task> cb_stat_task;
     @FXML
     private JFXDatePicker dp_stat_from;
     @FXML
@@ -147,17 +148,17 @@ public class UserViewController extends JFrame implements Initializable {
     
     @FXML
     private JFXButton bn_task1;
-    private JFXComboBox<Task> cb_task1;
+   
     @FXML
     private ImageView img_task1;
     @FXML
     private JFXButton bn_task2;
-    private JFXComboBox<Task> cb_task2;
+   
     @FXML
     private ImageView img_task2;
     @FXML
     private JFXButton bn_task3;
-    private JFXComboBox<Task> cb_task3;
+    
     @FXML
     private ImageView img_task3;
    
@@ -174,6 +175,7 @@ public class UserViewController extends JFrame implements Initializable {
     
     Session SessionToedit;
     Task taskToedit;
+    Task runningTask;
     boolean timeState = true;
     
     static int msec = 0;
@@ -203,9 +205,7 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private ToggleButton tb_task_billable;
     @FXML
-    private JFXComboBox<?> cb_stat_clint;
-    @FXML
-    private JFXComboBox<?> cb_stat_dev;
+    private JFXComboBox<Client> cb_stat_clint;
     @FXML
     private JFXButton bn_report;
     @FXML
@@ -223,9 +223,7 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private TableColumn<Report, String> Report_finishTime;
     @FXML
-    private TableColumn<Report, String> Report_billableMin;
-    @FXML
-    private TableColumn<Report, String> Report_totalPrice;
+    private TableColumn<Report, String> Report_duration;
     @FXML
     private ToggleButton tb_smallview_billable;
     @FXML
@@ -250,6 +248,17 @@ public class UserViewController extends JFrame implements Initializable {
     private Label lb_session_name;
     @FXML
     private Label lb_session_dev;
+    @FXML
+    private Label lb_progress;
+    @FXML
+    private JFXButton bn_t_confirm;
+    @FXML
+    private JFXButton bn_t_cancel;
+    @FXML
+    private JFXButton bn_s_confirm;
+    @FXML
+    private JFXButton bn_s_cancel;
+    
     
     
     
@@ -277,12 +286,17 @@ public class UserViewController extends JFrame implements Initializable {
         
         cb_task_project.setItems(userModel.getAllProjectsIDsAndNames());
         
-        
-        
-        
-        
+        cb_stat_clint.setItems(userModel.getAllClientNameAndId());
+        cb_stat_project.setItems(userModel.getAllProjectsIDsAndNamesForReport());
+
         lb_loginuser.setText(liu.getName());
         tv_project_task.setVisible(false);
+        lb_progress.setVisible(false);
+        
+         bn_t_confirm.setVisible(false);
+         bn_t_cancel.setVisible(false);
+         bn_s_confirm.setVisible(false);
+         bn_s_cancel.setVisible(false);
     }    
 
     public UserViewController() {
@@ -458,9 +472,8 @@ public class UserViewController extends JFrame implements Initializable {
         Report_user.setCellValueFactory(new PropertyValueFactory<Report, String>("loggedInUser"));
         Report_startTime.setCellValueFactory(new PropertyValueFactory<Report, String>("startTime"));
         Report_finishTime.setCellValueFactory(new PropertyValueFactory<Report, String>("finishTime"));
-        //minutes
-        Report_billableMin.setCellValueFactory(new PropertyValueFactory<Report, String>("billable"));
-        Report_totalPrice.setCellValueFactory(new PropertyValueFactory<Report, String>("revenue"));
+        Report_duration.setCellValueFactory(new PropertyValueFactory<Report, String>("minutes"));
+        
         
         Tbv_Report.setItems(userModel.oReport());
         System.out.println(""+userModel.oReport().size());
@@ -628,44 +641,7 @@ public class UserViewController extends JFrame implements Initializable {
         
     }
     
-   /* private void handel_task_add(ActionEvent event) {
-        Thread t = new Thread()
-        {
-            public void run()
-            {
-        taskTapAddTask();
-        
-        
-        tbv_task.setItems(userModel.oListTask());
-        
-        sessionStartNStop();
-        
-       String T = task_name.getText();
-       
-       int y =  userModel.oListTask().size();
-       
-        String tpj = cb_task_project.getSelectionModel().getSelectedItem().getProjectName();
-       
-       for (int c = 0; c < y ; c++) {
-                    String tn = userModel.oListTask().get(c).getTaskName();
-                    //String tn = "TreeItem [ value: "+adminModel.oListTask().get(c).getTaskName()+" ]";
-                    String tp = userModel.oListTask().get(c).getProjectName();
-                    
-          if(       T.equals(tn)){
-              if(tpj.equals(tp)){
-            selectTask = userModel.oListTask().get(c);
-              }}}
-                 }
-        
-        };
-                 t.start();
-        /* adminModel.addNewTaskToDB(
-                task_name.getText().trim(),              
-                cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
-                bb);
-        tbv_task.refresh();*/
-        
-   // }
+  
 
     @FXML
     private void handel_edit_task(ActionEvent event) {//*
@@ -679,10 +655,8 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void handel_delete_task(ActionEvent event) {//*
-         userModel.removeTaskFromDB(taskToedit);
-        userModel.oListTask().remove(taskToedit);
-        tbv_task.refresh();
-        task_name.clear();
+         bn_t_confirm.setVisible(true);
+        bn_t_cancel.setVisible(true);
     }
     
      @FXML
@@ -702,13 +676,8 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void handel_session_delete(ActionEvent event) {//*
-        userModel.removeSessionFromDB(SessionToedit);
-        userModel.oListSession().remove(SessionToedit);
-        TBV_Session.refresh();
-         lb_session_name.setText("Name");
-         tf_session_start.clear();
-         tf_session_stop.clear();
-         lb_session_dev.setText("Developers");
+        bn_s_confirm.setVisible(true);
+        bn_s_cancel.setVisible(true);
     }
     
     public void clock(){
@@ -794,6 +763,7 @@ public class UserViewController extends JFrame implements Initializable {
              });
             LocalDateTime LDTnow = LocalDateTime.now();
             
+            runningTask = selectTask;
             startTime = userModel.localDateTimeToString(LDTnow);
             timeState = true;
             clock();
@@ -807,7 +777,7 @@ public class UserViewController extends JFrame implements Initializable {
              System.out.println(""+ lu);
              LocalDateTime LDTnow = LocalDateTime.now();
              String StopTime = userModel.localDateTimeToString(LDTnow);
-             userModel.addNewSessionToDB(lu, selectTask.getTaskID(),selectTask.getTaskName(), startTime, StopTime);
+             userModel.addNewSessionToDB(lu, runningTask.getTaskID(),runningTask.getTaskName(), startTime, StopTime);
              timeState = false;
              
              
@@ -838,18 +808,92 @@ public class UserViewController extends JFrame implements Initializable {
 
     @FXML
     private void Handel_project(ActionEvent event) {
+        try{
+        userModel.getAllTaskIDsAndNamesOfAProject(cb_stat_project.getSelectionModel().getSelectedItem().getProjectID());
+        ObservableList<Task> cp = userModel.projectTask();
+        cb_stat_task.setItems(cp);}
+       catch(Exception e){
+           System.out.println(""+e);
+       }
     }
 
 
     @FXML
     private void handel_selectClient(ActionEvent event) {
-        search.clear();
-       tv_project_task.setVisible(false);
+        ObservableList<Project> cp = userModel.getAllProjectIDsAndNamesOfAClient(cb_stat_clint.getSelectionModel().getSelectedItem().getClientId());
+        cb_stat_project.setItems(cp);
     }
 
     @FXML
     private void handel_report(ActionEvent event) { //bn report gen
+        lb_progress.setVisible(true);
+        lb_progress.setText("Generating Report");
+        Thread t = new Thread()
+        {
+            public void run()
+            {
+                
+        LocalDate from;
+        LocalDate to;
+        int client =0;
+        int project = 0;
+        int task = 0;
+        int user = liu.getId();
+        //client
+        if(cb_stat_clint.getSelectionModel().getSelectedItem() == null){
+            client = -1;
+        }else{
+            client = cb_stat_clint.getSelectionModel().getSelectedItem().getClientId();
+        }
+        //project
+        if(cb_stat_project.getSelectionModel().getSelectedItem() == null){
+            project = -1;
+        }else if(client != -1 & cb_stat_project.getSelectionModel().getSelectedItem()== null){
+           project = -2;
+        }else{
+           project = cb_stat_project.getSelectionModel().getSelectedItem().getProjectID();
+        }
+        //Task
+        if(cb_stat_task.getSelectionModel().getSelectedItem()== null){
+            task = -1;
+        }else if(project != -1 & cb_stat_task.getSelectionModel().getSelectedItem() == null){
+            task = -2;
+        }else{
+            task = cb_stat_task.getSelectionModel().getSelectedItem().getTaskID();
+        }
+           
+        
+        if(dp_stat_from.getValue() == null){
+            from = LocalDate.now().minusYears(100);
+        }
+            else{
+               from= dp_stat_from.getValue();    
+            }
+        
+        if(dp_stat_to.getValue() == null){
+                   to = LocalDate.now().plusDays(1);
+                }
+                else{
+                to = dp_stat_to.getValue();
+                };
+        
+        userModel.generateReport(
+                client,
+                project,
+                task,
+                user,
+                from,
+                to
+                );
+        Platform.runLater(()->{
+                 setReport();
+                 lb_progress.setVisible(false);
+             });
+        
+        
+    }}; t.start();
     }
+    
 
  
     @FXML
@@ -975,6 +1019,41 @@ public class UserViewController extends JFrame implements Initializable {
                 bb);
         tbv_task.refresh();*/
         
+    }
+
+    @FXML
+    private void confirm_task_delete(ActionEvent event) {
+        userModel.removeTaskFromDB(taskToedit);
+        userModel.oListTask().remove(taskToedit);
+        tbv_task.refresh();
+        task_name.clear();
+        bn_t_confirm.setVisible(false);
+        bn_t_cancel.setVisible(false);
+    }
+
+    @FXML
+    private void cancel_task_delete(ActionEvent event) {
+        bn_t_confirm.setVisible(false);
+        bn_t_cancel.setVisible(false);
+    }
+
+    @FXML
+    private void confirm_session_delete(ActionEvent event) {
+        userModel.removeSessionFromDB(SessionToedit);
+        userModel.oListSession().remove(SessionToedit);
+        TBV_Session.refresh();
+         lb_session_name.setText("Name");
+         tf_session_start.clear();
+         tf_session_stop.clear();
+         lb_session_dev.setText("Developers");
+        bn_s_confirm.setVisible(false);
+        bn_s_cancel.setVisible(false);
+    }
+
+    @FXML
+    private void cancel_session_delete(ActionEvent event) {
+        bn_s_confirm.setVisible(false);
+        bn_s_cancel.setVisible(false);
     }
 
     

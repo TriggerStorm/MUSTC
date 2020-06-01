@@ -2,6 +2,41 @@
  * Empty Stylesheet file.
  */
 
-.mainFxmlClass {
+.AdminViewController {
+}
 
+
+
+
+.cole{
+    -fx-text-alignment: right
+}
+.button{
+    -fx-background-radius: 10%;
+    
+    
+    
+}
+.deleteconfirme
+{
+    -fx-background-color: #e24f4f;
+    -fx-border-color: #fffb01;
+    -fx-border-radius: 60%;
+    -fx-background-radius: 60%;
+    
+    
+}
+.toolBar
+{
+    -fx-background-color: #8e8a8a;
+    
+}
+.bb{
+    -fx-background-color: #f4f4f4;
+    -fx-background-radius: 100%;
+    -fx-font-size: 12 px;
+}
+.lb
+{
+    -fx-text-fill: rgb(252, 255, 74);
 }
