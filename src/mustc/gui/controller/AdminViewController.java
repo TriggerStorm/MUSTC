@@ -311,6 +311,7 @@ public class AdminViewController implements Initializable, Runnable {
     boolean isStarted;
     String startTime;
     Task selectTask;
+    Task runningTask;
     String currentTab = "client";
     
     static int msec = 0;
@@ -366,6 +367,8 @@ public class AdminViewController implements Initializable, Runnable {
     private JFXButton bn_u_confirm;
     @FXML
     private JFXButton bn_u_cancel;
+    @FXML
+    private TableColumn<?, ?> Report_mins;
     
    
    
@@ -840,7 +843,9 @@ public class AdminViewController implements Initializable, Runnable {
                 task_name.getText().trim(),              
                 cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
                 bb);
-    task_name.clear();
+       tb_project.setText(cb_task_project.getSelectionModel().getSelectedItem().toString());
+       lb_task.setText(task_name.getText().toString());
+    
         
     }
     
@@ -1011,7 +1016,7 @@ public class AdminViewController implements Initializable, Runnable {
                  bn_start_stop.setText("Stop");
              });
             LocalDateTime LDTnow = LocalDateTime.now();
-            
+            runningTask = selectTask;
             startTime = adminModel.localDateTimeToString(LDTnow);
             timeState = true;
             clock();
@@ -1025,7 +1030,7 @@ public class AdminViewController implements Initializable, Runnable {
             
              LocalDateTime LDTnow = LocalDateTime.now();
              String StopTime = adminModel.localDateTimeToString(LDTnow);
-             adminModel.addNewSessionToDB(lu, selectTask.getTaskID(),selectTask.getTaskName(), startTime, StopTime);
+             adminModel.addNewSessionToDB(lu, runningTask.getTaskID(),runningTask.getTaskName(), startTime, StopTime);
              timeState = false;
              
              
@@ -1083,7 +1088,7 @@ public class AdminViewController implements Initializable, Runnable {
         
         };
                  t.start();
-        tf_newtask.clear();
+        
     }
 
     @FXML
@@ -1200,12 +1205,14 @@ public class AdminViewController implements Initializable, Runnable {
         
         if(bb == true){
             bb = false;  
-            tb_smallview_billable.setTextFill(Color.rgb(210,39,30));
+            
+            tb_task_billable.setTextFill(Color.rgb(210,39,30));
             
         }
         else{
         bb = true;
-         tb_smallview_billable.setTextFill(Color.rgb(21,117,84));
+         
+         tb_task_billable.setTextFill(Color.rgb(21,117,84));
         }
         
     }
@@ -1215,11 +1222,11 @@ public class AdminViewController implements Initializable, Runnable {
         
         if(bbm == true){
             bbm = false;   
-            tb_task_billable.setTextFill(Color.rgb(210,39,30));
+            tb_smallview_billable.setTextFill(Color.rgb(210,39,30));
         }
         else{
         bbm = true;
-        tb_task_billable.setTextFill(Color.rgb(21,117,84));
+        tb_smallview_billable.setTextFill(Color.rgb(21,117,84));
         }
         
     }

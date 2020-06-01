@@ -175,6 +175,7 @@ public class UserViewController extends JFrame implements Initializable {
     
     Session SessionToedit;
     Task taskToedit;
+    Task runningTask;
     boolean timeState = true;
     
     static int msec = 0;
@@ -762,6 +763,7 @@ public class UserViewController extends JFrame implements Initializable {
              });
             LocalDateTime LDTnow = LocalDateTime.now();
             
+            runningTask = selectTask;
             startTime = userModel.localDateTimeToString(LDTnow);
             timeState = true;
             clock();
@@ -775,7 +777,7 @@ public class UserViewController extends JFrame implements Initializable {
              System.out.println(""+ lu);
              LocalDateTime LDTnow = LocalDateTime.now();
              String StopTime = userModel.localDateTimeToString(LDTnow);
-             userModel.addNewSessionToDB(lu, selectTask.getTaskID(),selectTask.getTaskName(), startTime, StopTime);
+             userModel.addNewSessionToDB(lu, runningTask.getTaskID(),runningTask.getTaskName(), startTime, StopTime);
              timeState = false;
              
              
