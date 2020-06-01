@@ -50,9 +50,7 @@ public class Session implements Comparable<Session>{
     }
 
 // User constructor        
-    public Session(int sessionID, int associatedTaskID, 
-            String associatedTaskName, String startTime, 
-            String finishTime) {
+    public Session(int sessionID, int associatedTaskID, String associatedTaskName, String startTime, String finishTime) {
         this.sessionID = sessionID;
         this.associatedTaskID = associatedTaskID;
         this.associatedTaskName = associatedTaskName;
@@ -60,18 +58,8 @@ public class Session implements Comparable<Session>{
         this.finishTime = finishTime;
     }
     
-    
- /*// getAllSessionsOfATask constructor        
-    public Session(int sessionID, int associatedUserID, String associatedUserName, String startTime, String finishTime) {
-        this.sessionID = sessionID;
-        this.associatedUserID = associatedUserID;
-        this.associatedUserName = associatedUserName;
-        this.startTime = startTime;
-        this.finishTime = finishTime;
-    }  
-  */  
-    
-    // getDuration constructor        
+
+// getDuration constructor        
     public Session(int sessionID, int associatedTaskID, 
             String associatedTaskName, String startTime, 
             String finishTime, int duration) {
@@ -86,7 +74,6 @@ public class Session implements Comparable<Session>{
 // Ordering by DateTime constructor        
     public Session(int sessionID, int associatedTaskID, String associatedTaskName, LocalDateTime startLDT, LocalDateTime finishLDT) {
         this.sessionID = sessionID;
-//        this.description = description;
         this.associatedTaskID = associatedTaskID;
         this.associatedTaskName = associatedTaskName; // Do I need this?
         this.startLDT = startLDT;

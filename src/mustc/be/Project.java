@@ -85,7 +85,7 @@ public class Project {
     }
     
 
- //  Report constructor      
+//  Report constructor      
  public Project(String projectName, String clientName, float projectRate, int allocatedHours) {
         this.projectName = projectName;
         this.clientName = clientName;

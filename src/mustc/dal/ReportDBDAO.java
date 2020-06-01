@@ -181,8 +181,8 @@ public class ReportDBDAO {
     public List<Session> getAllSessionsOfAProject(int projectID) throws SQLException {
         List<Session> allSessionsOfAProject = new ArrayList<>();
         List<Session> allSessions = new ArrayList<>();
-        String sql = "SELECT * FROM Sessions INNER JOIN Tasks ON Sessions.AssociatedTask = tasks.id "// WHERE tasks.id "= '" + taskID + "'" 
-          +"INNER JOIN Projects ON Tasks.AssociatedProject = Projects.id WHERE Projects.id = '" + projectID + "'"; //Tasks.id)";// "; 
+        String sql = "SELECT * FROM Sessions INNER JOIN Tasks ON Sessions.AssociatedTask = tasks.id "
+          +"INNER JOIN Projects ON Tasks.AssociatedProject = Projects.id WHERE Projects.id = '" + projectID + "'";
         try(Connection con = dbc.getConnection()) 
         {
             PreparedStatement pstmt = con.prepareStatement(sql);   

@@ -14,11 +14,11 @@ public class Report {
     private String projectName;
     private String taskName;
     private String loggedInUser;  // the person whom the Session is assigned to.    
-    private String startTime;     // LDT?
-    private String finishTime;    // LDT?
-    private String minutes;       // for Admin
+    private String startTime;    
+    private String finishTime;  
+    private String minutes;      
     private String billable;
-    private String revenue;             // for Admin
+    private String revenue;        
 
 
     
@@ -30,7 +30,6 @@ public class Report {
         this.loggedInUser = loggedInUser;
         this.startTime = startTime;
         this.finishTime = finishTime;
-
         this.minutes = minutes;
         this.billable = billable;
         this.revenue = revenue;
