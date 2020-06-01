@@ -39,7 +39,8 @@ public class UserViewModel {
     private ObservableList<Project> clientpj;
     private ObservableList<Task> projectTask;
     private ObservableList<Project> pjreport;
-     
+    private ObservableList<Client> client; 
+    
     private ObservableList<Task> g1;
     private ObservableList<Task> g2;
     private ObservableList<Task> g3;
@@ -74,6 +75,12 @@ public class UserViewModel {
     return projectTask;
     }
     
+     public ObservableList<Client> getAllClientNameAndId() {
+        
+        List<Client> Clients = bllManager.getAllClientsIDsAndNames();
+        client = FXCollections.observableArrayList(Clients);
+        return client;
+    }
     
     // Projects
     public ObservableList<Project> getAllProject(){
@@ -110,6 +117,7 @@ public class UserViewModel {
         
     }
    
+    
 
     //Task
 

@@ -98,4 +98,8 @@ public interface IBLL {
     public ObservableList<Session> searchSession(ObservableList<Session> allSession, String text);
     public ObservableList<User> searchUser(ObservableList<User> allUser, String text);
     
+  //validators
+    public boolean isValidEmail(String email);
+    public boolean isValidPhoneNumber(String phoneNumber);
+    
 }
