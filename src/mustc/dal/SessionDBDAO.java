@@ -26,7 +26,7 @@ import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
 import mustc.bll.TimeUtilities;
-import mustc.gui.controller.TestController;
+
 
 /**
  *
@@ -36,22 +36,31 @@ public class SessionDBDAO {
     private DBConnection dbc;
     private UserDBDAO userDBDao;
     private TimeUtilities timeUtilities;
-    private TestController testController;
+    
  //   private TaskDBDAO taskDBDao;
 
-    
-    
+    /**
+     *
+     */
     public SessionDBDAO() {
         dbc = new DBConnection();
  //       taskDBDao = new TaskDBDAO();
         userDBDao = new UserDBDAO();
         timeUtilities = new TimeUtilities();
-    testController = new TestController();
+    
     }
 
-    
-    
-     public Session addNewSessionToDB(int associatedUserID, int associatedTaskID,String associatedTaskName, String startTime, String finishTime) throws SQLException { 
+    /**
+     *
+     * @param associatedUserID
+     * @param associatedTaskID
+     * @param associatedTaskName
+     * @param startTime
+     * @param finishTime
+     * @return
+     * @throws SQLException
+     */
+    public Session addNewSessionToDB(int associatedUserID, int associatedTaskID,String associatedTaskName, String startTime, String finishTime) throws SQLException { 
     //  Adds a new Session to the Sessions table of the database given the sessions details. Generates an id key    
         String associatedUserName = getSessionsUserName(associatedUserID);   
         Session newSession = new Session(0, associatedUserID,  associatedUserName, associatedTaskID, associatedTaskName, startTime, finishTime);
@@ -83,7 +92,12 @@ public class SessionDBDAO {
         return newSession;
     }
      
-     
+    /**
+     *
+     * @param sessionID
+     * @return
+     * @throws SQLException
+     */
     public Session getSession(int sessionID) throws SQLException {
     //  Returns a Session data object given a Session id
         Session session = null; 
@@ -109,7 +123,12 @@ public class SessionDBDAO {
         return session ;
     }
     
-     public List<Session> getAllSessions() throws SQLException { // Admin view
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
+    public List<Session> getAllSessions() throws SQLException { // Admin view
     // Returns a list of Sessions where the associatedUser = loggedInUser
         List<Session> allSessions = new ArrayList<>();
         String sql = "SELECT * FROM Sessions"; 
@@ -138,8 +157,12 @@ public class SessionDBDAO {
         return allSessions ;
     }
  
-       
-     
+    /**
+     *
+     * @param loggedInUser
+     * @return
+     * @throws SQLException
+     */
     public List<Session> getAllSessionsOfAUser(User loggedInUser) throws SQLException { // User view
     // Returns a list of Sessions where the associatedUser = loggedInUser
         List<Session> allLoggedInUserSessions = new ArrayList<>();
@@ -163,7 +186,12 @@ public class SessionDBDAO {
         return allLoggedInUserSessions ;
     }
      
-       
+    /**
+     *
+     * @param taskID
+     * @return
+     * @throws SQLException
+     */
     public List<Session> getAllSessionsOfATask(int taskID) throws SQLException {  // Work in progress
         List<Session> allSessionsOfATask = new ArrayList<>();
 //        allSessionsOfATask = null;
@@ -191,7 +219,12 @@ public class SessionDBDAO {
         return allSessionsOfATask ;
     }
    
-          
+    /**
+     *
+     * @param projectID
+     * @return
+     * @throws SQLException
+     */
     public List<Session> getAllSessionsOfAProject(int projectID) throws SQLException {
             List<Session> allSessionsOfAProject = new ArrayList<>();
     //        List<Task> allTaskIDsAndNamesOfAProject = TaskDBDAOgetAllTaskIDsAndNamesOfAProject(int projectID);
@@ -225,7 +258,15 @@ public class SessionDBDAO {
         return allSessionsOfAProject;
     }
         
-       
+    /**
+     *
+     * @param editedSession
+     * @param associatedUserID
+     * @param associatedTaskID
+     * @param startTime
+     * @param finishTime
+     * @return
+     */
     public Session editSession (Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime) { 
     //  Edits a Session in the Session table of the database given the Sessions new details.  
         int sessionID = editedSession.getSessionID();
@@ -253,7 +294,10 @@ public class SessionDBDAO {
         return null;
     }
 
-       
+    /**
+     *
+     * @param sessionToDelete
+     */
     public void removeSessionFromDB(Session sessionToDelete) {
     //  Removes a session from the Session table of the database given a Session data object
         String sql = "DELETE FROM Sessions WHERE id = ?";
@@ -266,14 +310,24 @@ public class SessionDBDAO {
         }
     }
      
-    
+    /**
+     *
+     * @param associatedUserID
+     * @return
+     * @throws SQLException
+     */
     public String getSessionsUserName(int associatedUserID) throws SQLException {
         UserDBDAO userDBDao = new UserDBDAO();
         String associatedUserName = userDBDao.getUserName(associatedUserID);
         return associatedUserName;
     }
     
-    
+    /**
+     *
+     * @param associatedTaskID
+     * @return
+     * @throws SQLException
+     */
     public String getSessionsTaskName(int associatedTaskID) throws SQLException {
         TaskDBDAO taskDBDao = new TaskDBDAO();
         String associatedTaskName = taskDBDao.getTaskName(associatedTaskID);
@@ -298,7 +352,12 @@ public class SessionDBDAO {
  //System.out.println("Session id = " + session.getSessionID() + "   Session Duration = " + session.getDuration());
     }
     
-    
+    /**
+     *
+     * @param startTime
+     * @param finishTime
+     * @return
+     */
     public int calculateDurationOfASession(String startTime, String finishTime) {
     //  Calculates the number od minutesi n a Session.    
         LocalDateTime startLDT = timeUtilities.stringToLocalDateTime(startTime);
@@ -313,7 +372,12 @@ public class SessionDBDAO {
         return duration;
     }
  
-    
+    /**
+     *
+     * @param taskID
+     * @return
+     * @throws SQLException
+     */
     public Task returnTotalTaskMinutesAndDevelopers(int taskID) throws SQLException {
     // Returns the total minutes of a given Task and it's Developers
         String developers = "";
@@ -343,7 +407,13 @@ public class SessionDBDAO {
         return developers;
     }
 
-    
+    /**
+     *
+     * @param userID
+     * @param taskID
+     * @return
+     * @throws SQLException
+     */
     public int calculateUsersTaskMinutes(int userID, int taskID) throws SQLException{
     // Returns the total minutes a given User has spent dong a Task  
         int usersTaskMinutes = 0;
@@ -365,7 +435,12 @@ System.out.println("TaskID = " + taskID + "   USERs TASK MINUTES = " + usersTask
         return usersTaskMinutes;
     }
   
-          
+    /**
+     *
+     * @param loggedInUser
+     * @return
+     * @throws SQLException
+     */
     public List<Session> getAllLoggedInUsersSessionsStartTimseAndTaskIDs(User loggedInUser) throws SQLException {  // UNUSED??
     // Returns a list of Sessions where the associatedUser = loggedInUser
         List<Session> allLoggedInUserSessions = new ArrayList<>();

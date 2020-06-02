@@ -45,6 +45,9 @@ public class UserViewModel {
     private ObservableList<Task> g2;
     private ObservableList<Task> g3;
 
+    /**
+     *
+     */
     public UserViewModel() {
         bllManager = new BllManager();
         liu = LoggedInUser.getInstance();
@@ -52,30 +55,59 @@ public class UserViewModel {
         
     }
     
+    /**
+     *
+     * @return
+     */
     public static AdminModel getInstance(){
         return AMSingelton;
     }
     
+    /**
+     *
+     * @return
+     */
     public ObservableList<Report> oReport(){
     return Report;
     }
     
+    /**
+     *
+     * @return
+     */
     public ObservableList<Task> oListTask(){
     return taskList;
     }
     
+    /**
+     *
+     * @return
+     */
     public ObservableList<Project> oListProject(){
     return pjList;
     }
+
+    /**
+     *
+     * @return
+     */
     public ObservableList<Session> oListSession(){
     return sessionList;
     }
  
+    /**
+     *
+     * @return
+     */
     public ObservableList<Task> projectTask(){
     return projectTask;
     }
     
-     public ObservableList<Client> getAllClientNameAndId() {
+    /**
+     *
+     * @return
+     */
+    public ObservableList<Client> getAllClientNameAndId() {
         
         List<Client> Clients = bllManager.getAllClientsIDsAndNames();
         client = FXCollections.observableArrayList(Clients);
@@ -83,6 +115,11 @@ public class UserViewModel {
     }
     
     // Projects
+
+    /**
+     *
+     * @return
+     */
     public ObservableList<Project> getAllProject(){
         
        List<Project> allProjcets = bllManager.getAllProjectsForUser();
@@ -91,15 +128,22 @@ public class UserViewModel {
         
     }
     
-   
-    
-     public ObservableList<Project> getAllProjectsIDsAndNames() {
+    /**
+     *
+     * @return
+     */
+    public ObservableList<Project> getAllProjectsIDsAndNames() {
         List<Project> allProjcets =bllManager.getAllProjectsIDsAndNames();
         pj = FXCollections.observableArrayList(allProjcets);
         return pj;
     }
     
     // Task
+
+    /**
+     *
+     * @return
+     */
     public ObservableList<Task> getAllTask(){
         
          List<Task> allTask = bllManager.getAllTasksForUser();
@@ -107,6 +151,11 @@ public class UserViewModel {
          return taskList;
     }
     
+    /**
+     *
+     * @param loggedInUser
+     * @return
+     */
     public ObservableList<Task> getUsersThreeRecentTaskss(User loggedInUser){
         
         
@@ -121,6 +170,14 @@ public class UserViewModel {
 
     //Task
 
+    /**
+     *
+     * @param taskName
+     * @param associatedProjectID
+     * @param isBillable
+     * @return
+     */
+
     
     public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable){
         Task addT = bllManager.addNewTaskToDB(taskName, associatedProjectID, isBillable);
@@ -128,17 +185,34 @@ public class UserViewModel {
         return null;
    }
     
+    /**
+     *
+     * @param editedTask
+     * @param taskName
+     * @param associatedProjectID
+     * @param isBillable
+     * @return
+     */
     public Task editTask(Task editedTask, String taskName, int associatedProjectID, boolean isBillable) {
          bllManager.editTask(editedTask, taskName, associatedProjectID, isBillable);
          return null;
     }
     
+    /**
+     *
+     * @param taskToDelete
+     */
     public void removeTaskFromDB(Task taskToDelete) {
         bllManager.removeTaskFromDB(taskToDelete);
     }
     
     
     // Session
+
+    /**
+     *
+     * @return
+     */
     public ObservableList<Session> getAllSession(){
           User t = bllManager.getUser(liu.getId());
           List<Session> allSession = bllManager.getAllSessionsOfAUser(t);
@@ -147,12 +221,22 @@ public class UserViewModel {
     }
     
     // 3 recent task 
+
+    /**
+     *
+     * @return
+     */
     public ObservableList<Task> get1(){
         Task t1 = RecentTask.get(0);
         g1 = FXCollections.observableArrayList(t1);
         
         return g1;
     }
+
+    /**
+     *
+     * @return
+     */
     public ObservableList<Task> get2(){
         Task t2 = RecentTask.get(1);
         g2 = FXCollections.observableArrayList(t2);
@@ -160,6 +244,10 @@ public class UserViewModel {
         return g2;
     }
     
+    /**
+     *
+     * @return
+     */
     public ObservableList<Task> get3(){
         Task t3 = RecentTask.get(2);
         g3 = FXCollections.observableArrayList(t3);
@@ -168,48 +256,114 @@ public class UserViewModel {
     }
     
     // Session
+
+    /**
+     *
+     * @param editedSession
+     * @param associatedUserID
+     * @param associatedTaskID
+     * @param startTime
+     * @param finishTime
+     * @return
+     */
     public Session editSession(Session editedSession, int associatedUserID, int associatedTaskID, String startTime, String finishTime) {
         bllManager.editSession(editedSession, associatedUserID, associatedTaskID, startTime, finishTime);
         return null;
     }
     
+    /**
+     *
+     * @param sessionToDelete
+     */
     public void removeSessionFromDB(Session sessionToDelete) {
         bllManager.removeSessionFromDB(sessionToDelete);
     }
     
+    /**
+     *
+     * @param associatedUserID
+     * @param associatedTaskID
+     * @param associatedTaskName
+     * @param startTime
+     * @param finishTime
+     * @return
+     */
     public Session addNewSessionToDB(int associatedUserID, int associatedTaskID, String associatedTaskName ,String startTime, String finishTime) {
        Session s = bllManager.addNewSessionToDB(associatedUserID, associatedTaskID, associatedTaskName, startTime, finishTime);
        sessionList.add(s);
        return null;
     }
     
-    
-    
+    /**
+     *
+     * @param LDT
+     * @return
+     */
     public String localDateTimeToString(LocalDateTime LDT) {
         return bllManager.localDateTimeToString(LDT);
     }
     // sertch
     
+    /**
+     *
+     * @param allTask
+     * @param filterTask
+     * @return
+     */
     public ObservableList<Task> searchTask(ObservableList<Task> allTask, String filterTask){
         return bllManager.searchTask(allTask, filterTask);
     }
     
+    /**
+     *
+     * @param allTask
+     * @param text
+     * @return
+     */
     public ObservableList<Task> searchTaskpj(ObservableList<Task> allTask, String text){
         return bllManager.searchTask(allTask, text);
     }
+
+    /**
+     *
+     * @param allProject
+     * @param text
+     * @return
+     */
     public ObservableList<Project> searchProject(ObservableList<Project> allProject, String text){
         return bllManager.searchProject(allProject, text);
     }
     
-     public ObservableList<Session> searchSession(ObservableList<Session> allSession, String text){
+    /**
+     *
+     * @param allSession
+     * @param text
+     * @return
+     */
+    public ObservableList<Session> searchSession(ObservableList<Session> allSession, String text){
         return bllManager.searchSession(allSession, text);
     }
     
-    
+    /**
+     *
+     * @param userID
+     * @return
+     */
     public User getUser(int userID) {
         return bllManager.getUser(userID);
     }
     // Report
+
+    /**
+     *
+     * @param clientID
+     * @param projectID
+     * @param taskID
+     * @param userID
+     * @param searchFrom
+     * @param searchTo
+     * @return
+     */
     public ObservableList<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) {
                 Reportlist = bllManager.generateReport(clientID, projectID, taskID, userID, searchFrom, searchTo);
                 System.out.println(""+Reportlist.size());
@@ -217,19 +371,36 @@ public class UserViewModel {
                 
                 return Report;
     }
-     public ObservableList<Project> getAllProjectIDsAndNamesOfAClient(int clientID) {
+
+    /**
+     *
+     * @param clientID
+     * @return
+     */
+    public ObservableList<Project> getAllProjectIDsAndNamesOfAClient(int clientID) {
          
         List<Project> clintProjcets = bllManager.getAllProjectIDsAndNamesOfAClient(clientID);
        clientpj = FXCollections.observableArrayList(clintProjcets);
        return clientpj;
     }
-      public ObservableList<Task> getAllTaskIDsAndNamesOfAProject(int projectID) {
+
+    /**
+     *
+     * @param projectID
+     * @return
+     */
+    public ObservableList<Task> getAllTaskIDsAndNamesOfAProject(int projectID) {
          
          List<Task> pjTask = bllManager.getAllTaskIDsAndNamesOfAProject(projectID);
        projectTask = FXCollections.observableArrayList(pjTask);
        return projectTask;
     }
-      public ObservableList<Project> getAllProjectsIDsAndNamesForReport() {
+
+    /**
+     *
+     * @return
+     */
+    public ObservableList<Project> getAllProjectsIDsAndNamesForReport() {
         
        List<Project> pj = bllManager.getAllProjectsIDsAndNamesForReport();
        pjreport = FXCollections.observableArrayList(pj);

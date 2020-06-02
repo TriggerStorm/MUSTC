@@ -27,12 +27,17 @@ import java.util.regex.Pattern;
 
 public class InputValidators  implements Serializable {
    
+    /**
+     *
+     */
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
     Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     
-    
-     
-
+    /**
+     *
+     * @param email
+     * @return
+     */
     public boolean isValidEmail(String email) {
     //  Returns true if email string is is in valid email format. Works pretty well. Not 100% (eg: abc@xyz..com)
     
@@ -40,7 +45,11 @@ public class InputValidators  implements Serializable {
         return matcher.find();
     }
 
-
+    /**
+     *
+     * @param phoneNumber
+     * @return
+     */
     public boolean isValidPhoneNumber(String phoneNumber) {
     //  Returns true if phoneNumber is 8 chars long and contains only numbers
         phoneNumber = phoneNumber.trim();

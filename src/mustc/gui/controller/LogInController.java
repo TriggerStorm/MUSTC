@@ -49,6 +49,8 @@ public class LogInController implements Initializable {
     private Label lb_error;
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {

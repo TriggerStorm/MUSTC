@@ -15,10 +15,19 @@ public class LogInModel {
     
     private BllManager bllManager;
 
+    /**
+     *
+     */
     public LogInModel() {
         bllManager = new BllManager();
     }
     
+    /**
+     *
+     * @param loggedInUserEmail
+     * @param password
+     * @return
+     */
     public int checkUserLogin(String loggedInUserEmail, String password){
         return bllManager.checkUserLogin(loggedInUserEmail, password);
     }

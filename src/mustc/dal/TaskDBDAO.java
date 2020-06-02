@@ -29,13 +29,23 @@ import mustc.be.User;
 public class TaskDBDAO {
     private DBConnection dbc;
     private SessionDBDAO sessionDBDao;    
+
+    /**
+     *
+     */
     public TaskDBDAO() {
             dbc = new DBConnection();
             sessionDBDao = new SessionDBDAO();  // DANGEROUS??
     }        
     
-   
-            
+    /**
+     *
+     * @param taskName
+     * @param associatedProjectID
+     * @param isBillable
+     * @return
+     * @throws SQLException
+     */
     public Task addNewTaskToDB(String taskName, int associatedProjectID, boolean isBillable) throws SQLException { 
     //  Adds a new Task to the DB, and returns the updated Project to the GUI
         Project associatedProjectNameAndRate = getProjectNameAndProjectRate(associatedProjectID);
@@ -73,7 +83,12 @@ public class TaskDBDAO {
         return newTask;
     }
      
-    
+    /**
+     *
+     * @param taskID
+     * @return
+     * @throws SQLException
+     */
     public Task getTaskForUser(int taskID) throws SQLException {
     //  Returns a Task from the DB where ID = taskID
         Task taskInProject = null;
@@ -98,6 +113,11 @@ public class TaskDBDAO {
         return taskInProject ;
     }
     
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public List<Task> getAllTasksForUser() throws SQLException {
     //  Returns a list of Tasks from the DB for a User
     List<Task> allTasksForAdmin = new ArrayList<>();
@@ -124,7 +144,12 @@ public class TaskDBDAO {
        return allTasksForAdmin; 
     }
     
-     
+    /**
+     *
+     * @param taskID
+     * @return
+     * @throws SQLException
+     */
     public Task getTaskForAdmin(int taskID) throws SQLException {
     //  Returns a Task from the DB where ID = taskID
         Task taskInProject = null;
@@ -153,7 +178,11 @@ public class TaskDBDAO {
         return taskInProject ;
     }
       
-    
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public List<Task> getAllTasksForAdmin() throws SQLException {
     //  Returns a list of Tasks from the DB for an Admin
         List<Task> allTasksForAdmin = new ArrayList<>();
@@ -183,7 +212,12 @@ public class TaskDBDAO {
        return allTasksForAdmin; 
     }
      
-    
+    /**
+     *
+     * @param projectID
+     * @return
+     * @throws SQLException
+     */
     public List<Task> getAllTasksOfAProject(int projectID) throws SQLException {
         List<Task> allTasksOfAProject = new ArrayList<>();
         try(Connection con = dbc.getConnection()){
@@ -213,7 +247,12 @@ public class TaskDBDAO {
         return allTasksOfAProject;
     }
     
-    
+    /**
+     *
+     * @param projectID
+     * @return
+     * @throws SQLException
+     */
     public List<Task> getAllTaskIDsAndNamesOfAProject(int projectID) throws SQLException {
         List<Task> allTaskIDsAndNamesOfAProject = new ArrayList<>();
         String sql;
@@ -239,7 +278,12 @@ public class TaskDBDAO {
         return allTaskIDsAndNamesOfAProject;
     } 
     
-    
+    /**
+     *
+     * @param taskID
+     * @return
+     * @throws SQLException
+     */
     public Task getTaskForReport(int taskID) throws SQLException {
     //  Returns a Task from the DB where ID = taskID
         Task taskInProject = null;
@@ -260,7 +304,12 @@ public class TaskDBDAO {
         return taskInProject ;
     }
       
-      
+    /**
+     *
+     * @param projectID
+     * @return
+     * @throws SQLException
+     */
     public int[] getTotalMinutesOfAProject(int projectID) throws SQLException {
         int[] totalProjectMinutes = new int[2];
         totalProjectMinutes[0] = 0;
@@ -290,7 +339,12 @@ System.out.println("totalUnbillableProjectHours: " + totalUnbillableProjectHours
         return totalProjectMinutes;
     }
     
-  
+    /**
+     *
+     * @param loggedInUser
+     * @return
+     * @throws SQLException
+     */
     public List<Task> getUsersThreeRecentTasks(User loggedInUser) throws SQLException {
     //  Returns a list of maximum size 3 of the three most recent distinct Tasks of the loggedInUser
         List<Task> recentTasks = new ArrayList<>();
@@ -334,8 +388,13 @@ System.out.println("recentTask3ID = " + recentTask3ID);
         return recentTasks;
     }
 
-    
-     public String getTaskName(int taskID) throws SQLException {  //  USED??
+    /**
+     *
+     * @param taskID
+     * @return
+     * @throws SQLException
+     */
+    public String getTaskName(int taskID) throws SQLException {  //  USED??
         //  Returns a User data object given a User id
         String taskName = "mock";
         String sql = "SELECT name FROM Tasks WHERE id = '" + taskID + "'";  //  userName, email, password, salary, isAdmin 
@@ -351,7 +410,12 @@ System.out.println("recentTask3ID = " + recentTask3ID);
         return taskName;
     }
     
-        
+    /**
+     *
+     * @param associatedProjectID
+     * @return
+     * @throws SQLException
+     */
     public Project getProjectNameAndProjectRate(int associatedProjectID) throws SQLException {  // AdminModel 113 and 
     //  Return a projectName and projectRate for a Task
         Project projectNameAndRate = null;
@@ -370,7 +434,14 @@ System.out.println("recentTask3ID = " + recentTask3ID);
         return projectNameAndRate; 
     }
     
-        
+    /**
+     *
+     * @param editedTask
+     * @param taskName
+     * @param associatedProjectID
+     * @param isBillable
+     * @return
+     */
     public Task editTask (Task editedTask, String taskName, int associatedProjectID, boolean isBillable) { 
     //  Edits a Task in the Task table of the database given the Projects new details.  
         String sql = "UPDATE Tasks SET name = ?, associatedProject = ?, description = ? WHERE id = '" + editedTask.getTaskID() + "'";
@@ -394,7 +465,10 @@ System.out.println("recentTask3ID = " + recentTask3ID);
         return null;
     }
       
-        
+    /**
+     *
+     * @param taskToDelete
+     */
     public void removeTaskFromDB(Task taskToDelete) {
     //  Removes a user from the User table of the database given a User data object
         try (Connection con = dbc.getConnection()) {

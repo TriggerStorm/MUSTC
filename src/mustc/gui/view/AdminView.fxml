@@ -268,7 +268,7 @@
                               <TableColumn fx:id="col_sesion_taskname" prefWidth="178.0" styleClass="coluoms" text="Task name" />
                               <TableColumn fx:id="col_sesion_start" prefWidth="187.0" styleClass="coluoms" text="Start" />
                               <TableColumn fx:id="col_sesion_stop" prefWidth="179.0" styleClass="coluoms" text="Stop" />
-                              <TableColumn fx:id="col_sesion_Developers" prefWidth="177.0" styleClass="coluoms" text="User" />
+                              <TableColumn fx:id="col_sesion_Developers" prefWidth="172.0" styleClass="coluoms" text="User" />
                            </columns>
                         </TableView>
                         <JFXTextField fx:id="tf_session_start" layoutX="139.0" layoutY="394.0" prefHeight="25.0" prefWidth="105.0" promptText="Start" />

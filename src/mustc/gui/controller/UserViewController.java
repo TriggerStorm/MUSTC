@@ -260,12 +260,11 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private JFXButton bn_s_cancel;
     
-    
-    
-    
-    
-
-    
+    /**
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         userModel = new UserViewModel();
@@ -300,12 +299,19 @@ public class UserViewController extends JFrame implements Initializable {
          bn_s_cancel.setVisible(false);
     }    
 
+    /**
+     *
+     */
     public UserViewController() {
         MaxWidth = 260;
         min = true;
         isStarted = false;
         liu = LoggedInUser.getInstance();
     }
+
+    /**
+     *
+     */
     public void set3LatesTask(){
     //recent task 1
         lb_t1task.setText(userModel.get1().get(0).getTaskName());
@@ -318,6 +324,9 @@ public class UserViewController extends JFrame implements Initializable {
         lb_t3project.setText(userModel.get3().get(0).getProjectName());
     }
     
+    /**
+     *
+     */
     public void sizeExpantion(){
         
         
@@ -357,6 +366,10 @@ public class UserViewController extends JFrame implements Initializable {
         }
        
     }
+
+    /**
+     *
+     */
     public void ToggelSize(){
         
         if(min == false){    
@@ -384,7 +397,9 @@ public class UserViewController extends JFrame implements Initializable {
         }
     }
     
-    
+    /**
+     *
+     */
     public void addTask(){
         userModel.addNewTaskToDB(tf_newtask.getText(),cb_project.getSelectionModel().getSelectedItem().getProjectID(), bbm);
         tb_project.setText(cb_project.getSelectionModel().getSelectedItem().toString());
@@ -401,6 +416,9 @@ public class UserViewController extends JFrame implements Initializable {
         ToggelSize();
     }
 
+    /**
+     *
+     */
     public void setTreeView(){
         
        
@@ -437,6 +455,9 @@ public class UserViewController extends JFrame implements Initializable {
         tv_project_task.setRoot(root);
     }
     
+    /**
+     *
+     */
     public void setProject(){
     Col_pj_name.setCellValueFactory(new PropertyValueFactory<Project, String>("projectName"));
         Col_pj_clint.setCellValueFactory(new PropertyValueFactory<Project, String>("clientName"));
@@ -448,6 +469,9 @@ public class UserViewController extends JFrame implements Initializable {
                 Tbv_pj.setItems(userModel.getAllProject());
     }
 
+    /**
+     *
+     */
     public void setTask(){
         Col_task_taskname.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
         Col_task_project.setCellValueFactory(new PropertyValueFactory<Task, String>("projectName"));
@@ -457,6 +481,9 @@ public class UserViewController extends JFrame implements Initializable {
                  tbv_task.setItems(userModel.getAllTask());
     }
     
+    /**
+     *
+     */
     public void setSession(){
         col_sesion_taskname.setCellValueFactory(new PropertyValueFactory<Session, String>("associatedTaskName"));
         col_sesion_start.setCellValueFactory(new PropertyValueFactory<Session, String>("startTime"));
@@ -465,6 +492,9 @@ public class UserViewController extends JFrame implements Initializable {
         TBV_Session.setItems(userModel.getAllSession());
     }
     
+    /**
+     *
+     */
     public void setReport(){
         
         Report_client.setCellValueFactory(new PropertyValueFactory<Report, String>("clientName"));
@@ -633,6 +663,9 @@ public class UserViewController extends JFrame implements Initializable {
         
     }
 
+    /**
+     *
+     */
     public void taskTapAddTask(){
     userModel.addNewTaskToDB(
                 task_name.getText().trim(),              
@@ -681,6 +714,9 @@ public class UserViewController extends JFrame implements Initializable {
         bn_s_cancel.setVisible(true);
     }
     
+    /**
+     *
+     */
     public void clock(){
         
         
@@ -751,6 +787,10 @@ public class UserViewController extends JFrame implements Initializable {
         
         
     }
+
+    /**
+     *
+     */
     public void sessionStartNStop(){
      Thread t = new Thread()
         {
@@ -796,7 +836,10 @@ public class UserViewController extends JFrame implements Initializable {
         
        }
     
-     public void resetTime(){
+    /**
+     *
+     */
+    public void resetTime(){
     lb_tasktime.setText("00:00:00");
     msec = 0;
     sec = 0;

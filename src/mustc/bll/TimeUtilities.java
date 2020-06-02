@@ -22,6 +22,11 @@ public class TimeUtilities {
     
     boolean timeState = true;
     
+    /**
+     *
+     * @param LDT
+     * @return
+     */
     public String localDateTimeToString(LocalDateTime LDT) {
     // Converts a formatted LocalDateTime to string of format "yyyy-MM-dd HH:mm:ss"
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -29,7 +34,11 @@ public class TimeUtilities {
         return dateNowString;
     } 
     
-      
+    /**
+     *
+     * @param dateTimeSTR
+     * @return
+     */
     public LocalDateTime stringToLocalDateTime(String dateTimeSTR) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd['T'HH:mm:ss[Z]]");
         String[] parts = dateTimeSTR.split(" ");
@@ -40,7 +49,11 @@ public class TimeUtilities {
         return LDT;
     }
     
-        
+    /**
+     *
+     * @param dateTimeSTR
+     * @return
+     */
     public LocalDate stringToLocalDate(String dateTimeSTR) {
         LocalDateTime localDateTime = stringToLocalDateTime(dateTimeSTR);
         LocalDate localDate = localDateTime.toLocalDate();

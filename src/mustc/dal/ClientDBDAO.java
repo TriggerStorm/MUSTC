@@ -24,11 +24,22 @@ import mustc.be.Client;
 public class ClientDBDAO {
     private DBConnection dbc;
     
-    
+    /**
+     *
+     */
     public ClientDBDAO() {
         dbc = new DBConnection();
     }
     
+    /**
+     *
+     * @param clientName
+     * @param logoImgLocation
+     * @param email
+     * @param standardRate
+     * @return
+     * @throws SQLException
+     */
     public Client addNewClientToDB(String clientName, String logoImgLocation, String email, float standardRate) throws SQLException { 
     //  Adds a new Client to the DB, and returns the updated Client to the GUI
         Client newClient = new Client(0,clientName,logoImgLocation, email, standardRate, 0, 0);
@@ -58,7 +69,12 @@ public class ClientDBDAO {
         return newClient;
     }
     
-     
+    /**
+     *
+     * @param clientID
+     * @return
+     * @throws SQLException
+     */
     public Client getClient(int clientID) throws SQLException {
     //  Returns specific Client
         try(Connection con = dbc.getConnection()){
@@ -83,7 +99,11 @@ public class ClientDBDAO {
         return null;
     }
     
-     
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public List<Client> getAllClients() throws SQLException {
     //  Returns all Clients  
         List<Client> allClients = new ArrayList<>();
@@ -107,7 +127,11 @@ public class ClientDBDAO {
         return allClients;
     }
     
-        
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public List<Client> getAllClientsIDsAndNames() throws SQLException {
     //  Returns all Clients Id's and Names for Report Selection 
         List<Client> allClients = new ArrayList<>();
@@ -127,7 +151,12 @@ public class ClientDBDAO {
         return allClients;
     }
     
-    
+    /**
+     *
+     * @param clientID
+     * @return
+     * @throws SQLException
+     */
     public String getClientName(int clientID) throws SQLException {
     //  Returns a Client Name for a Report 
         String clientName = "";
@@ -160,7 +189,15 @@ System.out.println("reading Client Information" );
         return noOfProjectsOfAClient;
     }
      
-     
+    /**
+     *
+     * @param editedClient
+     * @param clientName
+     * @param standardRate
+     * @param logoImgLocation
+     * @param email
+     * @return
+     */
     public Client editClient (Client editedClient,String clientName,float standardRate,String logoImgLocation, String email) { 
     //  Edits a client  
         String sql = "UPDATE Clients SET name = ?, standardRate = ?, logoImgLocation = ?, email = ? WHERE id = ?";
@@ -187,7 +224,11 @@ System.out.println("reading Client Information" );
         return null; 
     }
    
-    
+    /**
+     *
+     * @param clientToDelete
+     * @throws SQLException
+     */
     public void removeClientFromDB(Client clientToDelete) throws SQLException {
     //  Delete specific Client
         try(Connection con = dbc.getConnection()){

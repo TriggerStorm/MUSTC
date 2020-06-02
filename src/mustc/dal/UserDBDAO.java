@@ -26,12 +26,22 @@ import mustc.be.User;
 public class UserDBDAO {
     private DBConnection dbc;
 
-    
+    /**
+     *
+     */
     public UserDBDAO() {
         dbc = new DBConnection();
     } 
     
-    
+    /**
+     *
+     * @param userName
+     * @param email
+     * @param password
+     * @param salary
+     * @param status
+     * @return
+     */
     public User addNewUserToDB(String userName, String email, String password, float salary, String status) { 
     //  Adds a new user to the User table of the database given the users details. Generated an id key    
         User newUser = new User(10, userName, email, password, salary, status);
@@ -65,7 +75,12 @@ public class UserDBDAO {
         return newUser;
     }
      
-    
+    /**
+     *
+     * @param userID
+     * @return
+     * @throws SQLException
+     */
     public User getUser(int userID) throws SQLException {
     //  Returns a User data object given a User id
         User user = null;
@@ -90,6 +105,11 @@ public class UserDBDAO {
         return user;
     }   
  
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public List<User> getAllUsers() throws SQLException {
     //  Returns a User data object given a User id
         List<User> allUsers = new ArrayList<>();
@@ -116,7 +136,11 @@ public class UserDBDAO {
         return allUsers;
     }   
  
-     
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public List<User> getAllUsersIDsAndName() throws SQLException {
         //  Returns a User data object given a User id
         List<User> allUsersIDsAndName = new ArrayList<>();
@@ -137,7 +161,12 @@ public class UserDBDAO {
         return allUsersIDsAndName;
     }
     
-    
+    /**
+     *
+     * @param userID
+     * @return
+     * @throws SQLException
+     */
     public String getUserName(int userID) throws SQLException {
         //  Returns a User data object given a User id
         String userName = "mock";
@@ -154,7 +183,16 @@ public class UserDBDAO {
         return userName;
     }
     
-    
+    /**
+     *
+     * @param editedUser
+     * @param userName
+     * @param email
+     * @param password
+     * @param salary
+     * @param status
+     * @return
+     */
     public User editUser (User editedUser, String userName, String email, String password, Float salary, String status) { 
     //  Edits a user in the User table of the database given the users new details.
         
@@ -187,7 +225,10 @@ public class UserDBDAO {
         return null;
     }
 
-         
+    /**
+     *
+     * @param userToDelete
+     */
     public void removeUserFromDB(User userToDelete) {
     //  Removes a User from the Users table of the database given a User data object
         String sql = "DELETE FROM Users WHERE id = ?";//'" + userToDelete.getUserId() + "'";
@@ -200,7 +241,13 @@ public class UserDBDAO {
         }
     }
     
-    
+    /**
+     *
+     * @param loggedInUserEmail
+     * @param password
+     * @return
+     * @throws SQLException
+     */
     public int checkUserLogin(String loggedInUserEmail, String password) throws SQLException { 
     //  Confirms the validity of a user given their email and password. Returns a int value denoting their user type: 0 = invalid user, 1 = admin, 2 = dev
         LoggedInUser tempLogin = null;

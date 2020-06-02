@@ -22,7 +22,16 @@ public class LoggedInUser {
        Task currentTask = new Task("",1);
     }
 
-    
+    /**
+     *
+     * @param LoggedInUserID
+     * @param LoggedInUserName
+     * @param LoggedInUserEmail
+     * @param password
+     * @param salary
+     * @param admin
+     * @param currentTask
+     */
     public LoggedInUser(int LoggedInUserID, String LoggedInUserName, String LoggedInUserEmail, String password, int salary, boolean admin, Task currentTask) {
         this.loggedInUserID = LoggedInUserID;
         this.loggedInUserName = LoggedInUserName;
@@ -33,6 +42,10 @@ public class LoggedInUser {
         this.currentTask = currentTask;
     }
     
+    /**
+     *
+     * @return
+     */
     public static LoggedInUser getInstance()
     {
         if(instance == null)
@@ -51,57 +64,116 @@ public class LoggedInUser {
         LoggedInUser.instance = instance;
     }*/
 
+    /**
+     *
+     * @return
+     */
+
+
     public int getId() {
         return loggedInUserID;
     }
 
+    /**
+     *
+     * @param loggedInUserID
+     */
     public void setId(int loggedInUserID) {
         this.loggedInUserID = loggedInUserID;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return loggedInUserName;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getEmail() {
         return loggedInUserEmail;
     }
 
+    /**
+     *
+     * @param loggedInUserEmail
+     */
     public void setEmail(String loggedInUserEmail) {
         this.loggedInUserEmail = loggedInUserEmail;
     }
+
+    /**
+     *
+     * @param loggedInUserName
+     */
     public void setName(String loggedInUserName) {
         this.loggedInUserName = loggedInUserName;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     *
+     * @param password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getSalary() {
         return salary;
     }
 
+    /**
+     *
+     * @param salary
+     */
     public void setSalary(int salary) {
         this.salary = salary;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isAdmin() {
         return admin;
     }
 
+    /**
+     *
+     * @param admin
+     */
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
 
+    /**
+     *
+     * @return
+     */
     public Task getCurrentTask() {
         return currentTask;
     }
 
+    /**
+     *
+     * @param currentTask
+     */
     public void setCurrentTask(Task currentTask) {
         this.currentTask = currentTask;
     }

@@ -28,13 +28,25 @@ public class ProjectDBDAO {
     private ClientDBDAO clientDBDao;
     private TaskDBDAO taskDBDao;
     
+    /**
+     *
+     */
     public ProjectDBDAO() {
         dbc = new DBConnection();
         clientDBDao = new ClientDBDAO();
         taskDBDao = new TaskDBDAO();
     }
     
-    
+    /**
+     *
+     * @param projectName
+     * @param associatedClientID
+     * @param phoneNr
+     * @param projectRate
+     * @param allocatedHours
+     * @return
+     * @throws SQLException
+     */
     public Project addNewProjectToDB(String projectName, int associatedClientID , int phoneNr, float projectRate, int allocatedHours) throws SQLException { 
     //  Adds a new Admin created Project to the DB, and returns the updated Admin Project to the GUI
         String clientName = clientDBDao.getClient(associatedClientID).getClientName();
@@ -81,7 +93,12 @@ System.out.println(" client Name = " + clientName);
         return projectForAdmin;
     }
     
-    
+    /**
+     *
+     * @param projectID
+     * @return
+     * @throws SQLException
+     */
     public Project getProjectForUser(int projectID) throws SQLException {
     //  Returns a Project for a User, given the Project id
         int loggedInUserId = 1;  // MOCK DATA   TO GET FETCHED LATER
@@ -112,7 +129,11 @@ System.out.println(" client Name = " + clientName);
         return projectForUser;
     }   
     
-     
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public List<Project> getAllProjectsForUser() throws SQLException {
         int loggedInUserId = 1;  // MOCK DATA   TO GET FETCHED LATER
         List<Project> allProjectsForAUser = new ArrayList<>();
@@ -140,7 +161,12 @@ System.out.println(" client Name = " + clientName);
         return allProjectsForAUser; 
     }
     
-    
+    /**
+     *
+     * @param projectID
+     * @return
+     * @throws SQLException
+     */
     public Project getProjectForAdmin(int projectID) throws SQLException {
     //  Returns a Project for an Admin, given the Project id
         Project projectForAdmin = null;
@@ -169,7 +195,11 @@ System.out.println(" client Name = " + clientName);
         return projectForAdmin;
     }   
     
-     
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public List<Project> getAllProjectsForAdmin() throws SQLException {
         List<Project> allProjectsForAdmin = new ArrayList<>();
         try(Connection con = dbc.getConnection()){
@@ -199,7 +229,12 @@ System.out.println(" client Name = " + clientName);
         return allProjectsForAdmin; 
     }
     
-   
+    /**
+     *
+     * @param projectID
+     * @return
+     * @throws SQLException
+     */
     public Project getProjectForReport(int projectID) throws SQLException {
     //  Returns a Project for an Admin, given the Project id
         Project projectForReport = null;
@@ -221,7 +256,11 @@ System.out.println(" client Name = " + clientName);
         return projectForReport;
     }   
     
-
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public List<Project> getAllProjectsIDsAndNames() throws SQLException {  // AdminModel 113 and 
         List<Project> allProjectsIDsAndNames = new ArrayList<>();
         try(Connection con = dbc.getConnection()){
@@ -240,7 +279,11 @@ System.out.println(" client Name = " + clientName);
         return allProjectsIDsAndNames; 
     }
     
-    
+    /**
+     *
+     * @return
+     * @throws SQLException
+     */
     public List<Project> getAllProjectsIDsAndNamesForReport() throws SQLException {  
         List<Project> allProjectsIDsAndNamesForReport = new ArrayList<>();
         allProjectsIDsAndNamesForReport.add(new Project(-1, "All Projects"));
@@ -249,7 +292,12 @@ System.out.println(" client Name = " + clientName);
         return allProjectsIDsAndNamesForReport;
     }
 
-    
+    /**
+     *
+     * @param clientID
+     * @return
+     * @throws SQLException
+     */
     public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID) throws SQLException {  
 //  Returns a list of Project Id's and Names for GUI Report - Project selection
         List<Project> allProjectIDsAndNamesOfAClient = new ArrayList<>();
@@ -293,12 +341,26 @@ try(Connection con = dbc.getConnection()){
         return taskIDlistOfProject; 
     }
       
-    
+    /**
+     *
+     * @param projectID
+     * @return
+     * @throws SQLException
+     */
     public String getProjectName(int projectID) throws SQLException {
         return getProjectForUser(projectID).getProjectName();
     } 
     
-
+    /**
+     *
+     * @param editedProject
+     * @param projectName
+     * @param phoneNr
+     * @param projectRate
+     * @param allocatedHours
+     * @param isClosed
+     * @return
+     */
     public Project editProject (Project editedProject, String projectName, /*int associatedClientID,*/ int phoneNr, float projectRate, int allocatedHours, boolean isClosed) { 
     //  Returns an Admin edited Project in the Projects table of the database, given the Projects new details.  
         int projectID = editedProject.getProjectID();
@@ -330,7 +392,10 @@ try(Connection con = dbc.getConnection()){
         return null;  //  editedProject?
     }
       
-      
+    /**
+     *
+     * @param projectToDelete
+     */
     public void removeProjectFromDB(Project projectToDelete) {
     //  Removes a session from the Session table of the database given a Session data object
         String sql = "DELETE FROM Projects WHERE id = ?";

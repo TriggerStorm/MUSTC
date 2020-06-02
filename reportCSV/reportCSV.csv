@@ -1,5 +1,5 @@
-REPORT ,GENERATED,2020-06-01, at 13:35:48, : SEARCH PARAMETERS , ON NEXT LINE:,,,
-all Clients,all Projects,all Tasks,all Users,from 1920-06-01,to 2020-06-02,Mins, ?$?,PRICE
+REPORT ,GENERATED,2020-06-02, at 10:25:55, : SEARCH PARAMETERS , ON NEXT LINE:,,,
+all Clients,all Projects,all Tasks,all Users,from 1920-06-02,to 2020-06-03,Mins, ?$?,PRICE
 Bapple,Project X,Phone Calls 10,Steve,2020-04-11 13:10:55,2020-04-11 14:10:50,60,$$,920
 Bapple,Project X,Accounting,Bob,2020-04-13 13:14:55,2020-04-13 15:12:55,120,$$,1840
 Logo,Windmills,DBDAO,Steve,2020-04-15 13:16:55,2020-04-15 18:55:55,345,$$,4887
@@ -38,36 +38,19 @@ MichaelSoft,Plan B,gui bug test,Janet,2020-05-28 10:13:48,2020-05-28 11:14:55,75
 MichaelSoft,Plan B,gui bug test,Janet,2020-05-28 15:57:37,2020-05-28 15:57:44,0,$$,0
 Logo,Windmills,Thred test2,Janet,2020-05-28 16:05:10,2020-05-28 16:07:08,15,$$,212
 winner5,Bob's job,thert showoff,Janet,2020-05-28 16:09:18,2020-05-28 16:09:27,0,--,0
-Asweea,Update,Gui Update,Janet,2020-05-28 16:10:16,2020-05-28 16:10:26,0,$$,0
 Logo,Windmills,Thred test2,Janet,2020-05-28 16:11:33,2020-05-28 16:11:36,0,$$,0
 winner5,Bob's job,thert showoff,Janet,2020-05-28 16:14:33,2020-05-28 16:14:44,0,--,0
 Mike,Project House,LogIn,Janet,2020-05-28 16:18:08,2020-05-28 16:18:32,0,$$,0
 MichaelSoft,Plan B,Refactoring,Janet,2020-05-28 16:21:50,2020-05-28 16:22:26,0,$$,0
-winner5,Bob's job,autoStart,Janet,2020-05-28 16:25:44,2020-05-28 16:25:58,0,$$,0
 Mike,Project House,LogIn,Janet,2020-05-28 16:44:44,2020-05-28 16:45:31,0,$$,0
-Abibas,Project Z,Database,Janet,2020-05-28 16:48:10,2020-05-28 16:48:26,0,$$,0
 MichaelSoft,Plan B,Refactoring,Janet,2020-05-28 16:51:12,2020-05-28 16:52:37,15,$$,175
-Asweea,Update,Gui Update,Janet,2020-05-28 17:05:25,2020-05-28 17:06:02,0,$$,0
-Mike,Project House,2autostart?,Janet,2020-05-29 10:23:18,2020-05-29 10:23:30,0,$$,0
-winner5,Bob's job,mediumTaskU,Janet,2020-05-29 12:14:00,2020-05-29 12:14:17,0,$$,0
-Asweea,Update,Gui Update,Janet,2020-05-29 12:30:26,2020-05-29 12:30:36,0,$$,0
 Logo,Windmills,Thred test2,John B,2020-05-29 18:22:12,2020-05-29 18:22:35,0,$$,0
 Logo,Windmills,Thred test2,John B,2020-05-29 18:24:06,2020-05-29 18:24:37,0,$$,0
-Mike,Project House,2autostart?,John B,2020-05-29 18:37:10,2020-05-29 18:37:20,0,$$,0
-winner5,Bob's job,mediumTaskU,John B,2020-05-29 18:40:07,2020-05-29 18:40:13,0,$$,0
-Mike,Project House,2autostart?,John B,2020-05-29 18:57:57,2020-05-29 18:58:03,0,$$,0
-Bapple,Project X,addMc,John B,2020-05-29 19:27:39,2020-05-29 19:27:56,0,$$,0
-Mike,Project House,addwuw,John B,2020-05-29 19:28:36,2020-05-29 19:28:41,0,$$,0
-winner5,Bob's job,tapTaskPtxt,John B,2020-05-29 19:39:36,2020-05-29 19:39:48,0,$$,0
 MichaelSoft,Plan B,DbdaoCon,Steve,2020-05-29 19:48:02,2020-05-29 19:55:10,15,$$,175
 Logo,SpaceCraft,GUI,John B,2020-05-29 21:07:48,2020-05-29 21:08:01,0,$$,0
-Mike,Project House,2autostart?,John B,2020-05-29 21:09:59,2020-05-29 21:10:04,0,$$,0
 MichaelSoft,Plan B,Meetings,John B,2020-05-29 21:16:42,2020-05-29 21:16:56,0,--,0
 Bapple,Project X,Phone Calls 10,John B,2020-05-29 21:23:37,2020-05-29 21:24:23,0,$$,0
 Mike,Project House,LogIn,Steve,2020-05-29 21:32:43,2020-05-29 21:32:47,0,$$,0
-Bapple,Project X,addMc,Janet,2020-05-29 21:58:15,2020-05-29 21:58:32,0,$$,0
-MichaelSoft,Plan B,thred test,Janet,2020-05-29 21:59:59,2020-05-29 22:00:03,0,$$,0
-Asweea,Update,PropText,John B,2020-05-29 22:02:03,2020-05-29 22:02:16,0,$$,0
 Abibas,Project Z,BLL methods,Steve,2020-05-30 20:36:10,2020-05-30 20:36:16,0,$$,0
-Abibas,Project Z,Database,John B,2020-06-01 09:15:19,2020-06-01 09:15:28,0,$$,0
-TOTALS -> , BILLABLE, (mins) = ,2280, UNBILLABLE (mins) = ,435, TOTAL ,  = ,32814
+Logo,SpaceCraft,GUI,Steve,2020-06-02 09:59:05,2020-06-02 10:50:54,60,$$,1424
+TOTALS -> , BILLABLE, (mins) = ,2340, UNBILLABLE (mins) = ,435, TOTAL ,  = ,34238

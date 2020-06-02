@@ -18,10 +18,15 @@ import javafx.stage.Stage;
  */
 public class MUSTC extends Application {
     
+    /**
+     *
+     * @param stage
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
         
-    //Parent root = FXMLLoader.load(getClass().getResource("gui/view/viewTest.fxml"));
+    
           Parent root = FXMLLoader.load(getClass().getResource("gui/view/LogIn.fxml"));
 
 
@@ -30,10 +35,7 @@ public class MUSTC extends Application {
         
         stage.setScene(scene);
         stage.show();
-        /*stage.setMaxHeight(488);
-        stage.setMaxWidth(260);
-        stage.setMinHeight(488);
-        stage.setMinWidth(260);*/
+        
         
     }
 

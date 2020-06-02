@@ -368,9 +368,9 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private TableColumn<Report, String> Report_mins;
     
-   
-   
-    
+    /**
+     *
+     */
     public AdminViewController() {
         MaxWidth = 260;
         min = true;
@@ -378,6 +378,11 @@ public class AdminViewController implements Initializable, Runnable {
         liu = LoggedInUser.getInstance();
     }
     
+    /**
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -435,6 +440,9 @@ public class AdminViewController implements Initializable, Runnable {
          
     }    
     
+    /**
+     *
+     */
     public void set3LatesTask(){
     //recent task 1
         lb_t1task.setText(adminModel.get1().get(0).getTaskName());
@@ -447,6 +455,9 @@ public class AdminViewController implements Initializable, Runnable {
         lb_t3project.setText(adminModel.get3().get(0).getProjectName());
     }
 
+    /**
+     *
+     */
     public void sizeExpantion(){
         
         
@@ -486,6 +497,10 @@ public class AdminViewController implements Initializable, Runnable {
         }
        
     }
+
+    /**
+     *
+     */
     public void ToggelSize(){
         
         if(min == false){    
@@ -513,9 +528,9 @@ public class AdminViewController implements Initializable, Runnable {
         }
     }
     
-    
-   
-    
+    /**
+     *
+     */
     public void setTreeView(){
         
        
@@ -552,8 +567,9 @@ public class AdminViewController implements Initializable, Runnable {
         tv_project_task.setRoot(root);
     }
     
-   
-    
+    /**
+     *
+     */
     public void setClint(){
     Col_clint_name.setCellValueFactory(new PropertyValueFactory<Client, String>("clientName"));
         Col_clint_email.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
@@ -564,6 +580,9 @@ public class AdminViewController implements Initializable, Runnable {
         Tbv_Clint.setItems(adminModel.getAllClient());
     }
     
+    /**
+     *
+     */
     public void setProject(){
     Col_pj_name.setCellValueFactory(new PropertyValueFactory<Project, String>("projectName"));
         Col_pj_clint.setCellValueFactory(new PropertyValueFactory<Project, String>("clientName"));
@@ -577,6 +596,9 @@ public class AdminViewController implements Initializable, Runnable {
       
     }
     
+    /**
+     *
+     */
     public void setTask(){
     Col_task_taskname.setCellValueFactory(new PropertyValueFactory<Task, String>("taskName"));
         Col_task_project.setCellValueFactory(new PropertyValueFactory<Task, String>("projectName"));
@@ -587,6 +609,9 @@ public class AdminViewController implements Initializable, Runnable {
                  tbv_task.setItems(adminModel.getAllTask());
     }
     
+    /**
+     *
+     */
     public void setUser(){
     col_user_name.setCellValueFactory(new PropertyValueFactory<User, String>("userName"));
         col_user_$perhour.setCellValueFactory(new PropertyValueFactory<User, String>("salary"));
@@ -596,6 +621,9 @@ public class AdminViewController implements Initializable, Runnable {
             tbv_user.setItems(adminModel.getAllUser());
     }
     
+    /**
+     *
+     */
     public void setSession(){
      col_sesion_taskname.setCellValueFactory(new PropertyValueFactory<Session, String>("associatedTaskName"));
         col_sesion_Developers.setCellValueFactory(new PropertyValueFactory<Session, String>("associatedUserName"));
@@ -605,6 +633,9 @@ public class AdminViewController implements Initializable, Runnable {
             tbv_session.setItems(adminModel.getAllSessions());
     }
     
+    /**
+     *
+     */
     public void setReport(){
         
         Report_client.setCellValueFactory(new PropertyValueFactory<Report, String>("clientName"));
@@ -621,8 +652,9 @@ public class AdminViewController implements Initializable, Runnable {
         System.out.println(""+adminModel.oReport().size());
     }
     
-    
-    
+    /**
+     *
+     */
     public void addTask(){  //  COMMENTED OUT FOR NOW
        adminModel.addNewTaskToDB(tf_newtask.getText(),cb_project.getSelectionModel().getSelectedItem().getProjectID(), bbm);
        /*selectTask.setTaskName(tf_newtask.getText());
@@ -836,6 +868,9 @@ public class AdminViewController implements Initializable, Runnable {
         
     }
     
+    /**
+     *
+     */
     public void taskTapAddTask(){
     adminModel.addNewTaskToDB(
                 task_name.getText().trim(),              
@@ -999,6 +1034,9 @@ public class AdminViewController implements Initializable, Runnable {
         
     }
     
+    /**
+     *
+     */
     public void sessionStartNStop(){
      Thread t = new Thread()
         {
@@ -1043,6 +1081,9 @@ public class AdminViewController implements Initializable, Runnable {
         
        }
     
+    /**
+     *
+     */
     public void resetTime(){
     lb_tasktime.setText("00:00:00");
     msec = 0;
@@ -1248,6 +1289,9 @@ public class AdminViewController implements Initializable, Runnable {
         
     }
     
+    /**
+     *
+     */
     public void clock(){
         Thread t = new Thread()
         {
@@ -1317,6 +1361,9 @@ public class AdminViewController implements Initializable, Runnable {
  
     }
     
+    /**
+     *
+     */
     @Override
     public void run() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

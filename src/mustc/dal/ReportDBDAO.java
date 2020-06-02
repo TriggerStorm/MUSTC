@@ -36,7 +36,9 @@ public class ReportDBDAO {
     private UserDBDAO userDBDao;
     private static final String reportCSV = "reportCSV/reportCSV.csv";
 
-    
+    /**
+     *
+     */
     public ReportDBDAO() {
         dbc = new DBConnection();
         timeUtilities = new TimeUtilities();
@@ -47,7 +49,17 @@ public class ReportDBDAO {
         userDBDao = new UserDBDAO();
     }
     
-    
+    /**
+     *
+     * @param clientID
+     * @param projectID
+     * @param taskID
+     * @param userID
+     * @param searchFrom
+     * @param searchTo
+     * @return
+     * @throws SQLException
+     */
     public List<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) throws SQLException {
     //  Returns a list of Reports based of the users search parameters. Imcludes a two line header, and footer of totals
         List<Report> reportList = getReportHeader(clientID, projectID, taskID, userID, searchFrom, searchTo);
@@ -132,8 +144,17 @@ public class ReportDBDAO {
         return reportList;
     } 
     
-    
-    
+    /**
+     *
+     * @param clientID
+     * @param projectID
+     * @param taskID
+     * @param userID
+     * @param searchFrom
+     * @param searchTo
+     * @return
+     * @throws SQLException
+     */
     public List<Session> compileSessionsForReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) throws SQLException {
       
         List<Session> allValidSessions = null; // new ArrayList<>(); //??
@@ -161,7 +182,11 @@ public class ReportDBDAO {
         return allValidSessions;
     }  
            
-      
+    /**
+     *
+     * @param reportList
+     * @throws IOException
+     */
     public void addReportListToCSVFile(List<Report> reportList) throws IOException {
     //Add reportList to File
         File file = new File(reportCSV);
@@ -177,7 +202,12 @@ public class ReportDBDAO {
         }
     }
    
-        
+    /**
+     *
+     * @param projectID
+     * @return
+     * @throws SQLException
+     */
     public List<Session> getAllSessionsOfAProject(int projectID) throws SQLException {
         List<Session> allSessionsOfAProject = new ArrayList<>();
         List<Session> allSessions = new ArrayList<>();
@@ -204,7 +234,12 @@ public class ReportDBDAO {
         return allSessionsOfAProject;
     }
             
-    
+    /**
+     *
+     * @param clientID
+     * @return
+     * @throws SQLException
+     */
     public List<Session> getAllSessionsOfAClient(int clientID) throws SQLException {
         List<Session> allSessionsOfAProject = new ArrayList<>();
         List<Session> allSessions = new ArrayList<>();
