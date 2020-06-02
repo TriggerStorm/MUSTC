@@ -10,15 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.PriorityQueue;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -212,7 +207,7 @@ public class SessionDBDAO {
                 
                 Session sessionInTask = new Session(sessionID, associatedUserID, associatedUserName, 0, "", startTime, finishTime);
                 sessionInTask.setAssociatedUserName(associatedUserName);
-                System.out.println("Task: " + taskID + "    Session: " + sessionID + "   AssociatedUserID = " + associatedUserID + "   AssociatedUserName = " + sessionInTask.getAssociatedUserName());            
+                   
                allSessionsOfATask.add(sessionInTask); 
             }    
         }
@@ -342,12 +337,12 @@ public class SessionDBDAO {
     
     
     private void setSessionsDuration(Session session) {  // Maybe not need
- System.out.println("setSessionsDuration");
+
     String startTime = session.getStartTime();
     String finishTime = session.getFinishTime();
     int duration = calculateDurationOfASession(startTime, finishTime);
       session.setDuration(duration);
- //System.out.println("Session id = " + session.getSessionID() + "   Session Duration = " + session.getDuration());
+ 
     }
     
     /**
@@ -429,7 +424,7 @@ public class SessionDBDAO {
                 usersTaskMinutes += sessionDuration; 
             }    
         }
-System.out.println("TaskID = " + taskID + "   USERs TASK MINUTES = " + usersTaskMinutes);
+
         return usersTaskMinutes;
     }
   
@@ -459,12 +454,11 @@ System.out.println("TaskID = " + taskID + "   USERs TASK MINUTES = " + usersTask
                 allLoggedInUserSessions.add(loggedInUserSession); 
             }    
         }
-        System.out.println(" Sorting");
+        
          Collections.sort(allLoggedInUserSessions, Collections.reverseOrder());  // https://beginnersbook.com/2013/12/sort-arraylist-in-descending-order-in-java/
           for (int i = 0; i < allLoggedInUserSessions.size(); i++) {
             Session session = allLoggedInUserSessions.get(i);
-              System.out.println("");
-               System.out.println(session.getStartTime());
+              
               
         }
   

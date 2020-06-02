@@ -10,15 +10,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mustc.be.Client;
 import mustc.be.Project;
 import mustc.be.Task;
-import mustc.be.Session;
 /**
  *
  * @author Trigger and Alan
@@ -50,7 +47,7 @@ public class ProjectDBDAO {
     public Project addNewProjectToDB(String projectName, int associatedClientID , int phoneNr, float projectRate, int allocatedHours) throws SQLException { 
     //  Adds a new Admin created Project to the DB, and returns the updated Admin Project to the GUI
         String clientName = clientDBDao.getClient(associatedClientID).getClientName();
-System.out.println(" client Name = " + clientName);        
+    
         int usersProjectMinutes = 0;
         int totalBillableMinutes = 0;
         int totalUnbillableMinutes = 0;
@@ -421,7 +418,7 @@ try(Connection con = dbc.getConnection()){
             int taskID = taskIDlistOfProject.get(i);
             int usersTaskMinutes = sessionDBDAO.calculateUsersTaskMinutes(loggedInUserId, taskID);
             usersProjectMinutes += usersTaskMinutes;
-            System.out.println("TASK = " + taskID + "   usersProjectMinutes = " + usersProjectMinutes);
+            
         }
         return usersProjectMinutes;
     }

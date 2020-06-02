@@ -10,11 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mustc.be.Project;
@@ -239,7 +236,7 @@ public class TaskDBDAO {
                 String developers = task.getDevelopers();  //"Bob, Sue";
                 int billable = rs.getInt("description");  // String description needs to be replaced in DB with int billable   
                 boolean isBillable = convertIntToBoolean(billable);
- System.out.println("taskID: " + taskID + "   totalTaskHours:  " + totalTaskMinutes + "   isBillable: " + isBillable);               
+
                Task taskOfAProject = new Task(taskID, taskName, associatedProjectID, projectName, projectRate, totalTaskMinutes, developers, isBillable);
                 allTasksOfAProject.add(taskOfAProject);
             }    
@@ -325,15 +322,14 @@ public class TaskDBDAO {
             Task taskMinutesAndDevs =  sessionDBDao.returnTotalTaskMinutesAndDevelopers(taskID);  //  REPLACE WITH MODEL LATER
             totalTaskMinutes = taskMinutesAndDevs.getTotalTaskMinutes();
             
-System.out.println("Task: " + taskID + "   TotalTaskHours: " + totalTaskMinutes);    
+
             if (task.getIsBillable() == true) {
                 totalBillableProjectMinutes += totalTaskMinutes;
             } else {
                 totalUnbillableProjectHours += totalTaskMinutes;
             }
         }
-System.out.println("totalBillableProjectMinutes: " + totalBillableProjectMinutes);    
-System.out.println("totalUnbillableProjectHours: " + totalUnbillableProjectHours);    
+  
         totalProjectMinutes[0] = totalUnbillableProjectHours;
         totalProjectMinutes[1] = totalBillableProjectMinutes;
         return totalProjectMinutes;
@@ -351,14 +347,14 @@ System.out.println("totalUnbillableProjectHours: " + totalUnbillableProjectHours
         int recentTask1ID = -1;  // Initialiser value - not a real taskID        
         int recentTask2ID = -1;  // Initialiser value - not a real taskID   
         int recentTask3ID = -1;  // Initialiser value - not a real taskID   
-System.out.println("getUsersThreeRecentTasks = "); 
+
         
         List<Session> allLoggedInUserSessions = sessionDBDao.getAllLoggedInUsersSessionsStartTimseAndTaskIDs(loggedInUser);
         //  Get recentTask1
         if (allLoggedInUserSessions.size() > 0) {
             Session recentSession1 =  allLoggedInUserSessions.get(0);
             recentTask1ID = recentSession1.getAssociatedTaskID();
-System.out.println("recentTask1ID = " + recentTask1ID); 
+
             Task recentTask1 = getTaskForUser(recentTask1ID);  // makes recentTask1 the the first Task from recentSession list 
             recentTasks.add(recentTask1);
         }
@@ -368,7 +364,7 @@ System.out.println("recentTask1ID = " + recentTask1ID);
             Session recentSession2 =  allLoggedInUserSessions.get(counter);
             if (recentSession2.getAssociatedTaskID() != recentTask1ID) {
                 recentTask2ID = recentSession2.getAssociatedTaskID();
-System.out.println("recentTask2ID = " + recentTask2ID); 
+
                 Task recentTask2 = getTaskForUser(recentTask2ID);  // makes recentTask2 the the second distinct Task from recentSession list                 
                 recentTasks.add(recentTask2);
                 break;
@@ -379,7 +375,7 @@ System.out.println("recentTask2ID = " + recentTask2ID);
             Session recentSession3 =  allLoggedInUserSessions.get(counter);
             if ((recentSession3.getAssociatedTaskID() != recentTask1ID) && (recentSession3.getAssociatedTaskID() != recentTask2ID)) {
                 recentTask3ID = recentSession3.getAssociatedTaskID();
-System.out.println("recentTask3ID = " + recentTask3ID); 
+
                 Task recentTask3 = getTaskForUser(recentTask3ID);  // makes recentTask2 the the second distinct Task from recentSession list                 
                 recentTasks.add(recentTask3);
                 break;

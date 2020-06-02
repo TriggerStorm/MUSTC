@@ -361,7 +361,7 @@ public class UserViewController extends JFrame implements Initializable {
             fp_last3task.setVisible(true);
             min = true;
            
-                System.out.println("true");
+                
                 Stage stage = (Stage) fp_last3task.getScene().getWindow();
                 stage.setMaxHeight(488);
                 stage.setMaxWidth(260);
@@ -373,7 +373,7 @@ public class UserViewController extends JFrame implements Initializable {
             fp_last3task.setVisible(false);
             min = false;
             
-            System.out.println("false");
+            
             Stage stage = (Stage) fp_last3task.getScene().getWindow();
             stage.setMaxHeight(248);
             stage.setMaxWidth(255);
@@ -492,7 +492,7 @@ public class UserViewController extends JFrame implements Initializable {
         
         
         Tbv_Report.setItems(userModel.oReport());
-        System.out.println(""+userModel.oReport().size());
+        
     }
     
     // Taps
@@ -799,7 +799,7 @@ public class UserViewController extends JFrame implements Initializable {
              bn_start_stop.setText("Start");
              });
              int lu = liu.getId();
-             System.out.println(""+ lu);
+             
              LocalDateTime LDTnow = LocalDateTime.now();
              String StopTime = userModel.localDateTimeToString(LDTnow);
              userModel.addNewSessionToDB(lu, runningTask.getTaskID(),runningTask.getTaskName(), startTime, StopTime);

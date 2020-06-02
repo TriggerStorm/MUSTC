@@ -185,7 +185,7 @@ public class ClientDBDAO {
                 noOfProjectsOfAClient ++; 
             }    
         }
-System.out.println("reading Client Information" );        
+      
         return noOfProjectsOfAClient;
     }
      

@@ -475,7 +475,7 @@ public class AdminViewController implements Initializable, Runnable {
             fp_last3task.setVisible(true);
             min = true;
            
-                System.out.println("true");
+                
                 Stage stage = (Stage) fp_last3task.getScene().getWindow();
                 stage.setMaxHeight(488);
                 stage.setMaxWidth(260);
@@ -487,7 +487,7 @@ public class AdminViewController implements Initializable, Runnable {
             fp_last3task.setVisible(false);
             min = false;
             
-            System.out.println("false");
+            
             Stage stage = (Stage) fp_last3task.getScene().getWindow();
             stage.setMaxHeight(248);
             stage.setMaxWidth(255);
@@ -616,7 +616,7 @@ public class AdminViewController implements Initializable, Runnable {
         Report_totalPrice.setCellValueFactory(new PropertyValueFactory<Report, String>("revenue"));
         
         Tbv_Report.setItems(adminModel.oReport());
-        System.out.println(""+adminModel.oReport().size());
+        
     }
     
     /**

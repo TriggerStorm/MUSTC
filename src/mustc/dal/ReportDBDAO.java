@@ -271,11 +271,11 @@ public class ReportDBDAO {
     private List<Session> filterSessionListForUser(List<Session> allValidSessions, int userID) {
         List<Session> developerFilteredSessionList = new ArrayList<>();
        // developerFilteredSessionList = null;
-System.out.println("UserID = " + userID);            
+           
        
        for (int i = 0; i < allValidSessions.size(); i++) {
             Session currentSession = allValidSessions.get(i);
-System.out.println("currentSession.UserID = " + currentSession.getAssociatedUserID());            
+         
             if (currentSession.getAssociatedUserID() == userID) {  // if session was created by userID (developer
                 developerFilteredSessionList.add(currentSession);
             }

@@ -5,7 +5,6 @@
  */
 package mustc.dal;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import mustc.be.Client;
