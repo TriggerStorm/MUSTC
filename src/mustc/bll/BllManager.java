@@ -254,13 +254,6 @@ public class BllManager implements IBLL {
         return dalManager.getAllTasksForUser();
     }
 
-    
- /*   @Override
-    public List<Task> getAllUsersTasks() {
-         return dalManager.getAllUsersTasks();
-    }
-*/
-
     /**
      *
      * @param taskID

@@ -63,18 +63,7 @@ public class LogInController implements Initializable {
    
 
     private void adminlogin(String mail, String password) throws IOException {
-       /*Parent root1;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mustc/gui/view/AdminView.fxml"));
-        root1 = (Parent) fxmlLoader.load();
-        
-        fxmlLoader.<AdminViewController>getController();
-
-        Stage addStage = new Stage();
-        Scene addScene = new Scene(root1);
-
-        
-        addStage.setScene(addScene);
-        addStage.show();*/
+       
           Parent root1;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mustc/gui/view/AdminView.fxml"));
         root1 = (Parent) fxmlLoader.load();
@@ -125,22 +114,6 @@ public class LogInController implements Initializable {
                     break;
             default: lb_error.setVisible(true);
         }}
-        
-            
-
-    @FXML
-    private void test(ActionEvent event) throws IOException {
-         Parent root1;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mustc/gui/view/Test.fxml"));
-        root1 = (Parent) fxmlLoader.load();
-        fxmlLoader.<AdminViewController>getController();
-        Stage addStage = new Stage();
-        Scene addScene = new Scene(root1);
-        addStage.setScene(addScene);
-        addStage.show();
-        Stage stage = (Stage) bn_login.getScene().getWindow();
-        stage.close();
-    }
-    
+  
     
 }

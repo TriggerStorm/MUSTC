@@ -165,10 +165,7 @@ public class Task {
         return  taskName;// + taskDuration ;
     }
     
-   /* @Override
-    public String toString() {
-        return "Task{" + "taskID=" + taskID + ", taskName=" + taskName + ", associatedProjectID=" + associatedProjectID + ", projectName=" + projectName + ", projectRate=" + projectRate + ", usersTaskMinutes=" + usersTaskMinutes + ", totalTaskMinutes=" + totalTaskMinutes + ", developers=" + developers + ", sessions=" + sessions + '}';
-    }*/
+   
     
     /**
      *

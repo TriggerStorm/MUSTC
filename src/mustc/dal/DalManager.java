@@ -339,18 +339,6 @@ public class DalManager implements DalFaçade {
         return null;
     }
 
-    
-/*    @Override
-    public List<Task> getAllUsersTasks() {
-        try {
-            return taskDBDao.getAllUsersTasks();
-        } catch (SQLException ex) {
-            Logger.getLogger(DalManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
- */   
-
     /**
      *
      * @param taskID

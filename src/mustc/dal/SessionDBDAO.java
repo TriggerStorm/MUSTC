@@ -146,14 +146,14 @@ public class SessionDBDAO {
                 String startTime = rs.getString("startTime");                
                 String finishTime = rs.getString("FinishTime");
                 Session session = new Session(sessionID, associatedUserID, associatedUserName, associatedTaskID, associatedTaskName, startTime, finishTime);
-// Need next bit... but here?
+
                 setSessionsLDTs(session);
                 calculateDurationOfASession(startTime, finishTime);
                 setSessionsDuration(session);
                 allSessions.add(session); 
             }    
         }
-  //      returnTotalTaskMinutesAndDevelopers(3);  //  TEST
+  
         return allSessions ;
     }
  
@@ -230,7 +230,7 @@ public class SessionDBDAO {
     //        List<Task> allTaskIDsAndNamesOfAProject = TaskDBDAOgetAllTaskIDsAndNamesOfAProject(int projectID);
 
         List<Session> allSessions = new ArrayList<>();
- //WORKS       String sql = "SELECT * FROM Sessions INNER JOIN Tasks ON Sessions.AssociatedTask = tasks.id WHERE tasks.id = '" + taskID + "'"; //Tasks.id)";// INNER JOIN Projects ON Tasks.AssociatedProject = Projects.id"; 
+ 
           String sql = "SELECT * FROM Sessions INNER JOIN Tasks ON Sessions.AssociatedTask = tasks.id"
                   + "INNER JOIN Projects ON Tasks.AssociatedProject = Projects.id WHERE Projects.id '" + projectID + "'"; //Tasks.id)";// "; 
   
@@ -239,9 +239,7 @@ public class SessionDBDAO {
             PreparedStatement pstmt = con.prepareStatement(sql);   
             pstmt.execute();    
             ResultSet rs = pstmt.executeQuery();
-      /*      Statement stmtUpdate = con.createStatement();
-            ResultSet rs = stmtUpdate.executeQuery(sql);
-*/
+   
             while(rs.next()) // While you have something in the results
             {
                 int sessionID = rs.getInt("id");
@@ -442,9 +440,9 @@ System.out.println("TaskID = " + taskID + "   USERs TASK MINUTES = " + usersTask
      * @throws SQLException
      */
     public List<Session> getAllLoggedInUsersSessionsStartTimseAndTaskIDs(User loggedInUser) throws SQLException {  // UNUSED??
-    // Returns a list of Sessions where the associatedUser = loggedInUser
+    
         List<Session> allLoggedInUserSessions = new ArrayList<>();
- //       int loggedInUserID = loggedInUser.getUserID();
+ 
          int loggedInUserID = loggedInUser.getUserID();
 
  String sql = "SELECT associatedTask, StartTime FROM Sessions WHERE associatedUser = '" + loggedInUserID + "'"; 
@@ -472,64 +470,5 @@ System.out.println("TaskID = " + taskID + "   USERs TASK MINUTES = " + usersTask
   
         return allLoggedInUserSessions ;
     }
-    
-    
-    
-    
-    
-    
-    
-             
-          
-    
-    
-    
-    
-    
-    
- //   UNUSED CODE SO FAR
-   
-       
-     //  NEWLY OUY COMMENTED
 
-       
-  /*  private void addStartTimeToSession(Session currentSession) { 
-    //  Adds a strartTime to a given Session   
-        LocalDateTime LDTnow = LocalDateTime.now();
-        String startTime = LDTnow.toString();
-        currentSession.setStartTime(startTime);
-    }
-
-     
-    private void addFinishTimeToSession(Session currentSession) throws SQLException { 
-    //  Adds a strartTime to a given Session   
-        LocalDateTime LDTnow = LocalDateTime.now();
-        String finishTime = LDTnow.toString();
-        currentSession.setFinishTime(finishTime);
-        String startTime = currentSession.getStartTime();
-        int associatedTaskID = currentSession.getAssociatedTaskID();
- //       Task currentTask = taskDBDao.getTask(associatedTaskID);  // HAD TO COMMENT OUT 
- /*       int[] sessionDuration = calculateDurationOfASession(startTime, finishTime);
-        int sessionkHours = sessionDuration[0];
-        int sessionMinutes = sessionDuration[1];
-        
- //       int[] taskDuration = currentTask.getTaskDuration();
-        int taskHours = taskDuration[0];
-        int taskMinutes = taskDuration[1];
-        taskMinutes += sessionMinutes;
-        if (taskMinutes >= 60) {
-            taskMinutes =- 60;
-            taskHours ++;
-        }
-        taskHours += sessionkHours;
-        taskDuration[0] = taskHours;
-        taskDuration[1] = taskMinutes;   
-        currentTask.setTaskDuration(taskDuration);
- */ //      int associatedUserID = loggedInUser.getId();
-  //      addNewSessionToDB(associatedUserID, associatedTaskID, startTime, finishTime) { 
-
-        
-  //  }
-    
-    
 }

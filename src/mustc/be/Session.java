@@ -95,15 +95,7 @@ public class Session implements Comparable<Session>{
     }
     
     
- /*// getAllSessionsOfATask constructor        
-    public Session(int sessionID, int associatedUserID, String associatedUserName, String startTime, String finishTime) {
-        this.sessionID = sessionID;
-        this.associatedUserID = associatedUserID;
-        this.associatedUserName = associatedUserName;
-        this.startTime = startTime;
-        this.finishTime = finishTime;
-    }  
-  */  
+ 
     
     // getDuration constructor        
 

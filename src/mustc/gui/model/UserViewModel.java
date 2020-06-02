@@ -159,7 +159,7 @@ public class UserViewModel {
         
         List<Task> task = bllManager.getUsersThreeRecentTasks(loggedInUser);
         RecentTask = FXCollections.observableArrayList(task);
-        System.out.println(""+RecentTask);
+        
         return RecentTask;
         
     }
@@ -364,7 +364,7 @@ public class UserViewModel {
      */
     public ObservableList<Report> generateReport(int clientID, int projectID, int taskID, int userID, LocalDate searchFrom, LocalDate searchTo) {
                 Reportlist = bllManager.generateReport(clientID, projectID, taskID, userID, searchFrom, searchTo);
-                System.out.println(""+Reportlist.size());
+                
                 Report = FXCollections.observableArrayList(Reportlist);
                 
                 return Report;

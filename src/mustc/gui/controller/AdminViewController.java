@@ -9,42 +9,30 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.JFXTreeView;
 
-import java.awt.event.MouseEvent;
 import static java.lang.Thread.sleep;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import static javafx.collections.FXCollections.observableList;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -52,19 +40,14 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javax.swing.tree.TreeNode;
 
 import mustc.be.Client;
 import mustc.be.LoggedInUser;
 import mustc.be.Project;
 import mustc.be.Report;
 import mustc.be.Session;
-import mustc.be.Task;
 import mustc.be.User;
-import mustc.bll.BllManager;
 import mustc.bll.TimeUtilities;
-import mustc.dal.DalManager;
-import mustc.dal.ProjectDBDAO;
 import mustc.gui.model.AdminModel;
 import mustc.be.Task;
 
@@ -399,24 +382,9 @@ public class AdminViewController implements Initializable, Runnable {
         cb_stat_clint.setItems(adminModel.getAllClientNameAndId());
         cb_stat_project.setItems(adminModel.getAllProjectsIDsAndNamesForReport());
         cb_stat_dev.setItems(adminModel.getAllUserNameAndId());
-        //setTreeView();
-        //adminModel.getUsersThreeRecentTasks(adminModel.getUser(1));
-        //cb_task1.setSelectionModel(Task);
-        // cb_task1.setItems(adminModel.getAllTask());
-       // tv_project_task.setVisible(false);
-        
+ 
         set3LatesTask();
-        
-        
-        //image work in progress
-        /*Image image1 = new Image(userModel.taskImg1());
-        Image image2 = new Image(userModel.taskImg2());
-        Image image3 = new Image(userModel.taskImg3());
-        img_task1.setImage(image1);
-        img_task2.setImage(image2);
-        img_task3.setImage(image3);*/
-        
-        
+
         cb_project.setItems(adminModel.getAllProjectsIDsAndNames());
         cb_pj_clint.setItems(adminModel.getAllClient());
         cb_task_project.setItems(adminModel.getAllProjectsIDsAndNames());
@@ -575,8 +543,7 @@ public class AdminViewController implements Initializable, Runnable {
         Col_clint_email.setCellValueFactory(new PropertyValueFactory<Client, String>("email"));
         Col_clint_nrofpj.setCellValueFactory(new PropertyValueFactory<Client, String>("noOfProjects"));
         Col_clint_$perhour.setCellValueFactory(new PropertyValueFactory<Client, String>("standardRate"));
-        //Col_clint_totalhours.setCellValueFactory(new PropertyValueFactory<Client, String>("totalHours"));
-       // Col_clint_totalprice.setCellValueFactory(new PropertyValueFactory<Client, String>("totalPrice"));
+       
         Tbv_Clint.setItems(adminModel.getAllClient());
     }
     
@@ -657,8 +624,6 @@ public class AdminViewController implements Initializable, Runnable {
      */
     public void addTask(){  //  COMMENTED OUT FOR NOW
        adminModel.addNewTaskToDB(tf_newtask.getText(),cb_project.getSelectionModel().getSelectedItem().getProjectID(), bbm);
-       /*selectTask.setTaskName(tf_newtask.getText());
-       selectTask.setProjectName(cb_project.getSelectionModel().toString());*/
        tb_project.setText(cb_project.getSelectionModel().getSelectedItem().toString());
        lb_task.setText(tf_newtask.getText().toString());
     }
@@ -1095,7 +1060,7 @@ public class AdminViewController implements Initializable, Runnable {
             public void run()
             {
         addTask();
-        //adminModel.getAllTask();
+        
         
         tbv_task.setItems(adminModel.oListTask());
         
@@ -1109,7 +1074,6 @@ public class AdminViewController implements Initializable, Runnable {
        
        for (int c = 0; c < y ; c++) {
                     String tn = adminModel.oListTask().get(c).getTaskName();
-                    //String tn = "TreeItem [ value: "+adminModel.oListTask().get(c).getTaskName()+" ]";
                     String tp = adminModel.oListTask().get(c).getProjectName();
                     
           if(       T.equals(tn)){
