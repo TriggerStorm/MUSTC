@@ -11,12 +11,9 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeView;
 import java.net.URL;
-import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -24,7 +21,6 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.BarChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -33,10 +29,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -51,7 +45,6 @@ import mustc.be.Project;
 import mustc.be.Report;
 import mustc.be.Session;
 import mustc.be.Task;
-import mustc.be.User;
 import mustc.gui.model.UserViewModel;
 
 
@@ -276,14 +269,6 @@ public class UserViewController extends JFrame implements Initializable {
         set3LatesTask();
         
         cb_project.setItems(userModel.getAllProjectsIDsAndNames());
-        
-        /*Image image1 = new Image(userModel.taskImg1());
-        Image image2 = new Image(userModel.taskImg2());
-        Image image3 = new Image(userModel.taskImg3());
-        img_task1.setImage(image1);
-        img_task2.setImage(image2);
-        img_task3.setImage(image3);*/
-        
         cb_task_project.setItems(userModel.getAllProjectsIDsAndNames());
         
         cb_stat_clint.setItems(userModel.getAllClientNameAndId());
@@ -646,7 +631,6 @@ public class UserViewController extends JFrame implements Initializable {
        String tpj = tv_project_task.getSelectionModel().getSelectedItem().getParent().getValue();
        for (int c = 0; c < y ; c++) {
                     String tn = userModel.oListTask().get(c).getTaskName();
-                    //String tn = "TreeItem [ value: "+adminModel.oListTask().get(c).getTaskName()+" ]";
                     String tp = userModel.oListTask().get(c).getProjectName();
                     
           if(       T.equals(tn)){
@@ -1048,7 +1032,6 @@ public class UserViewController extends JFrame implements Initializable {
        
        for (int c = 0; c < y ; c++) {
                     String tn = userModel.oListTask().get(c).getTaskName();
-                    //String tn = "TreeItem [ value: "+adminModel.oListTask().get(c).getTaskName()+" ]";
                     String tp = userModel.oListTask().get(c).getProjectName();
                     
           if(       T.equals(tn)){

@@ -56,13 +56,6 @@ public class LoggedInUser {
         return instance;
     }
     
-   /* public static LoggedInUser getInstance() {
-        return instance;
-    }
-
-    public static void setInstance(LoggedInUser instance) {
-        LoggedInUser.instance = instance;
-    }*/
 
     /**
      *

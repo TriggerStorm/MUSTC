@@ -190,8 +190,7 @@ System.out.println(" client Name = " + clientName);
         projectForAdmin = new Project(projectID, projectName, clientName, phoneNr, projectRate, totalBillableMinutes, totalUnbillableMinutes, totalPrice, noOfTasks);
             }    
         }
-//        taskList = null;  //may use method below
-        //taskList = taskDBDao.getAllTaskIDsAndNamesOfAProject(projectID);
+
         return projectForAdmin;
     }   
     
@@ -428,23 +427,7 @@ try(Connection con = dbc.getConnection()){
     }
        
     
- /*   public List<Project> getAllProjectIDsAndNamesOfAClient(int clientID) throws SQLException {
-    //  Returns all Projects for all Client   
-        List<Project> allProjectIDsAndNamesOfAClient = new ArrayList<>();
-        try(Connection con = dbc.getConnection()){
-            String sql = "SELECT id AND name FROM Projects WHERE associatedClient = '" + clientID + "'";
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()) //While you have something in the results
-            {
-                int projectID =  rs.getInt("id");
-                String projectName = rs.getString("name");
-                allProjectIDsAndNamesOfAClient.add(new Project(projectID, projectName, 0, 0, 0, 0, null, false)); 
-            }    
-        }
-        return allProjectIDsAndNamesOfAClient;
-    }
-*/
+ 
 
 
 

@@ -914,11 +914,7 @@ public class AdminViewController implements Initializable, Runnable {
         
         };
                  t.start();
-        /* adminModel.addNewTaskToDB(
-                task_name.getText().trim(),              
-                cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
-                bb);
-        tbv_task.refresh();*/
+       
         
     }
         
