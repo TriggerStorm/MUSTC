@@ -654,9 +654,10 @@ public class UserViewController extends JFrame implements Initializable {
                 task_name.clear();
     }
 
-    private void handel_delete_task(ActionEvent event) {//*
+    @FXML
+    private void handel_task_delete(ActionEvent event) {//*
          bn_t_confirm.setVisible(true);
-        bn_t_cancel.setVisible(true);
+         bn_t_cancel.setVisible(true);
     }
     
      @FXML
@@ -983,7 +984,8 @@ public class UserViewController extends JFrame implements Initializable {
         
     }
 
-    private void handel_add_task(ActionEvent event) {
+    @FXML
+    private void handel_task_add(ActionEvent event) {
         Thread t = new Thread()
         {
             public void run()
@@ -1016,11 +1018,7 @@ public class UserViewController extends JFrame implements Initializable {
         
         };
                  t.start();
-        /* adminModel.addNewTaskToDB(
-                task_name.getText().trim(),              
-                cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
-                bb);
-        tbv_task.refresh();*/
+        
         
     }
 
@@ -1059,15 +1057,6 @@ public class UserViewController extends JFrame implements Initializable {
         bn_s_cancel.setVisible(false);
     }
 
-    @FXML
-    private void handel_task_add(ActionEvent event) {
-    }
-
-    @FXML
-    private void handel_task_delete(ActionEvent event) {
-    }
-
-    
 
 }
     

@@ -64,7 +64,7 @@
                </padding></JFXTextField>
          </items>
       </ToolBar>
-      <Button fx:id="bn_expandview" layoutX="141.0" layoutY="410.0" mnemonicParsing="false" onAction="#handel_view" prefHeight="27.0" prefWidth="79.0" styleClass="bn" text="Expand view" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="141.0" />
+      <Button fx:id="bn_expandview" layoutX="131.0" layoutY="410.0" mnemonicParsing="false" onAction="#handel_view" prefHeight="27.0" prefWidth="89.0" styleClass="bn" text="Expand view" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="131.0" />
       <TabPane layoutX="243.0" layoutY="27.0" prefHeight="421.0" prefWidth="766.0" side="LEFT" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab fx:id="tab_clint" onSelectionChanged="#handle_tap_clint" styleClass="taps" text="Client">
@@ -87,15 +87,6 @@
                         <JFXTextField fx:id="tf_clint_name" layoutX="65.0" layoutY="394.0" prefHeight="25.0" prefWidth="89.0" promptText="Name " />
                         <JFXTextField fx:id="tf_clint_email" layoutX="156.0" layoutY="394.0" prefHeight="25.0" prefWidth="105.0" promptText="Email" />
                         <JFXTextField fx:id="tf_clint_$perhour" layoutX="263.0" layoutY="394.0" prefHeight="25.0" prefWidth="111.0" promptText="\$ Per hour" />
-                        <Button fx:id="bn_filepath" layoutX="385.0" layoutY="394.0" mnemonicParsing="false" onAction="#handle_filepath" prefHeight="25.0" prefWidth="40.0">
-                           <graphic>
-                              <ImageView fitHeight="19.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../assets/icons8-browse-folder-50.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
                         <JFXButton fx:id="bn_c_confirm" layoutX="571.0" layoutY="394.0" onAction="#confirm_client_delete" styleClass="confirme" text="Confirm" />
                         <JFXButton fx:id="bn_c_cancel" layoutX="634.0" layoutY="394.0" onAction="#cancel_client_delete" styleClass="cancel" text="Cancel" />
                         <JFXButton fx:id="bn_clint_add" layoutX="469.0" layoutY="392.0" onAction="#handel_client_add" prefHeight="26.0" prefWidth="26.0" styleClass="AED" text=" ">
@@ -212,7 +203,7 @@
                               <TableColumn fx:id="Col_task_$perhour" prefWidth="123.0" styleClass="coluoms" text="\$ per hour" />
                               <TableColumn fx:id="Col_task_totalhours" prefWidth="123.0" styleClass="coluoms" text="Total Minutes" />
                               <TableColumn fx:id="Col_task_Billable" prefWidth="59.0" styleClass="coluoms" text="Billable" />
-                              <TableColumn fx:id="Col_task_devs" prefWidth="169.0" styleClass="coluoms" text="User" />
+                              <TableColumn fx:id="Col_task_devs" prefWidth="164.0" styleClass="coluoms" text="User" />
                           </columns>
                         </TableView>
                         <Label layoutX="5.0" layoutY="392.0" text="Task">

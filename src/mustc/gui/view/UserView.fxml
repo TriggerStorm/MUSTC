@@ -102,7 +102,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="task_name" layoutX="43.0" layoutY="392.0" prefHeight="25.0" prefWidth="95.0" text="Name " />
+                        <JFXTextField fx:id="task_name" layoutX="43.0" layoutY="392.0" prefHeight="25.0" prefWidth="95.0" promptText="Name " />
                         <JFXComboBox fx:id="cb_task_project" layoutX="142.0" layoutY="392.0" prefHeight="25.0" prefWidth="117.0" promptText="Project" />
                         <JFXButton fx:id="bn_t_confirm" layoutX="550.0" layoutY="394.0" onAction="#confirm_task_delete" styleClass="confirme" text="Confirm" />
                         <JFXButton fx:id="bn_t_cancel" layoutX="614.0" layoutY="394.0" onAction="#cancel_task_delete" styleClass="cancel" text="Cancel" />
@@ -370,6 +370,6 @@
             <Insets right="-6.0" />
          </padding>
       </JFXButton>
-      <Button fx:id="tb_toggle" layoutX="22.0" layoutY="408.0" mnemonicParsing="false" onAction="#toggel_size" styleClass="bn" text="Toggel Size" />
+      <Button fx:id="tb_toggle" layoutX="22.0" layoutY="408.0" mnemonicParsing="false" onAction="#toggel_size" styleClass="bn" text="Toggel Size" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="22.0" />
    </children>
 </AnchorPane>

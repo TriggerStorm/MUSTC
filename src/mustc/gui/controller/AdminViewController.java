@@ -246,8 +246,6 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private ImageView img_task3;
     @FXML
-    private Button bn_filepath;
-    @FXML
     private JFXTextField tf_user_email;
     @FXML
     private JFXTextField tf_user_password;
@@ -969,9 +967,6 @@ public class AdminViewController implements Initializable, Runnable {
         
     }
 
-    @FXML
-    private void handle_filepath(ActionEvent event) {
-    }
 
     @FXML
     private void handel_session_edit(ActionEvent event) {
