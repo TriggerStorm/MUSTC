@@ -26,7 +26,6 @@ import mustc.be.Session;
 import mustc.be.Task;
 import mustc.be.User;
 import mustc.bll.TimeUtilities;
-import mustc.gui.controller.TestController;
 
 /**
  *
@@ -36,7 +35,6 @@ public class SessionDBDAO {
     private DBConnection dbc;
     private UserDBDAO userDBDao;
     private TimeUtilities timeUtilities;
-    private TestController testController;
  //   private TaskDBDAO taskDBDao;
 
     
@@ -46,7 +44,6 @@ public class SessionDBDAO {
  //       taskDBDao = new TaskDBDAO();
         userDBDao = new UserDBDAO();
         timeUtilities = new TimeUtilities();
-    testController = new TestController();
     }
 
     
