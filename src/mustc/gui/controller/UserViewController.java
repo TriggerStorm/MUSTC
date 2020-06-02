@@ -41,6 +41,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javax.swing.JFrame;
@@ -73,7 +74,7 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private TextField search;
     @FXML
-    private ToggleButton tb_toggle;
+    private Button tb_toggle;
     @FXML
     private Button bn_start_stop;
     @FXML
@@ -203,7 +204,7 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private JFXButton bn_session_delete;
     @FXML
-    private ToggleButton tb_task_billable;
+    private JFXButton tb_task_billable;
     @FXML
     private JFXComboBox<Client> cb_stat_clint;
     @FXML
@@ -225,7 +226,7 @@ public class UserViewController extends JFrame implements Initializable {
     @FXML
     private TableColumn<Report, String> Report_duration;
     @FXML
-    private ToggleButton tb_smallview_billable;
+    private JFXButton tb_smallview_billable;
     @FXML
     private JFXButton bn_searchClear;
     @FXML
@@ -654,9 +655,9 @@ public class UserViewController extends JFrame implements Initializable {
     }
 
     @FXML
-    private void handel_delete_task(ActionEvent event) {//*
+    private void handel_task_delete(ActionEvent event) {//*
          bn_t_confirm.setVisible(true);
-        bn_t_cancel.setVisible(true);
+         bn_t_cancel.setVisible(true);
     }
     
      @FXML
@@ -943,11 +944,13 @@ public class UserViewController extends JFrame implements Initializable {
         
         if(bb == true){
             bb = false;  
+            tb_task_billable.setTextFill(Color.rgb(210,39,30));
             
             
         }
         else{
         bb = true;
+        tb_task_billable.setTextFill(Color.rgb(21,117,84));
         }
         
     }
@@ -956,10 +959,12 @@ public class UserViewController extends JFrame implements Initializable {
     private void handle_small_billable(ActionEvent event) {
         
         if(bbm == true){
-            bbm = false;     
+            bbm = false;   
+            tb_smallview_billable.setTextFill(Color.rgb(210,39,30));
         }
         else{
         bbm = true;
+        tb_smallview_billable.setTextFill(Color.rgb(21,117,84));
         }
         
     }
@@ -980,7 +985,7 @@ public class UserViewController extends JFrame implements Initializable {
     }
 
     @FXML
-    private void handel_add_task(ActionEvent event) {
+    private void handel_task_add(ActionEvent event) {
         Thread t = new Thread()
         {
             public void run()
@@ -1013,11 +1018,7 @@ public class UserViewController extends JFrame implements Initializable {
         
         };
                  t.start();
-        /* adminModel.addNewTaskToDB(
-                task_name.getText().trim(),              
-                cb_task_project.getSelectionModel().getSelectedItem().getProjectID(),
-                bb);
-        tbv_task.refresh();*/
+        
         
     }
 
@@ -1056,7 +1057,6 @@ public class UserViewController extends JFrame implements Initializable {
         bn_s_cancel.setVisible(false);
     }
 
-    
 
 }
     
