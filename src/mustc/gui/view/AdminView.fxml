@@ -14,7 +14,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -29,12 +28,11 @@
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="LIGHTGRAY" height="450.0" layoutX="-2.0" stroke="BLACK" strokeType="INSIDE" width="245.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f4f4f4" height="445.0" layoutX="1.0" layoutY="1.0" stroke="WHITE" strokeType="INSIDE" width="240.0" />
-      <TextField fx:id="tf_newtask" layoutX="100.0" layoutY="35.0" prefHeight="25.0" prefWidth="75.0" promptText="New Task" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="35.0" />
-      <ComboBox fx:id="cb_project" layoutX="15.0" layoutY="35.0" prefHeight="25.0" prefWidth="81.0" promptText="Project" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="35.0" />
-      <TextField fx:id="search" layoutX="19.0" layoutY="70.0" onKeyReleased="#handel_search" prefHeight="25.0" prefWidth="162.0" promptText="Search" AnchorPane.leftAnchor="19.0" AnchorPane.topAnchor="70.0" />
-      <ToggleButton fx:id="tb_toggle" layoutX="28.0" layoutY="412.0" mnemonicParsing="false" onAction="#toggel_size" prefHeight="25.0" prefWidth="81.0" text="Toggel Size" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="412.0" />
-      <Button fx:id="bn_start_stop" layoutX="19.0" layoutY="355.0" mnemonicParsing="false" onAction="#handle_start_stop" prefHeight="40.0" prefWidth="52.0" text="Start" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="19.0" />
-      <Label fx:id="lb_tasktime" layoutX="163.0" layoutY="365.0" text="00:00:00" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="163.0">
+      <TextField fx:id="tf_newtask" layoutX="110.0" layoutY="35.0" prefHeight="27.0" prefWidth="75.0" promptText="New Task" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="35.0" />
+      <ComboBox fx:id="cb_project" layoutX="17.0" layoutY="35.0" prefHeight="8.0" prefWidth="89.0" promptText="Project" styleClass="bn" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="35.0" />
+      <TextField fx:id="search" layoutX="21.0" layoutY="70.0" onKeyReleased="#handel_search" prefHeight="25.0" prefWidth="167.0" promptText="Search" AnchorPane.leftAnchor="21.0" AnchorPane.topAnchor="70.0" />
+      <Button fx:id="bn_start_stop" layoutX="21.0" layoutY="356.0" mnemonicParsing="false" onAction="#handle_start_stop" prefHeight="40.0" prefWidth="52.0" styleClass="bn" text="Start" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="21.0" />
+      <Label fx:id="lb_tasktime" layoutX="156.0" layoutY="366.0" text="00:00:00" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="156.0">
          <font>
             <Font size="17.0" />
          </font></Label>
@@ -45,27 +43,40 @@
             <Label text="MUSTC" />
             <Label prefHeight="17.0" prefWidth="44.0" />
             <Label text="User:  " />
-            <Label fx:id="lb_loginuser" prefHeight="17.0" prefWidth="55.0" text="User" />
-            <JFXButton fx:id="bn_settings" onAction="#handel_onTop" prefHeight="0.0" prefWidth="26.0" text="S" />
+            <Label fx:id="lb_loginuser" prefHeight="17.0" prefWidth="56.0" text="User" />
+            <JFXButton fx:id="bn_settings" onAction="#handel_onTop" prefHeight="18.0" prefWidth="14.0" text=" ">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/icons8-settings-48.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets bottom="-2.0" left="-2.0" right="-10.0" top="-2.0" />
+               </padding></JFXButton>
             <Label prefHeight="17.0" prefWidth="285.0" />
             <Label fx:id="lb_progress" prefHeight="17.0" prefWidth="167.0" styleClass="lb" text="TEXT" />
-            <Label prefHeight="17.0" prefWidth="215.0" />
-            <JFXTextField fx:id="tap_search" onKeyReleased="#Search" prefHeight="0.0" prefWidth="98.0" promptText="Search" />
+            <Label prefHeight="0.0" prefWidth="215.0" />
+            <JFXTextField fx:id="tap_search" focusColor="#e9fc59" onKeyReleased="#Search" prefHeight="8.0" prefWidth="98.0" promptText="Search">
+               <padding>
+                  <Insets bottom="-1.0" />
+               </padding></JFXTextField>
          </items>
       </ToolBar>
-      <Button fx:id="bn_expandview" layoutX="128.0" layoutY="412.0" mnemonicParsing="false" onAction="#handel_view" prefHeight="25.0" prefWidth="95.0" text="Expand view" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="128.0" />
+      <Button fx:id="bn_expandview" layoutX="141.0" layoutY="410.0" mnemonicParsing="false" onAction="#handel_view" prefHeight="27.0" prefWidth="79.0" styleClass="bn" text="Expand view" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="141.0" />
       <TabPane layoutX="243.0" layoutY="27.0" prefHeight="421.0" prefWidth="766.0" side="LEFT" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab fx:id="tab_clint" onSelectionChanged="#handle_tap_clint" text="Client">
+            <Tab fx:id="tab_clint" onSelectionChanged="#handle_tap_clint" styleClass="taps" text="Client">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="Tbv_Clint" onMouseClicked="#handel_pick_client" prefHeight="392.0" prefWidth="740.0">
+                        <TableView fx:id="Tbv_Clint" onMouseClicked="#handel_pick_client" prefHeight="389.0" prefWidth="740.0">
                            <columns>
-                              <TableColumn fx:id="Col_clint_name" prefWidth="185.0" styleClass="cole" text="Name" />
-                              <TableColumn fx:id="Col_clint_email" prefWidth="185.0" text="Email" />
-                              <TableColumn fx:id="Col_clint_nrofpj" prefWidth="185.0" text="Nr of projects" />
-                              <TableColumn fx:id="Col_clint_$perhour" prefWidth="185.0" text="\$ per hour" />
+                              <TableColumn fx:id="Col_clint_name" prefWidth="185.0" styleClass="coluoms" text="Name" />
+                              <TableColumn fx:id="Col_clint_email" prefWidth="185.0" styleClass="coluoms" text="Email" />
+                              <TableColumn fx:id="Col_clint_nrofpj" prefWidth="185.0" styleClass="coluoms" text="Nr of projects" />
+                              <TableColumn fx:id="Col_clint_$perhour" prefWidth="166.0" styleClass="coluoms" text="\$ per hour" />
                            </columns>
                         </TableView>
                         <Label layoutX="6.0" layoutY="394.0" prefHeight="25.0" prefWidth="44.0" text="Client">
@@ -73,13 +84,10 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="tf_clint_name" layoutX="64.0" layoutY="393.0" prefHeight="25.0" prefWidth="64.0" promptText="Name " />
-                        <JFXButton fx:id="bn_clint_add" buttonType="RAISED" layoutX="356.0" layoutY="395.0" onAction="#handel_client_add" style="-fx-background-color: lightgrey;" text="Add" />
-                        <JFXButton fx:id="bn_clint_eddit" layoutX="392.0" layoutY="395.0" onAction="#handel_client_eddit" styleClass="button2" text="edit" />
-                        <JFXButton fx:id="bn_clint_delete" layoutX="427.0" layoutY="395.0" onAction="#handel_client_delete" text="Delete" />
-                        <JFXTextField fx:id="tf_clint_email" layoutX="130.0" layoutY="393.0" prefHeight="25.0" prefWidth="75.0" promptText="Email" />
-                        <JFXTextField fx:id="tf_clint_$perhour" layoutX="207.0" layoutY="393.0" prefHeight="25.0" prefWidth="81.0" promptText="\$ Per hour" />
-                        <Button fx:id="bn_filepath" layoutX="293.0" layoutY="393.0" mnemonicParsing="false" onAction="#handle_filepath" prefHeight="25.0" prefWidth="40.0">
+                        <JFXTextField fx:id="tf_clint_name" layoutX="65.0" layoutY="394.0" prefHeight="25.0" prefWidth="89.0" promptText="Name " />
+                        <JFXTextField fx:id="tf_clint_email" layoutX="156.0" layoutY="394.0" prefHeight="25.0" prefWidth="105.0" promptText="Email" />
+                        <JFXTextField fx:id="tf_clint_$perhour" layoutX="263.0" layoutY="394.0" prefHeight="25.0" prefWidth="111.0" promptText="\$ Per hour" />
+                        <Button fx:id="bn_filepath" layoutX="385.0" layoutY="394.0" mnemonicParsing="false" onAction="#handle_filepath" prefHeight="25.0" prefWidth="40.0">
                            <graphic>
                               <ImageView fitHeight="19.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -88,26 +96,62 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <JFXButton fx:id="bn_c_confirm" layoutX="500.0" layoutY="395.0" onAction="#confirm_client_delete" styleClass="deleteconfirme" text="Confirm" />
-                        <JFXButton fx:id="bn_c_cancel" layoutX="566.0" layoutY="395.0" onAction="#cancel_client_delete" text="Cancel" />
+                        <JFXButton fx:id="bn_c_confirm" layoutX="571.0" layoutY="394.0" onAction="#confirm_client_delete" styleClass="confirme" text="Confirm" />
+                        <JFXButton fx:id="bn_c_cancel" layoutX="634.0" layoutY="394.0" onAction="#cancel_client_delete" styleClass="cancel" text="Cancel" />
+                        <JFXButton fx:id="bn_clint_add" layoutX="469.0" layoutY="392.0" onAction="#handel_client_add" prefHeight="26.0" prefWidth="26.0" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-add-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets right="-8.0" />
+                           </padding>
+                        </JFXButton>
+                        <JFXButton fx:id="bn_clint_eddit" layoutX="500.0" layoutY="392.0" onAction="#handel_client_eddit" prefHeight="28.0" prefWidth="26.0" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-edit-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets left="-1.0" right="-8.0" />
+                           </padding>
+                        </JFXButton>
+                        <JFXButton fx:id="bn_clint_delete" layoutX="530.0" layoutY="392.0" onAction="#handel_client_delete" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-delete-bin-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets right="-8.0" />
+                           </padding>
+                        </JFXButton>
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-          <Tab fx:id="tab_pj" onSelectionChanged="#handle_tap_project" text="Project">
+          <Tab fx:id="tab_pj" onSelectionChanged="#handle_tap_project" styleClass="taps" text="Project">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TableView fx:id="Tbv_pj" onMouseClicked="#handel_pick_project" prefHeight="390.0" prefWidth="740.0">
                           <columns>
-                            <TableColumn fx:id="Col_pj_name" prefWidth="92.0" text="Name" />
-                            <TableColumn fx:id="Col_pj_clint" prefWidth="92.0" text="Client" />
-                              <TableColumn fx:id="Col_pj_contact" prefWidth="92.0" text="Contact info" />
-                              <TableColumn fx:id="Col_pj_nroftask" prefWidth="92.0" text="Nr of task" />
-                              <TableColumn fx:id="Col_pj_projectrate" prefWidth="92.0" text="ProjectRate" />
-                              <TableColumn fx:id="Col_pj_Billable" prefWidth="92.0" text="Billable" />
-                              <TableColumn fx:id="Col_pj_UnBillable" prefWidth="92.0" text="UnBillable" />
-                              <TableColumn fx:id="Col_pj_totalprice" prefWidth="92.0" text="Total price" />
+                            <TableColumn fx:id="Col_pj_name" prefWidth="92.0" styleClass="coluoms" text="Name" />
+                            <TableColumn fx:id="Col_pj_clint" prefWidth="92.0" styleClass="coluoms" text="Client" />
+                              <TableColumn fx:id="Col_pj_contact" prefWidth="92.0" styleClass="coluoms" text="Contact info" />
+                              <TableColumn fx:id="Col_pj_nroftask" prefWidth="92.0" styleClass="coluoms" text="Nr of task" />
+                              <TableColumn fx:id="Col_pj_projectrate" prefWidth="92.0" styleClass="coluoms" text="ProjectRate" />
+                              <TableColumn fx:id="Col_pj_Billable" prefWidth="92.0" styleClass="coluoms" text="Billable" />
+                              <TableColumn fx:id="Col_pj_UnBillable" prefWidth="92.0" styleClass="coluoms" text="UnBillable" />
+                              <TableColumn fx:id="Col_pj_totalprice" prefWidth="77.0" styleClass="coluoms" text="Total price" />
                           </columns>
                         </TableView>
                         <Label layoutX="1.0" layoutY="394.0" prefHeight="25.0" prefWidth="40.0" text="Project">
@@ -115,31 +159,60 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="tf_pj_name" layoutX="49.0" layoutY="393.0" prefHeight="25.0" prefWidth="68.0" promptText="Name" />
-                        <JFXTextField fx:id="tf_pj_nr" layoutX="194.0" layoutY="393.0" prefHeight="25.0" prefWidth="68.0" promptText="Nr" />
-                        <JFXTextField fx:id="tf_pj_$perhour" layoutX="263.0" layoutY="393.0" prefHeight="25.0" prefWidth="68.0" promptText="\$ per hour" />
-                        <JFXComboBox fx:id="cb_pj_clint" layoutX="119.0" layoutY="393.0" maxWidth="75.0" promptText="Client" />
-                        <JFXButton fx:id="bn_pj_add" layoutX="336.0" layoutY="395.0" onAction="#handel_project_add" style="-fx-background-color: lightgrey;" text="Add" />
-                        <JFXButton fx:id="bn_pj_eddit" layoutX="372.0" layoutY="395.0" onAction="#handel_project_eddit" style="-fx-background-color: lightgrey;" text="edit" />
-                        <JFXButton fx:id="bn_pj_delete" layoutX="405.0" layoutY="395.0" onAction="#handel_project_delete" style="-fx-background-color: lightgrey;" text="Delete" />
-                        <JFXButton fx:id="bn_p_confirm" layoutX="499.0" layoutY="393.0" onAction="#confirm_project_delete" text="Confirm" />
-                        <JFXButton fx:id="bn_p_cancel" layoutX="558.0" layoutY="393.0" onAction="#cancel_project_delete" text="Cancel" />
+                        <JFXTextField fx:id="tf_pj_name" layoutX="49.0" layoutY="393.0" prefHeight="25.0" prefWidth="89.0" promptText="Name" />
+                        <JFXTextField fx:id="tf_pj_nr" layoutX="252.0" layoutY="393.0" prefHeight="25.0" prefWidth="98.0" promptText="Nr" />
+                        <JFXTextField fx:id="tf_pj_$perhour" layoutX="352.0" layoutY="393.0" prefHeight="25.0" prefWidth="89.0" promptText="\$ per hour" />
+                        <JFXComboBox fx:id="cb_pj_clint" layoutX="140.0" layoutY="393.0" maxWidth="110.0" prefHeight="25.0" prefWidth="110.0" promptText="Client" />
+                        <JFXButton fx:id="bn_pj_add" layoutX="469.0" layoutY="392.0" onAction="#handel_project_add" prefHeight="26.0" prefWidth="26.0" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-add-50.png" />
+                                 </image></ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets right="-8.0" />
+                           </padding></JFXButton>
+                        <JFXButton fx:id="bn_pj_eddit" layoutX="499.0" layoutY="392.0" onAction="#handel_project_eddit" prefHeight="28.0" prefWidth="26.0" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-edit-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets left="-1.0" right="-8.0" />
+                           </padding></JFXButton>
+                        <JFXButton fx:id="bn_pj_delete" layoutX="528.0" layoutY="392.0" onAction="#handel_project_delete" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-delete-bin-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets right="-8.0" />
+                           </padding></JFXButton>
+                        <JFXButton fx:id="bn_p_confirm" layoutX="566.0" layoutY="394.0" onAction="#confirm_project_delete" styleClass="confirme" text="Confirm" />
+                        <JFXButton fx:id="bn_p_cancel" layoutX="629.0" layoutY="394.0" onAction="#cancel_project_delete" styleClass="cancel" text="Cancel" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab fx:id="tab_task" onSelectionChanged="#handle_tap_task" text="Task">
+          <Tab fx:id="tab_task" onSelectionChanged="#handle_tap_task" styleClass="taps" text="Task">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tbv_task" onMouseClicked="#handel_pick_task" prefHeight="390.0" prefWidth="740.0">
+                        <TableView fx:id="tbv_task" onMouseClicked="#handel_pick_task" prefHeight="390.0" prefWidth="731.0">
                           <columns>
-                            <TableColumn fx:id="Col_task_taskname" prefWidth="123.0" text="Task name" />
-                            <TableColumn fx:id="Col_task_project" prefWidth="123.0" text="Project" />
-                              <TableColumn fx:id="Col_task_$perhour" prefWidth="123.0" text="\$ per hour" />
-                              <TableColumn fx:id="Col_task_totalhours" prefWidth="123.0" text="Total Minutes" />
-                              <TableColumn fx:id="Col_task_Billable" prefWidth="123.0" text="Billable" />
-                              <TableColumn fx:id="Col_task_devs" prefWidth="123.0" text="User" />
+                            <TableColumn fx:id="Col_task_taskname" prefWidth="123.0" styleClass="coluoms" text="Task name" />
+                            <TableColumn fx:id="Col_task_project" prefWidth="123.0" styleClass="coluoms" text="Project" />
+                              <TableColumn fx:id="Col_task_$perhour" prefWidth="123.0" styleClass="coluoms" text="\$ per hour" />
+                              <TableColumn fx:id="Col_task_totalhours" prefWidth="123.0" styleClass="coluoms" text="Total Minutes" />
+                              <TableColumn fx:id="Col_task_Billable" prefWidth="59.0" styleClass="coluoms" text="Billable" />
+                              <TableColumn fx:id="Col_task_devs" prefWidth="169.0" styleClass="coluoms" text="User" />
                           </columns>
                         </TableView>
                         <Label layoutX="5.0" layoutY="392.0" text="Task">
@@ -147,57 +220,115 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="task_name" layoutX="43.0" layoutY="392.0" prefHeight="25.0" prefWidth="81.0" promptText="Name " />
-                        <JFXComboBox fx:id="cb_task_project" layoutX="126.0" layoutY="392.0" prefHeight="25.0" prefWidth="81.0" promptText="Project" />
-                        <JFXButton fx:id="bn_task_add" layoutX="303.0" layoutY="395.0" onAction="#handel_task_add" style="-fx-background-color: lightgrey;" text="Add" />
-                        <JFXButton fx:id="bn_task_eddit" layoutX="338.0" layoutY="395.0" onAction="#handel_task_eddit" style="-fx-background-color: lightgrey;" text="edit" />
-                        <JFXButton fx:id="bn_task_delete" layoutX="372.0" layoutY="395.0" onAction="#handel_task_delete" style="-fx-background-color: lightgrey;" text="Delete" />
-                        <JFXButton fx:id="bn_t_confirm" layoutX="438.0" layoutY="392.0" onAction="#confirm_task_delete" text="Confirm" />
-                        <JFXButton fx:id="bn_t_cancel" layoutX="507.0" layoutY="393.0" onAction="#cancel_task_delete" text="Cancel" />
-                        <JFXButton fx:id="tb_task_billable" layoutX="217.0" layoutY="393.0" onAction="#handel_billable" ripplerFill="#24cd4e" styleClass="bb" text="\$" textFill="#157554" />
+                        <JFXTextField fx:id="task_name" layoutX="43.0" layoutY="392.0" prefHeight="25.0" prefWidth="106.0" promptText="Name " />
+                        <JFXComboBox fx:id="cb_task_project" layoutX="152.0" layoutY="392.0" prefHeight="25.0" prefWidth="114.0" promptText="Project" />
+                        <JFXButton fx:id="bn_t_confirm" layoutX="573.0" layoutY="394.0" onAction="#confirm_task_delete" styleClass="confirme" text="Confirm" />
+                        <JFXButton fx:id="bn_t_cancel" layoutX="636.0" layoutY="394.0" onAction="#cancel_task_delete" styleClass="cancel" text="Cancel" />
+                        <JFXButton fx:id="tb_task_billable" layoutX="267.0" layoutY="392.0" onAction="#handel_billable" prefHeight="27.0" prefWidth="23.0" ripplerFill="#24cd4e" styleClass="bb" text="\$" textFill="#157554">
+                           <padding>
+                              <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
+                           </padding></JFXButton>
+                        <JFXButton fx:id="bn_task_add" layoutX="469.0" layoutY="392.0" onAction="#handel_task_add" prefHeight="26.0" prefWidth="26.0" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-add-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets right="-8.0" />
+                           </padding>
+                        </JFXButton>
+                        <JFXButton fx:id="bn_task_eddit" layoutX="500.0" layoutY="392.0" onAction="#handel_task_eddit" prefHeight="28.0" prefWidth="26.0" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-edit-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets left="-1.0" right="-8.0" />
+                           </padding>
+                        </JFXButton>
+                        <JFXButton fx:id="bn_task_delete" layoutX="530.0" layoutY="392.0" onAction="#handel_task_delete" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-delete-bin-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets right="-8.0" />
+                           </padding>
+                        </JFXButton>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab fx:id="tab_sesion" onSelectionChanged="#handle_tap_sessions" text="Session">
+            <Tab fx:id="tab_sesion" onSelectionChanged="#handle_tap_sessions" styleClass="taps" text="Session">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tbv_session" onMouseClicked="#handel_pick_session" prefHeight="390.0" prefWidth="740.0">
+                        <TableView fx:id="tbv_session" onMouseClicked="#handel_pick_session" prefHeight="390.0" prefWidth="730.0">
                            <columns>
-                              <TableColumn fx:id="col_sesion_taskname" prefWidth="185.0" text="Task name" />
-                              <TableColumn fx:id="col_sesion_start" prefWidth="185.0" text="Start" />
-                              <TableColumn fx:id="col_sesion_stop" prefWidth="185.0" text="Stop" />
-                              <TableColumn fx:id="col_sesion_Developers" prefWidth="185.0" text="User" />
+                              <TableColumn fx:id="col_sesion_taskname" prefWidth="178.0" styleClass="coluoms" text="Task name" />
+                              <TableColumn fx:id="col_sesion_start" prefWidth="187.0" styleClass="coluoms" text="Start" />
+                              <TableColumn fx:id="col_sesion_stop" prefWidth="179.0" styleClass="coluoms" text="Stop" />
+                              <TableColumn fx:id="col_sesion_Developers" prefWidth="177.0" styleClass="coluoms" text="User" />
                            </columns>
                         </TableView>
-                        <JFXTextField fx:id="tf_session_start" layoutX="139.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Start" />
-                        <JFXTextField fx:id="tf_session_stop" layoutX="222.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Stop" />
+                        <JFXTextField fx:id="tf_session_start" layoutX="139.0" layoutY="394.0" prefHeight="25.0" prefWidth="105.0" promptText="Start" />
+                        <JFXTextField fx:id="tf_session_stop" layoutX="246.0" layoutY="394.0" prefHeight="25.0" prefWidth="119.0" promptText="Stop" />
                         <Label layoutX="3.0" layoutY="397.0" text="Session">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <JFXButton fx:id="bn_session_edit" layoutX="393.0" layoutY="393.0" onAction="#handel_session_edit" style="-fx-background-color: lightgrey;" text="Edit" />
-                        <JFXButton fx:id="bn_session_delete" layoutX="428.0" layoutY="393.0" onAction="#handel_session_delete" style="-fx-background-color: lightgrey;" text="Delete" />
                         <Label fx:id="lb_session_name" layoutX="62.0" layoutY="395.0" prefHeight="25.0" prefWidth="75.0" text="Name" />
-                        <Label fx:id="lb_session_dev" layoutX="307.0" layoutY="399.0" prefHeight="17.0" prefWidth="75.0" text="Developers" />
-                        <JFXButton fx:id="bn_s_confirm" layoutX="500.0" layoutY="393.0" onAction="#confirm_session_delete" text="Confirm" />
-                        <JFXButton fx:id="bn_s_cancel" layoutX="559.0" layoutY="393.0" onAction="#cancel_session_delete" text="Cancel" />
+                        <Label fx:id="lb_session_dev" layoutX="372.0" layoutY="400.0" prefHeight="17.0" prefWidth="75.0" text="Developers" />
+                        <JFXButton fx:id="bn_s_confirm" layoutX="527.0" layoutY="394.0" onAction="#confirm_session_delete" styleClass="confirme" text="Confirm" />
+                        <JFXButton fx:id="bn_s_cancel" layoutX="590.0" layoutY="394.0" onAction="#cancel_session_delete" styleClass="cancel" text="Cancel" />
+                        <JFXButton fx:id="bn_session_edit" layoutX="446.0" layoutY="392.0" onAction="#handel_session_edit" prefHeight="28.0" prefWidth="26.0" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-edit-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets left="-1.0" right="-8.0" />
+                           </padding>
+                        </JFXButton>
+                        <JFXButton fx:id="bn_session_delete" layoutX="478.0" layoutY="392.0" onAction="#handel_session_delete" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-delete-bin-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets right="-8.0" />
+                           </padding>
+                        </JFXButton>
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="tab_user" onSelectionChanged="#handle_tap_user" text="User">
+            <Tab fx:id="tab_user" onSelectionChanged="#handle_tap_user" styleClass="taps" text="User">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TableView fx:id="tbv_user" onMouseClicked="#handel_pick_user" prefHeight="390.0" prefWidth="740.0">
                            <columns>
-                              <TableColumn fx:id="col_user_name" prefWidth="185.0" text="Name" />
-                              <TableColumn fx:id="col_user_email" prefWidth="185.0" text="Email" />
-                              <TableColumn fx:id="col_user_$perhour" prefWidth="185.0" text="\$ per hour" />
-                              <TableColumn fx:id="col_user_status" prefWidth="185.0" text="Status" />
+                              <TableColumn fx:id="col_user_name" prefWidth="185.0" styleClass="coluoms" text="Name" />
+                              <TableColumn fx:id="col_user_email" prefWidth="179.0" styleClass="coluoms" text="Email" />
+                              <TableColumn fx:id="col_user_$perhour" prefWidth="185.0" styleClass="coluoms" text="\$ per hour" />
+                              <TableColumn fx:id="col_user_status" prefWidth="172.0" styleClass="coluoms" text="Status" />
                            </columns>
                         </TableView>
                         <Label layoutX="2.0" layoutY="393.0" text="User">
@@ -208,18 +339,51 @@
                         <JFXTextField fx:id="tf_user_name" layoutX="38.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="Name" />
                         <JFXTextField fx:id="tf_user_$perhour" layoutX="287.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="\$ per hour" />
                         <JFXComboBox fx:id="cb_user_admin" layoutX="370.0" layoutY="394.0" promptText="Admin" />
-                        <JFXButton fx:id="bn_user_add" layoutX="464.0" layoutY="395.0" onAction="#handel_user_add" style="-fx-background-color: lightgrey;" text="Add" />
-                        <JFXButton fx:id="bn_user_eddit" layoutX="499.0" layoutY="395.0" onAction="#handel_user_eddit" style="-fx-background-color: lightgrey;" text="edit" />
-                        <JFXButton fx:id="bn_user_delete" layoutX="532.0" layoutY="395.0" onAction="#handel_user_delete" style="-fx-background-color: lightgrey;" text="Delete" />
                         <JFXTextField fx:id="tf_user_email" layoutX="121.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="email" />
                         <JFXTextField fx:id="tf_user_password" layoutX="204.0" layoutY="394.0" prefHeight="25.0" prefWidth="81.0" promptText="password" />
-                        <JFXButton fx:id="bn_u_confirm" layoutX="594.0" layoutY="393.0" onAction="#confirm_user_delete" text="Confirm" />
-                        <JFXButton fx:id="bn_u_cancel" layoutX="653.0" layoutY="393.0" onAction="#cancel_user_delete" text="Cancel" />
+                        <JFXButton fx:id="bn_u_confirm" layoutX="567.0" layoutY="394.0" onAction="#confirm_user_delete" styleClass="confirme" text="Confirm" />
+                        <JFXButton fx:id="bn_u_cancel" layoutX="631.0" layoutY="394.0" onAction="#cancel_user_delete" styleClass="cancel" text="Cancel" />
+                        <JFXButton fx:id="bn_user_add" layoutX="468.0" layoutY="392.0" onAction="#handel_user_add" prefHeight="26.0" prefWidth="26.0" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-add-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets right="-8.0" />
+                           </padding>
+                        </JFXButton>
+                        <JFXButton fx:id="bn_user_eddit" layoutX="500.0" layoutY="392.0" onAction="#handel_user_eddit" prefHeight="28.0" prefWidth="26.0" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-edit-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets left="-1.0" right="-8.0" />
+                           </padding>
+                        </JFXButton>
+                        <JFXButton fx:id="bn_user_delete" layoutX="530.0" layoutY="392.0" onAction="#handel_user_delete" styleClass="AED" text=" ">
+                           <graphic>
+                              <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/icons8-delete-bin-50.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets right="-8.0" />
+                           </padding>
+                        </JFXButton>
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab fx:id="tab_Report" onSelectionChanged="#handle_tap_report" text="Report">
+            <Tab fx:id="tab_Report" onSelectionChanged="#handle_tap_report" styleClass="taps" text="Report">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="422.0" prefWidth="362.0">
                      <children>
@@ -229,32 +393,38 @@
                         <JFXDatePicker fx:id="dp_stat_to" layoutX="582.0" layoutY="381.0" prefHeight="28.0" prefWidth="100.0" />
                         <JFXComboBox fx:id="cb_stat_clint" layoutY="384.0" onAction="#handel_selectClient" prefHeight="25.0" prefWidth="109.0" promptText="Client" />
                         <JFXComboBox fx:id="cb_stat_dev" layoutX="361.0" layoutY="384.0" prefHeight="25.0" prefWidth="107.0" promptText="User" />
-                        <TableView fx:id="Tbv_Report" onMouseClicked="#handel_pick_project" prefHeight="376.0" prefWidth="728.0">
+                        <TableView fx:id="Tbv_Report" onMouseClicked="#handel_pick_project" prefHeight="376.0" prefWidth="731.0">
                            <columns>
-                              <TableColumn fx:id="Report_client" prefWidth="92.0" text="Client" />
-                              <TableColumn fx:id="Report_project" prefWidth="92.0" text="Project" />
-                              <TableColumn fx:id="Report_task" prefWidth="69.0" text="Task" />
-                              <TableColumn fx:id="Report_user" prefWidth="82.0" text="User" />
-                              <TableColumn fx:id="Report_startTime" prefWidth="98.0" text="Start Time" />
-                              <TableColumn fx:id="Report_finishTime" prefWidth="107.0" text="Finish Time" />
-                              <TableColumn fx:id="Report_billableMin" prefWidth="28.0" text="\$" />
-                              <TableColumn fx:id="Report_mins" prefWidth="71.0" text="Mins" />
-                              <TableColumn fx:id="Report_totalPrice" prefWidth="87.0" text="Total price" />
+                              <TableColumn fx:id="Report_client" prefWidth="73.0" styleClass="coluoms" text="Client" />
+                              <TableColumn fx:id="Report_project" prefWidth="84.0" styleClass="coluoms" text="Project" />
+                              <TableColumn fx:id="Report_task" prefWidth="73.0" styleClass="coluoms" text="Task" />
+                              <TableColumn fx:id="Report_user" prefWidth="69.0" styleClass="coluoms" text="User" />
+                              <TableColumn fx:id="Report_startTime" prefWidth="118.0" styleClass="coluoms" text="Start Time" />
+                              <TableColumn fx:id="Report_finishTime" prefWidth="123.0" styleClass="coluoms" text="Finish Time" />
+                              <TableColumn fx:id="Report_billableMin" prefWidth="28.0" styleClass="coluoms" text="\$" />
+                              <TableColumn fx:id="Report_mins" prefWidth="71.0" styleClass="coluoms" text="Mins" />
+                              <TableColumn fx:id="Report_totalPrice" prefWidth="77.0" styleClass="coluoms" text="Total price" />
                            </columns>
                         </TableView>
-                        <JFXButton fx:id="bn_report" layoutX="680.0" layoutY="376.0" onAction="#handel_report" prefHeight="25.0" prefWidth="52.0" text="Report" underline="true" />
-                        <JFXButton fx:id="bn_export" layoutX="681.0" layoutY="400.0" onAction="#handle_export" text="Export" underline="true" />
+                        <JFXButton fx:id="bn_report" layoutX="679.0" layoutY="378.0" onAction="#handel_report" prefHeight="22.0" prefWidth="52.0" text="Report" underline="true">
+                           <padding>
+                              <Insets left="-10.0" right="-10.0" />
+                           </padding></JFXButton>
+                        <JFXButton fx:id="bn_export" layoutX="682.0" layoutY="397.0" onAction="#handle_export" prefHeight="25.0" prefWidth="44.0" text="Export" underline="true">
+                           <padding>
+                              <Insets left="-1.0" />
+                           </padding></JFXButton>
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
         </tabs>
       </TabPane>
-      <JFXButton fx:id="bn_searchClear" layoutX="190.0" layoutY="69.0" onAction="#handel_searchClear" prefHeight="17.0" prefWidth="23.0" style="-fx-background-color: black;" text=" " AnchorPane.leftAnchor="190.0" AnchorPane.topAnchor="69.0">
+      <JFXButton fx:id="bn_searchClear" layoutX="190.0" layoutY="69.0" onAction="#handel_searchClear" prefHeight="27.0" prefWidth="31.0" text=" " AnchorPane.leftAnchor="190.0" AnchorPane.topAnchor="69.0">
          <graphic>
-            <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../Downloads/icons8-left-50.png" />
+                  <Image url="@../assets/delete-512.png" />
                </image>
             </ImageView>
          </graphic>
@@ -265,12 +435,12 @@
          <children>
             <StackPane layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="160.0">
                <children>
-                  <JFXButton fx:id="bn_task1" buttonType="RAISED" onAction="#handel_task1" prefHeight="76.0" prefWidth="200.0" style="-fx-background-color: lightgrey;" text=" ">
+                  <JFXButton fx:id="bn_task1" buttonType="RAISED" onAction="#handel_task1" prefHeight="76.0" prefWidth="200.0" styleClass="treerecent" text=" ">
                      <padding>
                         <Insets bottom="40.0" left="40.0" />
                      </padding>
                   </JFXButton>
-                  <ImageView fx:id="img_task1" fitHeight="122.0" fitWidth="45.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="img_task1" fitHeight="122.0" fitWidth="45.0" mouseTransparent="true" opacity="0.0" pickOnBounds="true" preserveRatio="true">
                      <StackPane.margin>
                         <Insets bottom="10.0" right="150.0" />
                      </StackPane.margin>
@@ -301,12 +471,12 @@
             </StackPane>
             <StackPane layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="189.0">
                <children>
-                  <JFXButton fx:id="bn_task2" buttonType="RAISED" onAction="#handle_task2" prefHeight="78.0" prefWidth="195.0" style="-fx-background-color: lightgrey;" text=" ">
+                  <JFXButton fx:id="bn_task2" buttonType="RAISED" onAction="#handle_task2" prefHeight="78.0" prefWidth="195.0" styleClass="treerecent" text=" ">
                      <padding>
                         <Insets bottom="40.0" left="40.0" />
                      </padding>
                   </JFXButton>
-                  <ImageView fx:id="img_task2" fitHeight="45.0" fitWidth="50.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="img_task2" fitHeight="45.0" fitWidth="50.0" mouseTransparent="true" opacity="0.0" pickOnBounds="true" preserveRatio="true">
                      <StackPane.margin>
                         <Insets bottom="10.0" right="150.0" />
                      </StackPane.margin>
@@ -337,12 +507,12 @@
             </StackPane>
             <StackPane layoutX="10.0" layoutY="10.0" prefHeight="76.0" prefWidth="189.0">
                <children>
-                  <JFXButton fx:id="bn_task3" buttonType="RAISED" onAction="#handle_task3" prefHeight="76.0" prefWidth="200.0" style="-fx-background-color: lightgrey;" text=" ">
+                  <JFXButton fx:id="bn_task3" buttonType="RAISED" onAction="#handle_task3" prefHeight="76.0" prefWidth="200.0" styleClass="treerecent" text=" ">
                      <padding>
                         <Insets bottom="40.0" left="40.0" />
                      </padding>
                   </JFXButton>
-                  <ImageView fx:id="img_task3" fitHeight="45.0" fitWidth="50.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="img_task3" fitHeight="45.0" fitWidth="50.0" mouseTransparent="true" opacity="0.0" pickOnBounds="true" preserveRatio="true">
                      <StackPane.margin>
                         <Insets bottom="10.0" right="150.0" />
                      </StackPane.margin>
@@ -373,18 +543,22 @@
             </StackPane>
          </children>
       </FlowPane>
-      <JFXTreeView fx:id="tv_project_task" layoutX="21.0" layoutY="103.0" onMouseClicked="#handel_pick_treeview" prefHeight="245.0" prefWidth="200.0" />
-      <JFXButton fx:id="tb_smallview_billable" layoutX="176.0" layoutY="35.0" onAction="#handle_small_billable" ripplerFill="#5be842" styleClass="bb" text="\$" textFill="#157554" />
-      <JFXButton fx:id="bn_add" layoutX="200.0" layoutY="36.0" onAction="#handel_addTaskminview" prefHeight="24.0" prefWidth="23.0" style="-fx-background-color: grey;" styleClass="bb" text=" ">
+      <JFXButton fx:id="tb_smallview_billable" layoutX="225.0" layoutY="37.0" onAction="#handle_small_billable" ripplerFill="#5be842" styleClass="bb" text="\$" textFill="#157554">
+         <padding>
+            <Insets bottom="-1.0" left="-1.0" right="-1.0" top="-1.0" />
+         </padding></JFXButton>
+      <JFXButton fx:id="bn_add" layoutX="193.0" layoutY="37.0" onAction="#handel_addTaskminview" prefHeight="24.0" prefWidth="23.0" style="-fx-background-color: grey;" styleClass="bb" text=" ">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../../Downloads/icons8-add-50.png" />
+                  <Image url="@../assets/icons8-add-50.png" />
                </image>
             </ImageView>
          </graphic>
          <padding>
-            <Insets right="-8.0" top="-0.0" />
+            <Insets left="1.0" right="-8.0" top="-1.0" />
          </padding></JFXButton>
+      <Button fx:id="tb_toggle" layoutX="21.0" layoutY="410.0" mnemonicParsing="false" onAction="#toggel_size" styleClass="bn" text="Toggel Size" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="21.0" />
+      <JFXTreeView fx:id="tv_project_task" layoutX="20.0" layoutY="103.0" onMouseClicked="#handel_pick_treeview" prefHeight="245.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

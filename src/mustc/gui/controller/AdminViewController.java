@@ -84,7 +84,7 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private TextField search;
     @FXML
-    private ToggleButton tb_toggle;
+    private Button tb_toggle;
     @FXML
     private Button bn_start_stop;
     @FXML
@@ -268,7 +268,7 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private TableColumn<Task, String> Col_task_Billable;
     @FXML
-    private ToggleButton tb_task_billable;
+    private JFXButton tb_task_billable;
     @FXML
     private JFXButton tb_smallview_billable;
     @FXML
@@ -368,7 +368,7 @@ public class AdminViewController implements Initializable, Runnable {
     @FXML
     private JFXButton bn_u_cancel;
     @FXML
-    private TableColumn<?, ?> Report_mins;
+    private TableColumn<Report, String> Report_mins;
     
    
    
@@ -615,7 +615,7 @@ public class AdminViewController implements Initializable, Runnable {
         Report_user.setCellValueFactory(new PropertyValueFactory<Report, String>("loggedInUser"));
         Report_startTime.setCellValueFactory(new PropertyValueFactory<Report, String>("startTime"));
         Report_finishTime.setCellValueFactory(new PropertyValueFactory<Report, String>("finishTime"));
-        //minutes
+        Report_mins.setCellValueFactory(new PropertyValueFactory<Report, String>("minutes"));      
         Report_billableMin.setCellValueFactory(new PropertyValueFactory<Report, String>("billable"));
         Report_totalPrice.setCellValueFactory(new PropertyValueFactory<Report, String>("revenue"));
         

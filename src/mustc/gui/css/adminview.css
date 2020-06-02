@@ -8,12 +8,12 @@
 
 
 
-.cole{
-    -fx-text-alignment: right
+.bn{
+    -fx-border-color: rgb(145, 140, 131);
+    -fx-border-radius: 5%;
 }
 .button{
     -fx-background-radius: 10%;
-    
     
     
 }
@@ -34,9 +34,48 @@
 .bb{
     -fx-background-color: #f4f4f4;
     -fx-background-radius: 100%;
-    -fx-font-size: 12 px;
+    -fx-font-size: 18 px;
 }
 .lb
 {
     -fx-text-fill: rgb(252, 255, 74);
+}
+.AED{
+    -fx-background-color: rgb(131, 172, 201);
+    
+    
+}
+.confirme{
+    -fx-background-color: rgb(36, 191, 44);
+    -fx-background-radius: 10%;
+    
+}
+.cancel{
+    -fx-background-color: rgb(247, 67, 67);
+    -fx-background-radius: 10%;
+    
+}
+.taps{
+    -fx-background-color: rgb(207, 204, 204);
+    -fx-background-radius: 15%;
+    -fx-font-size: 13 px;
+    -fx-border-color: rgb(0, 0, 0);
+    -fx-highlight-fill: rgb(247, 245, 242);
+    
+}
+.coluoms{
+    -fx-background-radius: 5%;
+    -fx-font-size: 12 px;
+    -fx-border-color: rgb(199, 193, 183);
+}
+.search{
+    -fx-text-fill: rgb(252, 255, 74);
+    
+}
+.treerecent{
+    -fx-background-color: rgb(207, 204, 204);
+    -fx-background-radius: 12%;
+    -fx-border-color: rgb(0,0,0);
+    -fx-border-radius: 5%
+    
 }
