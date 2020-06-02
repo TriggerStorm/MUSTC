@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Trigger,and Alan
+ * @author Trigger,and Alan !
  */
 public class MUSTC extends Application {
     
